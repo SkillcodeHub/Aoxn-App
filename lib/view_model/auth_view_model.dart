@@ -35,16 +35,16 @@ class AuthViewModel with ChangeNotifier {
           Provider.of<GetProviderTokenViewModel>(context, listen: false);
       userPreference.saveProviderToken(GetProviderTokenModel(
           displayMessage: value['displayMessage'].toString()));
-      if (kDebugMode) {
         Utils.flushBarErrorMessage('Login Successfully'.toString(), context);
+      if (kDebugMode) {
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => OtpVerifyScreen()));
 
         print(value.toString());
       }
     }).onError((error, stackTrace) {
-      if (kDebugMode) {
         Utils.flushBarErrorMessage(error.toString(), context);
+      if (kDebugMode) {
         print(error.toString());
       }
     });
