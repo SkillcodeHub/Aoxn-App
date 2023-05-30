@@ -17,3 +17,5 @@ const AppGradientColor = LinearGradient(colors: [
   AppPrimaryColor,
   AppPrimaryColor,
 ]);
+
+final BackgroundColor = Colors.grey.shade200;

@@ -1,4 +1,4 @@
-import 'package:axonweb/view_model/services/splash_services.dart';
+import 'package:axonweb/view_model/services/Splash_services/splash_services.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {

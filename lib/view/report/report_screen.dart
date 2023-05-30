@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../Res/colors.dart';
 import '../../res/components/appbar/axonimage_appbar-widget.dart';
 import '../../res/components/appbar/payment_widget.dart';
 import '../../res/components/appbar/screen_name_widget.dart';
@@ -17,7 +18,7 @@ class _ReportScreenState extends State<ReportScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade200,
+      backgroundColor: BackgroundColor,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(60.0),
         child: AppBar(

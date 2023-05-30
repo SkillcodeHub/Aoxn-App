@@ -1,13 +1,15 @@
-import 'package:axonweb/view/changeProvider/change_provider_screen.dart';
+import 'package:axonweb/view/ChangeProvider/change_provider_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 
+import '../../View_Model/Login_View_Model/auth_view_model.dart';
 import '../../utils/utils.dart';
-import '../../view_model/auth_view_model.dart';
 
 class OtpVerifyScreen extends StatefulWidget {
-  const OtpVerifyScreen({super.key});
+  final dynamic mobile;
+
+  const OtpVerifyScreen({super.key, required this.mobile});
 
   @override
   State<OtpVerifyScreen> createState() => _OtpVerifyScreenState();
@@ -31,6 +33,7 @@ class _OtpVerifyScreenState extends State<OtpVerifyScreen> {
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
                     children: [
+                      Text(widget.mobile['Mobile'].toString()),
                       Center(
                         child: PinFieldAutoFill(
                           currentCode: codeValue,
