@@ -1,18 +1,18 @@
 import '../../Data/Network/BaseApiServices.dart';
 import '../../Data/Network/NetworkApiService.dart';
-import '../../Model/DoctorDetails_Model/doctordetails_model.dart';
+import '../../Model/DoctorList_Model/doctorlist_model.dart';
 import '../../Res/app_url.dart';
 import '../../View_Model/Services/SharePreference/SharePreference.dart';
 
-class SettingsRepository {
+class DoctorListRepository {
   BaseApiServices _apiServices = NetworkApiService();
   UserPreferences userPreference = UserPreferences();
-  Future<DoctorDetailsListModel> fetchDoctorDetailsList(token) async {
+  Future<DoctorListModel> fetchDoctorList(token) async {
     try {
       dynamic response = await _apiServices.getGetApiResponse(
-          AppUrl.getdoctordetailsUrl + '?CustomerToken=' + token.toString());
+          AppUrl.getdoctorUrl + '?CustomerToken=' + token.toString());
       print(response);
-      return response = DoctorDetailsListModel.fromJson(response);
+      return response = DoctorListModel.fromJson(response);
     } catch (e) {
       throw e;
     }

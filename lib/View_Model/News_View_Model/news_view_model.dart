@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:axonweb/View/NevigationBar/my_navigationbar.dart';
 import 'package:axonweb/data/response/api_response.dart';
 
 import 'package:flutter/material.dart';
@@ -7,7 +8,6 @@ import 'package:flutter/material.dart';
 import '../../Model/CustomerToken_Model/customer_token.dart';
 import '../../Model/News_Model/news_model.dart';
 import '../../Repository/News_Repository/repository.dart';
-import '../../utils/routes/routes_name.dart';
 import '../Services/SharePreference/SharePreference.dart';
 
 class NewsViewmodel with ChangeNotifier {
@@ -53,10 +53,8 @@ class CustomerTkenViewmodel with ChangeNotifier {
       //     ));
       Timer(
           Duration(seconds: 1),
-          () => Navigator.pushNamed(
-                context,
-                RoutesName.news,
-              ));
+          () => Navigator.push(context,
+              MaterialPageRoute(builder: (context) => MyNavigationBar())));
     }).onError((error, stackTrace) {
       setCustomerToken(ApiResponse.error(error.toString()));
     });

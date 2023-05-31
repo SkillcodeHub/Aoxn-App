@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import '../../Data/Response/api_response.dart';
 import '../../Model/NewsDetails_Model/newsdetails_model.dart';
 import '../../Repository/NewsDetails_Repository/newsdetails_repository.dart';
-import '../../Utils/routes/routes_name.dart';
 
 class NewsDetailsViewmodel with ChangeNotifier {
   final _myRepo = NewsDetailsRepository();

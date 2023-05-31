@@ -1,5 +1,6 @@
 import 'package:axonweb/Utils/routes/routes_name.dart';
-import 'package:axonweb/View/NewsDetails/news_details.dart';
+import 'package:axonweb/View/NewsDetails/news_details_screen.dart';
+import 'package:axonweb/View/ReportDetails/report_details_screen.dart';
 import 'package:axonweb/View/Settings/settings_screen.dart';
 import 'package:axonweb/view/Book/book_appointment_screen.dart';
 import 'package:axonweb/view/ChangeProvider/change_provider_screen.dart';
@@ -10,6 +11,7 @@ import 'package:axonweb/view/report/report_screen.dart';
 import 'package:axonweb/view/Splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../../View/NevigationBar/my_navigationbar.dart';
 import '../../view/Login/login_screen.dart';
 
 class Routes {
@@ -29,6 +31,9 @@ class Routes {
       case RoutesName.changeProvider:
         return MaterialPageRoute(
             builder: (BuildContext context) => ChangeProviderScreen());
+      case RoutesName.myNevigationBar:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => MyNavigationBar());
       case RoutesName.news:
         return MaterialPageRoute(
             builder: (BuildContext context) => NewsScreen());
@@ -48,6 +53,10 @@ class Routes {
       case RoutesName.settings:
         return MaterialPageRoute(
             builder: (BuildContext context) => SettingsScreen());
+      case RoutesName.reportDetails:
+        return MaterialPageRoute(
+            builder: (BuildContext context) =>
+                ReportDetailsScreen(reportDetails: settings.arguments as Map));
       default:
         return MaterialPageRoute(builder: (_) {
           return const Scaffold(

@@ -15,9 +15,9 @@ class SettingsViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> fetchDoctorDetailsListApi() async {
+  Future<void> fetchDoctorDetailsListApi(String token) async {
     setDoctorDetailsList(ApiResponse.loading());
-    _myRepo.fetchDoctorDetailsList().then((value) {
+    _myRepo.fetchDoctorDetailsList(token).then((value) {
       setDoctorDetailsList(ApiResponse.completed(value));
     }).onError((error, stackTrace) {
       setDoctorDetailsList(ApiResponse.error(error.toString()));

@@ -7,16 +7,6 @@ import '../../res/app_url.dart';
 class NewsRepository {
   CustomerTokenModel customerTokenViewmodel = CustomerTokenModel();
   BaseApiServices _apiServices = NetworkApiService();
-  // Future<CustomerTokenModel> fetchCustomerToken(String appCode) async {
-  //   try {
-  //     dynamic response = await _apiServices.getGetApiResponse(
-  //         AppUrl.customertoken + '?Appcode=' + appCode.toString());
-
-  //     return response = CustomerTokenModel.fromJson(response);
-  //   } catch (e) {
-  //     throw e;
-  //   }
-  // }
 
   Future<NewsListModel> fetchNewsList(String token) async {
     try {

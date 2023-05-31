@@ -20,4 +20,11 @@ class AppUrl {
 
   //Get Doctor Details
   static var getdoctordetailsUrl = baseUrl + "BookAppointment/GetCustomer";
+
+  //Get Doctor
+  static var getdoctorUrl = baseUrl + "BookAppointment/GetCustomerDoctor";
+
+  //Get Rx Visit History
+  static var getrxvisithistoryUrl =
+      baseUrl + "BookAppointment/GetRxVisitHistory";
 }

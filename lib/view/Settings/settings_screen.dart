@@ -21,7 +21,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   UserPreferences userPreference = UserPreferences();
   SettingsViewModel settingsViewModel = SettingsViewModel();
   var mobile;
-  var token;
+  late String token;
 
   bool isLoading = false;
 
@@ -38,9 +38,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         token = value!;
       });
     });
-    setState(() {
-      settingsViewModel.fetchDoctorDetailsListApi();
-    });
+    setState(() {});
     // super.initState();
     super.initState();
   }
@@ -129,6 +127,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    settingsViewModel.fetchDoctorDetailsListApi(token);
+
     print(token);
 
     return Scaffold(

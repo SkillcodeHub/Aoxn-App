@@ -8,6 +8,9 @@ class RoutesName {
   //changeProvider screen routes name
   static const String changeProvider = 'changeprovider_screen';
 
+  //myNevigationBar screen routes name
+  static const String myNevigationBar = 'mynevigationbar_screen';
+
   //news screen routes name
   static const String news = 'news_screen';
 
@@ -25,4 +28,7 @@ class RoutesName {
 
   //newsDetails screen routes name
   static const String newsdetails = 'newsdetails_screen';
+
+  //newsDetails screen routes name
+  static const String reportDetails = 'reportdetails_screen';
 }
