@@ -23,13 +23,8 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
   CustomerTkenViewmodel customerTkenViewmodel = CustomerTkenViewmodel();
   @override
   Widget build(BuildContext context) {
-    userPreference.getMobile().then((value1) {
-      setState(() {
-        mobile = value1!;
-      });
-    });
     // final authViewModel = Provider.of<GetProviderTokenViewModel>(context);
-    final userPrefernce = Provider.of<GetProviderTokenViewModel>(context);
+    // final userPrefernce = Provider.of<GetProviderTokenViewModel>(context);
     return Scaffold(
       backgroundColor: BackgroundColor,
       appBar: PreferredSize(
@@ -236,18 +231,6 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                       ),
                     ),
                   ),
-                  InkWell(
-                    onTap: () {
-                      userPrefernce.remove().then((value) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => LoginScreen()));
-                      });
-                    },
-                    child: Text('Logout'),
-                  ),
-                  Text(mobile),
                 ],
               ),
             ),

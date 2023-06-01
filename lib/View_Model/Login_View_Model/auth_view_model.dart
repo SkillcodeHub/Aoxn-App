@@ -43,7 +43,7 @@ class AuthViewModel with ChangeNotifier {
         Utils.snackBar('OTP Send Successfully', context);
 
         Timer(
-            Duration(seconds: 3),
+            Duration(seconds: 2),
             () =>
                 Navigator.pushNamed(context, RoutesName.otp, arguments: data));
 
@@ -51,6 +51,7 @@ class AuthViewModel with ChangeNotifier {
           print(value.toString());
         }
       }
+      ;
     }).onError((error, stackTrace) {
       Utils.flushBarErrorMessage(
           error.toString(), Duration(seconds: 3), context);
@@ -68,15 +69,15 @@ class AuthViewModel with ChangeNotifier {
     setSignUpLoading(true);
     _myRepo.otpverifyapi(data).then((value) {
       setSignUpLoading(false);
-      Utils.flushBarErrorMessage(
-          'Otp is Valid'.toString(), Duration(seconds: 5), context);
+      // Utils.flushBarErrorMessage(
+      //     'Otp is Valid'.toString(), Duration(seconds: 5), context);
 
       if (value['status'] == true) {
         Utils.snackBar('Otp is Valid', context);
         userPreference.setMobile(data['Mobile']);
 
         Timer(
-            Duration(seconds: 3),
+            Duration(seconds: 2),
             () => Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -85,9 +86,11 @@ class AuthViewModel with ChangeNotifier {
         if (kDebugMode) {
           print(value.toString());
         }
-      }
-      if (kDebugMode) {
-        print(value.toString());
+      } else {
+        Utils.snackBar('OTP is not valid*', context);
+        if (kDebugMode) {
+          print(value.toString());
+        }
       }
     }).onError((error, stackTrace) {
       if (kDebugMode) {

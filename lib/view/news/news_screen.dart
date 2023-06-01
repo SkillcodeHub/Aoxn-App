@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:axonweb/View_Model/NewsDetails_View_model/newsdetails_view_model.dart';
 import 'package:axonweb/data/response/status.dart';
 
@@ -73,7 +75,7 @@ class _NewsScreenState extends State<NewsScreen> {
     return Column(
       children: [
         SizedBox(
-          height: 8,
+          height: 3,
         ),
         InkWell(
           onTap: () {
@@ -86,7 +88,7 @@ class _NewsScreenState extends State<NewsScreen> {
                 arguments: data);
           },
           child: Card(
-            margin: EdgeInsets.all(5),
+            margin: EdgeInsets.fromLTRB(5, 5, 5, 0),
             color: Colors.white,
             shadowColor: Colors.white,
             elevation: 10,
@@ -189,7 +191,13 @@ class _NewsScreenState extends State<NewsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    newsViewmodel.fetchNewsListApi(token);
+    Timer(Duration(microseconds: 20),
+        () => newsViewmodel.fetchNewsListApi(token));
+    // newsViewmodel.fetchNewsListApi(token);
+    Future refresh() async {
+      newsViewmodel.fetchNewsListApi(token);
+    }
+
     return Scaffold(
       backgroundColor: BackgroundColor,
       appBar: PreferredSize(
@@ -226,14 +234,20 @@ class _NewsScreenState extends State<NewsScreen> {
                 case Status.ERROR:
                   return Center(child: Text(value.newsList.message.toString()));
                 case Status.COMPLETED:
-                  return ListView.builder(
-                      padding: EdgeInsets.only(bottom: 10),
-                      physics: const ClampingScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: value.newsList.data!.data!.length,
-                      itemBuilder: (BuildContext context, int itemIndex) {
-                        return createNewsListContainer(context, itemIndex);
-                      });
+                  return RefreshIndicator(
+                    onRefresh: refresh,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 6, left: 4, right: 6),
+                      child: ListView.builder(
+                          padding: EdgeInsets.only(bottom: 10),
+                          physics: BouncingScrollPhysics(),
+                          // shrinkWrap: true,
+                          itemCount: value.newsList.data!.data!.length,
+                          itemBuilder: (BuildContext context, int itemIndex) {
+                            return createNewsListContainer(context, itemIndex);
+                          }),
+                    ),
+                  );
               }
             },
           )),

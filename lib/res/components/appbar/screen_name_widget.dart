@@ -17,7 +17,7 @@ class ScreenNameWidget extends StatelessWidget {
         style: TextStyle(
           color: Colors.black,
           fontWeight: FontWeight.w500,
-          fontSize: 22,
+          fontSize: 21,
         ),
         maxLines: 1,
         overflow: TextOverflow.ellipsis,

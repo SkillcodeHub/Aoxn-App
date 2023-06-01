@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:axonweb/View_Model/Book_View_Model/Book_view_Model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -51,8 +53,8 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    doctorListViewmodel.fetchDoctorListApi(token);
-
+    Timer(Duration(microseconds: 20),
+        () => doctorListViewmodel.fetchDoctorListApi(token));
     return Scaffold(
       backgroundColor: BackgroundColor,
       appBar: PreferredSize(
@@ -69,7 +71,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
               children: [
                 AxonIconForAppBarrWidget(),
                 ScreenNameWidget(
-                  title: '  Book Appointment',
+                  title: 'Book Appointment',
                 ),
                 WhatsappWidget(),
                 PaymentWidget(),
@@ -102,6 +104,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                   return Stack(
                     children: [
                       SingleChildScrollView(
+                        physics: BouncingScrollPhysics(),
                         child: Padding(
                           padding: EdgeInsets.all(0),
                           child: isLoading
@@ -111,7 +114,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                               : Column(
                                   children: [
                                     Container(
-                                        height: 25.h,
+                                        height: 22.h,
                                         width: 100.w,
                                         // decoration: BoxDecoration(
                                         //   image: DecorationImage(
@@ -180,7 +183,8 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                 //       : launch('tel://$number');
                                                 // },
                                                 child: Container(
-                                                  height: 40,
+                                                  width: 15.w,
+                                                  height: 5.h,
                                                   child: Image.asset(
                                                     "images/phone-call.png",
                                                   ),
@@ -194,12 +198,13 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                         borderRadius: BorderRadius.circular(8),
                                       ),
                                       margin: EdgeInsets.all(5),
-                                      color: Colors.white,
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: <Widget>[
                                           Container(
+                                            height: 12.h,
+                                            width: 81.3.w,
                                             padding: EdgeInsets.all(8),
                                             child: Column(
                                               mainAxisAlignment:
@@ -217,11 +222,10 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                       color:
                                                           Colors.grey.shade700),
                                                 ),
-                                                SizedBox(height: 30),
+                                                SizedBox(height: 1.h),
                                                 Container(
                                                   alignment:
                                                       Alignment.centerLeft,
-                                                  color: Colors.white,
                                                   child:
                                                       DropdownButtonHideUnderline(
                                                     child: ButtonTheme(
@@ -311,8 +315,8 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                         Radius.circular(8),
                                                     bottomRight:
                                                         Radius.circular(8))),
-                                            height: 110,
-                                            width: 63,
+                                            height: 12.h,
+                                            width: 16.w,
                                             child: Icon(
                                               Icons.punch_clock,
                                               color: Colors.white,
@@ -358,6 +362,8 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             Container(
+                                              height: 12.h,
+                                              width: 81.3.w,
                                               child: Padding(
                                                 padding:
                                                     const EdgeInsets.all(8.0),
@@ -403,8 +409,8 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                           bottomRight:
                                                               Radius.circular(
                                                                   8))),
-                                              height: 110,
-                                              width: 63,
+                                              height: 12.h,
+                                              width: 16.w,
                                               child: Icon(
                                                 Icons.punch_clock,
                                                 color: Colors.white,
@@ -440,6 +446,8 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             Container(
+                                              height: 12.h,
+                                              width: 81.3.w,
                                               child: Padding(
                                                 padding:
                                                     const EdgeInsets.all(8.0),
@@ -481,7 +489,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                           bottomRight:
                                                               Radius.circular(
                                                                   8))),
-                                              height: 110,
+                                              height: 12.h,
                                               width: 16.w,
                                               child: Icon(
                                                 Icons.person,
@@ -539,7 +547,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                       ),
                                     ),
                                     Container(
-                                      height: 180,
+                                      height: 10.h,
                                     ),
                                   ],
                                 ),
