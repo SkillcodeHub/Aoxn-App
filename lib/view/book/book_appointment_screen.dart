@@ -1,13 +1,18 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:axonweb/View_Model/Book_View_Model/Book_view_Model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../Res/Components/loader.dart';
 import '../../Res/colors.dart';
+import '../../Utils/routes/routes_name.dart';
+import '../../Utils/utils.dart';
 import '../../View_Model/Services/SharePreference/SharePreference.dart';
+import '../../View_Model/Settings_View_Model/settings_view_model.dart';
 import '../../data/response/status.dart';
 import '../../res/components/appbar/axonimage_appbar-widget.dart';
 import '../../res/components/appbar/payment_widget.dart';
@@ -25,11 +30,15 @@ class BookApointmentScreen extends StatefulWidget {
 class _BookApointmentScreenState extends State<BookApointmentScreen> {
   UserPreferences userPreference = UserPreferences();
   DoctorListViewmodel doctorListViewmodel = DoctorListViewmodel();
+  SettingsViewModel settingsViewModel = SettingsViewModel();
+  late String number = '6353335967';
+
   late String selectedDocotrId;
 
   bool isLoading = false;
   var mobile;
   late String token;
+
   // List doctorData = [];
   // List customerData = [];
 
@@ -53,8 +62,10 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Timer(Duration(microseconds: 20),
-        () => doctorListViewmodel.fetchDoctorListApi(token));
+    Timer(Duration(microseconds: 20), () {
+      doctorListViewmodel.fetchDoctorListApi(token);
+      settingsViewModel.fetchDoctorDetailsListApi(token);
+    });
     return Scaffold(
       backgroundColor: BackgroundColor,
       appBar: PreferredSize(
@@ -113,86 +124,133 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                   : Container()
                               : Column(
                                   children: [
-                                    Container(
-                                        height: 22.h,
-                                        width: 100.w,
-                                        // decoration: BoxDecoration(
-                                        //   image: DecorationImage(
-                                        //     image: MemoryImage(
-                                        //       base64Decode(customerData[0]['logoImageURL']),
-                                        //     ),
-                                        //     // onError: (exception, stackTrace) {
-                                        //     //   return Icon(Icons.error);
-                                        //     // },
-                                        //     // image: NetworkImage(
-                                        //     //   customerData[0]['logoImageURL'],
-                                        //     // ),
-                                        //     // image: AssetImage('images/c5.png'),
-                                        //     fit: BoxFit.cover,
-                                        //   ),
-                                        // ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.end,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Container(
-                                                width: 80.w,
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.end,
-                                                  children: [
-                                                    Text(
-                                                      doctorListViewmodel
-                                                          .doctorList
-                                                          .data!
-                                                          .data![0]
-                                                          .doctorName
-                                                          .toString(),
-                                                      // 'aaaa',
-                                                      // customerData[0]['customerName'],
-                                                      style: TextStyle(
-                                                          fontSize: 15,
-                                                          color: Colors.white),
-                                                      maxLines: 1,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
+                                    ChangeNotifierProvider<SettingsViewModel>(
+                                      create: (BuildContext context) =>
+                                          settingsViewModel,
+                                      child: Consumer<SettingsViewModel>(
+                                          builder: (context, value, child) {
+                                        switch (
+                                            value.doctorDetailsList.status!) {
+                                          case Status.LOADING:
+                                            return Center(
+                                                child:
+                                                    CircularProgressIndicator());
+                                          case Status.ERROR:
+                                            return Center(
+                                                child: Text(
+                                              // value
+                                              //   .doctorDetailsList
+                                              //   .message
+                                              //   .toString()
+                                              'aaaa',
+                                            ));
+                                          case Status.COMPLETED:
+                                            return Container(
+                                                height: 22.h,
+                                                width: 100.w,
+                                                decoration: BoxDecoration(
+                                                  image: DecorationImage(
+                                                    image: MemoryImage(
+                                                      base64Decode(
+                                                        settingsViewModel
+                                                            .doctorDetailsList
+                                                            .data!
+                                                            .data![0]
+                                                            .logoImageURL
+                                                            .toString(),
+                                                      ),
                                                     ),
-                                                    Text(
-                                                      'aaaa',
-                                                      // customerData[0]['customerAddress'],
-                                                      style: TextStyle(
-                                                          fontSize: 15,
-                                                          color: Colors.white),
-                                                      maxLines: 1,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              InkWell(
-                                                // onTap: () {
-                                                //   number == null
-                                                //       ? null
-                                                //       : launch('tel://$number');
-                                                // },
-                                                child: Container(
-                                                  width: 15.w,
-                                                  height: 5.h,
-                                                  child: Image.asset(
-                                                    "images/phone-call.png",
+                                                    // onError: (exception,
+                                                    //     stackTrace) {
+                                                    //   return ;
+                                                    // },
+                                                    // image: NetworkImage(
+                                                    //   customerData[0]['logoImageURL'],
+                                                    // ),
+                                                    // image: AssetImage('images/c5.png'),
+                                                    fit: BoxFit.cover,
                                                   ),
                                                 ),
-                                              ),
-                                            ],
-                                          ),
-                                        )),
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Row(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment.end,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Container(
+                                                        width: 80.w,
+                                                        child: Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .end,
+                                                          children: [
+                                                            Text(
+                                                              settingsViewModel
+                                                                  .doctorDetailsList
+                                                                  .data!
+                                                                  .data![0]
+                                                                  .customerName
+                                                                  .toString(),
+                                                              // 'aaaa',
+                                                              // customerData[0]['customerName'],
+                                                              style: TextStyle(
+                                                                  fontSize: 15,
+                                                                  color: Colors
+                                                                      .white),
+                                                              maxLines: 1,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                            ),
+                                                            Text(
+                                                              settingsViewModel
+                                                                  .doctorDetailsList
+                                                                  .data!
+                                                                  .data![0]
+                                                                  .customerAddress
+                                                                  .toString(),
+                                                              // customerData[0]['customerAddress'],
+                                                              style: TextStyle(
+                                                                  fontSize: 15,
+                                                                  color: Colors
+                                                                      .white),
+                                                              maxLines: 1,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      InkWell(
+                                                        onTap: () {
+                                                          number == null ||
+                                                                  number == ''
+                                                              ? null
+                                                              : launch(
+                                                                  'tel://$number');
+                                                        },
+                                                        child: Container(
+                                                          width: 15.w,
+                                                          height: 5.h,
+                                                          child: Image.asset(
+                                                            "images/phone-call.png",
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ));
+                                        }
+                                      }),
+                                    ),
                                     Card(
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(8),
@@ -328,24 +386,19 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                       ),
                                     ),
                                     InkWell(
-                                      // onTap: () {
-                                      //   selectedDocotrId != null
-                                      //       ?
-                                      //       //   Navigator.push(
-                                      //       //       context,
-                                      //       //       MaterialPageRoute(
-                                      //       //           builder: (context) =>
-                                      //       //               SelectAppointmentDate(selectedDocotrId)));
-                                      //       _navigateDateAndTimeSelaction(context)
-                                      //       : showDialog(
-                                      //           context: context,
-                                      //           builder: (_) => OverlayDialogWarning(
-                                      //               message: 'Please Select a Doctor',
-                                      //               // message: response['message'].toString(),
-                                      //               showButton: true,
-                                      //               dialogType: DialogType.Warning));
-                                      //   ;
-                                      // },
+                                      onTap: () {
+                                        selectedDocotrId != "null"
+                                            ? Navigator.pushNamed(
+                                                context,
+                                                RoutesName
+                                                    .selectAppointmentDate)
+                                            // _navigateDateAndTimeSelaction(context)
+                                            : Utils.snackBar(
+                                                'Please Select a Doctor',
+                                                context);
+
+                                        ;
+                                      },
                                       child: Card(
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
@@ -374,26 +427,29 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                     SizedBox(height: 20),
                                                     Container(
                                                       padding: EdgeInsets.only(
-                                                          left: 10),
-                                                      child: Text('aaa'
-                                                          // displayDate,
-                                                          // style: TextStyle(
-                                                          //     fontSize: 20,
-                                                          //     fontWeight: FontWeight.w500),
-                                                          ),
-                                                    ),
-                                                    SizedBox(height: 10),
-                                                    Container(
-                                                      padding: EdgeInsets.only(
-                                                          left: 10),
+                                                          left: 10, top: 10),
                                                       child: Text(
-                                                        'aaaa',
-                                                        // displayTimeSlot,
-                                                        // style: TextStyle(
-                                                        //     fontSize: 16,
-                                                        //     fontWeight: FontWeight.w400),
+                                                        'Select Appointment Date',
+                                                        // displayDate,
+                                                        style: TextStyle(
+                                                            fontSize: 20,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w500),
                                                       ),
                                                     ),
+                                                    SizedBox(height: 10),
+                                                    // Container(
+                                                    //   padding: EdgeInsets.only(
+                                                    //       left: 10),
+                                                    //   child: Text(
+                                                    //     '',
+                                                    //     // displayTimeSlot,
+                                                    //     // style: TextStyle(
+                                                    //     //     fontSize: 16,
+                                                    //     //     fontWeight: FontWeight.w400),
+                                                    //   ),
+                                                    // ),
                                                   ],
                                                 ),
                                               ),
@@ -423,11 +479,8 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                     ),
                                     InkWell(
                                       onTap: () {
-                                        // Navigator.push(
-                                        //     context,
-                                        //     MaterialPageRoute(
-                                        //         builder: (context) => SelectPatient()));
-                                        // _navigateNameAndGenderSelaction(context);
+                                        Navigator.pushNamed(
+                                            context, RoutesName.selectPateint);
                                       },
                                       child: Card(
                                         shape: RoundedRectangleBorder(
@@ -458,9 +511,11 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                     Container(
                                                       width: 77.w,
                                                       padding: EdgeInsets.only(
-                                                          left: 10),
+                                                        left: 10,
+                                                        top: 25,
+                                                      ),
                                                       child: Text(
-                                                        'aaa',
+                                                        'Select Patient',
                                                         // 'Select Patient',
                                                         // displayPatientName,
                                                         maxLines: 1,
@@ -528,14 +583,14 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                             height: 5.h,
                                             child: ElevatedButton(
                                               onPressed: () {
-                                                setState(() {
-                                                  // displayDate = 'Select Appointment Date';
-                                                  // displayTimeSlot = '';
-                                                  // displaytimingId = '';
-                                                  // displayPatientName = 'Select Patient';
-                                                  // displayBirthDate = '';
-                                                  // displayGender = '';
-                                                });
+                                                // setState(() {
+                                                //   // displayDate = 'Select Appointment Date';
+                                                //   // displayTimeSlot = '';
+                                                //   // displaytimingId = '';
+                                                //   // displayPatientName = 'Select Patient';
+                                                //   // displayBirthDate = '';
+                                                //   // displayGender = '';
+                                                // });
                                               },
                                               child: Text('RESET'),
                                               style: ElevatedButton.styleFrom(

@@ -67,6 +67,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     'images/axon.png',
                   ),
                 ),
+                SizedBox(
+                  height: 10,
+                ),
                 Card(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
