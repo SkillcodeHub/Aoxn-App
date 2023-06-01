@@ -87,9 +87,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           // },
                         ),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             SizedBox(
-                              width: 60.w,
+                           //   width: 60.w,
                             ),
                             TextButton(
                               child: Text(

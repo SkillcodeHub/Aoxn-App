@@ -1,7 +1,6 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:another_flushbar/flushbar_route.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class Utils {
   static void fieldFocusChange(
@@ -10,13 +9,13 @@ class Utils {
     FocusScope.of(context).requestFocus(nextFocus);
   }
 
-  static toastMessage(String message) {
-    Fluttertoast.showToast(
-      msg: message,
-      backgroundColor: Colors.black,
-      textColor: Colors.white,
-    );
-  }
+  // static toastMessage(String message) {
+  //   Fluttertoast.showToast(
+  //     msg: message,
+  //     backgroundColor: Colors.black,
+  //     textColor: Colors.white,
+  //   );
+  // }
 
   static void flushBarErrorMessage(
       String message, Duration duration, BuildContext context) {
