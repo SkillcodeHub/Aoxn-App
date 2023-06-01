@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class ScreenNameWidget extends StatelessWidget {
   final String title;
@@ -11,7 +12,7 @@ class ScreenNameWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.46,
+      width: 60.w,
       child: Text(
         title,
         style: TextStyle(

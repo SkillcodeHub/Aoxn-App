@@ -219,7 +219,7 @@ class _NewsScreenState extends State<NewsScreen> {
                   title: '  Notice Board',
                 ),
                 WhatsappWidget(),
-                PaymentWidget(),
+                // PaymentWidget(),
                 SettingsWidget(),
               ],
             ),

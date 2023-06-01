@@ -38,7 +38,7 @@ class _EventScreenState extends State<EventScreen> {
                   title: '  Events',
                 ),
                 WhatsappWidget(),
-                PaymentWidget(),
+                // PaymentWidget(),
                 SettingsWidget(),
               ],
             ),

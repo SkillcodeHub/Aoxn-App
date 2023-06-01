@@ -31,7 +31,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
   UserPreferences userPreference = UserPreferences();
   DoctorListViewmodel doctorListViewmodel = DoctorListViewmodel();
   SettingsViewModel settingsViewModel = SettingsViewModel();
-  late String number = '6353335967';
+  late String number ;
 
   late String selectedDocotrId;
 
@@ -85,7 +85,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                   title: 'Book Appointment',
                 ),
                 WhatsappWidget(),
-                PaymentWidget(),
+                // PaymentWidget(),
                 SettingsWidget(),
               ],
             ),
@@ -145,6 +145,12 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                               'aaaa',
                                             ));
                                           case Status.COMPLETED:
+                                          number = settingsViewModel
+                                                                  .doctorDetailsList
+                                                                  .data!
+                                                                  .data![0]
+                                                                  .customerContact
+                                                                  .toString();
                                             return Container(
                                                 height: 22.h,
                                                 width: 100.w,
@@ -203,7 +209,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                               style: TextStyle(
                                                                   fontSize: 15,
                                                                   color: Colors
-                                                                      .white),
+                                                                      .white,fontWeight: FontWeight.bold),
                                                               maxLines: 1,
                                                               overflow:
                                                                   TextOverflow
@@ -220,7 +226,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                               style: TextStyle(
                                                                   fontSize: 15,
                                                                   color: Colors
-                                                                      .white),
+                                                                      .white,fontWeight: FontWeight.bold),
                                                               maxLines: 1,
                                                               overflow:
                                                                   TextOverflow
@@ -233,7 +239,9 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                         onTap: () {
                                                           number == null ||
                                                                   number == ''
-                                                              ? null
+                                                              ? Utils.snackBar(
+                                                'MobileNo Not Available',
+                                                context)
                                                               : launch(
                                                                   'tel://$number');
                                                         },
