@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:axonweb/data/response/status.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../Res/Components/loader.dart';
@@ -19,6 +20,8 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
   NewsDetailsViewmodel newsDetailsViewmodel = NewsDetailsViewmodel();
   var token;
   var newsId;
+  late String displayDate;
+
   @override
   Widget build(BuildContext context) {
     token = widget.data['token'].toString();
@@ -26,6 +29,7 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
     newsDetailsViewmodel.fetchNewsDetailsListApi(
         context, token.toString(), newsId.toString());
 
+    // print(outputDate5);
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(70.0),
@@ -75,9 +79,19 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
                   return Center(
                       child: Text(value.newsDetailsList.message.toString()));
                 case Status.COMPLETED:
+                  String date = newsDetailsViewmodel
+                      .newsDetailsList.data!.data!.displayDate
+                      .toString();
+                  DateTime parseDate =
+                      new DateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(date);
+                  var inputDate = DateTime.parse(parseDate.toString());
+                  var outputFormat5 = DateFormat('d-MMM-yyyy,hh:mm a');
+                  var outputDate5 = outputFormat5.format(inputDate);
+                  displayDate = outputDate5;
                   return Stack(
                     children: <Widget>[
                       SingleChildScrollView(
+                        physics: BouncingScrollPhysics(),
                         child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: isLoading
@@ -95,9 +109,8 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
                                             right: 8,
                                             bottom: 8,
                                             top: 8),
-                                        // alignment: Alignment.center,
+                                        alignment: Alignment.center,
                                         child: Text(
-                                          // newsDetailsData["title"],
                                           newsDetailsViewmodel
                                               .newsDetailsList.data!.data!.title
                                               .toString(),
@@ -111,15 +124,14 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
                                         color: Colors.black,
                                       ),
                                       SizedBox(height: 10),
-                                      Text(
-                                        // newsDetailsData["displayDate"],
-                                        newsDetailsViewmodel.newsDetailsList
-                                            .data!.data!.displayDate
-                                            .toString(),
+                                      Container(
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          displayDate.toString(),
+                                        ),
                                       ),
                                       SizedBox(height: 20),
                                       Card(
-                                        // color: Colors.amber,
                                         child: Padding(
                                           padding: const EdgeInsets.all(12.0),
                                           child: Html(
@@ -129,15 +141,7 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
                                                 .data!
                                                 .description
                                                 .toString(),
-                                            // newsDetailsData["description"],
                                           ),
-                                          // Text(
-                                          //   newsDetailsData["description"],
-                                          //   style: TextStyle(
-                                          //     fontSize: 15,
-                                          //     fontWeight: FontWeight.normal,
-                                          //   ),
-                                          // ),
                                         ),
                                       ),
                                     ],

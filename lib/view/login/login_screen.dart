@@ -107,6 +107,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                   Utils.snackBar(
                                       'Please enter 10 Digit MobileNo*',
                                       context);
+                                } else if (_mobileController.text.length > 10) {
+                                  Utils.snackBar(
+                                      'Please enter 10 Digit MobileNo*',
+                                      context);
                                 } else {
                                   // Navigator.push(
                                   //     context,
@@ -117,7 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     'Mobile': _mobileController.text.toString()
                                   };
                                   authViewModel.loginApi(data, context);
-                                  Timer(Duration(seconds: 3), () {
+                                  Timer(Duration(seconds: 5), () {
                                     _mobileController.clear();
                                   });
                                 }

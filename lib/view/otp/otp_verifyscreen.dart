@@ -76,13 +76,9 @@ class _OtpVerifyScreenState extends State<OtpVerifyScreen> {
                                 if (codeValue.isEmpty) {
                                   Utils.snackBar('Please enter OTP*', context);
                                 } else {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              ChangeProviderScreen()));
                                   Map data = {
-                                    "Mobile": '6353335967',
+                                    "Mobile":
+                                        widget.mobile['Mobile'].toString(),
                                     'OTP': codeValue.toString()
                                   };
                                   authViewModel.otpVerifyApi(data, context);

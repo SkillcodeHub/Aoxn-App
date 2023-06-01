@@ -47,6 +47,7 @@ class Utils {
       SnackBar(
         backgroundColor: Colors.red,
         content: Text(message),
+        duration: Duration(seconds: 1),
       ),
     );
   }

@@ -27,6 +27,9 @@ class _ReportScreenState extends State<ReportScreen> {
   createNewsListContainer(BuildContext context, int itemIndex) {
     return Column(
       children: [
+        SizedBox(
+          height: 2,
+        ),
         InkWell(
           onTap: () {
             Map reportDetails = {
@@ -136,6 +139,10 @@ class _ReportScreenState extends State<ReportScreen> {
   @override
   Widget build(BuildContext context) {
     reportViewmodel.fetchReportsListApi(token, mobile);
+    Future refresh() async {
+      reportViewmodel.fetchReportsListApi(token, mobile);
+    }
+
     return Scaffold(
       backgroundColor: BackgroundColor,
       appBar: PreferredSize(
@@ -152,7 +159,7 @@ class _ReportScreenState extends State<ReportScreen> {
               children: [
                 AxonIconForAppBarrWidget(),
                 ScreenNameWidget(
-                  title: '  Recent Precription',
+                  title: 'Recent Precription',
                 ),
                 WhatsappWidget(),
                 PaymentWidget(),
@@ -173,30 +180,20 @@ class _ReportScreenState extends State<ReportScreen> {
                   return Center(
                       child: Text(value.reportsList.message.toString()));
                 case Status.COMPLETED:
-                  return Stack(
-                    children: [
-                      SingleChildScrollView(
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 3,
-                              ),
-                              ListView.builder(
-                                  padding: EdgeInsets.only(bottom: 10),
-                                  physics: const ClampingScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemCount: reportViewmodel
-                                      .reportsList.data!.data!.length,
-                                  itemBuilder:
-                                      (BuildContext context, int itemIndex) {
-                                    return createNewsListContainer(
-                                        context, itemIndex);
-                                  }),
-                            ],
-                          )),
-                      isLoading ? Loader() : Container(),
-                    ],
+                  return RefreshIndicator(
+                    onRefresh: refresh,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 6),
+                      child: ListView.builder(
+                          padding: EdgeInsets.only(bottom: 0),
+                          physics: BouncingScrollPhysics(),
+                          // shrinkWrap: true,
+                          itemCount:
+                              reportViewmodel.reportsList.data!.data!.length,
+                          itemBuilder: (BuildContext context, int itemIndex) {
+                            return createNewsListContainer(context, itemIndex);
+                          }),
+                    ),
                   );
               }
             },
