@@ -1,5 +1,12 @@
+import 'package:axonweb/View_Model/Book_View_Model/Book_view_Model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
+import '../../Res/Components/loader.dart';
+import '../../Res/colors.dart';
+import '../../View_Model/Services/SharePreference/SharePreference.dart';
+import '../../data/response/status.dart';
 import '../../res/components/appbar/axonimage_appbar-widget.dart';
 import '../../res/components/appbar/payment_widget.dart';
 import '../../res/components/appbar/screen_name_widget.dart';
@@ -14,10 +21,40 @@ class BookApointmentScreen extends StatefulWidget {
 }
 
 class _BookApointmentScreenState extends State<BookApointmentScreen> {
+  UserPreferences userPreference = UserPreferences();
+  DoctorListViewmodel doctorListViewmodel = DoctorListViewmodel();
+  late String selectedDocotrId;
+
+  bool isLoading = false;
+  var mobile;
+  late String token;
+  // List doctorData = [];
+  // List customerData = [];
+
+  @override
+  void initState() {
+    userPreference.getMobile().then((value1) {
+      setState(() {
+        mobile = value1;
+      });
+    });
+
+    userPreference.getToken().then((value) {
+      setState(() {
+        token = value!;
+      });
+    });
+    setState(() {});
+    // super.initState();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    doctorListViewmodel.fetchDoctorListApi(token);
+
     return Scaffold(
-      backgroundColor: Colors.grey.shade200,
+      backgroundColor: BackgroundColor,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(60.0),
         child: AppBar(
@@ -51,6 +88,469 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
           // )
         ),
       ),
+      body: ChangeNotifierProvider<DoctorListViewmodel>(
+          create: (BuildContext context) => doctorListViewmodel,
+          child: Consumer<DoctorListViewmodel>(
+            builder: (context, value, child) {
+              switch (value.doctorList.status!) {
+                case Status.LOADING:
+                  return Center(child: CircularProgressIndicator());
+                case Status.ERROR:
+                  return Center(
+                      child: Text(value.doctorList.message.toString()));
+                case Status.COMPLETED:
+                  return Stack(
+                    children: [
+                      SingleChildScrollView(
+                        child: Padding(
+                          padding: EdgeInsets.all(0),
+                          child: isLoading
+                              ? isLoading
+                                  ? Container()
+                                  : Container()
+                              : Column(
+                                  children: [
+                                    Container(
+                                        height: 25.h,
+                                        width: 100.w,
+                                        // decoration: BoxDecoration(
+                                        //   image: DecorationImage(
+                                        //     image: MemoryImage(
+                                        //       base64Decode(customerData[0]['logoImageURL']),
+                                        //     ),
+                                        //     // onError: (exception, stackTrace) {
+                                        //     //   return Icon(Icons.error);
+                                        //     // },
+                                        //     // image: NetworkImage(
+                                        //     //   customerData[0]['logoImageURL'],
+                                        //     // ),
+                                        //     // image: AssetImage('images/c5.png'),
+                                        //     fit: BoxFit.cover,
+                                        //   ),
+                                        // ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.end,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Container(
+                                                width: 80.w,
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.end,
+                                                  children: [
+                                                    Text(
+                                                      doctorListViewmodel
+                                                          .doctorList
+                                                          .data!
+                                                          .data![0]
+                                                          .doctorName
+                                                          .toString(),
+                                                      // 'aaaa',
+                                                      // customerData[0]['customerName'],
+                                                      style: TextStyle(
+                                                          fontSize: 15,
+                                                          color: Colors.white),
+                                                      maxLines: 1,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                    ),
+                                                    Text(
+                                                      'aaaa',
+                                                      // customerData[0]['customerAddress'],
+                                                      style: TextStyle(
+                                                          fontSize: 15,
+                                                          color: Colors.white),
+                                                      maxLines: 1,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              InkWell(
+                                                // onTap: () {
+                                                //   number == null
+                                                //       ? null
+                                                //       : launch('tel://$number');
+                                                // },
+                                                child: Container(
+                                                  height: 40,
+                                                  child: Image.asset(
+                                                    "images/phone-call.png",
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        )),
+                                    Card(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      margin: EdgeInsets.all(5),
+                                      color: Colors.white,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: <Widget>[
+                                          Container(
+                                            padding: EdgeInsets.all(8),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  'Provider',
+                                                  style: TextStyle(
+                                                      fontSize: 18,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      color:
+                                                          Colors.grey.shade700),
+                                                ),
+                                                SizedBox(height: 30),
+                                                Container(
+                                                  alignment:
+                                                      Alignment.centerLeft,
+                                                  color: Colors.white,
+                                                  child:
+                                                      DropdownButtonHideUnderline(
+                                                    child: ButtonTheme(
+                                                      alignedDropdown: true,
+                                                      child: DropdownButton<
+                                                          String>(
+                                                        isDense: true,
+                                                        hint: Text(
+                                                          // "Select Doctor",
+                                                          doctorListViewmodel
+                                                              .doctorList
+                                                              .data!
+                                                              .data![0]
+                                                              .doctorName
+                                                              .toString(),
+                                                          style: TextStyle(
+                                                              fontSize: 20,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              color:
+                                                                  Colors.black),
+                                                        ),
+                                                        value: selectedDocotrId =
+                                                            doctorListViewmodel
+                                                                .doctorList
+                                                                .data!
+                                                                .data![0]
+                                                                .doctorId
+                                                                .toString(),
+                                                        onChanged:
+                                                            (String? newValue) {
+                                                          setState(() {
+                                                            selectedDocotrId =
+                                                                newValue!;
+                                                          });
+
+                                                          print(
+                                                              selectedDocotrId);
+                                                        },
+                                                        items:
+                                                            doctorListViewmodel
+                                                                .doctorList
+                                                                .data!
+                                                                .data!
+                                                                .map((map) {
+                                                          return new DropdownMenuItem<
+                                                              String>(
+                                                            value: map.doctorId
+                                                                .toString(),
+                                                            // value: _mySelection,
+                                                            child: Row(
+                                                              children: <
+                                                                  Widget>[
+                                                                Container(
+                                                                    // width: 249,
+                                                                    margin: EdgeInsets
+                                                                        .only(
+                                                                            left:
+                                                                                10),
+                                                                    child: Text(
+                                                                      map.doctorName
+                                                                          .toString(),
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              20,
+                                                                          fontWeight:
+                                                                              FontWeight.w500),
+                                                                    )),
+                                                              ],
+                                                            ),
+                                                          );
+                                                        }).toList(),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                SizedBox(height: 20),
+                                              ],
+                                            ),
+                                          ),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                                color: Color(0xFFFD5722),
+                                                borderRadius: BorderRadius.only(
+                                                    topRight:
+                                                        Radius.circular(8),
+                                                    bottomRight:
+                                                        Radius.circular(8))),
+                                            height: 110,
+                                            width: 63,
+                                            child: Icon(
+                                              Icons.punch_clock,
+                                              color: Colors.white,
+                                              size: 30,
+                                            ),
+                                          ),
+                                          // isLoading ? Loader() : Container(),
+                                        ],
+                                      ),
+                                    ),
+                                    InkWell(
+                                      // onTap: () {
+                                      //   selectedDocotrId != null
+                                      //       ?
+                                      //       //   Navigator.push(
+                                      //       //       context,
+                                      //       //       MaterialPageRoute(
+                                      //       //           builder: (context) =>
+                                      //       //               SelectAppointmentDate(selectedDocotrId)));
+                                      //       _navigateDateAndTimeSelaction(context)
+                                      //       : showDialog(
+                                      //           context: context,
+                                      //           builder: (_) => OverlayDialogWarning(
+                                      //               message: 'Please Select a Doctor',
+                                      //               // message: response['message'].toString(),
+                                      //               showButton: true,
+                                      //               dialogType: DialogType.Warning));
+                                      //   ;
+                                      // },
+                                      child: Card(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        margin: EdgeInsets.all(5),
+                                        color: Colors.white,
+                                        // shadowColor: Colors.white,
+                                        // // shape: RoundedRectangleBorder(
+                                        // //     borderRadius: BorderRadius.all(Radius.circular(5))),
+                                        // elevation: 10,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Container(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    SizedBox(height: 20),
+                                                    Container(
+                                                      padding: EdgeInsets.only(
+                                                          left: 10),
+                                                      child: Text('aaa'
+                                                          // displayDate,
+                                                          // style: TextStyle(
+                                                          //     fontSize: 20,
+                                                          //     fontWeight: FontWeight.w500),
+                                                          ),
+                                                    ),
+                                                    SizedBox(height: 10),
+                                                    Container(
+                                                      padding: EdgeInsets.only(
+                                                          left: 10),
+                                                      child: Text(
+                                                        'aaaa',
+                                                        // displayTimeSlot,
+                                                        // style: TextStyle(
+                                                        //     fontSize: 16,
+                                                        //     fontWeight: FontWeight.w400),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                  color: Color(0xFFFD5722),
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                          topRight:
+                                                              Radius.circular(
+                                                                  8),
+                                                          bottomRight:
+                                                              Radius.circular(
+                                                                  8))),
+                                              height: 110,
+                                              width: 63,
+                                              child: Icon(
+                                                Icons.punch_clock,
+                                                color: Colors.white,
+                                                size: 30,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        // Navigator.push(
+                                        //     context,
+                                        //     MaterialPageRoute(
+                                        //         builder: (context) => SelectPatient()));
+                                        // _navigateNameAndGenderSelaction(context);
+                                      },
+                                      child: Card(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        margin: EdgeInsets.only(
+                                            left: 5, right: 5, top: 5),
+                                        color: Colors.white,
+                                        shadowColor: Colors.white,
+                                        // shape: RoundedRectangleBorder(
+                                        //     borderRadius: BorderRadius.all(Radius.circular(5))),
+                                        elevation: 10,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Container(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Container(
+                                                      width: 77.w,
+                                                      padding: EdgeInsets.only(
+                                                          left: 10),
+                                                      child: Text(
+                                                        'aaa',
+                                                        // 'Select Patient',
+                                                        // displayPatientName,
+                                                        maxLines: 1,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: TextStyle(
+                                                            fontSize: 20,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w500),
+                                                      ),
+                                                    ),
+                                                    //
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                  color: Color(0xFFFD5722),
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                          topRight:
+                                                              Radius.circular(
+                                                                  8),
+                                                          bottomRight:
+                                                              Radius.circular(
+                                                                  8))),
+                                              height: 110,
+                                              width: 16.w,
+                                              child: Icon(
+                                                Icons.person,
+                                                color: Colors.white,
+                                                size: 30,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      height: 7.h,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            height: 5.h,
+                                            child: ElevatedButton(
+                                              onPressed: () {
+                                                // _bookAppointment();
+                                              },
+                                              child: Text(
+                                                'BOOK APPOINTMENT',
+                                              ),
+                                              style: ElevatedButton.styleFrom(
+                                                  backgroundColor:
+                                                      Color(0xFFFD5722)),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Container(
+                                            height: 5.h,
+                                            child: ElevatedButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  // displayDate = 'Select Appointment Date';
+                                                  // displayTimeSlot = '';
+                                                  // displaytimingId = '';
+                                                  // displayPatientName = 'Select Patient';
+                                                  // displayBirthDate = '';
+                                                  // displayGender = '';
+                                                });
+                                              },
+                                              child: Text('RESET'),
+                                              style: ElevatedButton.styleFrom(
+                                                  backgroundColor:
+                                                      Color(0xFFFD5722)),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      height: 180,
+                                    ),
+                                  ],
+                                ),
+                        ),
+                      ),
+                      isLoading ? Loader() : Container(),
+                    ],
+                  );
+              }
+            },
+          )),
     );
   }
 }
