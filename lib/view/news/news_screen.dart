@@ -95,7 +95,7 @@ class _NewsScreenState extends State<NewsScreen> {
             child: Row(
               children: [
                 Container(
-                  height: 150,
+                  height: 17.h,
                   width: MediaQuery.of(context).size.width * 0.15,
                   color: Color(0xFFFD5722),
                   child: Icon(
@@ -105,9 +105,10 @@ class _NewsScreenState extends State<NewsScreen> {
                   ),
                 ),
                 Container(
+                  height: 17.h,
                   width: MediaQuery.of(context).size.width * 0.79,
                   child: Padding(
-                    padding: const EdgeInsets.fromLTRB(8, 0, 0, 8),
+                    padding: const EdgeInsets.fromLTRB(8, 5, 0, 8),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -126,7 +127,7 @@ class _NewsScreenState extends State<NewsScreen> {
                           ),
                         ),
                         SizedBox(
-                          height: 27,
+                          height: 2.h,
                         ),
                         Container(
                           width: 85.w,
@@ -148,7 +149,7 @@ class _NewsScreenState extends State<NewsScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Container(
-                                width: 67.w,
+                                width: 65.w,
                                 child: Text(
                                   newsdate!,
                                   style: TextStyle(
@@ -168,6 +169,7 @@ class _NewsScreenState extends State<NewsScreen> {
                                 //               newsData[itemIndex]['newsId'])));
                                 // },
                                 child: Container(
+                                  width: 8.w,
                                   child: Icon(Icons.info_outline),
                                 ),
                               ),
