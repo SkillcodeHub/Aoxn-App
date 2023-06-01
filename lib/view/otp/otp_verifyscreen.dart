@@ -25,7 +25,7 @@ class _OtpVerifyScreenState extends State<OtpVerifyScreen> {
     return SafeArea(
       child: Scaffold(
         body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(
               height: 10.h,
@@ -36,12 +36,13 @@ class _OtpVerifyScreenState extends State<OtpVerifyScreen> {
                 'images/axon.png',
               ),
             ),
+            SizedBox(height: 3.h,),
             Card(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
-                    Text(widget.mobile['Mobile'].toString()),
+                    // Text(widget.mobile['Mobile'].toString()),
                     Center(
                       child: PinFieldAutoFill(
                         currentCode: codeValue,

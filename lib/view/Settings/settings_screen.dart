@@ -293,7 +293,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                         ),
                                       ),
                                     ),
-                                    SizedBox(height: 20),
+                                    SizedBox(height: 5),
                                     Card(
                                       color: Colors.white,
                                       child: Padding(
