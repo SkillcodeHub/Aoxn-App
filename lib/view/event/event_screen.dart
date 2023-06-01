@@ -85,7 +85,7 @@ class _EventScreenState extends State<EventScreen> {
                       ),
                       Center(
                         child: Image.asset(
-                          'images/axon.jpg',
+                          'images/axon.png',
                           height: 90,
                           width: 90,
                         ),
