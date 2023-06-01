@@ -64,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Container(
                   height: 200,
                   child: Image.asset(
-                    'images/axon.jpg',
+                    'images/axon.png',
                   ),
                 ),
                 Card(
@@ -90,8 +90,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             SizedBox(
-                           //   width: 60.w,
-                            ),
+                                //   width: 60.w,
+                                ),
                             TextButton(
                               child: Text(
                                 'Request OTP',
