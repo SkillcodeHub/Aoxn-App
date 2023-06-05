@@ -35,6 +35,6 @@ class RoutesName {
   //selectAppointmentDate screen routes name
   static const String selectAppointmentDate = 'selectappointmentdate';
 
-  //selectPateint screen routes name
-  static const String selectPateint = 'selectpateint_screen';
+  //selectPatient screen routes name
+  static const String selectPatient = 'selectPatient_screen';
 }

@@ -27,4 +27,12 @@ class AppUrl {
   //Get Rx Visit History
   static var getrxvisithistoryUrl =
       baseUrl + "BookAppointment/GetRxVisitHistory";
+  //Get Appointments Timeslot
+  static var getAppointmentstimeslot =
+      baseUrl + "BookAppointment/GetAppointmentsInIntervals";
+  //Get Appointments Timeslot
+  static var getpatientbyid = baseUrl + "BookAppointment/GetPatientByCaseno";
+  //Get Appointments Timeslot
+  static var getpatientbymobile =
+      baseUrl + "BookAppointment/GetPatientByMobileNo";
 }

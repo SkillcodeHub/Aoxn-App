@@ -2,7 +2,7 @@ import 'package:axonweb/Utils/routes/routes_name.dart';
 import 'package:axonweb/View/NewsDetails/news_details_screen.dart';
 import 'package:axonweb/View/ReportDetails/report_details_screen.dart';
 import 'package:axonweb/View/SelectAppointmentDate/selectappointmentdate_screen.dart';
-import 'package:axonweb/View/SelectPateint/selectpateint_screen.dart';
+
 import 'package:axonweb/View/Settings/settings_screen.dart';
 import 'package:axonweb/view/Book/book_appointment_screen.dart';
 import 'package:axonweb/view/ChangeProvider/change_provider_screen.dart';
@@ -14,6 +14,7 @@ import 'package:axonweb/view/Splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../View/NevigationBar/my_navigationbar.dart';
+import '../../View/SelectPateint/selectpateint_screen.dart';
 import '../../view/Login/login_screen.dart';
 
 class Routes {
@@ -61,10 +62,11 @@ class Routes {
                 ReportDetailsScreen(reportDetails: settings.arguments as Map));
       case RoutesName.selectAppointmentDate:
         return MaterialPageRoute(
-            builder: (BuildContext context) => SelectAppointmentDateScreen());
-      case RoutesName.selectPateint:
+            builder: (BuildContext context) => SelectAppointmentDateScreen(
+                selectedDocotrId: settings.arguments as Map));
+      case RoutesName.selectPatient:
         return MaterialPageRoute(
-            builder: (BuildContext context) => SelectPateintScreen());
+            builder: (BuildContext context) => SelectPatientScreen());
       default:
         return MaterialPageRoute(builder: (_) {
           return const Scaffold(

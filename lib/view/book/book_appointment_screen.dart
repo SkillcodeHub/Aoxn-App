@@ -31,7 +31,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
   UserPreferences userPreference = UserPreferences();
   DoctorListViewmodel doctorListViewmodel = DoctorListViewmodel();
   SettingsViewModel settingsViewModel = SettingsViewModel();
-  late String number ;
+  late String number;
 
   late String selectedDocotrId;
 
@@ -145,12 +145,12 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                               'aaaa',
                                             ));
                                           case Status.COMPLETED:
-                                          number = settingsViewModel
-                                                                  .doctorDetailsList
-                                                                  .data!
-                                                                  .data![0]
-                                                                  .customerContact
-                                                                  .toString();
+                                            number = settingsViewModel
+                                                .doctorDetailsList
+                                                .data!
+                                                .data![0]
+                                                .customerContact
+                                                .toString();
                                             return Container(
                                                 height: 22.h,
                                                 width: 100.w,
@@ -209,7 +209,10 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                               style: TextStyle(
                                                                   fontSize: 15,
                                                                   color: Colors
-                                                                      .white,fontWeight: FontWeight.bold),
+                                                                      .white,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
                                                               maxLines: 1,
                                                               overflow:
                                                                   TextOverflow
@@ -226,7 +229,10 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                               style: TextStyle(
                                                                   fontSize: 15,
                                                                   color: Colors
-                                                                      .white,fontWeight: FontWeight.bold),
+                                                                      .white,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
                                                               maxLines: 1,
                                                               overflow:
                                                                   TextOverflow
@@ -240,8 +246,8 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                           number == null ||
                                                                   number == ''
                                                               ? Utils.snackBar(
-                                                'MobileNo Not Available',
-                                                context)
+                                                                  'MobileNo Not Available',
+                                                                  context)
                                                               : launch(
                                                                   'tel://$number');
                                                         },
@@ -395,11 +401,16 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                     ),
                                     InkWell(
                                       onTap: () {
+                                        Map selectedDocotrIdData = {
+                                          'selectedDocotrId':
+                                              selectedDocotrId.toString(),
+                                        };
                                         selectedDocotrId != "null"
                                             ? Navigator.pushNamed(
                                                 context,
                                                 RoutesName
-                                                    .selectAppointmentDate)
+                                                    .selectAppointmentDate,
+                                                arguments: selectedDocotrIdData)
                                             // _navigateDateAndTimeSelaction(context)
                                             : Utils.snackBar(
                                                 'Please Select a Doctor',
@@ -488,7 +499,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                     InkWell(
                                       onTap: () {
                                         Navigator.pushNamed(
-                                            context, RoutesName.selectPateint);
+                                            context, RoutesName.selectPatient);
                                       },
                                       child: Card(
                                         shape: RoundedRectangleBorder(

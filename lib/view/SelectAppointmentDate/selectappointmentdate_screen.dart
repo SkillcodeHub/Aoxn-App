@@ -1,10 +1,19 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import '../../Res/Components/Appbar/screen_name_widget.dart';
 import '../../Res/colors.dart';
+import '../../View_Model/SelectAppointDate_View_Model.dart/selectAppointmentDate_view_model.dart';
+import '../../data/response/status.dart';
 
 class SelectAppointmentDateScreen extends StatefulWidget {
-  const SelectAppointmentDateScreen({super.key});
+  final dynamic selectedDocotrId;
+
+  const SelectAppointmentDateScreen(
+      {super.key, required this.selectedDocotrId});
 
   @override
   State<SelectAppointmentDateScreen> createState() =>
@@ -13,8 +22,218 @@ class SelectAppointmentDateScreen extends StatefulWidget {
 
 class _SelectAppointmentDateScreenState
     extends State<SelectAppointmentDateScreen> {
+  DateTime selectedDate = DateTime.now(); // TO tracking date
+  String? datetime1;
+  bool isLoading = false;
+  bool TimeSlotes = false;
+  String? selectedTimeSlote;
+  int? timingId;
+  bool isButtonActive = false;
+
+  int currentDateSelectedIndex = 0; //For Horizontal Date
+  int? currentDateSelectedIndex1; //For Horizontal Date
+  ScrollController scrollController =
+      ScrollController(); //Scroll Controller for ListView
+  ScrollController scrollController1 =
+      ScrollController(); //Scroll Controller for ListView
+
+  AppointmentSlotListViewmodel appointmentSlotListViewmodel =
+      AppointmentSlotListViewmodel();
+
+  List<String> listOfMonths = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec"
+  ]; //List Of Months
+
+  List<String> listOfDays = [
+    "Mon",
+    "Tue",
+    "Wed",
+    "Thu",
+    "Fri",
+    "Sat",
+    "Sun"
+  ]; //List of Days
+
+  createNewsListContainer(BuildContext context, int itemIndex) {
+    String date = appointmentSlotListViewmodel
+        .AppointmentSlotList.data!.data![itemIndex].fromTimeSlotLocal
+        .toString();
+    DateTime parseDate = new DateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(date);
+    var inputDate = DateTime.parse(parseDate.toString());
+    var outputFormat3 = DateFormat('hh:mm a');
+    var outputDate3 = outputFormat3.format(inputDate);
+    print('|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
+    print(outputDate3);
+    print('|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
+
+    String date1 = appointmentSlotListViewmodel
+        .AppointmentSlotList.data!.data![itemIndex].toTimeSlotLocal
+        .toString();
+    DateTime parseDate1 = new DateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(date1);
+    var inputDate1 = DateTime.parse(parseDate1.toString());
+    var outputFormat13 = DateFormat('hh:mm a');
+    var outputDate13 = outputFormat13.format(inputDate1);
+    print('|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
+    print(outputDate13);
+    print('|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
+//============================================================================
+    // int capacity = appointmentData[itemIndex]["capacity"];
+    int capacity = appointmentSlotListViewmodel
+        .AppointmentSlotList.data!.data![itemIndex].capacity!
+        .toInt();
+    // int count = appointmentData[itemIndex]["count"];
+    int count = appointmentSlotListViewmodel
+        .AppointmentSlotList.data!.data![itemIndex].count!
+        .toInt();
+
+    var total = capacity - count;
+    // int varr = total;
+    print('========================================');
+    print(total);
+    print('==========================================');
+    return Column(
+      children: [
+        TimeSlotes ==
+                appointmentSlotListViewmodel
+                    .AppointmentSlotList.data!.data![itemIndex].isBlocked
+            ? InkWell(
+                onTap: () {
+                  setState(() {
+                    currentDateSelectedIndex1 = itemIndex;
+                    selectedTimeSlote = appointmentSlotListViewmodel
+                        .AppointmentSlotList.data!.data![itemIndex].displayTime
+                        .toString();
+                    print('selectedTimeSlote');
+                    print(selectedTimeSlote);
+                    print('selectedTimeSlote');
+                    timingId = appointmentSlotListViewmodel
+                        .AppointmentSlotList.data!.data![itemIndex].timingId!
+                        .toInt();
+                    isButtonActive = true;
+                  });
+                },
+                child: Container(
+                  margin: EdgeInsets.only(left: 10, right: 10),
+                  padding: EdgeInsets.only(left: 10, right: 10),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(2),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.grey.shade400,
+                            offset: Offset(3, 3),
+                            blurRadius: 5)
+                      ],
+                      color: currentDateSelectedIndex1 == itemIndex
+                          ? Colors.orange.shade100
+                          : Colors.white),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 10),
+                      Text(
+                        // datetime1 == defultDate1 ? str : prefix,
+                        outputDate3 + ' - ' + outputDate13,
+                        // appointmentData[itemIndex]["displayTime"],
+                        // listOftimeslot[itemIndex],
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500, fontSize: 18),
+                      ),
+                      SizedBox(height: 25),
+                      Row(
+                        children: [
+                          Container(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(total.toString() + " - Available"),
+                                SizedBox(height: 5),
+                                Container(
+                                  height: 3,
+                                  width: 290,
+                                  color: Colors.green,
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(width: 7),
+                          Container(
+                            child: Icon(
+                              Icons.turned_in_rounded,
+                              color: currentDateSelectedIndex1 == itemIndex
+                                  ? Color(0xFFFD5722)
+                                  : Colors.grey.shade300,
+                              size: 20,
+                            ),
+                          )
+                        ],
+                      ),
+                      SizedBox(height: 5),
+                    ],
+                  ),
+                ),
+              )
+            : Container(
+                height: 80,
+                width: 450,
+                margin: EdgeInsets.only(left: 10, right: 10),
+                padding: EdgeInsets.only(left: 10, right: 10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(2),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey,
+                      // offset: Offset(3, 3),
+                      // blurRadius: 5,
+                    )
+                  ],
+                  color: Colors.grey.shade400,
+                  // color: currentDateSelectedIndex1 == itemIndex
+                  //     ? Colors.orange.shade100
+                  //     : Colors.white,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 10),
+                    Text(
+                      outputDate3 + ' - ' + outputDate13,
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                          color: Colors.grey.shade700),
+                    ),
+                    SizedBox(height: 25),
+                    SizedBox(height: 5),
+                  ],
+                ),
+              ),
+        SizedBox(
+          height: 15,
+        ),
+        isLoading ? Container() : Container(),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    datetime1 = DateFormat("yyyy-MM-dd").format(selectedDate);
+    Timer(Duration(microseconds: 20), () {
+      appointmentSlotListViewmodel.fetchAppointmentSlotListApi(
+          widget.selectedDocotrId['selectedDocotrId'].toString(),
+          datetime1.toString());
+    });
     return Scaffold(
       backgroundColor: BackgroundColor,
       appBar: PreferredSize(
@@ -47,6 +266,168 @@ class _SelectAppointmentDateScreenState
           ),
         ),
       ),
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                Container(
+                    height: 80,
+                    child: Container(
+                        child: ListView.separated(
+                      separatorBuilder: (BuildContext context, int index) {
+                        return SizedBox(width: 0);
+                      },
+                      itemCount: 13,
+                      controller: scrollController,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (BuildContext context, int index) {
+                        return InkWell(
+                          onTap: () {
+                            setState(() {
+                              currentDateSelectedIndex = index;
+                              selectedDate =
+                                  DateTime.now().add(Duration(days: index));
+                              datetime1 =
+                                  DateFormat("yyyy-MM-dd").format(selectedDate);
+                              print(datetime1);
+
+                              // _getCategory1();
+                            });
+                            print(selectedDate);
+                          },
+                          child: Container(
+                            height: 80,
+                            width: 80,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                color: currentDateSelectedIndex == index
+                                    ? Color(0xFFFD5722)
+                                    : Colors.white),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  listOfDays[DateTime.now()
+                                                  .add(Duration(days: index))
+                                                  .weekday -
+                                              1]
+                                          .toString() +
+                                      " - " +
+                                      listOfMonths[DateTime.now()
+                                                  .add(Duration(days: index))
+                                                  .month -
+                                              1]
+                                          .toString(),
+                                  style: TextStyle(
+                                      fontSize: 13,
+                                      color: currentDateSelectedIndex == index
+                                          ? Colors.white
+                                          : Colors.grey),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  DateTime.now()
+                                      .add(Duration(days: index))
+                                      .day
+                                      .toString(),
+                                  style: TextStyle(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.w700,
+                                      color: currentDateSelectedIndex == index
+                                          ? Colors.white
+                                          : Colors.grey),
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ))),
+                SizedBox(height: 10),
+                ChangeNotifierProvider<AppointmentSlotListViewmodel>(
+                    create: (BuildContext context) =>
+                        appointmentSlotListViewmodel,
+                    child: Consumer<AppointmentSlotListViewmodel>(
+                      builder: (context, value, _) {
+                        switch (value.AppointmentSlotList.status!) {
+                          case Status.LOADING:
+                            return Center(child: CircularProgressIndicator());
+                          case Status.ERROR:
+                            return Center(
+                                child: Text(value.AppointmentSlotList.message
+                                    .toString()));
+                          case Status.COMPLETED:
+                            return ListView.builder(
+                                padding: EdgeInsets.only(bottom: 10),
+                                physics: ClampingScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: appointmentSlotListViewmodel
+                                    .AppointmentSlotList.data!.data!.length,
+                                itemBuilder:
+                                    (BuildContext context, int itemIndex) {
+                                  return createNewsListContainer(
+                                      context, itemIndex);
+                                });
+                        }
+                      },
+                    )),
+              ],
+            ),
+          )
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: isButtonActive ? Colors.green : Colors.grey,
+        onPressed: isButtonActive
+            ? () => Navigator.pop(
+                context, [datetime1, selectedTimeSlote, timingId.toString()])
+            : null,
+        child: Icon(Icons.check),
+      ),
     );
   }
 }
+
+
+
+
+
+
+
+
+
+// ChangeNotifierProvider<AppointmentSlotListViewmodel>(
+//           create: (BuildContext context) => appointmentSlotListViewmodel,
+//           child: Consumer<AppointmentSlotListViewmodel>(
+//             builder: (context, value, _) {
+//               switch (value.AppointmentSlotList.status!) {
+//                 case Status.LOADING:
+//                   return Center(child: CircularProgressIndicator());
+//                 case Status.ERROR:
+//                   return Center(
+//                       child: Text(value.AppointmentSlotList.message.toString()));
+//                 case Status.COMPLETED:
+//                   return RefreshIndicator(
+//                     onRefresh: refresh,
+//                     child: Padding(
+//                       padding: const EdgeInsets.only(top: 6),
+//                       child: ListView.builder(
+//                           padding: EdgeInsets.only(bottom: 0),
+//                           physics: BouncingScrollPhysics(),
+//                           // shrinkWrap: true,
+//                           itemCount:
+//                               reportViewmodel.reportsList.data!.data!.length,
+//                           itemBuilder: (BuildContext context, int itemIndex) {
+//                             return createNewsListContainer(context, itemIndex);
+//                           }),
+//                     ),
+//                   );
+//               }
+//             },
+//           )),
