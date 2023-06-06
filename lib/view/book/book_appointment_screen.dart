@@ -152,10 +152,21 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                 .customerContact
                                                 .toString();
                                             return Container(
-                                                height: 22.h,
+                                                height: 24.h,
                                                 width: 100.w,
                                                 decoration: BoxDecoration(
+                                                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.green,
+                    ),
+                    BoxShadow(
+                      color: Colors.white70,
+                      spreadRadius: -5.0,
+                      blurRadius: 20.0,
+                    ),
+                  ],
                                                   image: DecorationImage(
+                                                                                    
                                                     image: MemoryImage(
                                                       base64Decode(
                                                         settingsViewModel
@@ -265,18 +276,19 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                         }
                                       }),
                                     ),
+                                    SizedBox(height: 10,),
                                     Card(
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(8),
                                       ),
-                                      margin: EdgeInsets.all(5),
+                                      margin: EdgeInsets.only(left: 8,right: 8),
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: <Widget>[
                                           Container(
                                             height: 12.h,
-                                            width: 81.3.w,
+                                            width: 78.w,
                                             padding: EdgeInsets.all(8),
                                             child: Column(
                                               mainAxisAlignment:
@@ -423,7 +435,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                           borderRadius:
                                               BorderRadius.circular(8),
                                         ),
-                                        margin: EdgeInsets.all(5),
+                                        margin: EdgeInsets.only(left: 8,right: 8,top: 5),
                                         color: Colors.white,
                                         // shadowColor: Colors.white,
                                         // // shape: RoundedRectangleBorder(
@@ -436,7 +448,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                           children: [
                                             Container(
                                               height: 12.h,
-                                              width: 81.3.w,
+                                              width: 78.w,
                                               child: Padding(
                                                 padding:
                                                     const EdgeInsets.all(8.0),
@@ -508,7 +520,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                               BorderRadius.circular(8),
                                         ),
                                         margin: EdgeInsets.only(
-                                            left: 5, right: 5, top: 5),
+                                            left: 8, right: 8,top: 5),
                                         color: Colors.white,
                                         shadowColor: Colors.white,
                                         // shape: RoundedRectangleBorder(
@@ -520,7 +532,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                           children: [
                                             Container(
                                               height: 12.h,
-                                              width: 81.3.w,
+                                              width: 78.w,
                                               child: Padding(
                                                 padding:
                                                     const EdgeInsets.all(8.0),
