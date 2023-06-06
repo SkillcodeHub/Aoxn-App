@@ -368,7 +368,7 @@ class _SelectAppointmentDateScreenState
                       builder: (context, value, _) {
                         switch (value.AppointmentSlotList.status!) {
                           case Status.LOADING:
-                            return Center(child: CircularProgressIndicator());
+                            return Center(child: Center(child: CircularProgressIndicator()));
                           case Status.ERROR:
                             return Center(
                                 child: Text(value.AppointmentSlotList.message
