@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 import '../../Res/Components/Appbar/screen_name_widget.dart';
 import '../../Res/colors.dart';
@@ -164,7 +165,7 @@ class _SelectAppointmentDateScreenState
                                 SizedBox(height: 5),
                                 Container(
                                   height: 3,
-                                  width: 290,
+                                  width: 82.w,
                                   color: Colors.green,
                                 ),
                               ],
@@ -275,123 +276,125 @@ class _SelectAppointmentDateScreenState
           ),
         ),
       ),
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                Container(
-                    height: 80,
-                    child: Container(
-                        child: ListView.separated(
-                      separatorBuilder: (BuildContext context, int index) {
-                        return SizedBox(width: 0);
+      body: SingleChildScrollView(
+        
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+                height: 80,
+                child: Container(
+                    child: ListView.separated(
+                  separatorBuilder: (BuildContext context, int index) {
+                    return SizedBox(width: 0);
+                  },
+                  itemCount: 13,
+                  controller: scrollController,
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (BuildContext context, int index) {
+                    return InkWell(
+                      onTap: () {
+                        setState(() {
+                          currentDateSelectedIndex = index;
+                          selectedDate =
+                              DateTime.now().add(Duration(days: index));
+                          datetime1 =
+                              DateFormat("yyyy-MM-dd").format(selectedDate);
+                          print('pppppppppppppppppppppppp');
+                          print(datetime1);
+                          print('pppppppppppppppppppppppppppp');
+                          get();
+                          // _getCategory1();
+                        });
+                        print(selectedDate);
                       },
-                      itemCount: 13,
-                      controller: scrollController,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (BuildContext context, int index) {
-                        return InkWell(
-                          onTap: () {
-                            setState(() {
-                              currentDateSelectedIndex = index;
-                              selectedDate =
-                                  DateTime.now().add(Duration(days: index));
-                              datetime1 =
-                                  DateFormat("yyyy-MM-dd").format(selectedDate);
-                              print('pppppppppppppppppppppppp');
-                              print(datetime1);
-                              print('pppppppppppppppppppppppppppp');
-                              get();
-                              // _getCategory1();
-                            });
-                            print(selectedDate);
-                          },
-                          child: Container(
-                            height: 80,
-                            width: 80,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                color: currentDateSelectedIndex == index
-                                    ? Color(0xFFFD5722)
-                                    : Colors.white),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  listOfDays[DateTime.now()
-                                                  .add(Duration(days: index))
-                                                  .weekday -
-                                              1]
-                                          .toString() +
-                                      " - " +
-                                      listOfMonths[DateTime.now()
-                                                  .add(Duration(days: index))
-                                                  .month -
-                                              1]
-                                          .toString(),
-                                  style: TextStyle(
-                                      fontSize: 13,
-                                      color: currentDateSelectedIndex == index
-                                          ? Colors.white
-                                          : Colors.grey),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  DateTime.now()
-                                      .add(Duration(days: index))
-                                      .day
+                      child: Container(
+                        height: 80,
+                        width: 80,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            color: currentDateSelectedIndex == index
+                                ? Color(0xFFFD5722)
+                                : Colors.white),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              listOfDays[DateTime.now()
+                                              .add(Duration(days: index))
+                                              .weekday -
+                                          1]
+                                      .toString() +
+                                  " - " +
+                                  listOfMonths[DateTime.now()
+                                              .add(Duration(days: index))
+                                              .month -
+                                          1]
                                       .toString(),
-                                  style: TextStyle(
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.w700,
-                                      color: currentDateSelectedIndex == index
-                                          ? Colors.white
-                                          : Colors.grey),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                              ],
+                              style: TextStyle(
+                                  fontSize: 13,
+                                  color: currentDateSelectedIndex == index
+                                      ? Colors.white
+                                      : Colors.grey),
                             ),
-                          ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              DateTime.now()
+                                  .add(Duration(days: index))
+                                  .day
+                                  .toString(),
+                              style: TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.w700,
+                                  color: currentDateSelectedIndex == index
+                                      ? Colors.white
+                                      : Colors.grey),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ))),
+            SizedBox(height: 10),
+            ChangeNotifierProvider<AppointmentSlotListViewmodel>(
+                create: (BuildContext context) =>
+                    appointmentSlotListViewmodel,
+                child: Consumer<AppointmentSlotListViewmodel>(
+                  builder: (context, value, _) {
+                    switch (value.AppointmentSlotList.status!) {
+                      case Status.LOADING:
+                        return Center(child: Center(child: CircularProgressIndicator()));
+                      case Status.ERROR:
+                        return Center(
+                            child: Text(value.AppointmentSlotList.message
+                                .toString()));
+                      case Status.COMPLETED:
+                        return SizedBox(
+                          height: 80.h,
+                          child: ListView.builder(
+                              padding: EdgeInsets.only(bottom: 10),
+                              physics: BouncingScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: appointmentSlotListViewmodel
+                                  .AppointmentSlotList.data!.data!.length,
+                              itemBuilder:
+                                  (BuildContext context, int itemIndex) {
+                                return createNewsListContainer(
+                                    context, itemIndex);
+                              }),
                         );
-                      },
-                    ))),
-                SizedBox(height: 10),
-                ChangeNotifierProvider<AppointmentSlotListViewmodel>(
-                    create: (BuildContext context) =>
-                        appointmentSlotListViewmodel,
-                    child: Consumer<AppointmentSlotListViewmodel>(
-                      builder: (context, value, _) {
-                        switch (value.AppointmentSlotList.status!) {
-                          case Status.LOADING:
-                            return Center(child: Center(child: CircularProgressIndicator()));
-                          case Status.ERROR:
-                            return Center(
-                                child: Text(value.AppointmentSlotList.message
-                                    .toString()));
-                          case Status.COMPLETED:
-                            return ListView.builder(
-                                padding: EdgeInsets.only(bottom: 10),
-                                physics: BouncingScrollPhysics(),
-                                shrinkWrap: true,
-                                itemCount: appointmentSlotListViewmodel
-                                    .AppointmentSlotList.data!.data!.length,
-                                itemBuilder:
-                                    (BuildContext context, int itemIndex) {
-                                  return createNewsListContainer(
-                                      context, itemIndex);
-                                });
-                        }
-                      },
-                    )),
-              ],
-            ),
-          )
-        ],
+                    }
+                  },
+                )),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: isButtonActive ? Colors.green : Colors.grey,
