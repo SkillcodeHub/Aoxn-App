@@ -22,6 +22,7 @@ class SelectAppointmentDateScreen extends StatefulWidget {
 
 class _SelectAppointmentDateScreenState
     extends State<SelectAppointmentDateScreen> {
+  // DateTime selectedDate = DateTime.now(); // TO tracking date
   DateTime selectedDate = DateTime.now(); // TO tracking date
   String? datetime1;
   bool isLoading = false;
@@ -39,6 +40,11 @@ class _SelectAppointmentDateScreenState
 
   AppointmentSlotListViewmodel appointmentSlotListViewmodel =
       AppointmentSlotListViewmodel();
+
+  void initState() {
+    super.initState();
+    get();
+  }
 
   List<String> listOfMonths = [
     "Jan",
@@ -73,7 +79,6 @@ class _SelectAppointmentDateScreenState
     var inputDate = DateTime.parse(parseDate.toString());
     var outputFormat3 = DateFormat('hh:mm a');
     var outputDate3 = outputFormat3.format(inputDate);
-    print('|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
     print(outputDate3);
     print('|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
 
@@ -84,7 +89,6 @@ class _SelectAppointmentDateScreenState
     var inputDate1 = DateTime.parse(parseDate1.toString());
     var outputFormat13 = DateFormat('hh:mm a');
     var outputDate13 = outputFormat13.format(inputDate1);
-    print('|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
     print(outputDate13);
     print('|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
 //============================================================================
@@ -226,14 +230,19 @@ class _SelectAppointmentDateScreenState
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
+  get() {
     datetime1 = DateFormat("yyyy-MM-dd").format(selectedDate);
+    print('datetime1datetime1datetime1datetime1datetime1datetime1');
+    print(datetime1);
     Timer(Duration(microseconds: 20), () {
       appointmentSlotListViewmodel.fetchAppointmentSlotListApi(
           widget.selectedDocotrId['selectedDocotrId'].toString(),
           datetime1.toString());
     });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: BackgroundColor,
       appBar: PreferredSize(
@@ -290,8 +299,10 @@ class _SelectAppointmentDateScreenState
                                   DateTime.now().add(Duration(days: index));
                               datetime1 =
                                   DateFormat("yyyy-MM-dd").format(selectedDate);
+                              print('pppppppppppppppppppppppp');
                               print(datetime1);
-
+                              print('pppppppppppppppppppppppppppp');
+                              get();
                               // _getCategory1();
                             });
                             print(selectedDate);
@@ -365,7 +376,7 @@ class _SelectAppointmentDateScreenState
                           case Status.COMPLETED:
                             return ListView.builder(
                                 padding: EdgeInsets.only(bottom: 10),
-                                physics: ClampingScrollPhysics(),
+                                physics: BouncingScrollPhysics(),
                                 shrinkWrap: true,
                                 itemCount: appointmentSlotListViewmodel
                                     .AppointmentSlotList.data!.data!.length,

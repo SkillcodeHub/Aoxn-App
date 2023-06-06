@@ -164,6 +164,13 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
     );
   }
 
+  _GetById() {
+    print(token);
+    print(strPatientId.text);
+    selectPatientByIdViewmodel.fetchSelectPatientByIdApi(
+        token.toString(), strPatientId.text);
+  }
+
   @override
   Widget build(BuildContext context) {
     Timer(Duration(microseconds: 20),
@@ -216,9 +223,8 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
         ),
         body: TabBarView(
           children: [
-            ChangeNotifierProvider<GetPatientByMobileListViewmodel>(
-                create: (BuildContext context) =>
-                    getPatientByMobileListViewmodel,
+            ChangeNotifierProvider<GetPatientByMobileListViewmodel>.value(
+                value: getPatientByMobileListViewmodel,
                 child: Consumer<GetPatientByMobileListViewmodel>(
                   builder: (context, value, _) {
                     switch (value.GetPatientByMobileList.status!) {
@@ -242,29 +248,6 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                     }
                   },
                 )),
-            // Stack(
-            //   children: [
-            //     SingleChildScrollView(
-            //       child: Padding(
-            //         padding: EdgeInsets.all(15),
-            //         child: Column(
-            //           children: [
-            //             ListView.builder(
-            //                 padding: EdgeInsets.only(bottom: 10),
-            //                 physics: const AlwaysScrollableScrollPhysics(),
-            //                 shrinkWrap: true,
-            //                 itemCount: getPatientByMobileListViewmodel
-            //                     .GetPatientByMobileList.data!.data!.length,
-            //                 itemBuilder: (BuildContext context, int itemIndex) {
-            //                   return createPatientListContainer(
-            //                       context, itemIndex);
-            //                 }),
-            //           ],
-            //         ),
-            //       ),
-            //     ),
-            //   ],
-            // ),
             Stack(
               children: [
                 SingleChildScrollView(
@@ -445,36 +428,10 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                                 print(value);
                                 print(strPatientId.text);
                                 print('qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq');
-                                selectPatientByIdViewmodel
-                                    .fetchSelectPatientByIdApi(
-                                        token.toString(), strPatientId.text);
-                                ChangeNotifierProvider<
-                                        SelectPatientByIdViewmodel>(
-                                    create: (BuildContext context) =>
-                                        selectPatientByIdViewmodel,
-                                    child: Consumer<SelectPatientByIdViewmodel>(
-                                      builder: (context, value, child) {
-                                        switch (
-                                            value.SelectPatientById.status!) {
-                                          case Status.LOADING:
-                                            return Center(
-                                                child:
-                                                    CircularProgressIndicator());
-                                          case Status.ERROR:
-                                            return Center(
-                                                child: Text(value
-                                                    .SelectPatientById.message
-                                                    .toString()));
-                                          case Status.COMPLETED:
-                                            patientById =
-                                                selectPatientByIdViewmodel
-                                                    .SelectPatientById
-                                                    .data!
-                                                    .data!;
-                                            return Container();
-                                        }
-                                      },
-                                    ));
+                                _GetById();
+                                // selectPatientByIdViewmodel
+                                //     .fetchSelectPatientByIdApi(
+                                //         token.toString(), strPatientId.text);
 
                                 print(patientById);
                               });
@@ -502,78 +459,109 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                         ),
                         Container(
                           child: patientById.isNotEmpty
-                              ? InkWell(
-                                  onTap: () {
-                                    Navigator.pop(context, [
-                                      // patientById[0]['patient_name'],
-                                      // patientBirth,
-                                      // patientById[0]['patient_gender'],
-                                      // patientById[0]['case_no'].toString(),
-                                      // PatType = "Old",
-                                    ]);
-                                  },
-                                  child: Card(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Row(
-                                        children: [
-                                          Container(
-                                            width: 25.w,
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                Text(selectPatientByIdViewmodel
-                                                    .SelectPatientById
-                                                    .data!
-                                                    .data![0]
-                                                    .caseNo
-                                                    .toString()),
-                                                Container(
-                                                  child: Icon(Icons.person),
+                              ? ChangeNotifierProvider<
+                                      SelectPatientByIdViewmodel>(
+                                  create: (BuildContext context) =>
+                                      selectPatientByIdViewmodel,
+                                  child: Consumer<SelectPatientByIdViewmodel>(
+                                    builder: (context, value, child) {
+                                      switch (value.SelectPatientById.status!) {
+                                        case Status.LOADING:
+                                          return Center(
+                                              child:
+                                                  CircularProgressIndicator());
+                                        case Status.ERROR:
+                                          return Center(
+                                              child: Text(value
+                                                  .SelectPatientById.message
+                                                  .toString()));
+                                        case Status.COMPLETED:
+                                          patientById =
+                                              selectPatientByIdViewmodel
+                                                  .SelectPatientById
+                                                  .data!
+                                                  .data!;
+                                          return InkWell(
+                                            onTap: () {
+                                              Navigator.pop(context, [
+                                                // patientById[0]['patient_name'],
+                                                // patientBirth,
+                                                // patientById[0]['patient_gender'],
+                                                // patientById[0]['case_no'].toString(),
+                                                // PatType = "Old",
+                                              ]);
+                                            },
+                                            child: Card(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Row(
+                                                  children: [
+                                                    Container(
+                                                      width: 25.w,
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Text(selectPatientByIdViewmodel
+                                                              .SelectPatientById
+                                                              .data!
+                                                              .data![0]
+                                                              .caseNo
+                                                              .toString()),
+                                                          Container(
+                                                            child: Icon(
+                                                                Icons.person),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    Container(
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(selectPatientByIdViewmodel
+                                                              .SelectPatientById
+                                                              .data!
+                                                              .data![0]
+                                                              .patientName
+                                                              .toString()),
+                                                          SizedBox(
+                                                            height: 10,
+                                                          ),
+                                                          Text(selectPatientByIdViewmodel
+                                                              .SelectPatientById
+                                                              .data!
+                                                              .data![0]
+                                                              .patientMobile
+                                                              .toString()
+                                                              .replaceRange(
+                                                                  0,
+                                                                  10,
+                                                                  'xxxxxxxxxx')),
+                                                          SizedBox(
+                                                            height: 10,
+                                                          ),
+                                                          Text(selectPatientByIdViewmodel
+                                                              .SelectPatientById
+                                                              .data!
+                                                              .data![0]
+                                                              .patientDob
+                                                              .toString()),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
-                                              ],
+                                              ),
                                             ),
-                                          ),
-                                          Container(
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(selectPatientByIdViewmodel
-                                                    .SelectPatientById
-                                                    .data!
-                                                    .data![0]
-                                                    .patientName
-                                                    .toString()),
-                                                SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Text(selectPatientByIdViewmodel
-                                                    .SelectPatientById
-                                                    .data!
-                                                    .data![0]
-                                                    .patientMobile
-                                                    .toString()
-                                                    .replaceRange(
-                                                        0, 10, 'xxxxxxxxxx')),
-                                                SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Text(selectPatientByIdViewmodel
-                                                    .SelectPatientById
-                                                    .data!
-                                                    .data![0]
-                                                    .patientDob
-                                                    .toString()),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                )
+                                          );
+                                      }
+                                    },
+                                  ))
                               : Container(
                                   height: 60.h,
                                   child: Column(
