@@ -1,10 +1,13 @@
+import 'dart:async';
+
 import 'package:axonweb/view/otp/otp_verifyscreen.dart';
-import 'package:axonweb/view_model/auth_view_model.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 
+import '../../View_Model/Login_View_Model/auth_view_model.dart';
 import '../../utils/utils.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -61,8 +64,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 Container(
                   height: 200,
                   child: Image.asset(
-                    'images/axon.jpg',
+                    'images/axon.png',
                   ),
+                ),
+                SizedBox(
+                  height: 10,
                 ),
                 Card(
                   child: Padding(
@@ -84,10 +90,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           // },
                         ),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             SizedBox(
-                              width: 60.w,
-                            ),
+                                //   width: 60.w,
+                                ),
                             TextButton(
                               child: Text(
                                 'Request OTP',
@@ -104,16 +111,23 @@ class _LoginScreenState extends State<LoginScreen> {
                                   Utils.snackBar(
                                       'Please enter 10 Digit MobileNo*',
                                       context);
+                                } else if (_mobileController.text.length > 10) {
+                                  Utils.snackBar(
+                                      'Please enter 10 Digit MobileNo*',
+                                      context);
                                 } else {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              OtpVerifyScreen()));
+                                  // Navigator.push(
+                                  //     context,
+                                  //     MaterialPageRoute(
+                                  //         builder: (context) =>
+                                  //             OtpVerifyScreen()));
                                   Map data = {
                                     'Mobile': _mobileController.text.toString()
                                   };
                                   authViewModel.loginApi(data, context);
+                                  Timer(Duration(seconds: 5), () {
+                                    _mobileController.clear();
+                                  });
                                 }
                               },
                               // showWidget,

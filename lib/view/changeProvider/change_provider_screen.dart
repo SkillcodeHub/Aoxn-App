@@ -1,9 +1,12 @@
-import 'package:axonweb/view/login/login_screen.dart';
-import 'package:axonweb/view/nevigationBar/my_navigationbar.dart';
+import 'package:axonweb/view/Login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../view_model/provider_view_model.dart';
+import '../../Res/colors.dart';
+
+import '../../View_Model/ChangeProvider_View_Model/provider_view_model.dart';
+import '../../View_Model/News_View_Model/news_view_model.dart';
+import '../../view_model/services/SharePreference/SharePreference.dart';
 
 class ChangeProviderScreen extends StatefulWidget {
   const ChangeProviderScreen({super.key});
@@ -15,13 +18,15 @@ class ChangeProviderScreen extends StatefulWidget {
 class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
   final FocusNode _nodeAppcode = FocusNode();
   TextEditingController strAppcode = TextEditingController();
-
+  UserPreferences userPreference = UserPreferences();
+  late String mobile;
+  CustomerTkenViewmodel customerTkenViewmodel = CustomerTkenViewmodel();
   @override
   Widget build(BuildContext context) {
     // final authViewModel = Provider.of<GetProviderTokenViewModel>(context);
-    final userPrefernce = Provider.of<GetProviderTokenViewModel>(context);
+    // final userPrefernce = Provider.of<GetProviderTokenViewModel>(context);
     return Scaffold(
-      backgroundColor: Colors.grey.shade200,
+      backgroundColor: BackgroundColor,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(70.0),
         child: AppBar(
@@ -77,7 +82,7 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                         children: [
                           Container(
                             height: 100,
-                            child: Image(image: AssetImage('images/axon.jpg')),
+                            child: Image(image: AssetImage('images/axon.png')),
                           ),
                           SizedBox(height: 10),
                           Container(
@@ -101,7 +106,7 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                 Container(
                                   height: 40,
                                   child: Image(
-                                      image: AssetImage('images/axon.jpg')),
+                                      image: AssetImage('images/axon.png')),
                                 ),
                                 SizedBox(width: 10),
                                 Container(
@@ -161,17 +166,11 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                               )),
                                           TextButton(
                                               onPressed: () {
-                                                Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            MyNavigationBar()));
-                                                // Map data = {
-                                                //   "Mobile": '6353335967',
-                                                //   'OTP': codeValue.toString()
-                                                // };
-                                                // authViewModel
-                                                //     .getCustomerTokenApi(context);
+                                                customerTkenViewmodel
+                                                    .fetchCustomerTokenApi(
+                                                        context,
+                                                        strAppcode.text
+                                                            .toString());
                                               },
                                               child: Text(
                                                 'OK',
@@ -189,7 +188,7 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                 Container(
                                   height: 40,
                                   child: Image(
-                                      image: AssetImage('images/axon.jpg')),
+                                      image: AssetImage('images/axon.png')),
                                 ),
                                 SizedBox(width: 10),
                                 Container(
@@ -232,17 +231,6 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                       ),
                     ),
                   ),
-                  InkWell(
-                    onTap: () {
-                      userPrefernce.remove().then((value) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => LoginScreen()));
-                      });
-                    },
-                    child: Text('Logout'),
-                  )
                 ],
               ),
             ),

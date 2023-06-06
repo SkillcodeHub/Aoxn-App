@@ -1,4 +1,4 @@
-import 'package:axonweb/view/news/news_screen.dart';
+import 'package:axonweb/view/News/news_screen.dart';
 import 'package:axonweb/view/report/report_screen.dart';
 import 'package:flutter/material.dart';
 
