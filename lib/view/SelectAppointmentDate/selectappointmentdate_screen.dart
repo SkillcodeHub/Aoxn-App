@@ -116,9 +116,10 @@ class _SelectAppointmentDateScreenState
                 onTap: () {
                   setState(() {
                     currentDateSelectedIndex1 = itemIndex;
-                    selectedTimeSlote = appointmentSlotListViewmodel
-                        .AppointmentSlotList.data!.data![itemIndex].displayTime
-                        .toString();
+                    // selectedTimeSlote = appointmentSlotListViewmodel
+                    //     .AppointmentSlotList.data!.data![itemIndex].displayTime
+                    //     .toString();
+                    selectedTimeSlote = outputDate3 + ' - ' + outputDate13;
                     print('selectedTimeSlote');
                     print(selectedTimeSlote);
                     print('selectedTimeSlote');
@@ -235,10 +236,10 @@ class _SelectAppointmentDateScreenState
     datetime1 = DateFormat("yyyy-MM-dd").format(selectedDate);
     print('datetime1datetime1datetime1datetime1datetime1datetime1');
     print(datetime1);
+    print(widget.selectedDocotrId);
     Timer(Duration(microseconds: 20), () {
       appointmentSlotListViewmodel.fetchAppointmentSlotListApi(
-          widget.selectedDocotrId['selectedDocotrId'].toString(),
-          datetime1.toString());
+          widget.selectedDocotrId.toString(), datetime1.toString());
     });
   }
 
@@ -277,7 +278,6 @@ class _SelectAppointmentDateScreenState
         ),
       ),
       body: SingleChildScrollView(
-        
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -364,17 +364,17 @@ class _SelectAppointmentDateScreenState
                 ))),
             SizedBox(height: 10),
             ChangeNotifierProvider<AppointmentSlotListViewmodel>(
-                create: (BuildContext context) =>
-                    appointmentSlotListViewmodel,
+                create: (BuildContext context) => appointmentSlotListViewmodel,
                 child: Consumer<AppointmentSlotListViewmodel>(
                   builder: (context, value, _) {
                     switch (value.AppointmentSlotList.status!) {
                       case Status.LOADING:
-                        return Center(child: Center(child: CircularProgressIndicator()));
+                        return Center(
+                            child: Center(child: CircularProgressIndicator()));
                       case Status.ERROR:
                         return Center(
-                            child: Text(value.AppointmentSlotList.message
-                                .toString()));
+                            child: Text(
+                                value.AppointmentSlotList.message.toString()));
                       case Status.COMPLETED:
                         return SizedBox(
                           height: 80.h,

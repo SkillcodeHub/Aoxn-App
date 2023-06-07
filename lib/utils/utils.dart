@@ -1,6 +1,7 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:another_flushbar/flushbar_route.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class Utils {
   static void fieldFocusChange(
@@ -44,8 +45,21 @@ class Utils {
   static snackBar(String message, BuildContext context) {
     return ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        backgroundColor: Colors.black,
-        content: Text(message),
+        backgroundColor: Colors.grey.shade800,
+        content: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Icon(
+              Icons.error_outline,
+              color: Colors.white,
+              size: 3.3.h,
+            ),
+            SizedBox(
+              width: 3.w,
+            ),
+            Text(message),
+          ],
+        ),
         duration: Duration(seconds: 1),
       ),
     );

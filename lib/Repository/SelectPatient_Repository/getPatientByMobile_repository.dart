@@ -5,10 +5,15 @@ import '../../Res/app_url.dart';
 
 class GetPatientByMobileRepository {
   BaseApiServices _apiServices = NetworkApiService();
-  Future<GetPatientByMobileModel> fetchGetPatientByMobileList() async {
+  Future<GetPatientByMobileModel> fetchGetPatientByMobileList(
+      token, mobile) async {
     try {
       dynamic response = await _apiServices.getGetApiResponse(
-          AppUrl.getpatientbymobile + "?Mobile=" + "7567444375");
+          AppUrl.getpatientbymobile +
+              "?Mobile=" +
+              mobile +
+              "&CustomerToken=" +
+              token);
       print(response);
       return response = GetPatientByMobileModel.fromJson(response);
     } catch (e) {

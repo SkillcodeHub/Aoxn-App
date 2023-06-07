@@ -7,18 +7,20 @@ import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../Repository/Book_Repository/bookAppointment_repository.dart';
 import '../../Res/Components/loader.dart';
 import '../../Res/colors.dart';
-import '../../Utils/routes/routes_name.dart';
 import '../../Utils/utils.dart';
+import '../../View_Model/Book_View_Model/bookAppointment_view_model.dart';
 import '../../View_Model/Services/SharePreference/SharePreference.dart';
 import '../../View_Model/Settings_View_Model/settings_view_model.dart';
 import '../../data/response/status.dart';
 import '../../res/components/appbar/axonimage_appbar-widget.dart';
-import '../../res/components/appbar/payment_widget.dart';
 import '../../res/components/appbar/screen_name_widget.dart';
 import '../../res/components/appbar/settings_widget.dart';
 import '../../res/components/appbar/whatsapp_widget.dart';
+import '../SelectAppointmentDate/selectappointmentdate_screen.dart';
+import '../SelectPateint/selectpateint_screen.dart';
 
 class BookApointmentScreen extends StatefulWidget {
   const BookApointmentScreen({super.key});
@@ -38,6 +40,15 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
   bool isLoading = false;
   var mobile;
   late String token;
+  String displaySelectAppointmentDate = 'Select Appointment Date';
+  String displayDate = '';
+  String displayTimeSlot = '';
+  String? displaytimingId;
+  String displayPatientName = 'Select Patient';
+  String? displayBirthDate;
+  String? displayGender;
+  String CaseNo = "";
+  String PatType = "";
 
   // List doctorData = [];
   // List customerData = [];
@@ -62,6 +73,8 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final bookAppointmentViewModel =
+        Provider.of<BookAppointmentViewModel>(context);
     Timer(Duration(microseconds: 20), () {
       doctorListViewmodel.fetchDoctorListApi(token);
       settingsViewModel.fetchDoctorDetailsListApi(token);
@@ -101,8 +114,8 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
           // )
         ),
       ),
-      body: ChangeNotifierProvider<DoctorListViewmodel>(
-          create: (BuildContext context) => doctorListViewmodel,
+      body: ChangeNotifierProvider<DoctorListViewmodel>.value(
+          value: doctorListViewmodel,
           child: Consumer<DoctorListViewmodel>(
             builder: (context, value, child) {
               switch (value.doctorList.status!) {
@@ -124,9 +137,9 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                   : Container()
                               : Column(
                                   children: [
-                                    ChangeNotifierProvider<SettingsViewModel>(
-                                      create: (BuildContext context) =>
-                                          settingsViewModel,
+                                    ChangeNotifierProvider<
+                                        SettingsViewModel>.value(
+                                      value: settingsViewModel,
                                       child: Consumer<SettingsViewModel>(
                                           builder: (context, value, child) {
                                         switch (
@@ -156,17 +169,16 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                 width: 100.w,
                                                 decoration: BoxDecoration(
                                                   boxShadow: [
-                    BoxShadow(
-                      color: Colors.green,
-                    ),
-                    BoxShadow(
-                      color: Colors.white70,
-                      spreadRadius: -5.0,
-                      blurRadius: 20.0,
-                    ),
-                  ],
+                                                    BoxShadow(
+                                                      color: Colors.green,
+                                                    ),
+                                                    BoxShadow(
+                                                      color: Colors.white70,
+                                                      spreadRadius: -5.0,
+                                                      blurRadius: 20.0,
+                                                    ),
+                                                  ],
                                                   image: DecorationImage(
-                                                                                    
                                                     image: MemoryImage(
                                                       base64Decode(
                                                         settingsViewModel
@@ -276,12 +288,15 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                         }
                                       }),
                                     ),
-                                    SizedBox(height: 10,),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
                                     Card(
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(8),
                                       ),
-                                      margin: EdgeInsets.only(left: 8,right: 8),
+                                      margin:
+                                          EdgeInsets.only(left: 8, right: 8),
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -374,8 +389,8 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                       map.doctorName
                                                                           .toString(),
                                                                       style: TextStyle(
-                                                                          fontSize:
-                                                                              20,
+                                                                          fontSize: 14
+                                                                              .sp,
                                                                           fontWeight:
                                                                               FontWeight.w500),
                                                                     )),
@@ -413,16 +428,18 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                     ),
                                     InkWell(
                                       onTap: () {
-                                        Map selectedDocotrIdData = {
-                                          'selectedDocotrId':
-                                              selectedDocotrId.toString(),
-                                        };
+                                        // Map selectedDocotrIdData = {
+                                        //   'selectedDocotrId':
+                                        //       selectedDocotrId.toString(),
+                                        // };
                                         selectedDocotrId != "null"
-                                            ? Navigator.pushNamed(
-                                                context,
-                                                RoutesName
-                                                    .selectAppointmentDate,
-                                                arguments: selectedDocotrIdData)
+                                            ? _navigateDateAndTimeSelaction(
+                                                context)
+                                            // Navigator.pushNamed(
+                                            //     context,
+                                            //     RoutesName
+                                            //         .selectAppointmentDate,
+                                            //     arguments: selectedDocotrIdData)
                                             // _navigateDateAndTimeSelaction(context)
                                             : Utils.snackBar(
                                                 'Please Select a Doctor',
@@ -435,7 +452,8 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                           borderRadius:
                                               BorderRadius.circular(8),
                                         ),
-                                        margin: EdgeInsets.only(left: 8,right: 8,top: 5),
+                                        margin: EdgeInsets.only(
+                                            left: 8, right: 8, top: 5),
                                         color: Colors.white,
                                         // shadowColor: Colors.white,
                                         // // shape: RoundedRectangleBorder(
@@ -452,38 +470,71 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                               child: Padding(
                                                 padding:
                                                     const EdgeInsets.all(8.0),
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    SizedBox(height: 20),
-                                                    Container(
-                                                      padding: EdgeInsets.only(
-                                                          left: 10, top: 10),
-                                                      child: Text(
-                                                        'Select Appointment Date',
-                                                        // displayDate,
-                                                        style: TextStyle(
-                                                            fontSize: 20,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w500),
+                                                child: displayDate.isEmpty
+                                                    ? Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          SizedBox(height: 20),
+                                                          Container(
+                                                            padding:
+                                                                EdgeInsets.only(
+                                                                    left: 10,
+                                                                    top: 10),
+                                                            child: Text(
+                                                              displaySelectAppointmentDate,
+                                                              // displayDate,
+                                                              style: TextStyle(
+                                                                  fontSize:
+                                                                      14.sp,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500),
+                                                            ),
+                                                          ),
+                                                          SizedBox(height: 10),
+                                                        ],
+                                                      )
+                                                    : Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          SizedBox(height: 2),
+                                                          Container(
+                                                            padding:
+                                                                EdgeInsets.only(
+                                                                    left: 10,
+                                                                    top: 10),
+                                                            child: Text(
+                                                              displayDate,
+                                                              // displayDate,
+                                                              style: TextStyle(
+                                                                  fontSize:
+                                                                      14.sp,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500),
+                                                            ),
+                                                          ),
+                                                          SizedBox(height: 10),
+                                                          Container(
+                                                            padding:
+                                                                EdgeInsets.only(
+                                                                    left: 10),
+                                                            child: Text(
+                                                              displayTimeSlot,
+                                                              style: TextStyle(
+                                                                  fontSize:
+                                                                      12.sp,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400),
+                                                            ),
+                                                          ),
+                                                        ],
                                                       ),
-                                                    ),
-                                                    SizedBox(height: 10),
-                                                    // Container(
-                                                    //   padding: EdgeInsets.only(
-                                                    //       left: 10),
-                                                    //   child: Text(
-                                                    //     '',
-                                                    //     // displayTimeSlot,
-                                                    //     // style: TextStyle(
-                                                    //     //     fontSize: 16,
-                                                    //     //     fontWeight: FontWeight.w400),
-                                                    //   ),
-                                                    // ),
-                                                  ],
-                                                ),
                                               ),
                                             ),
                                             Container(
@@ -511,8 +562,10 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                     ),
                                     InkWell(
                                       onTap: () {
-                                        Navigator.pushNamed(
-                                            context, RoutesName.selectPatient);
+                                        _navigateNameAndGenderSelaction(
+                                            context);
+                                        // Navigator.pushNamed(
+                                        //     context, RoutesName.selectPatient);
                                       },
                                       child: Card(
                                         shape: RoundedRectangleBorder(
@@ -520,7 +573,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                               BorderRadius.circular(8),
                                         ),
                                         margin: EdgeInsets.only(
-                                            left: 8, right: 8,top: 5),
+                                            left: 8, right: 8, top: 5),
                                         color: Colors.white,
                                         shadowColor: Colors.white,
                                         // shape: RoundedRectangleBorder(
@@ -547,14 +600,14 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                         top: 25,
                                                       ),
                                                       child: Text(
-                                                        'Select Patient',
+                                                        displayPatientName,
                                                         // 'Select Patient',
                                                         // displayPatientName,
                                                         maxLines: 1,
                                                         overflow: TextOverflow
                                                             .ellipsis,
                                                         style: TextStyle(
-                                                            fontSize: 20,
+                                                            fontSize: 14.sp,
                                                             fontWeight:
                                                                 FontWeight
                                                                     .w500),
@@ -598,7 +651,39 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                             height: 5.h,
                                             child: ElevatedButton(
                                               onPressed: () {
-                                                // _bookAppointment();
+                                                if (displayDate.isEmpty) {
+                                                  Utils.snackBar(
+                                                      'Please Select Appointment Date',
+                                                      context);
+                                                } else if (displayPatientName ==
+                                                    'Select Patient') {
+                                                  Utils.snackBar(
+                                                      'Please Select Patient',
+                                                      context);
+                                                } else {
+                                                  Map data = {
+                                                    "CaseNo": CaseNo,
+                                                    "Name": displayPatientName,
+                                                    "Mobile": mobile.toString(),
+                                                    "Email": "",
+                                                    "Gender": displayGender
+                                                        .toString(),
+                                                    "PatType": "New",
+                                                    "ApptDate": displayDate,
+                                                    "CustomerToken": token,
+                                                    "DelayMinute": "",
+                                                    "DeviceId": "DESKTOP",
+                                                    "DoctorId":
+                                                        selectedDocotrId,
+                                                    "TimingId": displaytimingId
+                                                        .toString(),
+                                                  };
+                                                  // bookAppointmentViewModel
+                                                  //     .bookApointmentApi(
+                                                  //         data, context);
+                                                  // Timer(Duration(seconds: 5),
+                                                  //     () {});
+                                                }
                                               },
                                               child: Text(
                                                 'BOOK APPOINTMENT',
@@ -615,14 +700,15 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                             height: 5.h,
                                             child: ElevatedButton(
                                               onPressed: () {
-                                                // setState(() {
-                                                //   // displayDate = 'Select Appointment Date';
-                                                //   // displayTimeSlot = '';
-                                                //   // displaytimingId = '';
-                                                //   // displayPatientName = 'Select Patient';
-                                                //   // displayBirthDate = '';
-                                                //   // displayGender = '';
-                                                // });
+                                                setState(() {
+                                                  displayDate = '';
+                                                  displayTimeSlot = '';
+                                                  displaytimingId = '';
+                                                  displayPatientName =
+                                                      'Select Patient';
+                                                  displayBirthDate = '';
+                                                  displayGender = '';
+                                                });
                                               },
                                               child: Text('RESET'),
                                               style: ElevatedButton.styleFrom(
@@ -647,5 +733,51 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
             },
           )),
     );
+  }
+
+  _navigateDateAndTimeSelaction(BuildContext context) async {
+    print('selectedDocotrId');
+    print(selectedDocotrId);
+    print('selectedDocotrId');
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => SelectAppointmentDateScreen(
+                selectedDocotrId: selectedDocotrId,
+              )),
+    );
+    print(result[0]);
+    print(result[1]);
+    print(result[2]);
+
+    if (result != null) {
+      setState(() {
+        displayDate = result[0];
+        displayTimeSlot = result[1];
+        displaytimingId = result[2];
+      });
+    }
+  }
+
+  _navigateNameAndGenderSelaction(BuildContext context) async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => SelectPatientScreen()),
+    );
+    print(result[0]);
+    print(result[1]);
+    print(result[2]);
+    print(result[3]);
+    print(result[4]);
+
+    if (result != null) {
+      setState(() {
+        displayPatientName = result[0];
+        displayBirthDate = result[1];
+        displayGender = result[2];
+        CaseNo = result[3];
+        PatType = result[4];
+      });
+    }
   }
 }

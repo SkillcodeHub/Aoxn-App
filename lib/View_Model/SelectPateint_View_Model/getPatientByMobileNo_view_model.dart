@@ -14,9 +14,10 @@ class GetPatientByMobileListViewmodel with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> fetchGetPatientByMobileListApi() async {
+  Future<void> fetchGetPatientByMobileListApi(
+      String token, String mobile) async {
     setGetPatientByMobileList(ApiResponse.loading());
-    _myRepo.fetchGetPatientByMobileList().then((value) {
+    _myRepo.fetchGetPatientByMobileList(token, mobile).then((value) {
       setGetPatientByMobileList(ApiResponse.completed(value));
     }).onError((error, stackTrace) {
       setGetPatientByMobileList(ApiResponse.error(error.toString()));

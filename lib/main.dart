@@ -8,6 +8,7 @@ import 'package:sizer/sizer.dart';
 
 import 'Model/DoctorList_Model/doctorlist_model.dart';
 import 'Model/NewsDetails_Model/newsdetails_model.dart';
+import 'View_Model/Book_View_Model/bookAppointment_view_model.dart';
 import 'View_Model/ChangeProvider_View_Model/provider_view_model.dart';
 import 'View_Model/Login_View_Model/auth_view_model.dart';
 import 'View_Model/News_View_Model/news_view_model.dart';
@@ -31,14 +32,16 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AuthViewModel()),
         ChangeNotifierProvider(create: (_) => GetProviderTokenViewModel()),
         ChangeNotifierProvider(create: (_) => NewsViewmodel()),
-        ChangeNotifierProvider(create: (_) => SettingsViewModel()),
-        ChangeNotifierProvider(create: (_) => NewsViewmodel()),
-        ChangeNotifierProvider(
-          create: (_) => DoctorListViewmodel(),
-        ),
+        ChangeNotifierProvider<DoctorListViewmodel>.value(
+            value: DoctorListViewmodel()),
+        ChangeNotifierProvider<SettingsViewModel>.value(
+            value: SettingsViewModel()),
         ChangeNotifierProvider<GetPatientByMobileListViewmodel>.value(
             value: GetPatientByMobileListViewmodel()),
-        ChangeNotifierProvider(create: (_) => SelectPatientByIdViewmodel()),
+        ChangeNotifierProvider<SelectPatientByIdViewmodel>.value(
+            value: SelectPatientByIdViewmodel()),
+        ChangeNotifierProvider<BookAppointmentViewModel>.value(
+            value: BookAppointmentViewModel()),
       ],
       child: Sizer(builder: (context, orientation, DeviceType) {
         return MaterialApp(

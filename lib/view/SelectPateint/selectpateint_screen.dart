@@ -27,6 +27,9 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
   String? registeredpatientBirth;
   String? genderValue;
   bool _enableBtn = false;
+  String? PatType;
+  String? patientBirth;
+  String CaseNo = "";
 
   final formKey = GlobalKey<FormState>();
   final FocusNode _nodeName = FocusNode();
@@ -47,7 +50,7 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
         print(token);
       });
     });
-    userPreference.getToken().then((value1) {
+    userPreference.getMobile().then((value1) {
       setState(() {
         mobile = value1;
         print(token);
@@ -59,49 +62,36 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
   }
 
   createPatientListContainer(BuildContext context, int itemIndex) {
-    // registeredpatientBirth = patientData[itemIndex]['patient_dob'];
-
-    // String date = patientData[itemIndex]['patient_dob'];
     String date = getPatientByMobileListViewmodel
         .GetPatientByMobileList.data!.data![itemIndex].patientDob
         .toString();
 
     DateTime parseDate = new DateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(date);
     var inputDate = DateTime.parse(parseDate.toString());
-    var outputFormat = DateFormat('E d-MMMM-yyyy');
-    var outputFormat1 = DateFormat('E,yyyy');
-    var outputFormat2 = DateFormat('d MMM');
-    var outputFormat3 = DateFormat('hh:mm a');
-    var outputFormat4 = DateFormat('d-MM-yyyy');
+
     var outputFormat5 = DateFormat('d-MMM-yyyy');
-    // var outputFormat = DateFormat('MM/dd/yyyy hh:mm a');
-    var outputDate = outputFormat.format(inputDate);
-    var outputDate1 = outputFormat1.format(inputDate);
-    var outputDate2 = outputFormat2.format(inputDate);
-    var outputDate3 = outputFormat3.format(inputDate);
-    var outputDate4 = outputFormat4.format(inputDate);
+
     var outputDate5 = outputFormat5.format(inputDate);
     registeredpatientBirth = outputDate5;
     print('|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
-    print(outputDate);
-    print(outputDate1);
-    print(outputDate2);
-    print(outputDate3);
-    print(outputDate4);
     print(outputDate5);
-    // print(patientBirth);
     print('|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
-    // final notificationObj = listOfColumns[itemIndex];
     return Column(
       children: [
         InkWell(
           onTap: () {
             Navigator.pop(context, [
-              // patientData[itemIndex]['patient_name'],
-              // registeredpatientBirth,
-              // patientData[itemIndex]['patient_gender'],
-              // patientData[itemIndex]['case_no'].toString(),
-              // PatType = "Old",
+              getPatientByMobileListViewmodel
+                  .GetPatientByMobileList.data!.data![itemIndex].patientName
+                  .toString(),
+              registeredpatientBirth,
+              getPatientByMobileListViewmodel
+                  .GetPatientByMobileList.data!.data![itemIndex].patientGender
+                  .toString(),
+              getPatientByMobileListViewmodel
+                  .GetPatientByMobileList.data!.data![itemIndex].caseNo
+                  .toString(),
+              PatType = "Old",
             ]);
           },
           child: Card(
@@ -166,15 +156,32 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
 
   _GetById() {
     print(token);
-    print(strPatientId.text);
-    selectPatientByIdViewmodel.fetchSelectPatientByIdApi(
-        token.toString(), strPatientId.text);
+    print('strPatientId.text');
+    print(strPatientId.text != "");
+    print('strPatientId.text');
+    strPatientId.text != ""
+        ? [
+            selectPatientByIdViewmodel.fetchSelectPatientByIdApi(
+                token.toString(), strPatientId.text),
+            patientById = [strPatientId.text]
+          ]
+        : [
+            patientById.remove([]),
+          ];
   }
 
   @override
   Widget build(BuildContext context) {
-    Timer(Duration(microseconds: 20),
-        () => getPatientByMobileListViewmodel.fetchGetPatientByMobileListApi());
+    Timer(
+        Duration(microseconds: 20),
+        () => [
+              print('token.toString()'),
+              print(token.toString()),
+              print(mobile.toString()),
+              print('mobile.toString()'),
+              getPatientByMobileListViewmodel.fetchGetPatientByMobileListApi(
+                  token.toString(), mobile.toString())
+            ]);
 
     return DefaultTabController(
       length: 3,
@@ -235,16 +242,77 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                             child: Text(value.GetPatientByMobileList.message
                                 .toString()));
                       case Status.COMPLETED:
-                        return ListView.builder(
-                            padding: EdgeInsets.only(bottom: 10),
-                            physics: const AlwaysScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: getPatientByMobileListViewmodel
-                                .GetPatientByMobileList.data!.data!.length,
-                            itemBuilder: (BuildContext context, int itemIndex) {
-                              return createPatientListContainer(
-                                  context, itemIndex);
-                            });
+                        print('aaaaaaaaaaaaaaaaaaaaaaaaaa');
+                        print(getPatientByMobileListViewmodel
+                            .GetPatientByMobileList.data!.data!.length);
+                        print('aaaaaaaaaaaaaaaaaaaaaaaaaa');
+                        return Container(
+                          child: Column(
+                            children: [
+                              getPatientByMobileListViewmodel
+                                          .GetPatientByMobileList
+                                          .data!
+                                          .data!
+                                          .length !=
+                                      0
+                                  ? ListView.builder(
+                                      padding: EdgeInsets.only(bottom: 10),
+                                      physics:
+                                          const AlwaysScrollableScrollPhysics(),
+                                      shrinkWrap: true,
+                                      itemCount: getPatientByMobileListViewmodel
+                                          .GetPatientByMobileList
+                                          .data!
+                                          .data!
+                                          .length,
+                                      itemBuilder: (BuildContext context,
+                                          int itemIndex) {
+                                        return createPatientListContainer(
+                                            context, itemIndex);
+                                      })
+                                  : Container(
+                                      height: 60.h,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          SizedBox(
+                                            height: 2.h,
+                                          ),
+                                          Text(
+                                            'Swipe down to refresh page',
+                                            style: TextStyle(
+                                                fontSize: 12.sp,
+                                                fontWeight: FontWeight.w500),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                          SizedBox(
+                                            height: 20.h,
+                                          ),
+                                          Container(
+                                            height: 20.h,
+                                            child: Image.asset(
+                                                'images/loading.png'),
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Container(
+                                            width: 80.w,
+                                            child: Text(
+                                              "Oops. You haven't registered any patient yet.",
+                                              style: TextStyle(
+                                                  fontSize: 14.sp,
+                                                  fontWeight: FontWeight.w500),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                            ],
+                          ),
+                        );
                     }
                   },
                 )),
@@ -375,16 +443,15 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                                     height: 36,
                                     width: 180,
                                     child: ElevatedButton(
-                                      onPressed: () {},
-                                      // onPressed: _enableBtn
-                                      //     ? () => Navigator.pop(context, [
-                                      //           strName.text,
-                                      //           strBirthDate.text,
-                                      //           genderValue,
-                                      //           CaseNo,
-                                      //           PatType = "New",
-                                      //         ])
-                                      //     : null,
+                                      onPressed: _enableBtn
+                                          ? () => Navigator.pop(context, [
+                                                strName.text,
+                                                strBirthDate.text,
+                                                genderValue,
+                                                CaseNo,
+                                                PatType = "New",
+                                              ])
+                                          : null,
                                       child: Text(
                                         'SAVE',
                                         style: TextStyle(
@@ -437,7 +504,7 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                               });
                             },
                             scrollPadding: EdgeInsets.only(bottom: 60),
-                            keyboardType: TextInputType.text,
+                            keyboardType: TextInputType.number,
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
                             textInputAction: TextInputAction.next,
@@ -460,9 +527,8 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                         Container(
                           child: patientById.isNotEmpty
                               ? ChangeNotifierProvider<
-                                      SelectPatientByIdViewmodel>(
-                                  create: (BuildContext context) =>
-                                      selectPatientByIdViewmodel,
+                                      SelectPatientByIdViewmodel>.value(
+                                  value: selectPatientByIdViewmodel,
                                   child: Consumer<SelectPatientByIdViewmodel>(
                                     builder: (context, value, child) {
                                       switch (value.SelectPatientById.status!) {
@@ -481,6 +547,34 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                                                   .SelectPatientById
                                                   .data!
                                                   .data!;
+
+// convert date format
+                                          String date =
+                                              selectPatientByIdViewmodel
+                                                  .SelectPatientById
+                                                  .data!
+                                                  .data![0]
+                                                  .patientDob
+                                                  .toString();
+
+                                          DateTime parseDate = new DateFormat(
+                                                  "yyyy-MM-dd'T'HH:mm:ss")
+                                              .parse(date);
+                                          var inputDate = DateTime.parse(
+                                              parseDate.toString());
+
+                                          var outputFormat5 =
+                                              DateFormat('d-MMM-yyyy');
+                                          // var outputFormat = DateFormat('MM/dd/yyyy hh:mm a');
+
+                                          var outputDate5 =
+                                              outputFormat5.format(inputDate);
+                                          patientBirth = outputDate5;
+                                          print(
+                                              '|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
+                                          print(outputDate5);
+                                          print(
+                                              '|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
                                           return InkWell(
                                             onTap: () {
                                               Navigator.pop(context, [
@@ -488,7 +582,27 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                                                 // patientBirth,
                                                 // patientById[0]['patient_gender'],
                                                 // patientById[0]['case_no'].toString(),
-                                                // PatType = "Old",
+
+                                                selectPatientByIdViewmodel
+                                                    .SelectPatientById
+                                                    .data!
+                                                    .data![0]
+                                                    .patientName
+                                                    .toString(),
+                                                selectPatientByIdViewmodel
+                                                    .SelectPatientById
+                                                    .data!
+                                                    .data![0]
+                                                    .patientGender
+                                                    .toString(),
+                                                patientBirth,
+                                                selectPatientByIdViewmodel
+                                                    .SelectPatientById
+                                                    .data!
+                                                    .data![0]
+                                                    .caseNo
+                                                    .toString(),
+                                                PatType = "Old",
                                               ]);
                                             },
                                             child: Card(
@@ -545,11 +659,7 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                                                           SizedBox(
                                                             height: 10,
                                                           ),
-                                                          Text(selectPatientByIdViewmodel
-                                                              .SelectPatientById
-                                                              .data!
-                                                              .data![0]
-                                                              .patientDob
+                                                          Text(patientBirth
                                                               .toString()),
                                                         ],
                                                       ),
@@ -569,14 +679,23 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                                         CrossAxisAlignment.center,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Icon(
-                                        Icons.abc,
-                                        size: 100,
+                                      Container(
+                                        height: 20.h,
+                                        child:
+                                            Image.asset('images/loading.png'),
                                       ),
-                                      Text(
-                                        'Please enter your Unique Id to search for Patients.',
-                                        style: TextStyle(fontSize: 18.sp),
-                                        textAlign: TextAlign.center,
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Container(
+                                        width: 80.w,
+                                        child: Text(
+                                          'Please enter your Unique Id to search for Patients.',
+                                          style: TextStyle(
+                                              fontSize: 14.sp,
+                                              fontWeight: FontWeight.w500),
+                                          textAlign: TextAlign.center,
+                                        ),
                                       ),
                                     ],
                                   ),

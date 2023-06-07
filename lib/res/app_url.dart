@@ -35,4 +35,7 @@ class AppUrl {
   //Get Appointments Timeslot
   static var getpatientbymobile =
       baseUrl + "BookAppointment/GetPatientByMobileNo";
+
+  //Book Appointment
+  static var bookAppointmentUrl = baseUrl + "BookAppointment/BookAppointment";
 }
