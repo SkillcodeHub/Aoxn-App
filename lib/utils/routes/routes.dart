@@ -4,7 +4,6 @@ import 'package:axonweb/View/EventDetails/eventDetails_screen.dart';
 import 'package:axonweb/View/NewsDetails/news_details_screen.dart';
 import 'package:axonweb/View/ReportDetails/report_details_screen.dart';
 import 'package:axonweb/View/SelectAppointmentDate/selectappointmentdate_screen.dart';
-
 import 'package:axonweb/View/Settings/settings_screen.dart';
 import 'package:axonweb/view/Book/book_appointment_screen.dart';
 import 'package:axonweb/view/ChangeProvider/change_provider_screen.dart';

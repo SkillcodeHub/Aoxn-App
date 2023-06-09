@@ -25,7 +25,7 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
   var mobile;
   List patientById = [];
   String? registeredpatientBirth;
-  String? genderValue;
+  String genderValue ="Male";
   bool _enableBtn = false;
   String? PatType;
   String? patientBirth;
@@ -389,7 +389,7 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                                             groupValue: genderValue,
                                             onChanged: (value) {
                                               setState(() {
-                                                genderValue = value;
+                                                genderValue = value!;
                                               });
                                             },
                                           ),
@@ -416,7 +416,7 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                                             groupValue: genderValue,
                                             onChanged: (value) {
                                               setState(() {
-                                                genderValue = value;
+                                                genderValue = value!;
                                               });
                                             },
                                           ),

@@ -284,9 +284,11 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                             height: 10,
                           ),
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
+
                               Container(
-                                width: MediaQuery.of(context).size.width * 0.71,
+                                // width: MediaQuery.of(context).size.width * 0.71,
                                 child: Text(
                                   widget.appoitmentData['status'],
                                   style: TextStyle(

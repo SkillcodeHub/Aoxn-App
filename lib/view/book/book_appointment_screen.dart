@@ -459,14 +459,14 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                               width: 78.w,
                                               child: Padding(
                                                 padding:
-                                                    const EdgeInsets.all(8.0),
+                                                    const EdgeInsets.only(left: 8,right: 8,bottom: 8,top: 12),
                                                 child: displayDate.isEmpty
                                                     ? Column(
                                                         crossAxisAlignment:
                                                             CrossAxisAlignment
                                                                 .start,
                                                         children: [
-                                                          SizedBox(height: 20),
+                                                          SizedBox(height: 18),
                                                           Container(
                                                             padding:
                                                                 EdgeInsets.only(
@@ -587,7 +587,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                       width: 77.w,
                                                       padding: EdgeInsets.only(
                                                         left: 10,
-                                                        top: 25,
+                                                        top: 29,
                                                       ),
                                                       child: Text(
                                                         displayPatientName,

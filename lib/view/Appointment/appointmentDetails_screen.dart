@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../Res/Components/Appbar/screen_name_widget.dart';
 import '../../Res/colors.dart';
@@ -14,6 +15,22 @@ class AppointmentDetails extends StatefulWidget {
 class _AppointmentDetailsState extends State<AppointmentDetails> {
   @override
   Widget build(BuildContext context) {
+  String date =
+        widget.appointmentData['data']['apptDateLocal'];
+    DateTime parseDate = new DateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(date);
+    var inputDate = DateTime.parse(parseDate.toString());
+    var outputFormat = DateFormat('E d-MMMM-yyyy');
+    var outputFormat1 = DateFormat('E,yyyy');
+    var outputFormat2 = DateFormat('d MMM');
+    var outputFormat3 = DateFormat('hh:mm a');
+    // var outputFormat = DateFormat('MM/dd/yyyy hh:mm a');
+    var outputDate = outputFormat.format(inputDate);
+    var outputDate1 = outputFormat1.format(inputDate);
+    var outputDate2 = outputFormat2.format(inputDate);
+    var outputDate3 = outputFormat3.format(inputDate);
+    print('|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
+    print(outputDate);
+    print('|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
     return Scaffold(
       backgroundColor: BackgroundColor,
       appBar: PreferredSize(
@@ -149,7 +166,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                             children: [
                               Icon(Icons.perm_contact_calendar),
                               Text(
-                                'outputDate',
+                                outputDate,
                                 style: TextStyle(
                                   fontSize: 19,
                                 ),
@@ -161,7 +178,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                             children: [
                               Icon(Icons.punch_clock),
                               Text(
-                                'outputDate3',
+                                outputDate3,
                                 style: TextStyle(
                                   fontSize: 19,
                                 ),
@@ -207,9 +224,10 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                             height: 10,
                           ),
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Container(
-                                width: MediaQuery.of(context).size.width * 0.71,
+                                // width: MediaQuery.of(context).size.width * 0.71,
                                 child: Text(
                                   widget.appointmentData['data']['statusText'],
                                   //'aaaa',
