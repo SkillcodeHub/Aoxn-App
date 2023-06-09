@@ -504,10 +504,11 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                               });
                             },
                             scrollPadding: EdgeInsets.only(bottom: 60),
-                            keyboardType: TextInputType.number,
+                            keyboardType: TextInputType.numberWithOptions(signed: true,decimal: true),
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
-                            textInputAction: TextInputAction.next,
+                            textInputAction: TextInputAction.done,
+                            
                             decoration: InputDecoration(
                               errorMaxLines: 10,
                               contentPadding: const EdgeInsets.all(10.0),
