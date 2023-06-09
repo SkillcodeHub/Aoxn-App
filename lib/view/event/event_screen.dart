@@ -1,11 +1,9 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../Res/colors.dart';
 import '../../Utils/routes/routes_name.dart';
 import '../../View_Model/Event_View_Model/event_view_model.dart';
@@ -85,14 +83,14 @@ class _EventScreenState extends State<EventScreen> {
                 : null;
           },
           child: Card(
-            margin: EdgeInsets.only(top: 8, left: 8, right: 8),
+            margin: EdgeInsets.only(top: 18, left: 18, right: 18),
             color: Colors.white,
             shadowColor: Colors.white,
             elevation: 10,
             child: Row(
               children: [
                 Container(
-                    height: 150,
+                    height: 110,
                     width: MediaQuery.of(context).size.width * 0.25,
                     color: status == 'Booked' ? Colors.green : Colors.grey,
                     child: Padding(
@@ -104,106 +102,93 @@ class _EventScreenState extends State<EventScreen> {
                             outputDate1,
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 16,
+                              fontSize: 12.sp,
                             ),
                           ),
-                          SizedBox(height: 10),
+                          SizedBox(height: 6),
                           Text(
                             outputDate2,
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 17,
+                              fontSize: 12.sp,
                             ),
                           ),
                           SizedBox(
-                            height: 50,
+                            height: 22,
                           ),
                           Text(
                             outputDate3,
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 16,
+                              fontSize: 12.sp,
                             ),
                           ),
                         ],
                       ),
                     )),
                 Container(
-                  width: MediaQuery.of(context).size.width * 0.70,
+                  height: 110,
+                  width: MediaQuery.of(context).size.width * 0.65,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.67,
-                          child: Text(
-                            'Provider  ' +
-                                eventListViewmodel
-                                    .EventList.data!.data![itemIndex].doctorName
-                                    .toString(),
-                            // 'Why 100% PCR Testing Required?',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
+                        Text(
+                          'Provider  ' +
+                              eventListViewmodel
+                                  .EventList.data!.data![itemIndex].doctorName
+                                  .toString(),
+                          // 'Why 100% PCR Testing Required?',
+                          style: TextStyle(
+                            fontSize: 11.sp,
+                            fontWeight: FontWeight.w500,
                           ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
                         SizedBox(
-                          height: 13,
+                          height: 7,
                         ),
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.67,
-                          // child: Html(
-                          //   data: newsData[itemIndex]["description"],
-                          // ),
-                          child: Text(
-                            'Patient  ' +
-                                eventListViewmodel
-                                    .EventList.data!.data![itemIndex].name
-                                    .toString(),
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
+                        Text(
+                          'Patient  ' +
+                              eventListViewmodel
+                                  .EventList.data!.data![itemIndex].name
+                                  .toString(),
+                          style: TextStyle(
+                            fontSize: 11.sp,
+                            fontWeight: FontWeight.w500,
                           ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
                         SizedBox(
-                          height: 13,
+                          height: 7,
                         ),
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.67,
-                          child: Text(
-                            'Mobile  ' +
-                                eventListViewmodel
-                                    .EventList.data!.data![itemIndex].mobile
-                                    .toString(),
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.w500),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
+                        Text(
+                          'Mobile  ' +
+                              eventListViewmodel
+                                  .EventList.data!.data![itemIndex].mobile
+                                  .toString(),
+                          style: TextStyle(
+                              fontSize: 11.sp, fontWeight: FontWeight.w500),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
                         SizedBox(
-                          height: 13,
+                          height: 5,
                         ),
                         Container(
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Container(
-                                width: MediaQuery.of(context).size.width * 0.58,
-                                child: Text(
-                                  'Ref No  -',
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
+                              Text(
+                                'Ref No  -',
+                                style: TextStyle(
+                                    fontSize: 11.sp,
+                                    fontWeight: FontWeight.w500),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                               ),
                               InkWell(
                                 onTap: () {
