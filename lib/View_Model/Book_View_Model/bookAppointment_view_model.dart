@@ -1,11 +1,11 @@
 import 'dart:async';
 
+import 'package:axonweb/Utils/routes/routes_name.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../Repository/Book_Repository/bookAppointment_repository.dart';
 import '../../Utils/utils.dart';
-import '../../View/Appointment/appointmentDetails_screen.dart';
 
 class BookAppointmentViewModel with ChangeNotifier {
   final _myRepo = BookAppointmentRepository();
@@ -37,17 +37,17 @@ class BookAppointmentViewModel with ChangeNotifier {
 
       if (value['status'] == true) {
         Utils.snackBar('Appointment Book Successfully', context);
-
+        print(value);
         Timer(
             Duration(seconds: 2),
-            () => Navigator.push(context,
-                MaterialPageRoute(builder: (context) => AppointmentDetails())));
+            () => Navigator.pushNamed(context, RoutesName.appointmentDetails,
+                arguments: value));
 
         if (kDebugMode) {
           print(value.toString());
         }
       } else {
-        Utils.snackBar('OTP is not valid*', context);
+        Utils.snackBar(value['displayMessage'], context);
         if (kDebugMode) {
           print(value.toString());
         }

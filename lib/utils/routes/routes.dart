@@ -1,4 +1,6 @@
 import 'package:axonweb/Utils/routes/routes_name.dart';
+import 'package:axonweb/View/Appointment/appointmentDetails_screen.dart';
+import 'package:axonweb/View/EventDetails/eventDetails_screen.dart';
 import 'package:axonweb/View/NewsDetails/news_details_screen.dart';
 import 'package:axonweb/View/ReportDetails/report_details_screen.dart';
 import 'package:axonweb/View/SelectAppointmentDate/selectappointmentdate_screen.dart';
@@ -67,6 +69,14 @@ class Routes {
       case RoutesName.selectPatient:
         return MaterialPageRoute(
             builder: (BuildContext context) => SelectPatientScreen());
+      case RoutesName.appointmentDetails:
+        return MaterialPageRoute(
+            builder: (BuildContext context) =>
+                AppointmentDetails(appointmentData: settings.arguments as Map));
+      case RoutesName.eventDetails:
+        return MaterialPageRoute(
+            builder: (BuildContext context) =>
+                EventDetailsScreen(appoitmentData: settings.arguments as Map));
       default:
         return MaterialPageRoute(builder: (_) {
           return const Scaffold(

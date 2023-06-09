@@ -38,4 +38,7 @@ class AppUrl {
 
   //Book Appointment
   static var bookAppointmentUrl = baseUrl + "BookAppointment/BookAppointment";
+
+  //Appointment History
+  static var getEventList = baseUrl + "BookAppointment/GetAppointmentHistory";
 }

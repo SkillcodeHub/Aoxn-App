@@ -37,4 +37,10 @@ class RoutesName {
 
   //selectPatient screen routes name
   static const String selectPatient = 'selectPatient_screen';
+
+  //Appointment Details screen routes name
+  static const String appointmentDetails = 'appointmentDetails_screen';
+
+  //Event Details screen routes name
+  static const String eventDetails = 'eventDetails_screen';
 }

@@ -168,16 +168,6 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                 height: 24.h,
                                                 width: 100.w,
                                                 decoration: BoxDecoration(
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: Colors.green,
-                                                    ),
-                                                    BoxShadow(
-                                                      color: Colors.white70,
-                                                      spreadRadius: -5.0,
-                                                      blurRadius: 20.0,
-                                                    ),
-                                                  ],
                                                   image: DecorationImage(
                                                     image: MemoryImage(
                                                       base64Decode(
@@ -678,11 +668,11 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                     "TimingId": displaytimingId
                                                         .toString(),
                                                   };
-                                                  // bookAppointmentViewModel
-                                                  //     .bookApointmentApi(
-                                                  //         data, context);
-                                                  // Timer(Duration(seconds: 5),
-                                                  //     () {});
+                                                  bookAppointmentViewModel
+                                                      .bookApointmentApi(
+                                                          data, context);
+                                                  Timer(Duration(seconds: 5),
+                                                      () {});
                                                 }
                                               },
                                               child: Text(

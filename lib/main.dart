@@ -10,6 +10,7 @@ import 'Model/DoctorList_Model/doctorlist_model.dart';
 import 'Model/NewsDetails_Model/newsdetails_model.dart';
 import 'View_Model/Book_View_Model/bookAppointment_view_model.dart';
 import 'View_Model/ChangeProvider_View_Model/provider_view_model.dart';
+import 'View_Model/Event_View_Model/event_view_model.dart';
 import 'View_Model/Login_View_Model/auth_view_model.dart';
 import 'View_Model/News_View_Model/news_view_model.dart';
 import 'View_Model/SelectPateint_View_Model/getPatientByMobileNo_view_model.dart';
@@ -42,6 +43,8 @@ class MyApp extends StatelessWidget {
             value: SelectPatientByIdViewmodel()),
         ChangeNotifierProvider<BookAppointmentViewModel>.value(
             value: BookAppointmentViewModel()),
+        ChangeNotifierProvider<EventListViewmodel>.value(
+            value: EventListViewmodel()),
       ],
       child: Sizer(builder: (context, orientation, DeviceType) {
         return MaterialApp(

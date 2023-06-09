@@ -1,9 +1,17 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../Res/colors.dart';
+import '../../Utils/routes/routes_name.dart';
+import '../../View_Model/Event_View_Model/event_view_model.dart';
+import '../../View_Model/Services/SharePreference/SharePreference.dart';
+import '../../data/response/status.dart';
 import '../../res/components/appbar/axonimage_appbar-widget.dart';
-import '../../res/components/appbar/payment_widget.dart';
 import '../../res/components/appbar/screen_name_widget.dart';
 import '../../res/components/appbar/settings_widget.dart';
 import '../../res/components/appbar/whatsapp_widget.dart';
@@ -16,8 +24,229 @@ class EventScreen extends StatefulWidget {
 }
 
 class _EventScreenState extends State<EventScreen> {
+  UserPreferences userPreference = UserPreferences();
+  late String token;
+  String deviceId = 'DESKTOP';
+  EventListViewmodel eventListViewmodel = EventListViewmodel();
+  @override
+  void initState() {
+    userPreference.getToken().then((value) {
+      setState(() {
+        token = value!;
+      });
+    });
+    // super.initState();
+    super.initState();
+  }
+
+  createAppointmentListContainer(BuildContext context, int itemIndex) {
+    String date =
+        eventListViewmodel.EventList.data!.data![itemIndex].apptDate.toString();
+    DateTime parseDate = new DateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(date);
+    var inputDate = DateTime.parse(parseDate.toString());
+    var outputFormat = DateFormat('E d-MMMM-yyyy');
+    var outputFormat1 = DateFormat('E,yyyy');
+    var outputFormat2 = DateFormat('d MMM');
+    var outputFormat3 = DateFormat('hh:mm a');
+    // var outputFormat = DateFormat('MM/dd/yyyy hh:mm a');
+    var outputDate = outputFormat.format(inputDate);
+    var outputDate1 = outputFormat1.format(inputDate);
+    var outputDate2 = outputFormat2.format(inputDate);
+    var outputDate3 = outputFormat3.format(inputDate);
+    print('|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
+    print(outputDate);
+    print('|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
+    String doctorName = eventListViewmodel
+        .EventList.data!.data![itemIndex].doctorName
+        .toString();
+    String patientName =
+        eventListViewmodel.EventList.data!.data![itemIndex].name.toString();
+    String status = eventListViewmodel
+        .EventList.data!.data![itemIndex].statusText
+        .toString();
+    String appointmentId = eventListViewmodel
+        .EventList.data!.data![itemIndex].appointmentId
+        .toString();
+    return Column(
+      children: [
+        InkWell(
+          onTap: () {
+            Map data = {
+              'date': outputDate,
+              'doctorName': doctorName,
+              'outputDate3': outputDate3,
+              'patientName': patientName,
+              'status': status,
+              'appointmentId': appointmentId,
+            };
+            status == 'Booked'
+                ? Navigator.pushNamed(context, RoutesName.eventDetails,
+                    arguments: data)
+                : null;
+          },
+          child: Card(
+            margin: EdgeInsets.only(top: 8, left: 8, right: 8),
+            color: Colors.white,
+            shadowColor: Colors.white,
+            elevation: 10,
+            child: Row(
+              children: [
+                Container(
+                    height: 150,
+                    width: MediaQuery.of(context).size.width * 0.25,
+                    color: status == 'Booked' ? Colors.green : Colors.grey,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          Text(
+                            // historyData[itemIndex]['apptDate'],
+                            outputDate1,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            outputDate2,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 17,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 50,
+                          ),
+                          Text(
+                            outputDate3,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ],
+                      ),
+                    )),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.70,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.67,
+                          child: Text(
+                            'Provider  ' +
+                                eventListViewmodel
+                                    .EventList.data!.data![itemIndex].doctorName
+                                    .toString(),
+                            // 'Why 100% PCR Testing Required?',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 13,
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.67,
+                          // child: Html(
+                          //   data: newsData[itemIndex]["description"],
+                          // ),
+                          child: Text(
+                            'Patient  ' +
+                                eventListViewmodel
+                                    .EventList.data!.data![itemIndex].name
+                                    .toString(),
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 13,
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.67,
+                          child: Text(
+                            'Mobile  ' +
+                                eventListViewmodel
+                                    .EventList.data!.data![itemIndex].mobile
+                                    .toString(),
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.w500),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 13,
+                        ),
+                        Container(
+                          child: Row(
+                            children: [
+                              Container(
+                                width: MediaQuery.of(context).size.width * 0.58,
+                                child: Text(
+                                  'Ref No  -',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w500),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  Map data = {
+                                    'date': outputDate,
+                                    'doctorName': doctorName,
+                                    'outputDate3': outputDate3,
+                                    'patientName': patientName,
+                                    'status': status,
+                                    'appointmentId': appointmentId,
+                                  };
+                                  status == 'Booked'
+                                      ? Navigator.pushNamed(
+                                          context, RoutesName.eventDetails,
+                                          arguments: data)
+                                      : null;
+                                },
+                                child: Icon(Icons.info_outline),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        // SizedBox(
+        //   height: 20,
+        // ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    Timer(Duration(microseconds: 20), () {
+      eventListViewmodel.fetchEventListApi(
+          deviceId.toString(), token.toString());
+    });
     Future refresh() async {}
     return Scaffold(
       backgroundColor: BackgroundColor,
@@ -56,61 +285,144 @@ class _EventScreenState extends State<EventScreen> {
       ),
       body: RefreshIndicator(
         onRefresh: refresh,
-        child: Stack(
-          children: [
-            SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: Padding(
-                padding: EdgeInsets.all(15),
-                child: Container(
-                  height: 74.h,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Text(
-                        'Swipe down to refresh page',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Color(0XFF545454),
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 120,
-                      ),
-                      Center(
-                        child: Image.asset(
-                          'images/axon.png',
-                          height: 90,
-                          width: 90,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Center(
-                        child: Text(
-                          'You  don\'t have any bookings or upcoming events',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: Color(0XFF545454),
-                              fontWeight: FontWeight.w600),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
+        child: ChangeNotifierProvider<EventListViewmodel>.value(
+            value: eventListViewmodel,
+            child: Consumer<EventListViewmodel>(
+              builder: (context, value, _) {
+                switch (value.EventList.status!) {
+                  case Status.LOADING:
+                    return Center(
+                        child: Center(child: CircularProgressIndicator()));
+                  case Status.ERROR:
+                    return Center(
+                        child: Html(data: value.EventList.message.toString()));
+                  case Status.COMPLETED:
+                    return eventListViewmodel.EventList.data!.data!.length != 0
+                        ? ListView.builder(
+                            padding: EdgeInsets.only(bottom: 10),
+                            physics: BouncingScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount:
+                                eventListViewmodel.EventList.data!.data!.length,
+                            itemBuilder: (BuildContext context, int itemIndex) {
+                              return createAppointmentListContainer(
+                                  context, itemIndex);
+                            })
+                        : Stack(
+                            children: [
+                              SingleChildScrollView(
+                                physics: BouncingScrollPhysics(),
+                                child: Padding(
+                                  padding: EdgeInsets.all(15),
+                                  child: Container(
+                                    height: 74.h,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        SizedBox(
+                                          height: 30,
+                                        ),
+                                        Text(
+                                          'Swipe down to refresh page',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            color: Color(0XFF545454),
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 120,
+                                        ),
+                                        Center(
+                                          child: Image.asset(
+                                            'images/axon.png',
+                                            height: 90,
+                                            width: 90,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 20,
+                                        ),
+                                        Center(
+                                          child: Text(
+                                            'You  don\'t have any bookings or upcoming events',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                color: Color(0XFF545454),
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                }
+              },
+            )),
       ),
     );
   }
 }
+
+        // Stack(
+        //   children: [
+        //     SingleChildScrollView(
+        //       physics: BouncingScrollPhysics(),
+        //       child: Padding(
+        //         padding: EdgeInsets.all(15),
+        //         child: Container(
+        //           height: 74.h,
+        //           child: Column(
+        //             mainAxisAlignment: MainAxisAlignment.start,
+        //             crossAxisAlignment: CrossAxisAlignment.center,
+        //             children: [
+        //               SizedBox(
+        //                 height: 30,
+        //               ),
+        //               Text(
+        //                 'Swipe down to refresh page',
+        //                 textAlign: TextAlign.center,
+        //                 style: TextStyle(
+        //                   fontSize: 20,
+        //                   color: Color(0XFF545454),
+        //                   fontWeight: FontWeight.w600,
+        //                 ),
+        //               ),
+        //               SizedBox(
+        //                 height: 120,
+        //               ),
+        //               Center(
+        //                 child: Image.asset(
+        //                   'images/axon.png',
+        //                   height: 90,
+        //                   width: 90,
+        //                 ),
+        //               ),
+        //               SizedBox(
+        //                 height: 20,
+        //               ),
+        //               Center(
+        //                 child: Text(
+        //                   'You  don\'t have any bookings or upcoming events',
+        //                   textAlign: TextAlign.center,
+        //                   style: TextStyle(
+        //                       fontSize: 20,
+        //                       color: Color(0XFF545454),
+        //                       fontWeight: FontWeight.w600),
+        //                 ),
+        //               ),
+        //             ],
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+        //   ],
+        // ),

@@ -1,30 +1,110 @@
 import 'package:flutter/material.dart';
 
-import '../../Res/Components/Appbar/screen_name_widget.dart';
-import '../../Res/colors.dart';
-
-class AppointmentDetails extends StatefulWidget {
-  final dynamic appointmentData;
-  const AppointmentDetails({super.key, required this.appointmentData});
+class EventDetailsScreen extends StatefulWidget {
+  final dynamic appoitmentData;
+  const EventDetailsScreen({super.key, required this.appoitmentData});
 
   @override
-  State<AppointmentDetails> createState() => _AppointmentDetailsState();
+  State<EventDetailsScreen> createState() => _EventDetailsScreenState();
 }
 
-class _AppointmentDetailsState extends State<AppointmentDetails> {
+class _EventDetailsScreenState extends State<EventDetailsScreen> {
+  showAlertDialog(BuildContext context) {
+    // set up the buttons
+    Widget cancelButton = TextButton(
+      child: Text(
+        "Cancel",
+        style: TextStyle(
+          fontSize: 15,
+          color: Color(0xFFFD5722),
+        ),
+      ),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+    Widget continueButton = TextButton(
+      child: Text(
+        "Continue",
+        style: TextStyle(
+          fontSize: 15,
+          color: Color(0xFFFD5722),
+        ),
+      ),
+      onPressed: () {
+        showAlert(context);
+        // _cancelAppointmentDetails();
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Confirm"),
+      content: Text("Are you sure want to cancel Appointment?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  showAlert(BuildContext context) {
+    // set up the button
+    Widget okButton = TextButton(
+      child: Text(
+        "OK",
+        style: TextStyle(
+          fontSize: 15,
+          color: Color(0xFFFD5722),
+        ),
+      ),
+      onPressed: () {
+        Navigator.of(context)
+          ..pop()
+          ..pop();
+        // status = 'canceled';
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Alert"),
+      content: Text("Appointment cancelled"),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: BackgroundColor,
+      backgroundColor: Colors.grey.shade200,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(60.0),
+        preferredSize: Size.fromHeight(70.0),
         child: AppBar(
           automaticallyImplyLeading: false,
           centerTitle: false,
-          backgroundColor: Color(0xffffffff),
           elevation: 0,
+          backgroundColor: Color(0xffffffff),
           leading: Padding(
-            padding: EdgeInsets.only(top: 5.0),
+            padding: EdgeInsets.only(top: 20),
             child: IconButton(
               color: Colors.black,
               onPressed: () {
@@ -34,12 +114,18 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
             ),
           ),
           title: Padding(
-            padding: const EdgeInsets.only(top: 5.0),
+            padding: EdgeInsets.only(
+              top: 16.0,
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                ScreenNameWidget(
-                  title: 'Book Appointment',
+                Text(
+                  "Appointment",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 25,
+                  ),
                 ),
               ],
             ),
@@ -54,14 +140,6 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
               padding: EdgeInsets.only(top: 20, left: 8, right: 8),
               child: Column(
                 children: [
-                  Text(
-                    'Booking Successful',
-                    style: TextStyle(
-                      fontSize: 33,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFFFD5722),
-                    ),
-                  ),
                   SizedBox(height: 6),
                   Card(
                     // margin: EdgeInsets.all(3),
@@ -94,7 +172,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                             height: 3,
                           ),
                           Text(
-                            widget.appointmentData['data']['doctorName'],
+                            widget.appoitmentData['doctorName'],
                             // appointmentData['doctorName'],
                             style: TextStyle(
                               fontSize: 17,
@@ -111,8 +189,8 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                             height: 3,
                           ),
                           Text(
-                            // 'aaa',
-                            widget.appointmentData['data']['name'],
+                            widget.appoitmentData['patientName'],
+                            // appointmentData['name'],
                             style: TextStyle(
                               fontSize: 17,
                             ),
@@ -138,8 +216,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                             // 'aaa',
                             'Remember to visit' +
                                 ' ' +
-                                widget.appointmentData['data']['doctorName'],
-                            // + historyData['doctorName'],
+                                widget.appoitmentData['doctorName'],
                             style: TextStyle(
                               fontSize: 17,
                             ),
@@ -149,7 +226,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                             children: [
                               Icon(Icons.perm_contact_calendar),
                               Text(
-                                'outputDate',
+                                widget.appoitmentData['date'],
                                 style: TextStyle(
                                   fontSize: 19,
                                 ),
@@ -161,7 +238,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                             children: [
                               Icon(Icons.punch_clock),
                               Text(
-                                'outputDate3',
+                                widget.appoitmentData['outputDate3'],
                                 style: TextStyle(
                                   fontSize: 19,
                                 ),
@@ -211,8 +288,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                               Container(
                                 width: MediaQuery.of(context).size.width * 0.71,
                                 child: Text(
-                                  widget.appointmentData['data']['statusText'],
-                                  //'aaaa',
+                                  widget.appoitmentData['status'],
                                   style: TextStyle(
                                     fontSize: 20,
                                     color: Color(0xFFFD5722),
@@ -224,19 +300,18 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                               // ),
                               TextButton(
                                 onPressed: () {
-                                  // showAlertDialog(context);
+                                  showAlertDialog(context);
                                 },
-                                child: widget.appointmentData['data']
-                                            ['statusText'] ==
-                                        'Booked'
-                                    ? Text(
-                                        'CANCEL',
-                                        style: TextStyle(
-                                          fontSize: 15,
-                                          color: Color(0xFFFD5722),
-                                        ),
-                                      )
-                                    : Container(),
+                                child:
+                                    widget.appoitmentData['status'] == 'Booked'
+                                        ? Text(
+                                            'CANCEL',
+                                            style: TextStyle(
+                                              fontSize: 15,
+                                              color: Color(0xFFFD5722),
+                                            ),
+                                          )
+                                        : Container(),
                               ),
                             ],
                           ),
@@ -247,21 +322,21 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                   SizedBox(
                     height: 20,
                   ),
-                  Container(
-                    height: 40,
-                    width: 170,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        primary: Color(0xFFFD5722),
-                      ),
-                      child: Text(
-                        'RETURN TO HOME',
-                      ),
-                    ),
-                  )
+                  // Container(
+                  //   height: 40,
+                  //   width: 170,
+                  //   child: ElevatedButton(
+                  //     onPressed: () {
+                  //       Navigator.pop(context);
+                  //     },
+                  //     style: ElevatedButton.styleFrom(
+                  //       primary: Color(0xFFFD5722),
+                  //     ),
+                  //     child: Text(
+                  //       'RETURN TO HOME',
+                  //     ),
+                  //   ),
+                  // )
                 ],
               ),
             ),
