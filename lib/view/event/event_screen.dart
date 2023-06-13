@@ -232,7 +232,13 @@ class _EventScreenState extends State<EventScreen> {
       eventListViewmodel.fetchEventListApi(
           deviceId.toString(), token.toString());
     });
-    Future refresh() async {}
+    Future refresh() async {
+      Timer(Duration(microseconds: 20), () {
+        eventListViewmodel.fetchEventListApi(
+            deviceId.toString(), token.toString());
+      });
+    }
+
     return Scaffold(
       backgroundColor: BackgroundColor,
       appBar: PreferredSize(
@@ -283,16 +289,24 @@ class _EventScreenState extends State<EventScreen> {
                         child: Html(data: value.EventList.message.toString()));
                   case Status.COMPLETED:
                     return eventListViewmodel.EventList.data!.data!.length != 0
-                        ? ListView.builder(
-                            padding: EdgeInsets.only(bottom: 10),
-                            physics: BouncingScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount:
-                                eventListViewmodel.EventList.data!.data!.length,
-                            itemBuilder: (BuildContext context, int itemIndex) {
-                              return createAppointmentListContainer(
-                                  context, itemIndex);
-                            })
+                        ? Stack(
+                            children: [
+                              SingleChildScrollView(
+                                physics: BouncingScrollPhysics(),
+                                child: ListView.builder(
+                                    padding: EdgeInsets.only(bottom: 10),
+                                    physics: BouncingScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemCount: eventListViewmodel
+                                        .EventList.data!.data!.length,
+                                    itemBuilder:
+                                        (BuildContext context, int itemIndex) {
+                                      return createAppointmentListContainer(
+                                          context, itemIndex);
+                                    }),
+                              ),
+                            ],
+                          )
                         : Stack(
                             children: [
                               SingleChildScrollView(
@@ -356,58 +370,3 @@ class _EventScreenState extends State<EventScreen> {
     );
   }
 }
-
-        // Stack(
-        //   children: [
-        //     SingleChildScrollView(
-        //       physics: BouncingScrollPhysics(),
-        //       child: Padding(
-        //         padding: EdgeInsets.all(15),
-        //         child: Container(
-        //           height: 74.h,
-        //           child: Column(
-        //             mainAxisAlignment: MainAxisAlignment.start,
-        //             crossAxisAlignment: CrossAxisAlignment.center,
-        //             children: [
-        //               SizedBox(
-        //                 height: 30,
-        //               ),
-        //               Text(
-        //                 'Swipe down to refresh page',
-        //                 textAlign: TextAlign.center,
-        //                 style: TextStyle(
-        //                   fontSize: 20,
-        //                   color: Color(0XFF545454),
-        //                   fontWeight: FontWeight.w600,
-        //                 ),
-        //               ),
-        //               SizedBox(
-        //                 height: 120,
-        //               ),
-        //               Center(
-        //                 child: Image.asset(
-        //                   'images/axon.png',
-        //                   height: 90,
-        //                   width: 90,
-        //                 ),
-        //               ),
-        //               SizedBox(
-        //                 height: 20,
-        //               ),
-        //               Center(
-        //                 child: Text(
-        //                   'You  don\'t have any bookings or upcoming events',
-        //                   textAlign: TextAlign.center,
-        //                   style: TextStyle(
-        //                       fontSize: 20,
-        //                       color: Color(0XFF545454),
-        //                       fontWeight: FontWeight.w600),
-        //                 ),
-        //               ),
-        //             ],
-        //           ),
-        //         ),
-        //       ),
-        //     ),
-        //   ],
-        // ),

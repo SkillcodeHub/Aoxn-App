@@ -8,7 +8,10 @@ import 'package:sizer/sizer.dart';
 
 import 'Model/DoctorList_Model/doctorlist_model.dart';
 import 'Model/NewsDetails_Model/newsdetails_model.dart';
+import 'Provider/current_time_provider.dart';
+import 'View/demo.dart';
 import 'View_Model/Book_View_Model/bookAppointment_view_model.dart';
+import 'View_Model/Book_View_Model/cancelAppointment_view_model.dart';
 import 'View_Model/ChangeProvider_View_Model/provider_view_model.dart';
 import 'View_Model/Event_View_Model/event_view_model.dart';
 import 'View_Model/Login_View_Model/auth_view_model.dart';
@@ -31,6 +34,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthViewModel()),
+        ChangeNotifierProvider(create: (_) => TimeProvider()),
         ChangeNotifierProvider(create: (_) => GetProviderTokenViewModel()),
         ChangeNotifierProvider(create: (_) => NewsViewmodel()),
         ChangeNotifierProvider<DoctorListViewmodel>.value(
@@ -45,6 +49,8 @@ class MyApp extends StatelessWidget {
             value: BookAppointmentViewModel()),
         ChangeNotifierProvider<EventListViewmodel>.value(
             value: EventListViewmodel()),
+        ChangeNotifierProvider<CancelAppointmentViewModel>.value(
+            value: CancelAppointmentViewModel()),
       ],
       child: Sizer(builder: (context, orientation, DeviceType) {
         return MaterialApp(
@@ -53,7 +59,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: AppPrimaryColor,
           ),
-          // home: LoginScreen(),
+          // home: ViewWidget(),
           initialRoute: RoutesName.splash,
           onGenerateRoute: Routes.generateRoute,
         );

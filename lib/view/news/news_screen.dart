@@ -39,9 +39,19 @@ class _NewsScreenState extends State<NewsScreen> {
         print(token);
       });
     });
-
+    setState(() {
+      main();
+    });
     // _newsRepository.fetchCustomerToken();
     super.initState();
+  }
+
+  void main() async {
+    // Retrieve the list
+    List<String> retrievedList =
+        await userPreference.getListFromSharedPreferences();
+    print('Retrieved list from SharedPreferences:');
+    print(retrievedList);
   }
 
   createNewsListContainer<NewsViewmodel>(BuildContext context, int index) {
@@ -193,12 +203,20 @@ class _NewsScreenState extends State<NewsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print('ParthParthParth');
+
     Timer(Duration(microseconds: 20),
         () => newsViewmodel.fetchNewsListApi(token));
     // newsViewmodel.fetchNewsListApi(token);
     Future refresh() async {
       newsViewmodel.fetchNewsListApi(token);
     }
+
+    // myList.add(token);
+    // Set<String> uniqueItems = Set<String>.from(myList);
+    // print(uniqueItems.toList());
+    // userPreference.saveListToSharedPreferences(uniqueItems.toList());
+    // List<String> myList = ['item1', 'item2', 'item3', 'item4'];
 
     return Scaffold(
       backgroundColor: BackgroundColor,

@@ -1,11 +1,10 @@
 import 'dart:async';
 
+import 'package:axonweb/Provider/current_time_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-
-import '../../Res/Components/Appbar/screen_name_widget.dart';
 import '../../Res/colors.dart';
 import '../../View_Model/SelectAppointDate_View_Model.dart/selectAppointmentDate_view_model.dart';
 import '../../data/response/status.dart';
@@ -44,6 +43,11 @@ class _SelectAppointmentDateScreenState
 
   void initState() {
     super.initState();
+    final currrentTimeProvider =
+        Provider.of<TimeProvider>(context, listen: false);
+    Timer.periodic(Duration(seconds: 1), (timer) {
+      currrentTimeProvider.updateTime();
+    });
     get();
   }
 
@@ -241,40 +245,47 @@ class _SelectAppointmentDateScreenState
       appointmentSlotListViewmodel.fetchAppointmentSlotListApi(
           widget.selectedDocotrId.toString(), datetime1.toString());
     });
+    isButtonActive = false;
+    currentDateSelectedIndex1 = null;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: BackgroundColor,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(60.0),
-        child: AppBar(
-          automaticallyImplyLeading: false,
-          centerTitle: false,
-          backgroundColor: Color(0xffffffff),
-          elevation: 0,
-          leading: Padding(
-            padding: EdgeInsets.only(top: 5.0),
-            child: IconButton(
-              color: Colors.black,
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: Icon(Icons.arrow_back_rounded),
-            ),
+      appBar: AppBar(
+        centerTitle: false,
+        elevation: 0,
+        backgroundColor: Colors.white,
+        automaticallyImplyLeading: false,
+        leading: Padding(
+          padding: EdgeInsets.only(top: 12),
+          child: IconButton(
+            color: Colors.black,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(Icons.arrow_back_rounded),
           ),
-          title: Padding(
-            padding: const EdgeInsets.only(top: 5.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ScreenNameWidget(
-                  title: 'Choose Time',
-                ),
-              ],
+        ),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 15),
+            Text(
+              'Choose Time',
+              style: TextStyle(color: Colors.black),
             ),
-          ),
+            Consumer<TimeProvider>(builder: (context, value, child) {
+              return Text(
+                '${DateFormat("dd-MMM-yyyy").format(DateTime.now())}' +
+                    ', ' +
+                    "${value.currentTime.toString()} IST ",
+                style: TextStyle(fontSize: 15, color: Colors.black),
+              );
+            }),
+            SizedBox(height: 10),
+          ],
         ),
       ),
       body: SingleChildScrollView(

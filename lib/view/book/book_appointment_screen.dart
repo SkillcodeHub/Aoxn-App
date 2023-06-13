@@ -66,19 +66,23 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
         token = value!;
       });
     });
-    setState(() {});
+    // setState(() {});
     // super.initState();
     super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final bookAppointmentViewModel =
-        Provider.of<BookAppointmentViewModel>(context);
+    // final bookAppointmentViewModel =
+    //     Provider.of<BookAppointmentViewModel>(context, listen: false);
     Timer(Duration(microseconds: 20), () {
       doctorListViewmodel.fetchDoctorListApi(token);
       settingsViewModel.fetchDoctorDetailsListApi(token);
     });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    print('ParthParthParth');
+    final bookAppointmentViewModel =
+        Provider.of<BookAppointmentViewModel>(context, listen: false);
+
     return Scaffold(
       backgroundColor: BackgroundColor,
       appBar: PreferredSize(
@@ -103,15 +107,6 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
               ],
             ),
           ),
-          // InkWell(
-          //   onTap: () {
-          //     userPrefernce.remove().then((value) {
-          //       Navigator.push(context,
-          //           MaterialPageRoute(builder: (context) => LoginScreen()));
-          //     });
-          //   },
-          //   child: Text('Logout'),
-          // )
         ),
       ),
       body: ChangeNotifierProvider<DoctorListViewmodel>.value(
@@ -150,19 +145,12 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                     CircularProgressIndicator());
                                           case Status.ERROR:
                                             return Center(
-                                                child: Text(
-                                              // value
-                                              //   .doctorDetailsList
-                                              //   .message
-                                              //   .toString()
-                                              'aaaa',
-                                            ));
+                                                child: Text(value
+                                                    .doctorDetailsList.message
+                                                    .toString()));
                                           case Status.COMPLETED:
-                                            number = settingsViewModel
-                                                .doctorDetailsList
-                                                .data!
-                                                .data![0]
-                                                .customerContact
+                                            number = value.doctorDetailsList
+                                                .data!.data![0].customerContact
                                                 .toString();
                                             return Container(
                                                 height: 24.h,
@@ -171,7 +159,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                   image: DecorationImage(
                                                     image: MemoryImage(
                                                       base64Decode(
-                                                        settingsViewModel
+                                                        value
                                                             .doctorDetailsList
                                                             .data!
                                                             .data![0]
@@ -179,14 +167,6 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                             .toString(),
                                                       ),
                                                     ),
-                                                    // onError: (exception,
-                                                    //     stackTrace) {
-                                                    //   return ;
-                                                    // },
-                                                    // image: NetworkImage(
-                                                    //   customerData[0]['logoImageURL'],
-                                                    // ),
-                                                    // image: AssetImage('images/c5.png'),
                                                     fit: BoxFit.cover,
                                                   ),
                                                 ),
@@ -211,7 +191,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                   .end,
                                                           children: [
                                                             Text(
-                                                              settingsViewModel
+                                                              value
                                                                   .doctorDetailsList
                                                                   .data!
                                                                   .data![0]
@@ -232,7 +212,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                       .ellipsis,
                                                             ),
                                                             Text(
-                                                              settingsViewModel
+                                                              value
                                                                   .doctorDetailsList
                                                                   .data!
                                                                   .data![0]
@@ -324,7 +304,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                         isDense: true,
                                                         hint: Text(
                                                           // "Select Doctor",
-                                                          doctorListViewmodel
+                                                          value
                                                               .doctorList
                                                               .data!
                                                               .data![0]
@@ -338,13 +318,14 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                               color:
                                                                   Colors.black),
                                                         ),
-                                                        value: selectedDocotrId =
-                                                            doctorListViewmodel
-                                                                .doctorList
-                                                                .data!
-                                                                .data![0]
-                                                                .doctorId
-                                                                .toString(),
+                                                        value:
+                                                            selectedDocotrId =
+                                                                value
+                                                                    .doctorList
+                                                                    .data!
+                                                                    .data![0]
+                                                                    .doctorId
+                                                                    .toString(),
                                                         onChanged:
                                                             (String? newValue) {
                                                           setState(() {
@@ -355,12 +336,9 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                           print(
                                                               selectedDocotrId);
                                                         },
-                                                        items:
-                                                            doctorListViewmodel
-                                                                .doctorList
-                                                                .data!
-                                                                .data!
-                                                                .map((map) {
+                                                        items: value.doctorList
+                                                            .data!.data!
+                                                            .map((map) {
                                                           return new DropdownMenuItem<
                                                               String>(
                                                             value: map.doctorId
@@ -458,8 +436,11 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                               height: 12.h,
                                               width: 78.w,
                                               child: Padding(
-                                                padding:
-                                                    const EdgeInsets.only(left: 8,right: 8,bottom: 8,top: 12),
+                                                padding: const EdgeInsets.only(
+                                                    left: 8,
+                                                    right: 8,
+                                                    bottom: 8,
+                                                    top: 12),
                                                 child: displayDate.isEmpty
                                                     ? Column(
                                                         crossAxisAlignment:

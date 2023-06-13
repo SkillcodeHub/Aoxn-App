@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../View_Model/Book_View_Model/cancelAppointment_view_model.dart';
+import '../../View_Model/Services/SharePreference/SharePreference.dart';
 
 class EventDetailsScreen extends StatefulWidget {
   final dynamic appoitmentData;
@@ -9,7 +13,23 @@ class EventDetailsScreen extends StatefulWidget {
 }
 
 class _EventDetailsScreenState extends State<EventDetailsScreen> {
+  UserPreferences userPreference = UserPreferences();
+  late String token;
+
+  @override
+  void initState() {
+    userPreference.getToken().then((value) {
+      setState(() {
+        token = value!;
+      });
+    });
+    // super.initState();
+    super.initState();
+  }
+
   showAlertDialog(BuildContext context) {
+    final cancelAppointmentViewModel =
+        Provider.of<CancelAppointmentViewModel>(context, listen: false);
     // set up the buttons
     Widget cancelButton = TextButton(
       child: Text(
@@ -32,7 +52,13 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
         ),
       ),
       onPressed: () {
-        showAlert(context);
+        Map data = {
+          "customerToken": token,
+          "appointmentId": widget.appoitmentData['appointmentId'],
+        };
+        cancelAppointmentViewModel.cancelApointmentApi(data, context);
+
+        // showAlert(context);
         // _cancelAppointmentDetails();
       },
     );
@@ -286,7 +312,6 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-
                               Container(
                                 // width: MediaQuery.of(context).size.width * 0.71,
                                 child: Text(

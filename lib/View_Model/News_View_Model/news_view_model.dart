@@ -40,6 +40,8 @@ class CustomerTkenViewmodel with ChangeNotifier {
   }
 
   Future<void> fetchCustomerTokenApi(context, String appCode) async {
+    // List<String> myList = [];
+
     setCustomerToken(ApiResponse.loading());
     _myRepo.fetchCustomerToken(appCode).then((value) {
       setCustomerToken(ApiResponse.completed(value));
@@ -47,10 +49,20 @@ class CustomerTkenViewmodel with ChangeNotifier {
       final token = customertoken.data!.data!.token.toString();
       print(token);
       userPreference.setToken(token);
-      // final userPreference =
-      //     Provider.of<GetTokenViewModel>(context, listen: false);
-      // userPreference.saveProviderToken(CustomerTokenModel(
-      //     ));
+      void main() async {
+        // Retrieve the list
+        List<String> retrievedList =
+            await userPreference.getListFromSharedPreferences();
+        print('Retrieved list from SharedPreferences:');
+        print(retrievedList);
+        retrievedList.add(appCode);
+        Set<String> uniqueItems = Set<String>.from(retrievedList);
+        print(uniqueItems.toList());
+        await userPreference.saveListToSharedPreferences(uniqueItems.toList());
+      }
+
+      main();
+
       Timer(
           Duration(seconds: 1),
           () => Navigator.push(context,

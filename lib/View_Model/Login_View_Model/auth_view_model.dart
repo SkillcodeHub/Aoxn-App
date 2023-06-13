@@ -40,12 +40,12 @@ class AuthViewModel with ChangeNotifier {
           displayMessage: value['displayMessage'].toString()));
 
       if (value['status'] == true) {
-        Utils.snackBar('OTP Send Successfully', context);
+        // Utils.snackBar('OTP Send Successfully', context);
 
-        Timer(
-            Duration(seconds: 2),
-            () =>
-                Navigator.pushNamed(context, RoutesName.otp, arguments: data));
+        // Timer(
+        //     Duration(seconds: 2),
+        //     () =>
+        //         Navigator.pushNamed(context, RoutesName.otp, arguments: data));
 
         if (kDebugMode) {
           print(value.toString());
