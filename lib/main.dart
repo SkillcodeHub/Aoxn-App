@@ -1,15 +1,12 @@
+import 'dart:io';
 import 'package:axonweb/View_Model/Book_View_Model/Book_view_Model.dart';
 import 'package:axonweb/res/colors.dart';
 import 'package:axonweb/utils/routes/routes.dart';
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-
-import 'Model/DoctorList_Model/doctorlist_model.dart';
-import 'Model/NewsDetails_Model/newsdetails_model.dart';
 import 'Provider/current_time_provider.dart';
-import 'View/demo.dart';
 import 'View_Model/Book_View_Model/bookAppointment_view_model.dart';
 import 'View_Model/Book_View_Model/cancelAppointment_view_model.dart';
 import 'View_Model/ChangeProvider_View_Model/provider_view_model.dart';
@@ -27,6 +24,16 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+  String? getPlatformFontFamily() {
+    if (Platform.isIOS) {
+      return CupertinoThemeData().textTheme.textStyle.fontFamily;
+      // Replace with the desired iOS font family
+      // } else if (Platform.isAndroid) {
+      //   return ''; // Replace with the desired Android font family
+    } else {
+      // return null; // Fallback font family if the platform is not recognized
+    }
+  }
 
   // This widget is the root of your application.
   @override
@@ -57,6 +64,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
           theme: ThemeData(
+            fontFamily: getPlatformFontFamily(),
             primarySwatch: AppPrimaryColor,
           ),
           // home: ViewWidget(),

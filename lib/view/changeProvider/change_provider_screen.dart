@@ -252,11 +252,14 @@
 //   }
 // }
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import '../../Res/colors.dart';
 import '../../View_Model/News_View_Model/news_view_model.dart';
 import '../../view_model/services/SharePreference/SharePreference.dart';
+import '../NevigationBar/my_navigationbar.dart';
 
 class ChangeProviderScreen extends StatefulWidget {
   const ChangeProviderScreen({Key? key}) : super(key: key);
@@ -275,19 +278,27 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
   @override
   void initState() {
     super.initState();
-    fetchData();
+    // fetchData();
+    fetchData1();
   }
 
-  Future<List<String>> fetchData() async {
-    List<String> retrievedList =
-        await userPreference.getListFromSharedPreferences();
-    return retrievedList;
+  // Future<List<String>> fetchData() async {
+  //   List<String> retrievedList =
+  //       await userPreference.getListFromSharedPreferences();
+  //   return retrievedList;
+  // }
+
+  Future<List<Map<String, dynamic>>?> fetchData1() async {
+    List<Map<String, dynamic>>? storedData =
+        await userPreference.getDataFromSharedPreferences();
+    return storedData;
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<String>>(
-      future: fetchData(),
+    return FutureBuilder<List<Map<String, dynamic>>?>(
+      // future: fetchData(),
+      future: fetchData1(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Scaffold(
@@ -302,7 +313,7 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
             ),
           );
         } else {
-          List<String> providerList = snapshot.data ?? [];
+          List<Map<String, dynamic>> providerList = snapshot.data ?? [];
 
           return Scaffold(
             backgroundColor: BackgroundColor,
@@ -510,14 +521,33 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                       (BuildContext context, int index) {
                                     return InkWell(
                                       onTap: () {
-                                        customerTkenViewmodel
-                                            .fetchCustomerTokenApi(context,
-                                                providerList[index].toString());
+                                        final token = providerList[index]
+                                                ['token']
+                                            .toString();
+
+                                        print(providerList[index]['token']
+                                            .toString());
+                                        userPreference.setToken(token);
+
+                                        // customerTkenViewmodel
+                                        //     .fetchCustomerTokenApi(
+                                        //         context,
+                                        //         providerList[index]['token']
+                                        //             .toString());
+                                        Timer(
+                                            Duration(seconds: 1),
+                                            () => Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        MyNavigationBar())));
                                       },
                                       child: Card(
                                         child: Padding(
                                           padding: const EdgeInsets.all(15.0),
-                                          child: Text(providerList[index]),
+                                          child: Text(providerList[index]
+                                                  ['doctorName']
+                                              .toString()),
                                         ),
                                       ),
                                     );
