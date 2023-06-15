@@ -19,22 +19,10 @@ import 'View_Model/Settings_View_Model/settings_view_model.dart';
 import 'utils/routes/routes_name.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-  String? getPlatformFontFamily() {
-    if (Platform.isIOS) {
-      return CupertinoThemeData().textTheme.textStyle.fontFamily;
-      // Replace with the desired iOS font family
-      // } else if (Platform.isAndroid) {
-      //   return ''; // Replace with the desired Android font family
-    } else {
-      // return null; // Fallback font family if the platform is not recognized
-    }
-  }
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -64,7 +52,6 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
           theme: ThemeData(
-            fontFamily: getPlatformFontFamily(),
             primarySwatch: AppPrimaryColor,
           ),
           // home: ViewWidget(),

@@ -353,221 +353,404 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                 ),
               ),
             ),
-            body: Stack(
-              children: [
-                SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Card(
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(12.0))),
-                          elevation: 3,
-                          child: Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Column(
-                              children: [
-                                Container(
-                                  height: 13.h,
-                                  child: Image(
-                                      image: AssetImage('images/axon.png')),
-                                ),
-                                SizedBox(height: 2.h),
-                                Container(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    'Select Hospital by: ',
-                                    style: TextStyle(
-                                      fontSize: 15.sp,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(height: 2.h),
-                                InkWell(
-                                  onTap: () {
-                                    // _qrScanner();
-                                  },
-                                  child: Row(
+            body: providerList.length != 0
+                ? Stack(
+                    children: [
+                      SingleChildScrollView(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Card(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(12.0))),
+                                elevation: 3,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: Column(
                                     children: [
-                                      SizedBox(width: 2.w),
                                       Container(
-                                        height: 5.h,
+                                        height: 11.h,
                                         child: Image(
-                                            image:
-                                                AssetImage('images/axon.png')),
+                                            image: AssetImage(
+                                                'images/doctor.png')),
                                       ),
-                                      SizedBox(width: 4.w),
+                                      SizedBox(height: 1.h),
                                       Container(
                                         alignment: Alignment.centerLeft,
                                         child: Text(
-                                          'SCANNING APP CODE',
-                                          style: TextStyle(fontSize: 15.sp),
+                                          'Select Hospital by: ',
+                                          style: TextStyle(
+                                            fontSize: 15.sp,
+                                            fontWeight: FontWeight.w500,
+                                          ),
                                         ),
                                       ),
+                                      SizedBox(height: 1.h),
+                                      InkWell(
+                                        onTap: () {
+                                          // _qrScanner();
+                                        },
+                                        child: Row(
+                                          children: [
+                                            SizedBox(width: 2.w),
+                                            Container(
+                                              height: 5.h,
+                                              child: Image(
+                                                  image: AssetImage(
+                                                      'images/qr.png')),
+                                            ),
+                                            SizedBox(width: 4.w),
+                                            Container(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(
+                                                'SCANNING APP CODE',
+                                                style:
+                                                    TextStyle(fontSize: 15.sp),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      // SizedBox(height: 1.h),
+                                      Row(
+                                        children: [
+                                          Container(
+                                            height: 1,
+                                            width: 40.w,
+                                            color: Colors.black,
+                                          ),
+                                          SizedBox(width: 2.w),
+                                          Text('or'),
+                                          SizedBox(width: 2.w),
+                                          Container(
+                                            height: 1,
+                                            width: 40.w,
+                                            color: Colors.black,
+                                          ),
+                                        ],
+                                      ),
+                                      // SizedBox(height: 1.h),
+                                      InkWell(
+                                        onTap: () {
+                                          showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                return Container(
+                                                  child: AlertDialog(
+                                                    title: Text('Code'),
+                                                    content: TextField(
+                                                      focusNode: _nodeAppcode,
+                                                      controller: strAppcode,
+                                                      cursorColor:
+                                                          Color(0xFFFD5722),
+                                                      onChanged: (value) {},
+                                                      decoration: InputDecoration(
+                                                          hintText:
+                                                              'Write App Code'),
+                                                    ),
+                                                    actions: [
+                                                      TextButton(
+                                                          onPressed: () {
+                                                            Navigator.pop(
+                                                                context);
+                                                          },
+                                                          child: Text(
+                                                            'Cancel',
+                                                            style: TextStyle(
+                                                                color: Color(
+                                                                    0xFFFD5722)),
+                                                          )),
+                                                      TextButton(
+                                                          onPressed: () {
+                                                            customerTkenViewmodel
+                                                                .fetchCustomerTokenApi(
+                                                                    context,
+                                                                    strAppcode
+                                                                        .text
+                                                                        .toString());
+                                                          },
+                                                          child: Text(
+                                                            'OK',
+                                                            style: TextStyle(
+                                                                color: Color(
+                                                                    0xFFFD5722)),
+                                                          ))
+                                                    ],
+                                                  ),
+                                                );
+                                              });
+                                        },
+                                        child: Row(
+                                          children: [
+                                            SizedBox(width: 2.w),
+                                            Container(
+                                              height: 5.h,
+                                              child: Image(
+                                                  image: AssetImage(
+                                                      'images/keyboard.png')),
+                                            ),
+                                            SizedBox(width: 4.w),
+                                            Container(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(
+                                                'WRITING CODE MANUALLY',
+                                                style:
+                                                    TextStyle(fontSize: 15.sp),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      // SizedBox(height: 1.h),
                                     ],
                                   ),
                                 ),
-                                SizedBox(height: 1.h),
-                                Row(
-                                  children: [
-                                    Container(
-                                      height: 1,
-                                      width: 40.w,
-                                      color: Colors.black,
-                                    ),
-                                    SizedBox(width: 2.w),
-                                    Text('or'),
-                                    SizedBox(width: 2.w),
-                                    Container(
-                                      height: 1,
-                                      width: 40.w,
-                                      color: Colors.black,
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 1.h),
-                                InkWell(
-                                  onTap: () {
-                                    showDialog(
-                                        context: context,
-                                        builder: (context) {
-                                          return Container(
-                                            child: AlertDialog(
-                                              title: Text('Code'),
-                                              content: TextField(
-                                                focusNode: _nodeAppcode,
-                                                controller: strAppcode,
-                                                cursorColor: Color(0xFFFD5722),
-                                                onChanged: (value) {},
-                                                decoration: InputDecoration(
-                                                    hintText: 'Write App Code'),
+                              ),
+                              SizedBox(height: 1.h),
+                              providerList.length != 0
+                                  ? Text(
+                                      'OR',
+                                      style: TextStyle(fontSize: 12.sp),
+                                    )
+                                  : Container(),
+                              SizedBox(height: 1.h),
+                              SizedBox(
+                                height: 41.h,
+                                child: providerList.length != 0
+                                    ? ListView.builder(
+                                        shrinkWrap: true,
+                                        itemCount: providerList.length,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          return InkWell(
+                                            onTap: () {
+                                              final token = providerList[index]
+                                                      ['token']
+                                                  .toString();
+
+                                              print(providerList[index]['token']
+                                                  .toString());
+                                              userPreference.setToken(token);
+
+                                              // customerTkenViewmodel
+                                              //     .fetchCustomerTokenApi(
+                                              //         context,
+                                              //         providerList[index]['token']
+                                              //             .toString());
+                                              Timer(
+                                                  Duration(seconds: 1),
+                                                  () => Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              MyNavigationBar())));
+                                            },
+                                            child: Card(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(12.0),
+                                                child: Text(providerList[index]
+                                                        ['doctorName']
+                                                    .toString()),
                                               ),
-                                              actions: [
-                                                TextButton(
-                                                    onPressed: () {
-                                                      Navigator.pop(context);
-                                                    },
-                                                    child: Text(
-                                                      'Cancel',
-                                                      style: TextStyle(
-                                                          color: Color(
-                                                              0xFFFD5722)),
-                                                    )),
-                                                TextButton(
-                                                    onPressed: () {
-                                                      customerTkenViewmodel
-                                                          .fetchCustomerTokenApi(
-                                                              context,
-                                                              strAppcode.text
-                                                                  .toString());
-                                                    },
-                                                    child: Text(
-                                                      'OK',
-                                                      style: TextStyle(
-                                                          color: Color(
-                                                              0xFFFD5722)),
-                                                    ))
-                                              ],
                                             ),
                                           );
-                                        });
-                                  },
-                                  child: Row(
-                                    children: [
-                                      SizedBox(width: 2.w),
-                                      Container(
-                                        height: 5.h,
-                                        child: Image(
-                                            image:
-                                                AssetImage('images/axon.png')),
-                                      ),
-                                      SizedBox(width: 4.w),
-                                      Container(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          'WRITING CODE MANUALLY',
-                                          style: TextStyle(fontSize: 15.sp),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(height: 1.h),
-                              ],
-                            ),
+                                        },
+                                      )
+                                    : Container(),
+                              ),
+                              Text(
+                                'Contact your provider for App Code',
+                                style: TextStyle(fontSize: 12.sp),
+                              ),
+                              SizedBox(
+                                height: 5,
+                              )
+                            ],
                           ),
                         ),
-                        SizedBox(height: 1.h),
-                        providerList.length != 0
-                            ? Text(
-                                'OR',
-                                style: TextStyle(fontSize: 12.sp),
-                              )
-                            : Container(),
-                        SizedBox(height: 1.h),
-                        SizedBox(
-                          height: 34.h,
-                          child: providerList.length != 0
-                              ? ListView.builder(
-                                  shrinkWrap: true,
-                                  itemCount: providerList.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return InkWell(
-                                      onTap: () {
-                                        final token = providerList[index]
-                                                ['token']
-                                            .toString();
-
-                                        print(providerList[index]['token']
-                                            .toString());
-                                        userPreference.setToken(token);
-
-                                        // customerTkenViewmodel
-                                        //     .fetchCustomerTokenApi(
-                                        //         context,
-                                        //         providerList[index]['token']
-                                        //             .toString());
-                                        Timer(
-                                            Duration(seconds: 1),
-                                            () => Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        MyNavigationBar())));
-                                      },
-                                      child: Card(
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(15.0),
-                                          child: Text(providerList[index]
-                                                  ['doctorName']
-                                              .toString()),
+                      ),
+                    ],
+                  )
+                : Stack(
+                    children: [
+                      SingleChildScrollView(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                height: 20.h,
+                              ),
+                              Center(
+                                child: Card(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(12.0))),
+                                  elevation: 3,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          height: 11.h,
+                                          child: Image(
+                                              image: AssetImage(
+                                                  'images/doctor.png')),
                                         ),
-                                      ),
-                                    );
-                                  },
-                                )
-                              : Container(),
+                                        SizedBox(height: 1.h),
+                                        Container(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            'Select Hospital by: ',
+                                            style: TextStyle(
+                                              fontSize: 15.sp,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(height: 1.h),
+                                        InkWell(
+                                          onTap: () {
+                                            // _qrScanner();
+                                          },
+                                          child: Row(
+                                            children: [
+                                              SizedBox(width: 2.w),
+                                              Container(
+                                                height: 5.h,
+                                                child: Image(
+                                                    image: AssetImage(
+                                                        'images/qr.png')),
+                                              ),
+                                              SizedBox(width: 4.w),
+                                              Container(
+                                                alignment: Alignment.centerLeft,
+                                                child: Text(
+                                                  'SCANNING APP CODE',
+                                                  style: TextStyle(
+                                                      fontSize: 15.sp),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        // SizedBox(height: 1.h),
+                                        Row(
+                                          children: [
+                                            Container(
+                                              height: 1,
+                                              width: 40.w,
+                                              color: Colors.black,
+                                            ),
+                                            SizedBox(width: 2.w),
+                                            Text('or'),
+                                            SizedBox(width: 2.w),
+                                            Container(
+                                              height: 1,
+                                              width: 40.w,
+                                              color: Colors.black,
+                                            ),
+                                          ],
+                                        ),
+                                        // SizedBox(height: 1.h),
+                                        InkWell(
+                                          onTap: () {
+                                            showDialog(
+                                                context: context,
+                                                builder: (context) {
+                                                  return Container(
+                                                    child: AlertDialog(
+                                                      title: Text('Code'),
+                                                      content: TextField(
+                                                        focusNode: _nodeAppcode,
+                                                        controller: strAppcode,
+                                                        cursorColor:
+                                                            Color(0xFFFD5722),
+                                                        onChanged: (value) {},
+                                                        decoration: InputDecoration(
+                                                            hintText:
+                                                                'Write App Code'),
+                                                      ),
+                                                      actions: [
+                                                        TextButton(
+                                                            onPressed: () {
+                                                              Navigator.pop(
+                                                                  context);
+                                                            },
+                                                            child: Text(
+                                                              'Cancel',
+                                                              style: TextStyle(
+                                                                  color: Color(
+                                                                      0xFFFD5722)),
+                                                            )),
+                                                        TextButton(
+                                                            onPressed: () {
+                                                              customerTkenViewmodel
+                                                                  .fetchCustomerTokenApi(
+                                                                      context,
+                                                                      strAppcode
+                                                                          .text
+                                                                          .toString());
+                                                            },
+                                                            child: Text(
+                                                              'OK',
+                                                              style: TextStyle(
+                                                                  color: Color(
+                                                                      0xFFFD5722)),
+                                                            ))
+                                                      ],
+                                                    ),
+                                                  );
+                                                });
+                                          },
+                                          child: Row(
+                                            children: [
+                                              SizedBox(width: 2.w),
+                                              Container(
+                                                height: 5.h,
+                                                child: Image(
+                                                    image: AssetImage(
+                                                        'images/keyboard.png')),
+                                              ),
+                                              SizedBox(width: 4.w),
+                                              Container(
+                                                alignment: Alignment.centerLeft,
+                                                child: Text(
+                                                  'WRITING CODE MANUALLY',
+                                                  style: TextStyle(
+                                                      fontSize: 15.sp),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        // SizedBox(height: 1.h),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: 1.h),
+                              // Text(
+                              //   'Contact your provider for App Code',
+                              //   style: TextStyle(fontSize: 12.sp),
+                              // ),
+                              SizedBox(
+                                height: 5,
+                              )
+                            ],
+                          ),
                         ),
-                        Text(
-                          'Contact your provider for App Code',
-                          style: TextStyle(fontSize: 12.sp),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        )
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
-            ),
           );
         }
       },

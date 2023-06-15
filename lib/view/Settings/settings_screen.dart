@@ -392,6 +392,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
   SettingsViewModel settingsViewModel = SettingsViewModel();
   late String mobile;
   late String token;
+  late String name;
+  late String age;
 
   bool isLoading = false;
 
@@ -407,6 +409,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
     userPreference.getToken().then((value) {
       setState(() {
         token = value!;
+      });
+    });
+    userPreference.getName().then((value) {
+      setState(() {
+        name = value!;
+      });
+    });
+    userPreference.getAge().then((value) {
+      setState(() {
+        age = value!;
       });
     });
   }
@@ -454,7 +466,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     settingsViewModel.fetchDoctorDetailsListApi(token);
-
+    print(age);
+    print(name);
     return Scaffold(
       backgroundColor: BackgroundColor,
       appBar: PreferredSize(
@@ -623,13 +636,37 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                           ),
                                           SizedBox(height: 10),
                                           SizedBox(height: 5),
-                                          Text(
-                                            mobile.replaceRange(
-                                                0, 7, 'xxxxxxx'),
-                                            style: TextStyle(
-                                              fontSize: 17,
-                                              fontWeight: FontWeight.w500,
-                                            ),
+                                          Row(
+                                            children: [
+                                              Container(
+                                                  height: 4.h,
+                                                  child: age == 'Male'
+                                                      ? Image.asset(
+                                                          'images/male.png')
+                                                      : Image.asset(
+                                                          'images/female.png')),
+                                              SizedBox(
+                                                width: 2.w,
+                                              ),
+                                              Container(
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(name),
+                                                    Text(
+                                                      mobile.replaceRange(
+                                                          0, 7, 'xxxxxxx'),
+                                                      style: TextStyle(
+                                                        fontSize: 17,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
+                                            ],
                                           ),
                                           Row(
                                             mainAxisAlignment:

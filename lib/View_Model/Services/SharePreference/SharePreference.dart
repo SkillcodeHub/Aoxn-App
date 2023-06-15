@@ -23,6 +23,26 @@ class UserPreferences {
     prefs.setString("access_token", args);
   }
 
+  Future<String?> getName() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString("access_name");
+  }
+
+  void setName(String args) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("access_name", args);
+  }
+
+  Future<String?> getAge() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString("access_age");
+  }
+
+  void setAge(String args) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("access_age", args);
+  }
+
   void logoutProcess() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     // prefs.remove("isLoggedIn");
@@ -73,53 +93,3 @@ class UserPreferences {
     return []; // Return null if no data is found in SharedPreferences
   }
 }
-
-
-
-
-
-
-// class SharedPreferencesHelper {
-//   static const String _dataKey = 'data';
-
-//   // Store data in shared preferences
-//   static Future<void> saveData(List<Map<String, String>> data) async {
-//     SharedPreferences prefs = await SharedPreferences.getInstance();
-//     List<String> jsonData = data.map((item) => json.encode(item)).toList();
-//     await prefs.setStringList(_dataKey, jsonData);
-//   }
-
-//   // Retrieve data from shared preferences
-//   static Future<List<Map<String, String>>> getData() async {
-//     SharedPreferences prefs = await SharedPreferences.getInstance();
-//     List<String>? jsonData = prefs.getStringList(_dataKey);
-//     List<Map<String, String>> data = jsonData
-//             ?.map((item) => json.decode(item))
-//             .cast<Map<String, String>>()
-//             .toList() ??
-//         [];
-//     return data;
-//   }
-// }
-
-
-
-
-// class SharedPreferencesHelper {
-//   static const String _dataKey = 'data';
-
-//   // Store data in shared preferences
-//   static Future<void> saveData(List<Map<String, String>> data) async {
-//     SharedPreferences prefs = await SharedPreferences.getInstance();
-//     List<String> jsonData = data.map((item) => json.encode(item)).toList();
-//     await prefs.setStringList(_dataKey, jsonData);
-//   }
-
-//   // Retrieve data from shared preferences
-//   static Future<List> getData() async {
-//     SharedPreferences prefs = await SharedPreferences.getInstance();
-//     List<String>? jsonData = prefs.getStringList(_dataKey);
-//     List data = jsonData?.map((item) => json.decode(item)).toList() ?? [];
-//     return data;
-//   }
-// }

@@ -217,6 +217,8 @@
 // }
 
 import 'dart:async';
+import 'package:axonweb/Res/colors.dart';
+import 'package:axonweb/View_Model/Settings_View_Model/settings_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -232,10 +234,16 @@ class LoginScreen extends StatefulWidget {
 
 class LoginScreenState extends State {
   bool viewVisible = false;
+  bool saveButton = false;
   String codeValue = "";
 
   TextEditingController _mobileController = TextEditingController();
+  TextEditingController _nameController = TextEditingController();
+  TextEditingController _birthController = TextEditingController();
   FocusNode mobileFocusNode = FocusNode();
+  FocusNode nameFocusNode = FocusNode();
+  FocusNode birthFocusNode = FocusNode();
+  String genderValue = "Male";
 
   // void showWidget() {
   //   setState(() {
@@ -274,23 +282,144 @@ class LoginScreenState extends State {
   Widget build(BuildContext context) {
     final authViewModel = Provider.of<AuthViewModel>(context);
     return Scaffold(
+      backgroundColor: BackgroundColor,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: <Widget>[
-                SizedBox(
-                  height: 10.h,
-                ),
+                // SizedBox(
+                //   height: 10.h,
+                // ),
                 Container(
-                  height: 160,
+                  height: 11.h,
                   child: Image.asset(
                     'images/axon.png',
                   ),
                 ),
                 SizedBox(
                   height: 10,
+                ),
+                Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Login with your details',
+                          style: TextStyle(
+                              fontSize: 15.sp, fontWeight: FontWeight.w600),
+                        ),
+                        SizedBox(
+                          height: 1.h,
+                        ),
+                        TextFormField(
+                          controller: _nameController,
+                          keyboardType: TextInputType.text,
+                          focusNode: nameFocusNode,
+                          decoration: InputDecoration(
+                            // hintText: 'Mobile Number(10 digit)',
+                            labelText: 'Full Name',
+                          ),
+                        ),
+                        TextFormField(
+                          controller: _birthController,
+                          keyboardType: TextInputType.text,
+                          focusNode: birthFocusNode,
+                          decoration: InputDecoration(
+                            // hintText: 'Mobile Number(10 digit)',
+                            labelText: 'Birthday(Optional)',
+                          ),
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              child: Row(
+                                children: [
+                                  Container(
+                                    child: Row(
+                                      children: [
+                                        Radio(
+                                          value: 'Male',
+                                          activeColor: Color(0xFFFD5722),
+                                          groupValue: genderValue,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              genderValue = value!;
+                                            });
+                                          },
+                                        ),
+                                        Container(
+                                          child: Text(
+                                            "Male",
+                                            style: const TextStyle(
+                                              fontSize: 15,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    child: Row(
+                                      children: [
+                                        Radio(
+                                          value: 'Female',
+                                          activeColor: Color(0xFFFD5722),
+                                          groupValue: genderValue,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              genderValue = value!;
+                                            });
+                                          },
+                                        ),
+                                        Container(
+                                          child: Text(
+                                            "Female",
+                                            style: const TextStyle(
+                                              fontSize: 15,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                                //   width: 60.w,
+                                ),
+                            // TextButton(
+                            //   child: Text(
+                            //     'save',
+                            //     style: TextStyle(
+                            //       fontSize: 16,
+                            //       fontWeight: FontWeight.w600,
+                            //     ),
+                            //   ),
+                            //   onPressed: () {
+                            //     setState(() {
+                            //       if (_nameController.text.isEmpty) {
+                            //         Utils.snackBar(
+                            //             'Please enter Name*', context);
+                            //       } else {
+                            //         saveButton = true;
+                            //       }
+                            //     });
+                            //   },
+                            //   style: TextButton.styleFrom(
+                            //       elevation: 0, primary: Color(0xFFFD5722)),
+                            // ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
                 Card(
                   child: Padding(
@@ -327,7 +456,11 @@ class LoginScreenState extends State {
                               ),
                               onPressed: () {
                                 setState(() {
-                                  if (_mobileController.text.isEmpty) {
+                                  if (_nameController.text.isEmpty) {
+                                    Utils.snackBar(
+                                        'Please enter your name', context);
+                                    viewVisible = false;
+                                  } else if (_mobileController.text.isEmpty) {
                                     Utils.snackBar(
                                         'Please enter MobileNo*', context);
                                     viewVisible = false;
@@ -344,6 +477,10 @@ class LoginScreenState extends State {
                                         context);
                                     viewVisible = false;
                                   } else {
+                                    userPreference.setName(
+                                        _nameController.text.toString());
+                                    userPreference
+                                        .setAge(genderValue.toString());
                                     Map data = {
                                       'Mobile':
                                           _mobileController.text.toString()
@@ -356,36 +493,6 @@ class LoginScreenState extends State {
                                   }
                                 });
                               },
-                              //     () {
-                              //   if (_mobileController.text.isEmpty) {
-                              //     Utils.snackBar(
-                              //         'Please enter MobileNo*', context);
-                              //   } else if (_mobileController.text.length < 10) {
-                              //     Utils.snackBar(
-                              //         'Please enter 10 Digit MobileNo*',
-                              //         context);
-                              //   } else if (_mobileController.text.length > 10) {
-                              //     Utils.snackBar(
-                              //         'Please enter 10 Digit MobileNo*',
-                              //         context);
-                              //   } else {
-                              //     // Navigator.push(
-                              //     //     context,
-                              //     //     MaterialPageRoute(
-                              //     //         builder: (context) =>
-                              //     //             OtpVerifyScreen()));
-                              //     Map data = {
-                              //       'Mobile': _mobileController.text.toString()
-                              //     };
-                              //     // authViewModel.loginApi(data, context);
-                              //     // Timer(Duration(seconds: 5), () {
-                              //     //   _mobileController.clear();
-                              //     // });
-                              //     viewVisible = true;
-                              //     showWidget1;
-                              //   }
-                              // },
-                              // showWidget,
                               style: TextButton.styleFrom(
                                   elevation: 0, primary: Color(0xFFFD5722)),
                             ),
