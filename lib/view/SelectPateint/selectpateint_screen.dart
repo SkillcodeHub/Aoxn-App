@@ -25,7 +25,7 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
   var mobile;
   List patientById = [];
   String? registeredpatientBirth;
-  String genderValue ="Male";
+  String genderValue = "Male";
   bool _enableBtn = false;
   String? PatType;
   String? patientBirth;
@@ -504,11 +504,11 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                               });
                             },
                             scrollPadding: EdgeInsets.only(bottom: 60),
-                            keyboardType: TextInputType.numberWithOptions(signed: true,decimal: true),
+                            keyboardType: TextInputType.numberWithOptions(
+                                signed: true, decimal: true),
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
                             textInputAction: TextInputAction.done,
-                            
                             decoration: InputDecoration(
                               errorMaxLines: 10,
                               contentPadding: const EdgeInsets.all(10.0),
@@ -539,9 +539,11 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                                                   CircularProgressIndicator());
                                         case Status.ERROR:
                                           return Center(
-                                              child: Text(value
-                                                  .SelectPatientById.message
-                                                  .toString()));
+                                            child: Text(
+                                              value.SelectPatientById.message
+                                                  .toString(),
+                                            ),
+                                          );
                                         case Status.COMPLETED:
                                           patientById =
                                               selectPatientByIdViewmodel
@@ -613,21 +615,26 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                                                 child: Row(
                                                   children: [
                                                     Container(
-                                                      width: 25.w,
+                                                      width: 22.w,
                                                       child: Column(
                                                         crossAxisAlignment:
                                                             CrossAxisAlignment
                                                                 .center,
                                                         children: [
-                                                          Text(selectPatientByIdViewmodel
-                                                              .SelectPatientById
-                                                              .data!
-                                                              .data![0]
-                                                              .caseNo
-                                                              .toString()),
+                                                          Text('#' +
+                                                              selectPatientByIdViewmodel
+                                                                  .SelectPatientById
+                                                                  .data!
+                                                                  .data![0]
+                                                                  .caseNo
+                                                                  .toString()),
+                                                          SizedBox(
+                                                            height: 5,
+                                                          ),
                                                           Container(
-                                                            child: Icon(
-                                                                Icons.person),
+                                                            height: 5.h,
+                                                            child: Image.asset(
+                                                                'images/selectPatient.png'),
                                                           ),
                                                         ],
                                                       ),
@@ -638,12 +645,18 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                                                             CrossAxisAlignment
                                                                 .start,
                                                         children: [
-                                                          Text(selectPatientByIdViewmodel
-                                                              .SelectPatientById
-                                                              .data!
-                                                              .data![0]
-                                                              .patientName
-                                                              .toString()),
+                                                          Container(
+                                                            width: 60.w,
+                                                            child: Text(
+                                                              selectPatientByIdViewmodel
+                                                                  .SelectPatientById
+                                                                  .data!
+                                                                  .data![0]
+                                                                  .patientName
+                                                                  .toString(),
+                                                              maxLines: 1,
+                                                            ),
+                                                          ),
                                                           SizedBox(
                                                             height: 10,
                                                           ),

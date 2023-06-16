@@ -134,6 +134,8 @@ class _SelectAppointmentDateScreenState
                   });
                 },
                 child: Container(
+                  height: 10.9.h,
+                  width: 95.w,
                   margin: EdgeInsets.only(left: 10, right: 10),
                   padding: EdgeInsets.only(left: 10, right: 10),
                   decoration: BoxDecoration(
@@ -161,6 +163,7 @@ class _SelectAppointmentDateScreenState
                       ),
                       SizedBox(height: 25),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
                             child: Column(
@@ -176,7 +179,6 @@ class _SelectAppointmentDateScreenState
                               ],
                             ),
                           ),
-                          SizedBox(width: 7),
                           Container(
                             child: Icon(
                               Icons.turned_in_rounded,
@@ -194,8 +196,8 @@ class _SelectAppointmentDateScreenState
                 ),
               )
             : Container(
-                height: 80,
-                width: 450,
+                height: 10.h,
+                width: 95.w,
                 margin: EdgeInsets.only(left: 10, right: 10),
                 padding: EdgeInsets.only(left: 10, right: 10),
                 decoration: BoxDecoration(

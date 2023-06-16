@@ -253,13 +253,18 @@
 // }
 
 import 'dart:async';
+import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:sizer/sizer.dart';
 import '../../Res/colors.dart';
+import '../../View_Model/ChangeProvider_View_Model/provider_view_model.dart';
 import '../../View_Model/News_View_Model/news_view_model.dart';
 import '../../view_model/services/SharePreference/SharePreference.dart';
 import '../NevigationBar/my_navigationbar.dart';
+import 'package:qrscan/qrscan.dart' as scanner;
 
 class ChangeProviderScreen extends StatefulWidget {
   const ChangeProviderScreen({Key? key}) : super(key: key);
@@ -274,7 +279,8 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
   UserPreferences userPreference = UserPreferences();
   late String mobile;
   CustomerTkenViewmodel customerTkenViewmodel = CustomerTkenViewmodel();
-
+  CustomerTokenByQRViewmodel customerTokenByQRViewmodel =
+      CustomerTokenByQRViewmodel();
   @override
   void initState() {
     super.initState();
@@ -287,6 +293,61 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
   //       await userPreference.getListFromSharedPreferences();
   //   return retrievedList;
   // }
+  Future _qrScanner() async {
+    var camaraStatus = await Permission.camera.status;
+    if (camaraStatus.isGranted) {
+      String? qrdata = await scanner.scan();
+      print('--------------------------------------------------------------');
+      print(qrdata);
+      print(
+          'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+      Codec<String, String> stringToBase64 = utf8.fuse(base64);
+      String decoded = stringToBase64.decode(qrdata!); // username:password
+      print(decoded);
+      Map<String, dynamic> jsonMap = jsonDecode(decoded.toString());
+
+      String customerName = jsonMap['CustomerName'];
+      String appCode = jsonMap['AppCode'];
+
+      print('CustomerName: $customerName');
+      print('AppCode: $appCode');
+      print('cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc');
+      print(appCode);
+      customerTokenByQRViewmodel.fetchCustomerTokenByQR(
+          context, appCode.toString());
+      print(
+          'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+
+      print('-------------------------------------------------------------');
+    } else {
+      var isGrant = await Permission.camera.request();
+
+      if (isGrant.isGranted) {
+        String? qrdata = await scanner.scan();
+        print('--------------------------------------------------------------');
+        print(qrdata);
+        print(
+            'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+        Codec<String, String> stringToBase64 = utf8.fuse(base64);
+        String decoded = stringToBase64.decode(qrdata!); // username:password
+        print(decoded);
+        Map<String, dynamic> jsonMap = jsonDecode(decoded.toString());
+
+        String customerName = jsonMap['CustomerName'];
+        String appCode = jsonMap['AppCode'];
+
+        print('CustomerName: $customerName');
+        print('AppCode: $appCode');
+        print('cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc');
+        print(appCode);
+        customerTokenByQRViewmodel.fetchCustomerTokenByQR(
+            context, appCode.toString());
+        print(
+            'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+        print('--------------------------------------------------------------');
+      }
+    }
+  }
 
   Future<List<Map<String, dynamic>>?> fetchData1() async {
     List<Map<String, dynamic>>? storedData =
@@ -393,7 +454,7 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                       SizedBox(height: 1.h),
                                       InkWell(
                                         onTap: () {
-                                          // _qrScanner();
+                                          _qrScanner();
                                         },
                                         child: Row(
                                           children: [
@@ -429,7 +490,7 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                           SizedBox(width: 2.w),
                                           Container(
                                             height: 1,
-                                            width: 40.w,
+                                            width: 39.w,
                                             color: Colors.black,
                                           ),
                                         ],
@@ -618,7 +679,7 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                         SizedBox(height: 1.h),
                                         InkWell(
                                           onTap: () {
-                                            // _qrScanner();
+                                            _qrScanner();
                                           },
                                           child: Row(
                                             children: [

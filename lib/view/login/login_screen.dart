@@ -225,6 +225,7 @@ import 'package:sizer/sizer.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 
 import '../../View_Model/Login_View_Model/auth_view_model.dart';
+import '../../View_Model/News_View_Model/notification_services.dart';
 import '../../utils/utils.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -245,38 +246,12 @@ class LoginScreenState extends State {
   FocusNode birthFocusNode = FocusNode();
   String genderValue = "Male";
 
-  // void showWidget() {
-  //   setState(() {
-  //     viewVisible = true;
-  //   });
-  // }
-
-  // void hideWidget() {
-  //   setState(() {
-  //     viewVisible = false;
-  //   });
-  // }
-
-  // void showWidget1() {
-  //   setState(() {
-  //     if (_mobileController.text.isEmpty) {
-  //       Utils.snackBar('Please enter MobileNo*', context);
-  //     } else if (_mobileController.text.length < 10) {
-  //       Utils.snackBar('Please enter 10 Digit MobileNo*', context);
-  //     } else if (_mobileController.text.length > 10) {
-  //       Utils.snackBar('Please enter 10 Digit MobileNo*', context);
-  //     } else {
-  //       Map data = {'Mobile': _mobileController.text.toString()};
-  //       authViewModel.loginApi(data, context);
-  //       Timer(Duration(seconds: 5), () {
-  //         _mobileController.clear();
-  //       });
-  //       viewVisible = true;
-
-  //       // showWidget;
-  //     }
-  //   });
-  // }
+  NotificationServices notificationServices = NotificationServices();
+  @override
+  void initState() {
+    super.initState();
+    notificationServices.requestNotificationPermission();
+  }
 
   @override
   Widget build(BuildContext context) {

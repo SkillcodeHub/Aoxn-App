@@ -1,4 +1,4 @@
-package com.example.axonweb
+package com.axon.axonweb
 
 import io.flutter.embedding.android.FlutterActivity
 

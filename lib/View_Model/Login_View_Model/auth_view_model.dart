@@ -34,10 +34,10 @@ class AuthViewModel with ChangeNotifier {
     setLoading(true);
     await _myRepo.loginapi(data).then((value) {
       setLoading(false);
-      final userPreference =
-          Provider.of<GetProviderTokenViewModel>(context, listen: false);
-      userPreference.saveProviderToken(GetProviderTokenModel(
-          displayMessage: value['displayMessage'].toString()));
+      // final userPreference =
+      //     Provider.of<GetProviderTokenViewModel>(context, listen: false);
+      // userPreference.saveProviderToken(GetProviderTokenModel(
+      //     displayMessage: value['displayMessage'].toString()));
 
       if (value['status'] == true) {
         // Utils.snackBar('OTP Send Successfully', context);

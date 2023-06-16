@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:axonweb/View_Model/NewsDetails_View_model/newsdetails_view_model.dart';
+import 'package:axonweb/View_Model/News_View_Model/notification_services.dart';
 import 'package:axonweb/data/response/status.dart';
 
 import 'package:flutter/material.dart';
@@ -12,7 +13,6 @@ import '../../Utils/routes/routes_name.dart';
 import '../../View_Model/News_View_Model/news_view_model.dart';
 import '../../View_Model/Settings_View_Model/settings_view_model.dart';
 import '../../res/components/appbar/axonimage_appbar-widget.dart';
-import '../../res/components/appbar/payment_widget.dart';
 import '../../res/components/appbar/screen_name_widget.dart';
 import '../../res/components/appbar/settings_widget.dart';
 import '../../res/components/appbar/whatsapp_widget.dart';
@@ -33,6 +33,8 @@ class _NewsScreenState extends State<NewsScreen> {
   SettingsViewModel settingsViewModel = SettingsViewModel();
   NewsViewmodel newsViewmodel = NewsViewmodel();
   NewsDetailsViewmodel newsDetailsViewmodel = NewsDetailsViewmodel();
+  NotificationServices notificationServices = NotificationServices();
+
   @override
   void initState() {
     userPreference.getToken().then((value) {
@@ -46,6 +48,13 @@ class _NewsScreenState extends State<NewsScreen> {
     });
     // _newsRepository.fetchCustomerToken();
     super.initState();
+    notificationServices.requestNotificationPermission();
+    notificationServices.firebaseInit();
+    // notificationServices.isTokenRefresh();
+    notificationServices.getDeviceToken().then((value) {
+      print('device token');
+      print(value);
+    });
   }
 
   void main() async {

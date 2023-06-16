@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "878936700070",
+    "project_id": "axon-notifications",
+    "storage_bucket": "axon-notifications.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:878936700070:android:47b7166bc1ce1110cdb067",
+        "android_client_info": {
+          "package_name": "com.axon.axonweb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "878936700070-2oc36crsudf984rndju9divv4kq49jg1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsrMsiVSYZ0RVSlSRL0c0jGEKXIdpWu0c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "878936700070-2oc36crsudf984rndju9divv4kq49jg1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
