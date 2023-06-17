@@ -288,11 +288,38 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
     fetchData1();
   }
 
-  // Future<List<String>> fetchData() async {
-  //   List<String> retrievedList =
-  //       await userPreference.getListFromSharedPreferences();
-  //   return retrievedList;
-  // }
+  Future<List<String>> fetchData() async {
+    List<String> retrievedList =
+        await userPreference.getListFromSharedPreferences();
+    return retrievedList;
+  }
+
+//   Future _qr()async{
+    
+//         var camaraStatus = await Permission.camera.status;
+//  if (camaraStatus.isGranted) {MobileScanner(onDetect: (capture) {
+//           final List<Barcode> barcodes = capture.barcodes;
+//           final Uint8List? image = capture.image;
+//           for (final barcode in barcodes) {
+//             debugPrint('Barcode found! ${barcode.rawValue}');
+//           }
+//         }
+//         );
+//         }else{
+//           var isGrant = await Permission.camera.request();
+
+//         if (isGrant.isGranted) {MobileScanner(onDetect: (capture) {
+//           final List<Barcode> barcodes = capture.barcodes;
+//           final Uint8List? image = capture.image;
+//           for (final barcode in barcodes) {
+//             debugPrint('Barcode found! ${barcode.rawValue}');
+//           }
+//         }
+//         );
+//         }
+// }
+    
+//     }
   Future _qrScanner() async {
     var camaraStatus = await Permission.camera.status;
     if (camaraStatus.isGranted) {
@@ -454,7 +481,8 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                       SizedBox(height: 1.h),
                                       InkWell(
                                         onTap: () {
-                                          _qrScanner();
+                                          // _qrScanner();
+                                          // _qr();
                                         },
                                         child: Row(
                                           children: [
@@ -679,7 +707,8 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                         SizedBox(height: 1.h),
                                         InkWell(
                                           onTap: () {
-                                            _qrScanner();
+                                            // _qrScanner();
+                                            // _qr();
                                           },
                                           child: Row(
                                             children: [

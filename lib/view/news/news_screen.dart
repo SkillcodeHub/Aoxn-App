@@ -33,7 +33,7 @@ class _NewsScreenState extends State<NewsScreen> {
   SettingsViewModel settingsViewModel = SettingsViewModel();
   NewsViewmodel newsViewmodel = NewsViewmodel();
   NewsDetailsViewmodel newsDetailsViewmodel = NewsDetailsViewmodel();
-  NotificationServices notificationServices = NotificationServices();
+  // NotificationServices notificationServices = NotificationServices();
 
   @override
   void initState() {
@@ -48,13 +48,13 @@ class _NewsScreenState extends State<NewsScreen> {
     });
     // _newsRepository.fetchCustomerToken();
     super.initState();
-    notificationServices.requestNotificationPermission();
-    notificationServices.firebaseInit();
-    // notificationServices.isTokenRefresh();
-    notificationServices.getDeviceToken().then((value) {
-      print('device token');
-      print(value);
-    });
+    // notificationServices.requestNotificationPermission();
+    // notificationServices.firebaseInit();
+    // // notificationServices.isTokenRefresh();
+    // notificationServices.getDeviceToken().then((value) {
+    //   print('device token');
+    //   print(value);
+    // });
   }
 
   void main() async {

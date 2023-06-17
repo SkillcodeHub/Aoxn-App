@@ -30,6 +30,7 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
   String? PatType;
   String? patientBirth;
   String CaseNo = "";
+  String data = '';
 
   final formKey = GlobalKey<FormState>();
   final FocusNode _nodeName = FocusNode();
@@ -526,8 +527,9 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                           height: 10,
                         ),
                         Container(
-                          child: patientById.isNotEmpty
-                              ? ChangeNotifierProvider<
+                          child:
+                           patientById.isNotEmpty ?
+                           ChangeNotifierProvider<
                                       SelectPatientByIdViewmodel>.value(
                                   value: selectPatientByIdViewmodel,
                                   child: Consumer<SelectPatientByIdViewmodel>(
@@ -549,7 +551,16 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                                               selectPatientByIdViewmodel
                                                   .SelectPatientById
                                                   .data!
-                                                  .data!;
+                                                  .data!.toList();
+
+
+                                                 String data = selectPatientByIdViewmodel.SelectPatientById.data!.data!.toString();
+                                                  print('data');
+                                                  print(data);
+
+                                                  print('data');
+                                                                                            print(data);
+
 
 // convert date format
                                           String date =
@@ -578,7 +589,8 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                                           print(outputDate5);
                                           print(
                                               '|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
-                                          return InkWell(
+                                          return data != ''
+                              ?InkWell(
                                             onTap: () {
                                               Navigator.pop(context, [
                                                 // patientById[0]['patient_name'],
@@ -682,10 +694,37 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                                                 ),
                                               ),
                                             ),
-                                          );
+                                          ): Container(
+                                  height: 60.h,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        height: 20.h,
+                                        child:
+                                            Image.asset('images/loading.png'),
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Container(
+                                        width: 80.w,
+                                        child: Text(
+                                          'Please enter your Unique Id to search for Patients.',
+                                          style: TextStyle(
+                                              fontSize: 14.sp,
+                                              fontWeight: FontWeight.w500),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
                                       }
                                     },
-                                  ))
+                                  )) 
                               : Container(
                                   height: 60.h,
                                   child: Column(

@@ -246,11 +246,11 @@ class LoginScreenState extends State {
   FocusNode birthFocusNode = FocusNode();
   String genderValue = "Male";
 
-  NotificationServices notificationServices = NotificationServices();
+  // NotificationServices notificationServices = NotificationServices();
   @override
   void initState() {
     super.initState();
-    notificationServices.requestNotificationPermission();
+    // notificationServices.requestNotificationPermission();
   }
 
   @override

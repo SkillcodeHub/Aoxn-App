@@ -1,7 +1,6 @@
 import 'package:axonweb/View_Model/Book_View_Model/Book_view_Model.dart';
 import 'package:axonweb/res/colors.dart';
 import 'package:axonweb/utils/routes/routes.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -18,8 +17,8 @@ import 'View_Model/Settings_View_Model/settings_view_model.dart';
 import 'utils/routes/routes_name.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp();
   runApp(MyApp());
 }
 

@@ -1,10 +1,14 @@
+import 'dart:async';
+
 import 'package:axonweb/View_Model/Report_View_Model/report_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 import '../../Res/Components/loader.dart';
 import '../../Res/colors.dart';
 import '../../Utils/routes/routes_name.dart';
+import '../../View_Model/Settings_View_Model/settings_view_model.dart';
 import '../../data/response/status.dart';
 import '../../res/components/appbar/axonimage_appbar-widget.dart';
 import '../../res/components/appbar/payment_widget.dart';
@@ -20,10 +24,36 @@ class ReportScreen extends StatefulWidget {
 }
 
 class _ReportScreenState extends State<ReportScreen> {
-  late String token = '2dda9fd0-55f7-11e9-9855-029527c1db28';
-  late String mobile = '8140629967';
+  late String token ;
+  late String mobile ;
   bool isLoading = false;
   ReportViewmodel reportViewmodel = ReportViewmodel();
+
+@override
+  void initState() {
+    userPreference.getMobile().then((value1) {
+      setState(() {
+        mobile = value1!;
+      });
+    });
+
+    userPreference.getToken().then((value) {
+      setState(() {
+        token = value!;
+      });
+    });
+    // setState(() {});
+    // super.initState();
+    super.initState();
+    // final bookAppointmentViewModel =
+    //     Provider.of<BookAppointmentViewModel>(context, listen: false);
+    
+  }
+
+
+
+
+
   createNewsListContainer(BuildContext context, int itemIndex) {
     return Column(
       children: [
@@ -138,9 +168,14 @@ class _ReportScreenState extends State<ReportScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Timer(Duration(microseconds: 20), () {
+    reportViewmodel.fetchReportsListApi(token, mobile);
+    });
     reportViewmodel.fetchReportsListApi(token, mobile);
     Future refresh() async {
+      Timer(Duration(microseconds: 20), () {
       reportViewmodel.fetchReportsListApi(token, mobile);
+    });
     }
 
     return Scaffold(
@@ -184,7 +219,7 @@ class _ReportScreenState extends State<ReportScreen> {
                     onRefresh: refresh,
                     child: Padding(
                       padding: const EdgeInsets.only(top: 6),
-                      child: ListView.builder(
+                      child: reportViewmodel.reportsList.data!.data!.length != 0 ?ListView.builder(
                           padding: EdgeInsets.only(bottom: 0),
                           physics: BouncingScrollPhysics(),
                           // shrinkWrap: true,
@@ -192,9 +227,64 @@ class _ReportScreenState extends State<ReportScreen> {
                               reportViewmodel.reportsList.data!.data!.length,
                           itemBuilder: (BuildContext context, int itemIndex) {
                             return createNewsListContainer(context, itemIndex);
-                          }),
+                          }): Stack(
+                            children: [
+                              SingleChildScrollView(
+                                physics: BouncingScrollPhysics(),
+                                child: Padding(
+                                  padding: EdgeInsets.all(15),
+                                  child: Container(
+                                    height: 74.h,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        SizedBox(
+                                          height: 30,
+                                        ),
+                                        Text(
+                                          'Swipe down to refresh page',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            color: Color(0XFF545454),
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 120,
+                                        ),
+                                        Center(
+                                          child: Image.asset(
+                                            'images/axon.png',
+                                            height: 90,
+                                            width: 90,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 20,
+                                        ),
+                                        Center(
+                                          child: Text(
+                                            'You  don\'t have any bookings or upcoming events',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                color: Color(0XFF545454),
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                     ),
-                  );
+                  ); 
               }
             },
           )),
