@@ -257,15 +257,17 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sizer/sizer.dart';
 import '../../Res/colors.dart';
 import '../../View_Model/ChangeProvider_View_Model/provider_view_model.dart';
 import '../../View_Model/News_View_Model/news_view_model.dart';
+import '../../demo2.dart';
 import '../../view_model/services/SharePreference/SharePreference.dart';
 import '../NevigationBar/my_navigationbar.dart';
-import 'package:qrscan/qrscan.dart' as scanner;
-
+// import 'package:qrscan/qrscan.dart' as scanner;
+import 'package:qr_code_scanner/qr_code_scanner.dart';
 class ChangeProviderScreen extends StatefulWidget {
   const ChangeProviderScreen({Key? key}) : super(key: key);
 
@@ -281,6 +283,8 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
   CustomerTkenViewmodel customerTkenViewmodel = CustomerTkenViewmodel();
   CustomerTokenByQRViewmodel customerTokenByQRViewmodel =
       CustomerTokenByQRViewmodel();
+        var getResult = 'QR Code Result';
+
   @override
   void initState() {
     super.initState();
@@ -293,6 +297,15 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
         await userPreference.getListFromSharedPreferences();
     return retrievedList;
   }
+
+// _qrScanner(){
+
+//   // QrImage(data: 'This is a simple QR code',
+//   // version: QrVersions.auto,
+//   // size: 320,
+//   // gapless: false,);
+// }
+
 
 //   Future _qr()async{
     
@@ -320,61 +333,100 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
 // }
     
 //     }
-  Future _qrScanner() async {
-    var camaraStatus = await Permission.camera.status;
-    if (camaraStatus.isGranted) {
-      String? qrdata = await scanner.scan();
-      print('--------------------------------------------------------------');
-      print(qrdata);
-      print(
-          'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
-      Codec<String, String> stringToBase64 = utf8.fuse(base64);
-      String decoded = stringToBase64.decode(qrdata!); // username:password
-      print(decoded);
-      Map<String, dynamic> jsonMap = jsonDecode(decoded.toString());
+  // Future _qrScanner() async {
+  //   var camaraStatus = await Permission.camera.status;
+  //   if (camaraStatus.isGranted) {
+  //     String? qrdata = await scanner.scan();
+  //     print('--------------------------------------------------------------');
+  //     print(qrdata);
+  //     print(
+  //         'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+  //     Codec<String, String> stringToBase64 = utf8.fuse(base64);
+  //     String decoded = stringToBase64.decode(qrdata!); // username:password
+  //     print(decoded);
+  //     Map<String, dynamic> jsonMap = jsonDecode(decoded.toString());
 
-      String customerName = jsonMap['CustomerName'];
-      String appCode = jsonMap['AppCode'];
+  //     String customerName = jsonMap['CustomerName'];
+  //     String appCode = jsonMap['AppCode'];
 
-      print('CustomerName: $customerName');
-      print('AppCode: $appCode');
-      print('cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc');
-      print(appCode);
-      customerTokenByQRViewmodel.fetchCustomerTokenByQR(
-          context, appCode.toString());
-      print(
-          'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+  //     print('CustomerName: $customerName');
+  //     print('AppCode: $appCode');
+  //     print('cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc');
+  //     print(appCode);
+  //     customerTokenByQRViewmodel.fetchCustomerTokenByQR(
+  //         context, appCode.toString());
+  //     print(
+  //         'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
 
-      print('-------------------------------------------------------------');
-    } else {
-      var isGrant = await Permission.camera.request();
+  //     print('-------------------------------------------------------------');
+  //   } else {
+  //     var isGrant = await Permission.camera.request();
 
-      if (isGrant.isGranted) {
-        String? qrdata = await scanner.scan();
-        print('--------------------------------------------------------------');
-        print(qrdata);
-        print(
-            'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
-        Codec<String, String> stringToBase64 = utf8.fuse(base64);
-        String decoded = stringToBase64.decode(qrdata!); // username:password
-        print(decoded);
-        Map<String, dynamic> jsonMap = jsonDecode(decoded.toString());
+  //     if (isGrant.isGranted) {
+  //       String? qrdata = await scanner.scan();
+  //       print('--------------------------------------------------------------');
+  //       print(qrdata);
+  //       print(
+  //           'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+  //       Codec<String, String> stringToBase64 = utf8.fuse(base64);
+  //       String decoded = stringToBase64.decode(qrdata!); // username:password
+  //       print(decoded);
+  //       Map<String, dynamic> jsonMap = jsonDecode(decoded.toString());
 
-        String customerName = jsonMap['CustomerName'];
-        String appCode = jsonMap['AppCode'];
+  //       String customerName = jsonMap['CustomerName'];
+  //       String appCode = jsonMap['AppCode'];
 
-        print('CustomerName: $customerName');
-        print('AppCode: $appCode');
-        print('cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc');
-        print(appCode);
-        customerTokenByQRViewmodel.fetchCustomerTokenByQR(
-            context, appCode.toString());
-        print(
-            'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
-        print('--------------------------------------------------------------');
-      }
-    }
-  }
+  //       print('CustomerName: $customerName');
+  //       print('AppCode: $appCode');
+  //       print('cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc');
+  //       print(appCode);
+  //       customerTokenByQRViewmodel.fetchCustomerTokenByQR(
+  //           context, appCode.toString());
+  //       print(
+  //           'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+  //       print('--------------------------------------------------------------');
+  //     }
+  //   }
+  // }
+// void scanQRCode() async {
+//     try{
+//       final qrCode = await FlutterBarcodeScanner.scanBarcode('#ff6666', 'Cancel', true, ScanMode.QR);
+
+//       if (!mounted) return;
+
+//       setState(() {
+//         getResult = qrCode;
+//       });
+//       print("QRCode_Result:--");
+//       print(qrCode);
+//     } on PlatformException {
+//       getResult = 'Failed to scan QR Code.';
+//     }
+
+//   }
+
+// final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+//   QRViewController? controller;
+
+//   @override
+//   void dispose() {
+//     controller?.dispose();
+//     super.dispose();
+//   }
+
+//   void _onQRViewCreated(QRViewController controller) {
+//     setState(() {
+//       this.controller = controller;
+//     });
+//     controller.scannedDataStream.listen((scanData) {
+//       // Handle the scanned QR code data
+//       print(scanData.code);
+//       // You can perform further actions with the scanned data
+//     });
+//   }
+
+
+
 
   Future<List<Map<String, dynamic>>?> fetchData1() async {
     List<Map<String, dynamic>>? storedData =
@@ -483,6 +535,7 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                         onTap: () {
                                           // _qrScanner();
                                           // _qr();
+                                          Navigator.push(context, MaterialPageRoute(builder: (context)=>QRScannerWidget()));
                                         },
                                         child: Row(
                                           children: [
@@ -709,6 +762,7 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                           onTap: () {
                                             // _qrScanner();
                                             // _qr();
+                                            Navigator.push(context, MaterialPageRoute(builder: (context)=>QRScannerWidget()));
                                           },
                                           child: Row(
                                             children: [
@@ -847,3 +901,56 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
     );
   }
 }
+
+// class QRScannerWidget extends StatefulWidget {
+//   @override
+//   _QRScannerWidgetState createState() => _QRScannerWidgetState();
+// }
+
+// class _QRScannerWidgetState extends State<QRScannerWidget> {
+//   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+//   QRViewController? controller;
+
+//   @override
+//   void dispose() {
+//     controller?.dispose();
+//     super.dispose();
+//   }
+
+//   void _onQRViewCreated(QRViewController controller) {
+//     setState(() {
+//       this.controller = controller;
+//     });
+//     controller.scannedDataStream.listen((scanData) {
+//       // Handle the scanned QR code data
+//       print(scanData.code);
+//       // You can perform further actions with the scanned data
+//     });
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('QR Code Scanner'),
+//       ),
+//       body: Column(
+//         children: [
+//           Expanded(
+//             flex: 4,
+//             child: QRView(
+//               key: qrKey,
+//               onQRViewCreated: _onQRViewCreated,
+//             ),
+//           ),
+//           Expanded(
+//             flex: 1,
+//             child: Center(
+//               child: Text('Scan QR code'),
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }

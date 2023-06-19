@@ -56,8 +56,12 @@ dependencies:
   pin_field: ^0.0.1
   app_settings: ^4.2.0
   # flutter_local_notifications_platform_interface: ^7.0.0+1
-  qrscan: ^0.3.3
+  # qrscan: ^0.3.3
   permission_handler: ^10.2.0
+  # flutter_barcode_scanner : ^2.0.0
+  # qr_flutter: ^4.0.0
+  qr_code_scanner: ^1.0.1
+
 
 dev_dependencies:
   flutter_test:
