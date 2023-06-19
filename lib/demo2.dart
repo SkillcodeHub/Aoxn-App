@@ -1,8 +1,11 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+
+import 'View_Model/ChangeProvider_View_Model/provider_view_model.dart';
 
 class QRScannerWidget extends StatefulWidget {
   @override
@@ -13,7 +16,8 @@ class _QRScannerWidgetState extends State<QRScannerWidget> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   QRViewController? controller;
   Barcode? result;
-
+  CustomerTokenByQRViewmodel customerTokenByQRViewmodel =
+      CustomerTokenByQRViewmodel();
   @override
   void reassemble() {
     super.reassemble();
@@ -56,6 +60,25 @@ class _QRScannerWidgetState extends State<QRScannerWidget> {
       setState(() {
         result = scanData;
       });
+      Codec<String, String> stringToBase64 = utf8.fuse(base64);
+      String decoded =
+          stringToBase64.decode(result!.code.toString()); // username:password
+      print(decoded);
+      Map<String, dynamic> jsonMap = jsonDecode(decoded.toString());
+
+      String customerName = jsonMap['CustomerName'];
+      String appCode = jsonMap['AppCode'];
+
+      print('CustomerName: $customerName');
+      print('AppCode: $appCode');
+      print('cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc');
+      print(appCode);
+      customerTokenByQRViewmodel.fetchCustomerTokenByQR(
+          context, appCode.toString());
+      print(
+          'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+
+      print('-------------------------------------------------------------');
     });
   }
 
