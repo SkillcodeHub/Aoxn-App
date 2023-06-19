@@ -31,7 +31,7 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
   String? patientBirth;
   String CaseNo = "";
   String data = '';
-
+  String date = '';
   final formKey = GlobalKey<FormState>();
   final FocusNode _nodeName = FocusNode();
   final FocusNode _nodeBirth = FocusNode();
@@ -527,9 +527,8 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                           height: 10,
                         ),
                         Container(
-                          child:
-                           patientById.isNotEmpty ?
-                           ChangeNotifierProvider<
+                          child: patientById.isNotEmpty
+                              ? ChangeNotifierProvider<
                                       SelectPatientByIdViewmodel>.value(
                                   value: selectPatientByIdViewmodel,
                                   child: Consumer<SelectPatientByIdViewmodel>(
@@ -549,182 +548,225 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                                         case Status.COMPLETED:
                                           patientById =
                                               selectPatientByIdViewmodel
-                                                  .SelectPatientById
-                                                  .data!
-                                                  .data!.toList();
+                                                  .SelectPatientById.data!.data!
+                                                  .toList();
 
+                                          List data1 =
+                                              selectPatientByIdViewmodel
+                                                  .SelectPatientById.data!.data!
+                                                  .toList();
+                                          print('data');
+                                          print(data1);
 
-                                                 String data = selectPatientByIdViewmodel.SelectPatientById.data!.data!.toString();
-                                                  print('data');
-                                                  print(data);
-
-                                                  print('data');
-                                                                                            print(data);
-
+                                          print('data');
+                                          print(data1);
 
 // convert date format
-                                          String date =
-                                              selectPatientByIdViewmodel
-                                                  .SelectPatientById
-                                                  .data!
-                                                  .data![0]
-                                                  .patientDob
-                                                  .toString();
+                                          print(data1.length);
+                                          // data1.length > 0
+                                          //     ? date =
+                                          //         selectPatientByIdViewmodel
+                                          //             .SelectPatientById
+                                          //             .data!
+                                          //             .data![0]
+                                          //             .patientDob
+                                          //             .toString()
+                                          //     : date = '';
+                                          if (data1.length > 0) {
+                                            date = selectPatientByIdViewmodel
+                                                .SelectPatientById
+                                                .data!
+                                                .data![0]
+                                                .patientDob
+                                                .toString();
+                                            DateTime parseDate = new DateFormat(
+                                                    "yyyy-MM-dd'T'HH:mm:ss")
+                                                .parse(date);
+                                            var inputDate = DateTime.parse(
+                                                parseDate.toString());
 
-                                          DateTime parseDate = new DateFormat(
-                                                  "yyyy-MM-dd'T'HH:mm:ss")
-                                              .parse(date);
-                                          var inputDate = DateTime.parse(
-                                              parseDate.toString());
+                                            var outputFormat5 =
+                                                DateFormat('d-MMM-yyyy');
+                                            // var outputFormat = DateFormat('MM/dd/yyyy hh:mm a');
 
-                                          var outputFormat5 =
-                                              DateFormat('d-MMM-yyyy');
-                                          // var outputFormat = DateFormat('MM/dd/yyyy hh:mm a');
+                                            var outputDate5 =
+                                                outputFormat5.format(inputDate);
+                                            patientBirth = outputDate5;
+                                            print(
+                                                '|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
+                                            print(outputDate5);
+                                            print(
+                                                '|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
+                                          } else {
+                                            date = '';
+                                          }
 
-                                          var outputDate5 =
-                                              outputFormat5.format(inputDate);
-                                          patientBirth = outputDate5;
-                                          print(
-                                              '|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
-                                          print(outputDate5);
-                                          print(
-                                              '|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
-                                          return data != ''
-                              ?InkWell(
-                                            onTap: () {
-                                              Navigator.pop(context, [
-                                                // patientById[0]['patient_name'],
-                                                // patientBirth,
-                                                // patientById[0]['patient_gender'],
-                                                // patientById[0]['case_no'].toString(),
+                                          // DateTime parseDate = new DateFormat(
+                                          //         "yyyy-MM-dd'T'HH:mm:ss")
+                                          //     .parse(date);
+                                          // var inputDate = DateTime.parse(
+                                          //     parseDate.toString());
 
-                                                selectPatientByIdViewmodel
-                                                    .SelectPatientById
-                                                    .data!
-                                                    .data![0]
-                                                    .patientName
-                                                    .toString(),
-                                                selectPatientByIdViewmodel
-                                                    .SelectPatientById
-                                                    .data!
-                                                    .data![0]
-                                                    .patientGender
-                                                    .toString(),
-                                                patientBirth,
-                                                selectPatientByIdViewmodel
-                                                    .SelectPatientById
-                                                    .data!
-                                                    .data![0]
-                                                    .caseNo
-                                                    .toString(),
-                                                PatType = "Old",
-                                              ]);
-                                            },
-                                            child: Card(
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Row(
-                                                  children: [
-                                                    Container(
-                                                      width: 22.w,
-                                                      child: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .center,
+                                          // var outputFormat5 =
+                                          //     DateFormat('d-MMM-yyyy');
+                                          // // var outputFormat = DateFormat('MM/dd/yyyy hh:mm a');
+
+                                          // var outputDate5 =
+                                          //     outputFormat5.format(inputDate);
+                                          // patientBirth = outputDate5;
+                                          // print(
+                                          //     '|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
+                                          // print(outputDate5);
+                                          // print(
+                                          //     '|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
+
+                                          return data1.length > 0
+                                              ? InkWell(
+                                                  onTap: () {
+                                                    Navigator.pop(context, [
+                                                      // patientById[0]['patient_name'],
+                                                      // patientBirth,
+                                                      // patientById[0]['patient_gender'],
+                                                      // patientById[0]['case_no'].toString(),
+
+                                                      selectPatientByIdViewmodel
+                                                          .SelectPatientById
+                                                          .data!
+                                                          .data![0]
+                                                          .patientName
+                                                          .toString(),
+                                                      selectPatientByIdViewmodel
+                                                          .SelectPatientById
+                                                          .data!
+                                                          .data![0]
+                                                          .patientGender
+                                                          .toString(),
+                                                      patientBirth,
+                                                      selectPatientByIdViewmodel
+                                                          .SelectPatientById
+                                                          .data!
+                                                          .data![0]
+                                                          .caseNo
+                                                          .toString(),
+                                                      PatType = "Old",
+                                                    ]);
+                                                  },
+                                                  child: Card(
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
+                                                      child: Row(
                                                         children: [
-                                                          Text('#' +
-                                                              selectPatientByIdViewmodel
-                                                                  .SelectPatientById
-                                                                  .data!
-                                                                  .data![0]
-                                                                  .caseNo
-                                                                  .toString()),
-                                                          SizedBox(
-                                                            height: 5,
-                                                          ),
                                                           Container(
-                                                            height: 5.h,
-                                                            child: Image.asset(
-                                                                'images/selectPatient.png'),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Container(
-                                                      child: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Container(
-                                                            width: 60.w,
-                                                            child: Text(
-                                                              selectPatientByIdViewmodel
-                                                                  .SelectPatientById
-                                                                  .data!
-                                                                  .data![0]
-                                                                  .patientName
-                                                                  .toString(),
-                                                              maxLines: 1,
+                                                            width: 22.w,
+                                                            child: Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .center,
+                                                              children: [
+                                                                Text('#' +
+                                                                    selectPatientByIdViewmodel
+                                                                        .SelectPatientById
+                                                                        .data!
+                                                                        .data![
+                                                                            0]
+                                                                        .caseNo
+                                                                        .toString()),
+                                                                SizedBox(
+                                                                  height: 5,
+                                                                ),
+                                                                Container(
+                                                                  height: 5.h,
+                                                                  child: Image
+                                                                      .asset(
+                                                                          'images/selectPatient.png'),
+                                                                ),
+                                                              ],
                                                             ),
                                                           ),
-                                                          SizedBox(
-                                                            height: 10,
+                                                          Container(
+                                                            child: Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                Container(
+                                                                  width: 60.w,
+                                                                  child: Text(
+                                                                    selectPatientByIdViewmodel
+                                                                        .SelectPatientById
+                                                                        .data!
+                                                                        .data![
+                                                                            0]
+                                                                        .patientName
+                                                                        .toString(),
+                                                                    maxLines: 1,
+                                                                  ),
+                                                                ),
+                                                                SizedBox(
+                                                                  height: 10,
+                                                                ),
+                                                                Text(selectPatientByIdViewmodel
+                                                                    .SelectPatientById
+                                                                    .data!
+                                                                    .data![0]
+                                                                    .patientMobile
+                                                                    .toString()
+                                                                    .replaceRange(
+                                                                        0,
+                                                                        10,
+                                                                        'xxxxxxxxxx')),
+                                                                SizedBox(
+                                                                  height: 10,
+                                                                ),
+                                                                Text(patientBirth
+                                                                    .toString()),
+                                                              ],
+                                                            ),
                                                           ),
-                                                          Text(selectPatientByIdViewmodel
-                                                              .SelectPatientById
-                                                              .data!
-                                                              .data![0]
-                                                              .patientMobile
-                                                              .toString()
-                                                              .replaceRange(
-                                                                  0,
-                                                                  10,
-                                                                  'xxxxxxxxxx')),
-                                                          SizedBox(
-                                                            height: 10,
-                                                          ),
-                                                          Text(patientBirth
-                                                              .toString()),
                                                         ],
                                                       ),
                                                     ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ): Container(
-                                  height: 60.h,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        height: 20.h,
-                                        child:
-                                            Image.asset('images/loading.png'),
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      Container(
-                                        width: 80.w,
-                                        child: Text(
-                                          'Please enter your Unique Id to search for Patients.',
-                                          style: TextStyle(
-                                              fontSize: 14.sp,
-                                              fontWeight: FontWeight.w500),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                );
+                                                  ),
+                                                )
+                                              : Container(
+                                                  height: 60.h,
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Container(
+                                                        height: 20.h,
+                                                        child: Image.asset(
+                                                            'images/loading.png'),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 10,
+                                                      ),
+                                                      Container(
+                                                        width: 80.w,
+                                                        child: Text(
+                                                          'Please enter your Unique Id to search for Patients.',
+                                                          style: TextStyle(
+                                                              fontSize: 14.sp,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                );
                                       }
                                     },
-                                  )) 
+                                  ))
                               : Container(
                                   height: 60.h,
                                   child: Column(
