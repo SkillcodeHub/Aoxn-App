@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import '../../Res/colors.dart';
 import '../../View_Model/SelectAppointDate_View_Model.dart/selectAppointmentDate_view_model.dart';
+import '../../View_Model/Services/SharePreference/SharePreference.dart';
 import '../../data/response/status.dart';
 
 class SelectAppointmentDateScreen extends StatefulWidget {
@@ -28,8 +29,11 @@ class _SelectAppointmentDateScreenState
   bool isLoading = false;
   bool TimeSlotes = false;
   String? selectedTimeSlote;
+  int? minuteInterval;
   int? timingId;
   bool isButtonActive = false;
+  UserPreferences userPreference = UserPreferences();
+  late String token;
 
   int currentDateSelectedIndex = 0; //For Horizontal Date
   int? currentDateSelectedIndex1; //For Horizontal Date
@@ -42,6 +46,12 @@ class _SelectAppointmentDateScreenState
       AppointmentSlotListViewmodel();
 
   void initState() {
+    userPreference.getToken().then((value) {
+      setState(() {
+        token = value!;
+        print(token);
+      });
+    });
     super.initState();
     final currrentTimeProvider =
         Provider.of<TimeProvider>(context, listen: false);
@@ -77,6 +87,10 @@ class _SelectAppointmentDateScreenState
   ]; //List of Days
 
   createNewsListContainer(BuildContext context, int itemIndex) {
+    minuteInterval = appointmentSlotListViewmodel
+        .AppointmentSlotList.data!.data![itemIndex].minuteInterval!
+        .toInt();
+
     String date = appointmentSlotListViewmodel
         .AppointmentSlotList.data!.data![itemIndex].fromTimeSlotLocal
         .toString();
@@ -245,7 +259,9 @@ class _SelectAppointmentDateScreenState
     print(widget.selectedDocotrId);
     Timer(Duration(microseconds: 20), () {
       appointmentSlotListViewmodel.fetchAppointmentSlotListApi(
-          widget.selectedDocotrId.toString(), datetime1.toString());
+          widget.selectedDocotrId.toString(),
+          datetime1.toString(),
+          token.toString());
     });
     isButtonActive = false;
     currentDateSelectedIndex1 = null;
@@ -412,8 +428,12 @@ class _SelectAppointmentDateScreenState
       floatingActionButton: FloatingActionButton(
         backgroundColor: isButtonActive ? Colors.green : Colors.grey,
         onPressed: isButtonActive
-            ? () => Navigator.pop(
-                context, [datetime1, selectedTimeSlote, timingId.toString()])
+            ? () => Navigator.pop(context, [
+                  datetime1,
+                  selectedTimeSlote,
+                  timingId.toString(),
+                  minuteInterval!.toInt(),
+                ])
             : null,
         child: Icon(Icons.check),
       ),

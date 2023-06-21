@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:axonweb/View_Model/NewsDetails_View_model/newsdetails_view_model.dart';
 import 'package:axonweb/View_Model/News_View_Model/notification_services.dart';
@@ -6,12 +7,14 @@ import 'package:axonweb/data/response/status.dart';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:platform_device_id/platform_device_id.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import '../../Res/colors.dart';
 import '../../Utils/routes/routes_name.dart';
 import '../../View_Model/News_View_Model/news_view_model.dart';
 import '../../View_Model/Settings_View_Model/settings_view_model.dart';
+import '../../demo2.dart';
 import '../../res/components/appbar/axonimage_appbar-widget.dart';
 import '../../res/components/appbar/screen_name_widget.dart';
 import '../../res/components/appbar/settings_widget.dart';
@@ -29,6 +32,8 @@ class _NewsScreenState extends State<NewsScreen> {
   late String token;
   UserPreferences userPreference = UserPreferences();
   String? newsdate;
+  String deviceId = 'Unknown';
+  String? _id;
 
   SettingsViewModel settingsViewModel = SettingsViewModel();
   NewsViewmodel newsViewmodel = NewsViewmodel();
@@ -46,8 +51,16 @@ class _NewsScreenState extends State<NewsScreen> {
     setState(() {
       main();
     });
+    setState(() {
+      _getInfo();
+    });
     // _newsRepository.fetchCustomerToken();
     super.initState();
+    // getUniqueDeviceId().then((deviceId) {
+    //   setState(() {
+    //     this.deviceId = deviceId;
+    //   });
+    // });
     // notificationServices.requestNotificationPermission();
     // notificationServices.firebaseInit();
     // // notificationServices.isTokenRefresh();
@@ -55,6 +68,19 @@ class _NewsScreenState extends State<NewsScreen> {
     //   print('device token');
     //   print(value);
     // });
+  }
+
+  void _getInfo() async {
+    // Get device id
+    String? result = await PlatformDeviceId.getDeviceId;
+
+    // Update the UI
+    setState(() {
+      _id = result;
+      userPreference.setDeviceId(_id.toString());
+      print('----------------------------------------');
+      print(_id);
+    });
   }
 
   void main() async {
@@ -116,15 +142,16 @@ class _NewsScreenState extends State<NewsScreen> {
             child: Row(
               children: [
                 Container(
-                  height: 17.h,
-                  width: MediaQuery.of(context).size.width * 0.15,
-                  color: Color(0xFFFD5722),
-                  child: Icon(
-                    Icons.info,
-                    color: Colors.white,
-                    size: 30,
-                  ),
-                ),
+                    height: 17.h,
+                    width: MediaQuery.of(context).size.width * 0.15,
+                    color: Color(0xFFFD5722),
+                    child: Center(
+                      child: Image.asset(
+                        'images/Iicon.png',
+                        // width: 2,
+                        height: 25,
+                      ),
+                    )),
                 Container(
                   height: 17.h,
                   width: MediaQuery.of(context).size.width * 0.79,
@@ -225,12 +252,6 @@ class _NewsScreenState extends State<NewsScreen> {
       newsViewmodel.fetchNewsListApi(token);
     }
 
-    // myList.add(token);
-    // Set<String> uniqueItems = Set<String>.from(myList);
-    // print(uniqueItems.toList());
-    // userPreference.saveListToSharedPreferences(uniqueItems.toList());
-    // List<String> myList = ['item1', 'item2', 'item3', 'item4'];
-
     return Scaffold(
       backgroundColor: BackgroundColor,
       appBar: PreferredSize(
@@ -258,32 +279,40 @@ class _NewsScreenState extends State<NewsScreen> {
         ),
       ),
       body: ChangeNotifierProvider<NewsViewmodel>(
-          create: (BuildContext context) => newsViewmodel,
-          child: Consumer<NewsViewmodel>(
-            builder: (context, value, _) {
-              switch (value.newsList.status!) {
-                case Status.LOADING:
-                  return Center(child: CircularProgressIndicator());
-                case Status.ERROR:
-                  return Center(child: Text(value.newsList.message.toString()));
-                case Status.COMPLETED:
-                  return RefreshIndicator(
-                    onRefresh: refresh,
+        create: (BuildContext context) => newsViewmodel,
+        child: Consumer<NewsViewmodel>(
+          builder: (context, value, _) {
+            switch (value.newsList.status!) {
+              case Status.LOADING:
+                return Center(child: CircularProgressIndicator());
+              case Status.ERROR:
+                return Center(child: Text(value.newsList.message.toString()));
+              case Status.COMPLETED:
+                return RefreshIndicator(
+                  onRefresh: refresh,
+                  child: SingleChildScrollView(
+                    // Wrap with SingleChildScrollView
+                    physics:
+                        AlwaysScrollableScrollPhysics(), // Enable scrolling
                     child: Padding(
                       padding: const EdgeInsets.only(top: 6, left: 4, right: 6),
                       child: ListView.builder(
-                          padding: EdgeInsets.only(bottom: 10),
-                          physics: BouncingScrollPhysics(),
-                          // shrinkWrap: true,
-                          itemCount: value.newsList.data!.data!.length,
-                          itemBuilder: (BuildContext context, int itemIndex) {
-                            return createNewsListContainer(context, itemIndex);
-                          }),
+                        padding: EdgeInsets.only(bottom: 10),
+                        physics:
+                            NeverScrollableScrollPhysics(), // Disable scrolling
+                        shrinkWrap: true,
+                        itemCount: value.newsList.data!.data!.length,
+                        itemBuilder: (BuildContext context, int itemIndex) {
+                          return createNewsListContainer(context, itemIndex);
+                        },
+                      ),
                     ),
-                  );
-              }
-            },
-          )),
+                  ),
+                );
+            }
+          },
+        ),
+      ),
     );
   }
 }

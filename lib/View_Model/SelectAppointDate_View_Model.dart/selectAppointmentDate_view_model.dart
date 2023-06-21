@@ -15,9 +15,11 @@ class AppointmentSlotListViewmodel with ChangeNotifier {
   }
 
   Future<void> fetchAppointmentSlotListApi(
-      String selectedDocotrId, String datetime1) async {
+      String selectedDocotrId, String datetime1, String token) async {
     setAppointmentSlotList(ApiResponse.loading());
-    _myRepo.fetchAppointmentSlotList(selectedDocotrId, datetime1).then((value) {
+    _myRepo
+        .fetchAppointmentSlotList(selectedDocotrId, datetime1, token)
+        .then((value) {
       setAppointmentSlotList(ApiResponse.completed(value));
     }).onError((error, stackTrace) {
       setAppointmentSlotList(ApiResponse.error(error.toString()));

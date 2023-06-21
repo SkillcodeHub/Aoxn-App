@@ -253,21 +253,15 @@
 // }
 
 import 'dart:async';
-import 'dart:convert';
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:sizer/sizer.dart';
 import '../../Res/colors.dart';
 import '../../View_Model/ChangeProvider_View_Model/provider_view_model.dart';
-import '../../View_Model/News_View_Model/news_view_model.dart';
 import '../../demo2.dart';
 import '../../view_model/services/SharePreference/SharePreference.dart';
 import '../NevigationBar/my_navigationbar.dart';
-// import 'package:qrscan/qrscan.dart' as scanner;
-import 'package:qr_code_scanner/qr_code_scanner.dart';
+import '../QR_Code/qr_code_screen.dart';
+
 class ChangeProviderScreen extends StatefulWidget {
   const ChangeProviderScreen({Key? key}) : super(key: key);
 
@@ -283,12 +277,26 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
   CustomerTkenViewmodel customerTkenViewmodel = CustomerTkenViewmodel();
   CustomerTokenByQRViewmodel customerTokenByQRViewmodel =
       CustomerTokenByQRViewmodel();
-        var getResult = 'QR Code Result';
+  String? token;
+  String? customerName;
+  String? appCode;
+  bool showAlertDialog = false;
 
   @override
   void initState() {
+    userPreference.getToken().then((value) {
+      setState(() {
+        token = value!;
+        print(token);
+      });
+    });
     super.initState();
     // fetchData();
+    // if (showAlertDialog = true) {
+    //   setState(() {
+    //     _showBackAlertDialog();
+    //   });
+    // }
     fetchData1();
   }
 
@@ -298,47 +306,14 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
     return retrievedList;
   }
 
-// _qrScanner(){
-
-//   // QrImage(data: 'This is a simple QR code',
-//   // version: QrVersions.auto,
-//   // size: 320,
-//   // gapless: false,);
-// }
-
-
-//   Future _qr()async{
-    
-//         var camaraStatus = await Permission.camera.status;
-//  if (camaraStatus.isGranted) {MobileScanner(onDetect: (capture) {
-//           final List<Barcode> barcodes = capture.barcodes;
-//           final Uint8List? image = capture.image;
-//           for (final barcode in barcodes) {
-//             debugPrint('Barcode found! ${barcode.rawValue}');
-//           }
-//         }
-//         );
-//         }else{
-//           var isGrant = await Permission.camera.request();
-
-//         if (isGrant.isGranted) {MobileScanner(onDetect: (capture) {
-//           final List<Barcode> barcodes = capture.barcodes;
-//           final Uint8List? image = capture.image;
-//           for (final barcode in barcodes) {
-//             debugPrint('Barcode found! ${barcode.rawValue}');
-//           }
-//         }
-//         );
-//         }
-// }
-    
-//     }
   // Future _qrScanner() async {
   //   var camaraStatus = await Permission.camera.status;
   //   if (camaraStatus.isGranted) {
-  //     String? qrdata = await scanner.scan();
+  //     String? qrdata = '';
+
+  //     //  await scanner.scan();
   //     print('--------------------------------------------------------------');
-  //     print(qrdata);
+  //     // print(qrdata);
   //     print(
   //         'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
   //     Codec<String, String> stringToBase64 = utf8.fuse(base64);
@@ -363,7 +338,9 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
   //     var isGrant = await Permission.camera.request();
 
   //     if (isGrant.isGranted) {
-  //       String? qrdata = await scanner.scan();
+  //       String? qrdata = '';
+
+  //       // await scanner.scan();
   //       print('--------------------------------------------------------------');
   //       print(qrdata);
   //       print(
@@ -388,45 +365,6 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
   //     }
   //   }
   // }
-// void scanQRCode() async {
-//     try{
-//       final qrCode = await FlutterBarcodeScanner.scanBarcode('#ff6666', 'Cancel', true, ScanMode.QR);
-
-//       if (!mounted) return;
-
-//       setState(() {
-//         getResult = qrCode;
-//       });
-//       print("QRCode_Result:--");
-//       print(qrCode);
-//     } on PlatformException {
-//       getResult = 'Failed to scan QR Code.';
-//     }
-
-//   }
-
-// final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-//   QRViewController? controller;
-
-//   @override
-//   void dispose() {
-//     controller?.dispose();
-//     super.dispose();
-//   }
-
-//   void _onQRViewCreated(QRViewController controller) {
-//     setState(() {
-//       this.controller = controller;
-//     });
-//     controller.scannedDataStream.listen((scanData) {
-//       // Handle the scanned QR code data
-//       print(scanData.code);
-//       // You can perform further actions with the scanned data
-//     });
-//   }
-
-
-
 
   Future<List<Map<String, dynamic>>?> fetchData1() async {
     List<Map<String, dynamic>>? storedData =
@@ -454,6 +392,40 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
           );
         } else {
           List<Map<String, dynamic>> providerList = snapshot.data ?? [];
+          print('providerList');
+          print(providerList);
+
+          String specificToken = token.toString();
+
+          Map<String, dynamic>? specificHospital;
+          int? specificHospitalIndex;
+
+          for (int i = 0; i < providerList.length; i++) {
+            if (providerList[i]["token"] == specificToken) {
+              specificHospital = providerList[i];
+              specificHospitalIndex = i;
+              break;
+            }
+          }
+
+          if (specificHospital != null && specificHospitalIndex != null) {
+            providerList.removeAt(specificHospitalIndex);
+            providerList.insert(0, specificHospital);
+          }
+
+// Print the updated list
+
+          List<Map<String, dynamic>> outputList = [];
+
+          for (var hospital in providerList) {
+            Map<String, dynamic> output = {
+              "doctorName": hospital["doctorName"],
+              "token": hospital["token"]
+            };
+            outputList.add(output);
+          }
+
+          print(outputList);
 
           return Scaffold(
             backgroundColor: BackgroundColor,
@@ -535,7 +507,8 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                         onTap: () {
                                           // _qrScanner();
                                           // _qr();
-                                          Navigator.push(context, MaterialPageRoute(builder: (context)=>QRScannerWidget()));
+                                          _navigateAppcodeAndHospitalName(
+                                              context);
                                         },
                                         child: Row(
                                           children: [
@@ -654,7 +627,7 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                 ),
                               ),
                               SizedBox(height: 1.h),
-                              providerList.length != 0
+                              outputList.length != 0
                                   ? Text(
                                       'OR',
                                       style: TextStyle(fontSize: 12.sp),
@@ -663,19 +636,19 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                               SizedBox(height: 1.h),
                               SizedBox(
                                 height: 41.h,
-                                child: providerList.length != 0
+                                child: outputList.length != 0
                                     ? ListView.builder(
                                         shrinkWrap: true,
-                                        itemCount: providerList.length,
+                                        itemCount: outputList.length,
                                         itemBuilder:
                                             (BuildContext context, int index) {
                                           return InkWell(
                                             onTap: () {
-                                              final token = providerList[index]
+                                              final token = outputList[index]
                                                       ['token']
                                                   .toString();
 
-                                              print(providerList[index]['token']
+                                              print(outputList[index]['token']
                                                   .toString());
                                               userPreference.setToken(token);
 
@@ -696,9 +669,30 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                               child: Padding(
                                                 padding:
                                                     const EdgeInsets.all(12.0),
-                                                child: Text(providerList[index]
-                                                        ['doctorName']
-                                                    .toString()),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                      outputList[index]
+                                                              ['doctorName']
+                                                          .toString(),
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                    token ==
+                                                            outputList[index]
+                                                                    ['token']
+                                                                .toString()
+                                                        ? Image.asset(
+                                                            'images/true.png',
+                                                            height: 13,
+                                                          )
+                                                        : Container()
+                                                  ],
+                                                ),
                                               ),
                                             ),
                                           );
@@ -762,7 +756,8 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                           onTap: () {
                                             // _qrScanner();
                                             // _qr();
-                                            Navigator.push(context, MaterialPageRoute(builder: (context)=>QRScannerWidget()));
+                                            _navigateAppcodeAndHospitalName(
+                                                context);
                                           },
                                           child: Row(
                                             children: [
@@ -900,57 +895,47 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
       },
     );
   }
+
+  _navigateAppcodeAndHospitalName(BuildContext context) async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => QRScannerWidget()),
+    );
+    print(result[0]);
+    print(result[1]);
+
+    if (result != null) {
+      setState(() {
+        customerName = result[0];
+        appCode = result[1];
+        showAlertDialog = result[2];
+      });
+
+      if (result[2] == true) {
+        setState(() {
+          showAlertDialog = true;
+        });
+      }
+    }
+  }
+
+  void _showBackAlertDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Navigation Alert'),
+          content: Text('You navigated back from Screen 2'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                // Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
-
-// class QRScannerWidget extends StatefulWidget {
-//   @override
-//   _QRScannerWidgetState createState() => _QRScannerWidgetState();
-// }
-
-// class _QRScannerWidgetState extends State<QRScannerWidget> {
-//   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-//   QRViewController? controller;
-
-//   @override
-//   void dispose() {
-//     controller?.dispose();
-//     super.dispose();
-//   }
-
-//   void _onQRViewCreated(QRViewController controller) {
-//     setState(() {
-//       this.controller = controller;
-//     });
-//     controller.scannedDataStream.listen((scanData) {
-//       // Handle the scanned QR code data
-//       print(scanData.code);
-//       // You can perform further actions with the scanned data
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('QR Code Scanner'),
-//       ),
-//       body: Column(
-//         children: [
-//           Expanded(
-//             flex: 4,
-//             child: QRView(
-//               key: qrKey,
-//               onQRViewCreated: _onQRViewCreated,
-//             ),
-//           ),
-//           Expanded(
-//             flex: 1,
-//             child: Center(
-//               child: Text('Scan QR code'),
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }

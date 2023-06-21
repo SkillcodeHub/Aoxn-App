@@ -161,7 +161,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
       body: Stack(
         children: [
           SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
+            physics: AlwaysScrollableScrollPhysics(),
             child: Padding(
               padding: EdgeInsets.only(top: 20, left: 8, right: 8),
               child: Column(
@@ -262,9 +262,9 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                           SizedBox(height: 8),
                           Row(
                             children: [
-                              Icon(Icons.punch_clock),
+                              Icon(Icons.access_time_rounded),
                               Text(
-                                widget.appoitmentData['outputDate3'],
+                                widget.appoitmentData[' outputDate3'],
                                 style: TextStyle(
                                   fontSize: 19,
                                 ),

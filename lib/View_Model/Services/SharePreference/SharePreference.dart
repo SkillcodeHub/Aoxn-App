@@ -23,6 +23,16 @@ class UserPreferences {
     prefs.setString("access_token", args);
   }
 
+  Future<String?> getDeviceId() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString("access_deviceId");
+  }
+
+  void setDeviceId(String args) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("access_deviceId", args);
+  }
+
   Future<String?> getName() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString("access_name");

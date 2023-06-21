@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:axonweb/data/response/status.dart';
@@ -28,6 +30,14 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
     newsId = widget.data['newsId'].toString();
     newsDetailsViewmodel.fetchNewsDetailsListApi(
         context, token.toString(), newsId.toString());
+    Future refresh() async {
+      Timer(Duration(microseconds: 20), () {
+        token = widget.data['token'].toString();
+        newsId = widget.data['newsId'].toString();
+        newsDetailsViewmodel.fetchNewsDetailsListApi(
+            context, token.toString(), newsId.toString());
+      });
+    }
 
     // print(outputDate5);
     return Scaffold(
@@ -88,67 +98,70 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
                   var outputFormat5 = DateFormat('d-MMM-yyyy,hh:mm a');
                   var outputDate5 = outputFormat5.format(inputDate);
                   displayDate = outputDate5;
-                  return Stack(
-                    children: <Widget>[
-                      SingleChildScrollView(
-                        physics: BouncingScrollPhysics(),
-                        child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: isLoading
-                                ? isLoading
-                                    ? Container()
-                                    : Container()
-                                : Column(
-                                    children: [
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                      Container(
-                                        padding: EdgeInsets.only(
-                                            left: 28,
-                                            right: 8,
-                                            bottom: 8,
-                                            top: 8),
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          newsDetailsViewmodel
-                                              .newsDetailsList.data!.data!.title
-                                              .toString(),
-                                          // title,
-                                          style: TextStyle(fontSize: 20),
+                  return RefreshIndicator(
+                    onRefresh: refresh,
+                    child: Stack(
+                      children: <Widget>[
+                        SingleChildScrollView(
+                          physics: AlwaysScrollableScrollPhysics(),
+                          child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: isLoading
+                                  ? isLoading
+                                      ? Container()
+                                      : Container()
+                                  : Column(
+                                      children: [
+                                        SizedBox(
+                                          height: 5,
                                         ),
-                                      ),
-                                      SizedBox(height: 10),
-                                      Container(
-                                        height: 2,
-                                        color: Colors.black,
-                                      ),
-                                      SizedBox(height: 10),
-                                      Container(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          displayDate.toString(),
-                                        ),
-                                      ),
-                                      SizedBox(height: 20),
-                                      Card(
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(12.0),
-                                          child: Html(
-                                            data: newsDetailsViewmodel
-                                                .newsDetailsList
-                                                .data!
-                                                .data!
-                                                .description
+                                        Container(
+                                          padding: EdgeInsets.only(
+                                              left: 28,
+                                              right: 8,
+                                              bottom: 8,
+                                              top: 8),
+                                          alignment: Alignment.center,
+                                          child: Text(
+                                            newsDetailsViewmodel.newsDetailsList
+                                                .data!.data!.title
                                                 .toString(),
+                                            // title,
+                                            style: TextStyle(fontSize: 20),
                                           ),
                                         ),
-                                      ),
-                                    ],
-                                  )),
-                      ),
-                      isLoading ? Loader() : Container(),
-                    ],
+                                        SizedBox(height: 10),
+                                        Container(
+                                          height: 2,
+                                          color: Colors.black,
+                                        ),
+                                        SizedBox(height: 10),
+                                        Container(
+                                          alignment: Alignment.center,
+                                          child: Text(
+                                            displayDate.toString(),
+                                          ),
+                                        ),
+                                        SizedBox(height: 20),
+                                        Card(
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(12.0),
+                                            child: Html(
+                                              data: newsDetailsViewmodel
+                                                  .newsDetailsList
+                                                  .data!
+                                                  .data!
+                                                  .description
+                                                  .toString(),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    )),
+                        ),
+                        isLoading ? Loader() : Container(),
+                      ],
+                    ),
                   );
               }
             },

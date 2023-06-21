@@ -208,76 +208,81 @@ class _ReportScreenState extends State<ReportScreen> {
                 case Status.COMPLETED:
                   return RefreshIndicator(
                     onRefresh: refresh,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 6),
-                      child: reportViewmodel.reportsList.data!.data!.length != 0
-                          ? ListView.builder(
-                              padding: EdgeInsets.only(bottom: 0),
-                              physics: BouncingScrollPhysics(),
-                              // shrinkWrap: true,
-                              itemCount: reportViewmodel
-                                  .reportsList.data!.data!.length,
-                              itemBuilder:
-                                  (BuildContext context, int itemIndex) {
-                                return createNewsListContainer(
-                                    context, itemIndex);
-                              })
-                          : Stack(
-                              children: [
-                                SingleChildScrollView(
-                                  physics: BouncingScrollPhysics(),
-                                  child: Padding(
-                                    padding: EdgeInsets.all(15),
-                                    child: Container(
-                                      height: 74.h,
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          SizedBox(
-                                            height: 30,
-                                          ),
-                                          Text(
-                                            'Swipe down to refresh page',
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              fontSize: 20,
-                                              color: Color(0XFF545454),
-                                              fontWeight: FontWeight.w600,
+                    child: SingleChildScrollView(
+                      physics: AlwaysScrollableScrollPhysics(),
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 6),
+                        child: reportViewmodel.reportsList.data!.data!.length !=
+                                0
+                            ? ListView.builder(
+                                padding: EdgeInsets.only(bottom: 0),
+                                physics: BouncingScrollPhysics(),
+                                // shrinkWrap: true,
+                                itemCount: reportViewmodel
+                                    .reportsList.data!.data!.length,
+                                itemBuilder:
+                                    (BuildContext context, int itemIndex) {
+                                  return createNewsListContainer(
+                                      context, itemIndex);
+                                })
+                            : Stack(
+                                children: [
+                                  SingleChildScrollView(
+                                    physics: BouncingScrollPhysics(),
+                                    child: Padding(
+                                      padding: EdgeInsets.all(15),
+                                      child: Container(
+                                        height: 74.h,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            SizedBox(
+                                              height: 30,
                                             ),
-                                          ),
-                                          SizedBox(
-                                            height: 120,
-                                          ),
-                                          Center(
-                                            child: Image.asset(
-                                              'images/axon.png',
-                                              height: 90,
-                                              width: 90,
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: 20,
-                                          ),
-                                          Center(
-                                            child: Text(
-                                              'You  don\'t have any bookings or upcoming events',
+                                            Text(
+                                              'Swipe down to refresh page',
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
-                                                  fontSize: 20,
-                                                  color: Color(0XFF545454),
-                                                  fontWeight: FontWeight.w600),
+                                                fontSize: 20,
+                                                color: Color(0XFF545454),
+                                                fontWeight: FontWeight.w600,
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                            SizedBox(
+                                              height: 120,
+                                            ),
+                                            Center(
+                                              child: Image.asset(
+                                                'images/axon.png',
+                                                height: 90,
+                                                width: 90,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 20,
+                                            ),
+                                            Center(
+                                              child: Text(
+                                                'You  don\'t have any bookings or upcoming events',
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    color: Color(0XFF545454),
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
+                                ],
+                              ),
+                      ),
                     ),
                   );
               }

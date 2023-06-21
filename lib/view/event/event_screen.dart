@@ -24,13 +24,18 @@ class EventScreen extends StatefulWidget {
 class _EventScreenState extends State<EventScreen> {
   UserPreferences userPreference = UserPreferences();
   late String token;
-  String deviceId = 'DESKTOP';
+  late String deviceId;
   EventListViewmodel eventListViewmodel = EventListViewmodel();
   @override
   void initState() {
     userPreference.getToken().then((value) {
       setState(() {
         token = value!;
+      });
+    });
+    userPreference.getDeviceId().then((value) {
+      setState(() {
+        deviceId = value!;
       });
     });
     // super.initState();
@@ -83,7 +88,7 @@ class _EventScreenState extends State<EventScreen> {
                 : null;
           },
           child: Card(
-            margin: EdgeInsets.only(top: 18, left: 18, right: 18),
+            margin: EdgeInsets.only(top: 20, left: 18, right: 18),
             color: Colors.white,
             shadowColor: Colors.white,
             elevation: 10,
@@ -274,25 +279,25 @@ class _EventScreenState extends State<EventScreen> {
           // )
         ),
       ),
-      body: RefreshIndicator(
-        onRefresh: refresh,
-        child: ChangeNotifierProvider<EventListViewmodel>.value(
-            value: eventListViewmodel,
-            child: Consumer<EventListViewmodel>(
-              builder: (context, value, _) {
-                switch (value.EventList.status!) {
-                  case Status.LOADING:
-                    return Center(
-                        child: Center(child: CircularProgressIndicator()));
-                  case Status.ERROR:
-                    return Center(
-                        child: Html(data: value.EventList.message.toString()));
-                  case Status.COMPLETED:
-                    return eventListViewmodel.EventList.data!.data!.length != 0
-                        ? Stack(
+      body: ChangeNotifierProvider<EventListViewmodel>.value(
+          value: eventListViewmodel,
+          child: Consumer<EventListViewmodel>(
+            builder: (context, value, _) {
+              switch (value.EventList.status!) {
+                case Status.LOADING:
+                  return Center(
+                      child: Center(child: CircularProgressIndicator()));
+                case Status.ERROR:
+                  return Center(
+                      child: Html(data: value.EventList.message.toString()));
+                case Status.COMPLETED:
+                  return eventListViewmodel.EventList.data!.data!.length != 0
+                      ? RefreshIndicator(
+                          onRefresh: refresh,
+                          child: Stack(
                             children: [
                               SingleChildScrollView(
-                                physics: BouncingScrollPhysics(),
+                                physics: AlwaysScrollableScrollPhysics(),
                                 child: ListView.builder(
                                     padding: EdgeInsets.only(bottom: 10),
                                     physics: BouncingScrollPhysics(),
@@ -306,67 +311,66 @@ class _EventScreenState extends State<EventScreen> {
                                     }),
                               ),
                             ],
-                          )
-                        : Stack(
-                            children: [
-                              SingleChildScrollView(
-                                physics: BouncingScrollPhysics(),
-                                child: Padding(
-                                  padding: EdgeInsets.all(15),
-                                  child: Container(
-                                    height: 74.h,
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        SizedBox(
-                                          height: 30,
+                          ),
+                        )
+                      : Stack(
+                          children: [
+                            SingleChildScrollView(
+                              physics: BouncingScrollPhysics(),
+                              child: Padding(
+                                padding: EdgeInsets.all(15),
+                                child: Container(
+                                  height: 74.h,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      SizedBox(
+                                        height: 30,
+                                      ),
+                                      Text(
+                                        'Swipe down to refresh page',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          color: Color(0XFF545454),
+                                          fontWeight: FontWeight.w600,
                                         ),
-                                        Text(
-                                          'Swipe down to refresh page',
+                                      ),
+                                      SizedBox(
+                                        height: 120,
+                                      ),
+                                      Center(
+                                        child: Image.asset(
+                                          'images/axon.png',
+                                          height: 90,
+                                          width: 90,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      Center(
+                                        child: Text(
+                                          'You  don\'t have any bookings or upcoming events',
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
-                                            fontSize: 20,
-                                            color: Color(0XFF545454),
-                                            fontWeight: FontWeight.w600,
-                                          ),
+                                              fontSize: 20,
+                                              color: Color(0XFF545454),
+                                              fontWeight: FontWeight.w600),
                                         ),
-                                        SizedBox(
-                                          height: 120,
-                                        ),
-                                        Center(
-                                          child: Image.asset(
-                                            'images/axon.png',
-                                            height: 90,
-                                            width: 90,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 20,
-                                        ),
-                                        Center(
-                                          child: Text(
-                                            'You  don\'t have any bookings or upcoming events',
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                color: Color(0XFF545454),
-                                                fontWeight: FontWeight.w600),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
-                            ],
-                          );
-                }
-              },
-            )),
-      ),
+                            ),
+                          ],
+                        );
+              }
+            },
+          )),
     );
   }
 }

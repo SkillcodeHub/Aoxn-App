@@ -3,11 +3,10 @@ import 'dart:convert';
 
 import 'package:axonweb/View_Model/Book_View_Model/Book_view_Model.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import '../../Repository/Book_Repository/bookAppointment_repository.dart';
 import '../../Res/Components/loader.dart';
 import '../../Res/colors.dart';
 import '../../Utils/utils.dart';
@@ -40,8 +39,11 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
   bool isLoading = false;
   var mobile;
   late String token;
+  late String deviceId;
   String displaySelectAppointmentDate = 'Select Appointment Date';
   String displayDate = '';
+  String appointmentDate = '';
+  int? DelayMinute;
   String displayTimeSlot = '';
   String? displaytimingId;
   String displayPatientName = 'Select Patient';
@@ -64,6 +66,11 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
     userPreference.getToken().then((value) {
       setState(() {
         token = value!;
+      });
+    });
+    userPreference.getDeviceId().then((value) {
+      setState(() {
+        deviceId = value!;
       });
     });
     // setState(() {});
@@ -123,7 +130,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                   return Stack(
                     children: [
                       SingleChildScrollView(
-                        physics: BouncingScrollPhysics(),
+                        // physics: BouncingScrollPhysics(),
                         child: Padding(
                           padding: EdgeInsets.all(0),
                           child: isLoading
@@ -152,109 +159,273 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                             number = value.doctorDetailsList
                                                 .data!.data![0].customerContact
                                                 .toString();
-                                            return Container(
-                                                height: 24.h,
-                                                width: 100.w,
-                                                decoration: BoxDecoration(
-                                                  image: DecorationImage(
-                                                    image: MemoryImage(
-                                                      base64Decode(
-                                                        value
-                                                            .doctorDetailsList
-                                                            .data!
-                                                            .data![0]
-                                                            .logoImageURL
-                                                            .toString(),
+                                            return Stack(
+                                              children: [
+                                                Container(
+                                                  height: 26.h,
+                                                  width: 100.w,
+                                                  decoration: BoxDecoration(
+                                                    image: DecorationImage(
+                                                      image: MemoryImage(
+                                                        base64Decode(
+                                                          value
+                                                              .doctorDetailsList
+                                                              .data!
+                                                              .data![0]
+                                                              .logoImageURL
+                                                              .toString(),
+                                                        ),
                                                       ),
+                                                      fit: BoxFit.cover,
                                                     ),
-                                                    fit: BoxFit.cover,
                                                   ),
+                                                  //   child: Padding(
+                                                  //     padding:
+                                                  //         const EdgeInsets.all(
+                                                  //             8.0),
+                                                  //     child: Container(
+                                                  //       height: 20,
+                                                  //       decoration: BoxDecoration(
+                                                  //         boxShadow: [
+                                                  //           BoxShadow(
+                                                  //             spreadRadius: 0,
+                                                  //             color: Colors.amber,
+                                                  //             // color: Colors.black
+                                                  //             //     .withOpacity(
+                                                  //             //         0.4),
+                                                  //             blurRadius: 15,
+                                                  //           ),
+                                                  //         ],
+                                                  //       ),
+                                                  //       child: Row(
+                                                  //         crossAxisAlignment:
+                                                  //             CrossAxisAlignment
+                                                  //                 .end,
+                                                  //         mainAxisAlignment:
+                                                  //             MainAxisAlignment
+                                                  //                 .spaceBetween,
+                                                  //         children: [
+                                                  //           Container(
+                                                  //             width: 80.w,
+                                                  //             child: Column(
+                                                  //               crossAxisAlignment:
+                                                  //                   CrossAxisAlignment
+                                                  //                       .start,
+                                                  //               mainAxisAlignment:
+                                                  //                   MainAxisAlignment
+                                                  //                       .end,
+                                                  //               children: [
+                                                  //                 Text(
+                                                  //                   value
+                                                  //                       .doctorDetailsList
+                                                  //                       .data!
+                                                  //                       .data![0]
+                                                  //                       .customerName
+                                                  //                       .toString(),
+                                                  //                   style:
+                                                  //                       TextStyle(
+                                                  //                     fontSize:
+                                                  //                         15,
+                                                  //                     color: Colors
+                                                  //                         .white,
+                                                  //                     fontWeight:
+                                                  //                         FontWeight
+                                                  //                             .bold,
+                                                  //                   ),
+                                                  //                   maxLines: 1,
+                                                  //                   overflow:
+                                                  //                       TextOverflow
+                                                  //                           .ellipsis,
+                                                  //                 ),
+                                                  //                 Text(
+                                                  //                   value
+                                                  //                       .doctorDetailsList
+                                                  //                       .data!
+                                                  //                       .data![0]
+                                                  //                       .customerAddress
+                                                  //                       .toString(),
+                                                  //                   style:
+                                                  //                       TextStyle(
+                                                  //                     fontSize:
+                                                  //                         15,
+                                                  //                     color: Colors
+                                                  //                         .white,
+                                                  //                     fontStyle:
+                                                  //                         FontStyle
+                                                  //                             .italic,
+                                                  //                   ),
+                                                  //                   maxLines: 1,
+                                                  //                   overflow:
+                                                  //                       TextOverflow
+                                                  //                           .ellipsis,
+                                                  //                 ),
+                                                  //               ],
+                                                  //             ),
+                                                  //           ),
+                                                  //           InkWell(
+                                                  //             onTap: () {
+                                                  //               number == null ||
+                                                  //                       number ==
+                                                  //                           ''
+                                                  //                   ? Utils.snackBar(
+                                                  //                       'MobileNo Not Available',
+                                                  //                       context)
+                                                  //                   : launch(
+                                                  //                       'tel://$number');
+                                                  //             },
+                                                  //             child: Container(
+                                                  //               width: 15.w,
+                                                  //               height: 5.h,
+                                                  //               child: Image.asset(
+                                                  //                   "images/phone-call.png"),
+                                                  //             ),
+                                                  //           ),
+                                                  //         ],
+                                                  //       ),
+                                                  //     ),
+                                                  //   ),
                                                 ),
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: Row(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment.end,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Container(
-                                                        width: 80.w,
-                                                        child: Column(
+                                                Positioned(
+                                                  // top: 0,
+                                                  bottom: 3,
+                                                  left: 0,
+                                                  right: 0,
+                                                  child: Transform.translate(
+                                                    offset: Offset(0, 4),
+                                                    child: Container(
+                                                      height: 70,
+                                                      decoration: BoxDecoration(
+                                                        gradient: LinearGradient(
+                                                            begin: Alignment
+                                                                .topCenter,
+                                                            end: Alignment
+                                                                .bottomCenter,
+                                                            colors: [
+                                                              Colors
+                                                                  .transparent,
+                                                              Colors
+                                                                  .grey.shade700
+                                                            ]),
+                                                        // boxShadow: [
+                                                        //   BoxShadow(
+                                                        //     color: Colors.black
+                                                        //         .withOpacity(
+                                                        //             0.4),
+                                                        //     blurRadius: 8,
+                                                        //     offset:
+                                                        //         Offset(0, 4),
+                                                        //   ),
+                                                        //   BoxShadow(
+                                                        //     color: Colors.white
+                                                        //         .withOpacity(
+                                                        //             0.2),
+                                                        //     blurRadius: 4,
+                                                        //     offset:
+                                                        //         Offset(0, -4),
+                                                        //   ),
+                                                        // ],
+                                                      ),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                left: 14,
+                                                                top: 8,
+                                                                bottom: 8,
+                                                                right: 8),
+                                                        child: Row(
                                                           crossAxisAlignment:
                                                               CrossAxisAlignment
-                                                                  .start,
+                                                                  .end,
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
-                                                                  .end,
+                                                                  .spaceBetween,
                                                           children: [
-                                                            Text(
-                                                              value
-                                                                  .doctorDetailsList
-                                                                  .data!
-                                                                  .data![0]
-                                                                  .customerName
-                                                                  .toString(),
-                                                              // 'aaaa',
-                                                              // customerData[0]['customerName'],
-                                                              style: TextStyle(
-                                                                  fontSize: 15,
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold),
-                                                              maxLines: 1,
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
+                                                            Container(
+                                                              width: 70.w,
+                                                              child: Column(
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .end,
+                                                                children: [
+                                                                  Text(
+                                                                    value
+                                                                        .doctorDetailsList
+                                                                        .data!
+                                                                        .data![
+                                                                            0]
+                                                                        .customerName
+                                                                        .toString(),
+                                                                    style:
+                                                                        TextStyle(
+                                                                      fontSize:
+                                                                          13,
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                    ),
+                                                                    maxLines: 1,
+                                                                    overflow:
+                                                                        TextOverflow
+                                                                            .ellipsis,
+                                                                  ),
+                                                                  Text(
+                                                                    value
+                                                                        .doctorDetailsList
+                                                                        .data!
+                                                                        .data![
+                                                                            0]
+                                                                        .customerAddress
+                                                                        .toString(),
+                                                                    style:
+                                                                        TextStyle(
+                                                                      fontSize:
+                                                                          13,
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontStyle:
+                                                                          FontStyle
+                                                                              .italic,
+                                                                    ),
+                                                                    maxLines: 1,
+                                                                    overflow:
+                                                                        TextOverflow
+                                                                            .ellipsis,
+                                                                  ),
+                                                                ],
+                                                              ),
                                                             ),
-                                                            Text(
-                                                              value
-                                                                  .doctorDetailsList
-                                                                  .data!
-                                                                  .data![0]
-                                                                  .customerAddress
-                                                                  .toString(),
-                                                              // customerData[0]['customerAddress'],
-                                                              style: TextStyle(
-                                                                  fontSize: 15,
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold),
-                                                              maxLines: 1,
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
+                                                            InkWell(
+                                                              onTap: () {
+                                                                number == null ||
+                                                                        number ==
+                                                                            ''
+                                                                    ? Utils.snackBar(
+                                                                        'MobileNo Not Available',
+                                                                        context)
+                                                                    : launch(
+                                                                        'tel://$number');
+                                                              },
+                                                              child: Container(
+                                                                width: 15.w,
+                                                                height: 5.h,
+                                                                child: Image.asset(
+                                                                    "images/phone-call.png"),
+                                                              ),
                                                             ),
                                                           ],
                                                         ),
                                                       ),
-                                                      InkWell(
-                                                        onTap: () {
-                                                          number == null ||
-                                                                  number == ''
-                                                              ? Utils.snackBar(
-                                                                  'MobileNo Not Available',
-                                                                  context)
-                                                              : launch(
-                                                                  'tel://$number');
-                                                        },
-                                                        child: Container(
-                                                          width: 15.w,
-                                                          height: 5.h,
-                                                          child: Image.asset(
-                                                            "images/phone-call.png",
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
+                                                    ),
                                                   ),
-                                                ));
+                                                ),
+                                              ],
+                                            );
                                         }
                                       }),
                                     ),
@@ -285,7 +456,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                 Text(
                                                   'Provider',
                                                   style: TextStyle(
-                                                      fontSize: 18,
+                                                      fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.w400,
                                                       color:
@@ -345,23 +516,30 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                 .toString(),
                                                             // value: _mySelection,
                                                             child: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .start,
                                                               children: <
                                                                   Widget>[
                                                                 Container(
                                                                     // width: 249,
-                                                                    margin: EdgeInsets
-                                                                        .only(
-                                                                            left:
-                                                                                10),
+                                                                    // margin: EdgeInsets
+                                                                    //     .only(
+                                                                    //         left:
+                                                                    //             10),
                                                                     child: Text(
-                                                                      map.doctorName
-                                                                          .toString(),
-                                                                      style: TextStyle(
-                                                                          fontSize: 14
-                                                                              .sp,
-                                                                          fontWeight:
-                                                                              FontWeight.w500),
-                                                                    )),
+                                                                  map.doctorName
+                                                                      .toString(),
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          14.sp,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500),
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .start,
+                                                                )),
                                                               ],
                                                             ),
                                                           );
@@ -385,7 +563,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                             height: 12.h,
                                             width: 16.w,
                                             child: Icon(
-                                              Icons.punch_clock,
+                                              Icons.refresh_outlined,
                                               color: Colors.white,
                                               size: 30,
                                             ),
@@ -472,36 +650,79 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                             CrossAxisAlignment
                                                                 .start,
                                                         children: [
-                                                          SizedBox(height: 2),
+                                                          Text(
+                                                            'Appointment',
+                                                            style: TextStyle(
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                                color: Colors
+                                                                    .grey
+                                                                    .shade700),
+                                                          ),
+                                                          SizedBox(height: 1),
                                                           Container(
                                                             padding:
                                                                 EdgeInsets.only(
                                                                     left: 10,
-                                                                    top: 10),
-                                                            child: Text(
-                                                              displayDate,
-                                                              // displayDate,
-                                                              style: TextStyle(
-                                                                  fontSize:
-                                                                      14.sp,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500),
+                                                                    top: 8),
+                                                            child: Row(
+                                                              children: [
+                                                                Text(
+                                                                  'Date   ',
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          15,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w400,
+                                                                      color: Colors
+                                                                          .grey
+                                                                          .shade700),
+                                                                ),
+                                                                Text(
+                                                                  appointmentDate,
+                                                                  // displayDate,
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          13.sp,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500),
+                                                                ),
+                                                              ],
                                                             ),
                                                           ),
-                                                          SizedBox(height: 10),
+                                                          SizedBox(height: 4),
                                                           Container(
                                                             padding:
                                                                 EdgeInsets.only(
                                                                     left: 10),
-                                                            child: Text(
-                                                              displayTimeSlot,
-                                                              style: TextStyle(
-                                                                  fontSize:
-                                                                      12.sp,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400),
+                                                            child: Row(
+                                                              children: [
+                                                                Text(
+                                                                  'Time  ',
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          15,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w400,
+                                                                      color: Colors
+                                                                          .grey
+                                                                          .shade700),
+                                                                ),
+                                                                Text(
+                                                                  displayTimeSlot,
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          12.sp,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500),
+                                                                ),
+                                                              ],
                                                             ),
                                                           ),
                                                         ],
@@ -522,7 +743,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                               height: 12.h,
                                               width: 16.w,
                                               child: Icon(
-                                                Icons.punch_clock,
+                                                Icons.access_time_rounded,
                                                 color: Colors.white,
                                                 size: 30,
                                               ),
@@ -603,7 +824,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                               height: 12.h,
                                               width: 16.w,
                                               child: Icon(
-                                                Icons.person,
+                                                Icons.person_outline,
                                                 color: Colors.white,
                                                 size: 30,
                                               ),
@@ -639,11 +860,12 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                     "Email": "",
                                                     "Gender": displayGender
                                                         .toString(),
-                                                    "PatType": "New",
+                                                    "PatType": PatType,
                                                     "ApptDate": displayDate,
                                                     "CustomerToken": token,
-                                                    "DelayMinute": "",
-                                                    "DeviceId": "DESKTOP",
+                                                    "DelayMinute":
+                                                        DelayMinute.toString(),
+                                                    "DeviceId": deviceId,
                                                     "DoctorId":
                                                         selectedDocotrId,
                                                     "TimingId": displaytimingId
@@ -726,6 +948,12 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
         displayDate = result[0];
         displayTimeSlot = result[1];
         displaytimingId = result[2];
+        DelayMinute = result[3];
+
+        var inputDate = DateTime.parse(displayDate.toString());
+        var outputFormat5 = DateFormat('d-MMM-yyyy');
+        var outputDate5 = outputFormat5.format(inputDate);
+        appointmentDate = outputDate5;
       });
     }
   }

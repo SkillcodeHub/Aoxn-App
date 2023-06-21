@@ -1,90 +1,41 @@
-import 'dart:convert';
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:platform_device_id/platform_device_id.dart';
 
-import 'View_Model/ChangeProvider_View_Model/provider_view_model.dart';
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
 
-class QRScannerWidget extends StatefulWidget {
   @override
-  _QRScannerWidgetState createState() => _QRScannerWidgetState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _QRScannerWidgetState extends State<QRScannerWidget> {
-  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-  QRViewController? controller;
-  Barcode? result;
-  CustomerTokenByQRViewmodel customerTokenByQRViewmodel =
-      CustomerTokenByQRViewmodel();
-  @override
-  void reassemble() {
-    super.reassemble();
-    if (Platform.isAndroid) {
-      controller!.pauseCamera();
-    } else if (Platform.isIOS) {
-      controller!.resumeCamera();
-    }
+class _HomePageState extends State<HomePage> {
+  String? _id;
+
+  // This function will be called when the floating button is pressed
+  void _getInfo() async {
+    // Get device id
+    String? result = await PlatformDeviceId.getDeviceId;
+
+    // Update the UI
+    setState(() {
+      _id = result;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            flex: 5,
-            child: QRView(
-              key: qrKey,
-              onQRViewCreated: _onQRViewCreated,
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Center(
-              child: (result != null)
-                  ? Text(
-                      'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}')
-                  : Text('Scan a code'),
-            ),
-          )
-        ],
+      appBar: AppBar(title: const Text('KindaCode.com')),
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Center(
+            child: Text(
+          _id ?? 'Press the button',
+          style: TextStyle(fontSize: 20, color: Colors.red.shade900),
+        )),
       ),
+      floatingActionButton: FloatingActionButton(
+          onPressed: _getInfo, child: const Icon(Icons.play_arrow)),
     );
-  }
-
-  void _onQRViewCreated(QRViewController controller) {
-    this.controller = controller;
-    controller.scannedDataStream.listen((scanData) {
-      setState(() {
-        result = scanData;
-      });
-      Codec<String, String> stringToBase64 = utf8.fuse(base64);
-      String decoded =
-          stringToBase64.decode(result!.code.toString()); // username:password
-      print(decoded);
-      Map<String, dynamic> jsonMap = jsonDecode(decoded.toString());
-
-      String customerName = jsonMap['CustomerName'];
-      String appCode = jsonMap['AppCode'];
-
-      print('CustomerName: $customerName');
-      print('AppCode: $appCode');
-      print('cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc');
-      print(appCode);
-      customerTokenByQRViewmodel.fetchCustomerTokenByQR(
-          context, appCode.toString());
-      print(
-          'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
-
-      print('-------------------------------------------------------------');
-    });
-  }
-
-  @override
-  void dispose() {
-    controller?.dispose();
-    super.dispose();
   }
 }

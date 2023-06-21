@@ -6,14 +6,16 @@ import '../../Res/app_url.dart';
 class AppointmentSlotListRepository {
   BaseApiServices _apiServices = NetworkApiService();
   Future<AppointmentSlotListModel> fetchAppointmentSlotList(
-      selectedDocotrId, datetime1) async {
+      selectedDocotrId, datetime1, token) async {
     try {
       dynamic response = await _apiServices.getGetApiResponse(
           AppUrl.getAppointmentstimeslot +
               "?DoctorId=" +
               selectedDocotrId +
               "&ApptDate=" +
-              datetime1.toString());
+              datetime1.toString() +
+              "&customerToken=" +
+              token.toString());
       print(response);
       return response = AppointmentSlotListModel.fromJson(response);
     } catch (e) {
