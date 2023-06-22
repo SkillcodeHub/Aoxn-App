@@ -225,9 +225,7 @@ import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 import 'package:mobile_number/mobile_number.dart';
-
 import '../../View_Model/Login_View_Model/auth_view_model.dart';
-import '../../View_Model/News_View_Model/notification_services.dart';
 import '../../utils/utils.dart';
 
 class LoginScreen extends StatefulWidget {

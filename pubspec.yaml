@@ -60,6 +60,7 @@ dependencies:
   qr_code_scanner: ^1.0.1
   platform_device_id: ^1.0.1
   mobile_number: ^2.1.1
+  simnumber: ^0.0.12
 
 dev_dependencies:
   flutter_test:

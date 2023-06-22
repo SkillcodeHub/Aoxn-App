@@ -12,7 +12,7 @@ class ScreenNameWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 40.w,
+      width: 59.w,
       // width: 59.w,
       child: Text(
         title,
