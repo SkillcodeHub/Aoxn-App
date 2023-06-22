@@ -217,6 +217,7 @@
 // }
 
 import 'dart:async';
+import 'dart:io';
 import 'package:axonweb/Res/colors.dart';
 import 'package:axonweb/View_Model/Settings_View_Model/settings_view_model.dart';
 import 'package:flutter/material.dart';
@@ -499,8 +500,9 @@ class LoginScreenState extends State {
                           ),
 
                           onTap: () {
-                            _showSimCardNumbersDialog();
-                          },
+ if (Platform.isAndroid) {
+      _showSimCardNumbersDialog();
+    }                          },
                           // onFieldSubmitted: (value) {
                           //   Utils.fieldFocusChange(
                           //       context, emailFocusNode, passwordFocusNode);

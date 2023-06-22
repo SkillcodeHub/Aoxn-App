@@ -329,12 +329,12 @@ class _NewsScreenState extends State<NewsScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 AxonIconForAppBarrWidget(),
-                IconButton(
-                    onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => MyApp()));
-                    },
-                    icon: Icon(Icons.abc)),
+                // IconButton(
+                //     onPressed: () {
+                //       Navigator.push(context,
+                //           MaterialPageRoute(builder: (context) => MyApp()));
+                //     },
+                //     icon: Icon(Icons.abc)),
                 ScreenNameWidget(
                   title: '  Notice Board',
                 ),

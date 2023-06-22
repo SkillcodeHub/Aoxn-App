@@ -204,7 +204,7 @@ class _SelectAppointmentDateScreenState
                           )
                         ],
                       ),
-                      SizedBox(height: 5),
+                      // SizedBox(height: 5),
                     ],
                   ),
                 ),
@@ -240,7 +240,7 @@ class _SelectAppointmentDateScreenState
                           color: Colors.grey.shade700),
                     ),
                     SizedBox(height: 25),
-                    SizedBox(height: 5),
+                    // SizedBox(height: 5),
                   ],
                 ),
               ),
