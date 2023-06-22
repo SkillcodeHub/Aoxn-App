@@ -74,6 +74,14 @@ class _EventScreenState extends State<EventScreen> {
       children: [
         InkWell(
           onTap: () {
+            print(outputDate);
+            print(doctorName);
+            print('outputDate3');
+            print(outputDate3);
+            print('outputDate3');
+            print(patientName);
+            print(status);
+            print(appointmentId);
             Map data = {
               'date': outputDate,
               'doctorName': doctorName,
@@ -268,15 +276,6 @@ class _EventScreenState extends State<EventScreen> {
               ],
             ),
           ),
-          // InkWell(
-          //   onTap: () {
-          //     userPrefernce.remove().then((value) {
-          //       Navigator.push(context,
-          //           MaterialPageRoute(builder: (context) => LoginScreen()));
-          //     });
-          //   },
-          //   child: Text('Logout'),
-          // )
         ),
       ),
       body: ChangeNotifierProvider<EventListViewmodel>.value(

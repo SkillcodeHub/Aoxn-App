@@ -148,7 +148,7 @@ class _SelectAppointmentDateScreenState
                   });
                 },
                 child: Container(
-                  height: 10.9.h,
+                  height: 12.h,
                   width: 95.w,
                   margin: EdgeInsets.only(left: 10, right: 10),
                   padding: EdgeInsets.only(left: 10, right: 10),

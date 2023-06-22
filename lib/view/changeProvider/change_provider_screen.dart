@@ -280,7 +280,7 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
   String? token;
   String? customerName;
   String? appCode;
-  bool showAlertDialog = false;
+  String showAlertDialog = ' ';
 
   @override
   void initState() {
@@ -292,11 +292,12 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
     });
     super.initState();
     // fetchData();
-    // if (showAlertDialog = true) {
-    //   setState(() {
-    //     _showBackAlertDialog();
-    //   });
-    // }
+    setState(() {
+      print(showAlertDialog);
+      if (showAlertDialog != ' ') {
+        _showBackAlertDialog();
+      } else {}
+    });
     fetchData1();
   }
 
@@ -536,7 +537,7 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                         children: [
                                           Container(
                                             height: 1,
-                                            width: 40.w,
+                                            width: 38.w,
                                             color: Colors.black,
                                           ),
                                           SizedBox(width: 2.w),
@@ -644,26 +645,103 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                             (BuildContext context, int index) {
                                           return InkWell(
                                             onTap: () {
-                                              final token = outputList[index]
-                                                      ['token']
-                                                  .toString();
+                                              // showBackAlertDialog() {
+                                              showDialog(
+                                                context: context,
+                                                builder: (context) {
+                                                  return AlertDialog(
+                                                    title: Text(
+                                                      'Confirm',
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                    content: Text(
+                                                      'Are you sure want to change your current Provider?',
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 14),
+                                                    ),
+                                                    actions: <Widget>[
+                                                      TextButton(
+                                                        child: Text(
+                                                          'CANCEL',
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                        onPressed: () {
+                                                          setState(() {
+                                                            Navigator.pop(
+                                                                context);
+                                                          });
+                                                        },
+                                                      ),
+                                                      TextButton(
+                                                        child: Text(
+                                                          'CONFIRM',
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                        onPressed: () {
+                                                          final token =
+                                                              outputList[index]
+                                                                      ['token']
+                                                                  .toString();
 
-                                              print(outputList[index]['token']
-                                                  .toString());
-                                              userPreference.setToken(token);
+                                                          print(
+                                                              outputList[index]
+                                                                      ['token']
+                                                                  .toString());
+                                                          userPreference
+                                                              .setToken(token);
 
-                                              // customerTkenViewmodel
-                                              //     .fetchCustomerTokenApi(
+                                                          // customerTkenViewmodel
+                                                          //     .fetchCustomerTokenApi(
+                                                          //         context,
+                                                          //         providerList[index]['token']
+                                                          //             .toString());
+                                                          Timer(
+                                                              Duration(
+                                                                  seconds: 1),
+                                                              () => Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder:
+                                                                          (context) =>
+                                                                              MyNavigationBar())));
+                                                        },
+                                                      ),
+                                                    ],
+                                                  );
+                                                },
+                                              );
+                                              // }
+
+                                              // final token = outputList[index]
+                                              //         ['token']
+                                              //     .toString();
+
+                                              // print(outputList[index]['token']
+                                              //     .toString());
+                                              // userPreference.setToken(token);
+
+                                              // // customerTkenViewmodel
+                                              // //     .fetchCustomerTokenApi(
+                                              // //         context,
+                                              // //         providerList[index]['token']
+                                              // //             .toString());
+                                              // Timer(
+                                              //     Duration(seconds: 1),
+                                              //     () => Navigator.push(
                                               //         context,
-                                              //         providerList[index]['token']
-                                              //             .toString());
-                                              Timer(
-                                                  Duration(seconds: 1),
-                                                  () => Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              MyNavigationBar())));
+                                              //         MaterialPageRoute(
+                                              //             builder: (context) =>
+                                              //                 MyNavigationBar())));
                                             },
                                             child: Card(
                                               child: Padding(
@@ -785,7 +863,7 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                           children: [
                                             Container(
                                               height: 1,
-                                              width: 40.w,
+                                              width: 38.w,
                                               color: Colors.black,
                                             ),
                                             SizedBox(width: 2.w),
@@ -910,12 +988,19 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
         appCode = result[1];
         showAlertDialog = result[2];
       });
-
-      if (result[2] == true) {
-        setState(() {
-          showAlertDialog = true;
-        });
-      }
+      setState(() {
+        print('showAlertDialogshowAlertDialogshowAlertDialogshowAlertDialog');
+        print(showAlertDialog);
+        print('showAlertDialogshowAlertDialogshowAlertDialogshowAlertDialog');
+        if (showAlertDialog != ' ') {
+          _showBackAlertDialog();
+        }
+      });
+      // if (result[2] == true) {
+      //   setState(() {
+      //     showAlertDialog = true;
+      //   });
+      // }
     }
   }
 
@@ -924,13 +1009,36 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Navigation Alert'),
-          content: Text('You navigated back from Screen 2'),
+          title: Text(
+            'Confirm',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          content: Text(
+            customerName.toString(),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+          ),
           actions: <Widget>[
             TextButton(
-              child: Text('OK'),
+              child: Text(
+                'CANCEL',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
               onPressed: () {
-                // Navigator.pop(context);
+                setState(() {
+                  Navigator.pop(context);
+                });
+              },
+            ),
+            TextButton(
+              child: Text(
+                'CONFIRM',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              onPressed: () {
+                customerTokenByQRViewmodel.fetchCustomerTokenByQR(
+                  context,
+                  appCode.toString(),
+                );
               },
             ),
           ],

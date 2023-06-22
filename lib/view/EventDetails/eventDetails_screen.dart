@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -6,7 +8,8 @@ import '../../View_Model/Services/SharePreference/SharePreference.dart';
 
 class EventDetailsScreen extends StatefulWidget {
   final dynamic appoitmentData;
-  const EventDetailsScreen({super.key, required this.appoitmentData});
+  const EventDetailsScreen({Key? key, required this.appoitmentData})
+      : super(key: key);
 
   @override
   State<EventDetailsScreen> createState() => _EventDetailsScreenState();
@@ -15,13 +18,25 @@ class EventDetailsScreen extends StatefulWidget {
 class _EventDetailsScreenState extends State<EventDetailsScreen> {
   UserPreferences userPreference = UserPreferences();
   late String token;
-
+  String? outputDate;
+  String? doctorName;
+  String? outputDate3;
+  String? patientName;
+  String? status;
   @override
   void initState() {
     userPreference.getToken().then((value) {
       setState(() {
         token = value!;
       });
+    });
+    setState(() {
+      print(widget.appoitmentData.toString());
+      outputDate = widget.appoitmentData['date'] as String?;
+      doctorName = widget.appoitmentData['doctorName'] as String?;
+      outputDate3 = widget.appoitmentData['outputDate3'] as String?;
+      patientName = widget.appoitmentData['patientName'] as String?;
+      status = widget.appoitmentData['status'] as String?;
     });
     // super.initState();
     super.initState();
@@ -198,7 +213,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                             height: 3,
                           ),
                           Text(
-                            widget.appoitmentData['doctorName'],
+                            doctorName.toString(),
                             // appointmentData['doctorName'],
                             style: TextStyle(
                               fontSize: 17,
@@ -215,7 +230,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                             height: 3,
                           ),
                           Text(
-                            widget.appoitmentData['patientName'],
+                            patientName.toString(),
                             // appointmentData['name'],
                             style: TextStyle(
                               fontSize: 17,
@@ -240,9 +255,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                           ),
                           Text(
                             // 'aaa',
-                            'Remember to visit' +
-                                ' ' +
-                                widget.appoitmentData['doctorName'],
+                            'Remember to visit' + ' ' + doctorName.toString(),
                             style: TextStyle(
                               fontSize: 17,
                             ),
@@ -252,7 +265,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                             children: [
                               Icon(Icons.perm_contact_calendar),
                               Text(
-                                widget.appoitmentData['date'],
+                                outputDate.toString(),
                                 style: TextStyle(
                                   fontSize: 19,
                                 ),
@@ -264,7 +277,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                             children: [
                               Icon(Icons.access_time_rounded),
                               Text(
-                                widget.appoitmentData[' outputDate3'],
+                                outputDate3.toString(),
                                 style: TextStyle(
                                   fontSize: 19,
                                 ),
@@ -315,7 +328,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                               Container(
                                 // width: MediaQuery.of(context).size.width * 0.71,
                                 child: Text(
-                                  widget.appoitmentData['status'],
+                                  status.toString(),
                                   style: TextStyle(
                                     fontSize: 20,
                                     color: Color(0xFFFD5722),
@@ -329,16 +342,15 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                                 onPressed: () {
                                   showAlertDialog(context);
                                 },
-                                child:
-                                    widget.appoitmentData['status'] == 'Booked'
-                                        ? Text(
-                                            'CANCEL',
-                                            style: TextStyle(
-                                              fontSize: 15,
-                                              color: Color(0xFFFD5722),
-                                            ),
-                                          )
-                                        : Container(),
+                                child: status == 'Booked'
+                                    ? Text(
+                                        'CANCEL',
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          color: Color(0xFFFD5722),
+                                        ),
+                                      )
+                                    : Container(),
                               ),
                             ],
                           ),

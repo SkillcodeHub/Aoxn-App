@@ -220,9 +220,11 @@ import 'dart:async';
 import 'package:axonweb/Res/colors.dart';
 import 'package:axonweb/View_Model/Settings_View_Model/settings_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:sms_autofill/sms_autofill.dart';
+import 'package:mobile_number/mobile_number.dart';
 
 import '../../View_Model/Login_View_Model/auth_view_model.dart';
 import '../../View_Model/News_View_Model/notification_services.dart';
@@ -245,12 +247,99 @@ class LoginScreenState extends State {
   FocusNode nameFocusNode = FocusNode();
   FocusNode birthFocusNode = FocusNode();
   String genderValue = "Male";
-
+  List _simCardNumbers = [];
+  // TextEditingController _phoneNumberController = TextEditingController();
   // NotificationServices notificationServices = NotificationServices();
   @override
   void initState() {
     super.initState();
+    MobileNumber.listenPhonePermission((isPermissionGranted) {
+      if (isPermissionGranted) {
+        initMobileNumberState();
+      } else {}
+    });
+
+    initMobileNumberState();
     // notificationServices.requestNotificationPermission();
+  }
+
+  // Platform messages are asynchronous, so we initialize in an async method.
+  Future<void> initMobileNumberState() async {
+    if (!await MobileNumber.hasPhonePermission) {
+      await MobileNumber.requestPhonePermission;
+      return;
+    }
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      List<SimCard>? simCards = await MobileNumber.getSimCards;
+      _simCardNumbers = simCards!.map((sim) => sim.number).toList();
+    } on PlatformException catch (e) {
+      debugPrint("Failed to get mobile number because of '${e.message}'");
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) return;
+
+    setState(() {});
+  }
+
+  Widget buildCard(String simCardNumber) {
+    return InkWell(
+      onTap: () {
+        _selectPhoneNumber(simCardNumber);
+      },
+      child: Container(
+        height: 7.h,
+        margin: EdgeInsets.all(8),
+        child: Row(
+          children: [
+            Container(
+              height: 4.h,
+              child: Image.asset('images/phone.png'),
+            ),
+            Text('  ' + simCardNumber),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showSimCardNumbersDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            'Continue with',
+            style: TextStyle(fontSize: 16),
+          ),
+          content: ListView.builder(
+            shrinkWrap: true,
+            itemCount: _simCardNumbers.length,
+            itemBuilder: (BuildContext context, int index) {
+              return buildCard(_simCardNumbers[index]);
+            },
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('NONE OF THE ABOVE'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _selectPhoneNumber(String phoneNumber) {
+    setState(() {
+      _mobileController.text = phoneNumber;
+    });
+    Navigator.of(context).pop();
   }
 
   @override
@@ -410,6 +499,10 @@ class LoginScreenState extends State {
                             labelText: 'Mobile',
                             // prefixIcon: Icon(Icons.alternate_email),
                           ),
+
+                          onTap: () {
+                            _showSimCardNumbersDialog();
+                          },
                           // onFieldSubmitted: (value) {
                           //   Utils.fieldFocusChange(
                           //       context, emailFocusNode, passwordFocusNode);
@@ -445,13 +538,16 @@ class LoginScreenState extends State {
                                         'Please enter 10 Digit MobileNo*',
                                         context);
                                     viewVisible = false;
-                                  } else if (_mobileController.text.length >
-                                      10) {
-                                    Utils.snackBar(
-                                        'Please enter 10 Digit MobileNo*',
-                                        context);
-                                    viewVisible = false;
-                                  } else {
+                                  }
+
+                                  // else if (_mobileController.text.length >
+                                  //     10) {
+                                  //   Utils.snackBar(
+                                  //       'Please enter 10 Digit MobileNo*',
+                                  //       context);
+                                  //   viewVisible = false;
+                                  // }
+                                  else {
                                     userPreference.setName(
                                         _nameController.text.toString());
                                     userPreference
@@ -517,9 +613,9 @@ class LoginScreenState extends State {
                                     'Mobile': _mobileController.text.toString()
                                   };
                                   authViewModel.loginApi(data, context);
-                                  Timer(Duration(seconds: 5), () {
-                                    _mobileController.clear();
-                                  });
+                                  // Timer(Duration(seconds: 5), () {
+                                  //   _mobileController.clear();
+                                  // });
                                   viewVisible = true;
                                 },
                                 child: const Text(

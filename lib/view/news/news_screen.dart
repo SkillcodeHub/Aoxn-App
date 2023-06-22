@@ -1,11 +1,8 @@
 import 'dart:async';
-import 'dart:io';
-
 import 'package:axonweb/View_Model/NewsDetails_View_model/newsdetails_view_model.dart';
-import 'package:axonweb/View_Model/News_View_Model/notification_services.dart';
 import 'package:axonweb/data/response/status.dart';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:intl/intl.dart';
 import 'package:platform_device_id/platform_device_id.dart';
 import 'package:provider/provider.dart';
@@ -91,6 +88,18 @@ class _NewsScreenState extends State<NewsScreen> {
     print(retrievedList);
   }
 
+  String _getFirstTwoLines(String description) {
+    String trimmedDescription = description.trim();
+    List<String> lines = trimmedDescription.split('\n');
+    if (lines.length >= 2) {
+      String firstLine = lines[0].trimLeft();
+      String secondLine = lines[1].trimLeft();
+      return '$firstLine\n$secondLine...';
+    } else {
+      return trimmedDescription;
+    }
+  }
+
   createNewsListContainer<NewsViewmodel>(BuildContext context, int index) {
     // final notificationObj = listOfColumns[itemIndex];
     String newsId = newsViewmodel.newsList.data!.data![index].newsId.toString();
@@ -142,7 +151,7 @@ class _NewsScreenState extends State<NewsScreen> {
             child: Row(
               children: [
                 Container(
-                    height: 17.h,
+                    height: 18.h,
                     width: MediaQuery.of(context).size.width * 0.15,
                     color: Color(0xFFFD5722),
                     child: Center(
@@ -153,7 +162,7 @@ class _NewsScreenState extends State<NewsScreen> {
                       ),
                     )),
                 Container(
-                  height: 17.h,
+                  height: 18.h,
                   width: MediaQuery.of(context).size.width * 0.79,
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(8, 5, 0, 8),
@@ -167,26 +176,79 @@ class _NewsScreenState extends State<NewsScreen> {
                             newsViewmodel.newsList.data!.data![index].title
                                 .toString(),
                             style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500,
-                            ),
+                                fontSize: 14.sp, fontWeight: FontWeight.w600),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
                         SizedBox(
-                          height: 2.h,
+                          height: 1.h,
                         ),
                         Container(
+                          // color: Colors.amber,
+                          height: 55,
                           width: 85.w,
-                          child: Text(
-                            discription,
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
-                            ),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
+                          child: Html(
+                            data: _getFirstTwoLines(newsViewmodel
+                                    .newsList.data!.data![index].description
+                                    .toString()
+                                // .substring(0, 71)
+
+                                ),
+                            style: {
+                              'h3': Style(
+                                fontWeight: FontWeight
+                                    .normal, // Remove bold style from h3 tag
+                                fontStyle: FontStyle
+                                    .normal, // Remove italic style from h3 tag
+                                textDecoration: TextDecoration
+                                    .none, // Remove underline style from h3 tag
+                              ),
+                              'b': Style(
+                                fontWeight: FontWeight
+                                    .normal, // Remove bold style from b tag
+                              ),
+                              'u': Style(
+                                textDecoration: TextDecoration
+                                    .none, // Remove underline style from u tag
+                              ),
+                              'p': Style(
+                                maxLines: 2,
+                                textOverflow: TextOverflow.ellipsis,
+                                margin:
+                                    EdgeInsets.zero, // Remove margin from p tag
+
+                                fontWeight: FontWeight
+                                    .normal, // Remove bold style from p tag
+                                fontStyle: FontStyle
+                                    .normal, // Remove italic style from p tag
+                                textDecoration: TextDecoration
+                                    .none, // Remove underline style from p tag
+                              ),
+                            },
+                            customRender: {
+                              'img': (RenderContext context, Widget child) {
+                                if (context.tree.element!.attributes
+                                    .containsKey('src')) {
+                                  // Remove the substring limitation to include the entire image tag
+                                  return Container(
+                                      margin: EdgeInsets.only(top: 10),
+                                      height: 15,
+                                      child: Image.asset('images/obj.png'));
+                                }
+                                return child;
+                              },
+                            },
+                            onLinkTap: (url, _, __, ___) {
+                              // Handle link tap here
+                            },
+                            onImageTap: (src, _, __, ___) {
+                              // Handle image tap here
+                            },
+                            onImageError: (exception, stackTrace) {
+                              // Handle image error here
+                            },
+                            // Add any additional properties or callbacks you require
                           ),
                         ),
                         SizedBox(
@@ -267,11 +329,16 @@ class _NewsScreenState extends State<NewsScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 AxonIconForAppBarrWidget(),
+                IconButton(
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => MyApp()));
+                    },
+                    icon: Icon(Icons.abc)),
                 ScreenNameWidget(
                   title: '  Notice Board',
                 ),
                 WhatsappWidget(),
-                // PaymentWidget(),
                 SettingsWidget(),
               ],
             ),

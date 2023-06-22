@@ -179,114 +179,8 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                       fit: BoxFit.cover,
                                                     ),
                                                   ),
-                                                  //   child: Padding(
-                                                  //     padding:
-                                                  //         const EdgeInsets.all(
-                                                  //             8.0),
-                                                  //     child: Container(
-                                                  //       height: 20,
-                                                  //       decoration: BoxDecoration(
-                                                  //         boxShadow: [
-                                                  //           BoxShadow(
-                                                  //             spreadRadius: 0,
-                                                  //             color: Colors.amber,
-                                                  //             // color: Colors.black
-                                                  //             //     .withOpacity(
-                                                  //             //         0.4),
-                                                  //             blurRadius: 15,
-                                                  //           ),
-                                                  //         ],
-                                                  //       ),
-                                                  //       child: Row(
-                                                  //         crossAxisAlignment:
-                                                  //             CrossAxisAlignment
-                                                  //                 .end,
-                                                  //         mainAxisAlignment:
-                                                  //             MainAxisAlignment
-                                                  //                 .spaceBetween,
-                                                  //         children: [
-                                                  //           Container(
-                                                  //             width: 80.w,
-                                                  //             child: Column(
-                                                  //               crossAxisAlignment:
-                                                  //                   CrossAxisAlignment
-                                                  //                       .start,
-                                                  //               mainAxisAlignment:
-                                                  //                   MainAxisAlignment
-                                                  //                       .end,
-                                                  //               children: [
-                                                  //                 Text(
-                                                  //                   value
-                                                  //                       .doctorDetailsList
-                                                  //                       .data!
-                                                  //                       .data![0]
-                                                  //                       .customerName
-                                                  //                       .toString(),
-                                                  //                   style:
-                                                  //                       TextStyle(
-                                                  //                     fontSize:
-                                                  //                         15,
-                                                  //                     color: Colors
-                                                  //                         .white,
-                                                  //                     fontWeight:
-                                                  //                         FontWeight
-                                                  //                             .bold,
-                                                  //                   ),
-                                                  //                   maxLines: 1,
-                                                  //                   overflow:
-                                                  //                       TextOverflow
-                                                  //                           .ellipsis,
-                                                  //                 ),
-                                                  //                 Text(
-                                                  //                   value
-                                                  //                       .doctorDetailsList
-                                                  //                       .data!
-                                                  //                       .data![0]
-                                                  //                       .customerAddress
-                                                  //                       .toString(),
-                                                  //                   style:
-                                                  //                       TextStyle(
-                                                  //                     fontSize:
-                                                  //                         15,
-                                                  //                     color: Colors
-                                                  //                         .white,
-                                                  //                     fontStyle:
-                                                  //                         FontStyle
-                                                  //                             .italic,
-                                                  //                   ),
-                                                  //                   maxLines: 1,
-                                                  //                   overflow:
-                                                  //                       TextOverflow
-                                                  //                           .ellipsis,
-                                                  //                 ),
-                                                  //               ],
-                                                  //             ),
-                                                  //           ),
-                                                  //           InkWell(
-                                                  //             onTap: () {
-                                                  //               number == null ||
-                                                  //                       number ==
-                                                  //                           ''
-                                                  //                   ? Utils.snackBar(
-                                                  //                       'MobileNo Not Available',
-                                                  //                       context)
-                                                  //                   : launch(
-                                                  //                       'tel://$number');
-                                                  //             },
-                                                  //             child: Container(
-                                                  //               width: 15.w,
-                                                  //               height: 5.h,
-                                                  //               child: Image.asset(
-                                                  //                   "images/phone-call.png"),
-                                                  //             ),
-                                                  //           ),
-                                                  //         ],
-                                                  //       ),
-                                                  //     ),
-                                                  //   ),
                                                 ),
                                                 Positioned(
-                                                  // top: 0,
                                                   bottom: 3,
                                                   left: 0,
                                                   right: 0,
@@ -306,24 +200,6 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                               Colors
                                                                   .grey.shade700
                                                             ]),
-                                                        // boxShadow: [
-                                                        //   BoxShadow(
-                                                        //     color: Colors.black
-                                                        //         .withOpacity(
-                                                        //             0.4),
-                                                        //     blurRadius: 8,
-                                                        //     offset:
-                                                        //         Offset(0, 4),
-                                                        //   ),
-                                                        //   BoxShadow(
-                                                        //     color: Colors.white
-                                                        //         .withOpacity(
-                                                        //             0.2),
-                                                        //     blurRadius: 4,
-                                                        //     offset:
-                                                        //         Offset(0, -4),
-                                                        //   ),
-                                                        // ],
                                                       ),
                                                       child: Padding(
                                                         padding:

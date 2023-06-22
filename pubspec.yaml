@@ -59,6 +59,7 @@ dependencies:
   permission_handler: ^10.2.0
   qr_code_scanner: ^1.0.1
   platform_device_id: ^1.0.1
+  mobile_number: ^2.1.1
 
 dev_dependencies:
   flutter_test:

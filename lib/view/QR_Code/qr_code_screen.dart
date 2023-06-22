@@ -18,7 +18,7 @@ class _QRScannerWidgetState extends State<QRScannerWidget> {
   CustomerTokenByQRViewmodel customerTokenByQRViewmodel =
       CustomerTokenByQRViewmodel();
   bool isFlashOn = false;
-
+  String demo = 'true';
   @override
   void reassemble() {
     super.reassemble();
@@ -133,11 +133,11 @@ class _QRScannerWidgetState extends State<QRScannerWidget> {
         print('AppCode: $appCode');
 
         // Call your method or perform any necessary operations with the result
-        // Navigator.pop(context, [customerName, appCode, true]);
-        customerTokenByQRViewmodel.fetchCustomerTokenByQR(
-          context,
-          appCode.toString(),
-        );
+        Navigator.pop(context, [customerName, appCode, demo]);
+        // customerTokenByQRViewmodel.fetchCustomerTokenByQR(
+        //   context,
+        //   appCode.toString(),
+        // );
 
         isResultHandled = true;
         controller.stopCamera(); // Stop scanning after the first result
