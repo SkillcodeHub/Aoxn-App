@@ -10,6 +10,7 @@ import 'package:sizer/sizer.dart';
 import '../../Res/colors.dart';
 import '../../Utils/routes/routes_name.dart';
 import '../../View_Model/News_View_Model/news_view_model.dart';
+import '../../View_Model/News_View_Model/notification_services.dart';
 import '../../View_Model/Settings_View_Model/settings_view_model.dart';
 import '../../demo2.dart';
 import '../../res/components/appbar/axonimage_appbar-widget.dart';
@@ -35,7 +36,7 @@ class _NewsScreenState extends State<NewsScreen> {
   SettingsViewModel settingsViewModel = SettingsViewModel();
   NewsViewmodel newsViewmodel = NewsViewmodel();
   NewsDetailsViewmodel newsDetailsViewmodel = NewsDetailsViewmodel();
-  // NotificationServices notificationServices = NotificationServices();
+  NotificationServices notificationServices = NotificationServices();
 
   @override
   void initState() {
@@ -58,13 +59,13 @@ class _NewsScreenState extends State<NewsScreen> {
     //     this.deviceId = deviceId;
     //   });
     // });
-    // notificationServices.requestNotificationPermission();
-    // notificationServices.firebaseInit();
-    // // notificationServices.isTokenRefresh();
-    // notificationServices.getDeviceToken().then((value) {
-    //   print('device token');
-    //   print(value);
-    // });
+    notificationServices.requestNotificationPermission();
+    notificationServices.firebaseInit();
+    // notificationServices.isTokenRefresh();
+    notificationServices.getDeviceToken().then((value) {
+      print('device token');
+      print(value);
+    });
   }
 
   void _getInfo() async {

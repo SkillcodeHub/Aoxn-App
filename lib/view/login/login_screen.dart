@@ -500,9 +500,10 @@ class LoginScreenState extends State {
                           ),
 
                           onTap: () {
- if (Platform.isAndroid) {
-      _showSimCardNumbersDialog();
-    }                          },
+                            if (Platform.isAndroid) {
+                              _showSimCardNumbersDialog();
+                            }
+                          },
                           // onFieldSubmitted: (value) {
                           //   Utils.fieldFocusChange(
                           //       context, emailFocusNode, passwordFocusNode);
@@ -548,6 +549,7 @@ class LoginScreenState extends State {
                                   //   viewVisible = false;
                                   // }
                                   else {
+                                    mobileFocusNode.unfocus();
                                     userPreference.setName(
                                         _nameController.text.toString());
                                     userPreference
@@ -561,6 +563,8 @@ class LoginScreenState extends State {
                                     //   _mobileController.clear();
                                     // });
                                     viewVisible = true;
+
+                                    // Close the keyboard
                                   }
                                 });
                               },
