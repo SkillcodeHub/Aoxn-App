@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:io';
+import 'package:axonweb/View_Model/Settings_View_Model/settings_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -14,10 +16,34 @@ class WhatsappWidget extends StatefulWidget {
 }
 
 class _WhatsappWidgetState extends State<WhatsappWidget> {
+  SettingsViewModel settingsViewModel = SettingsViewModel();
+  late String token;
+
+  void initState() {
+    userPreference.getToken().then((value) {
+      setState(() {
+        token = value!;
+      });
+    });
+
+    super.initState();
+    // final bookAppointmentViewModel =
+    //     Provider.of<BookAppointmentViewModel>(context, listen: false);
+    Timer(Duration(microseconds: 20), () {
+      settingsViewModel.fetchDoctorDetailsListApi(token);
+    });
+  }
+
   whatsapp() async {
     var contact = "+916353335967";
-    var androidUrl = "whatsapp://send?phone=$contact&text=";
-    var iosUrl = "https://wa.me/$contact?text=${Uri.parse('')}";
+    var androidUrl = settingsViewModel
+        .doctorDetailsList.data!.data![0].customerContact
+        .toString();
+    var iosUrl = settingsViewModel
+        .doctorDetailsList.data!.data![0].customerContact
+        .toString();
+    // var androidUrl = "whatsapp://send?phone=$contact&text=";
+    // var iosUrl = "https://wa.me/$contact?text=${Uri.parse('')}";
 
     try {
       if (Platform.isIOS) {

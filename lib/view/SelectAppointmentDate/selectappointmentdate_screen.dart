@@ -28,7 +28,7 @@ class _SelectAppointmentDateScreenState
   bool isLoading = false;
   bool TimeSlotes = false;
   String? selectedTimeSlote;
-  int? minuteInterval;
+  String? DelayMinute;
   int? timingId;
   bool isButtonActive = false;
   UserPreferences userPreference = UserPreferences();
@@ -86,9 +86,17 @@ class _SelectAppointmentDateScreenState
   ]; //List of Days
 
   createNewsListContainer(BuildContext context, int itemIndex) {
-    minuteInterval = appointmentSlotListViewmodel
+    String minuteInterval1 = appointmentSlotListViewmodel
         .AppointmentSlotList.data!.data![itemIndex].minuteInterval!
-        .toInt();
+        .toString();
+    print(
+        'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+    print(minuteInterval1);
+    print('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+    // String a = '20.0';
+    // var parts = a.split('.');
+    // var prefix = parts[0].trim();
+    // DelayMinute = prefix.toString();
 
     String date = appointmentSlotListViewmodel
         .AppointmentSlotList.data!.data![itemIndex].fromTimeSlotLocal
@@ -132,6 +140,22 @@ class _SelectAppointmentDateScreenState
             ? InkWell(
                 onTap: () {
                   setState(() {
+                    String minuteInterval1 = appointmentSlotListViewmodel
+                        .AppointmentSlotList
+                        .data!
+                        .data![itemIndex]
+                        .minuteInterval!
+                        .toString();
+
+                    print(minuteInterval1);
+
+                    // String a = '20.0';
+                    var parts = minuteInterval1.split('.');
+                    var prefix = parts[0].trim();
+                    DelayMinute = prefix.toString();
+                    print('minuteInterval1');
+                    print(DelayMinute);
+                    print('minuteInterval1');
                     currentDateSelectedIndex1 = itemIndex;
                     // selectedTimeSlote = appointmentSlotListViewmodel
                     //     .AppointmentSlotList.data!.data![itemIndex].displayTime
@@ -431,7 +455,7 @@ class _SelectAppointmentDateScreenState
                   datetime1,
                   selectedTimeSlote,
                   timingId.toString(),
-                  minuteInterval!.toInt(),
+                  DelayMinute!.toString(),
                 ])
             : null,
         child: Icon(Icons.check),

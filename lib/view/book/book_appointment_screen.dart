@@ -43,7 +43,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
   String displaySelectAppointmentDate = 'Select Appointment Date';
   String displayDate = '';
   String appointmentDate = '';
-  int? DelayMinute;
+  String? DelayMinute;
   String displayTimeSlot = '';
   String? displaytimingId;
   String displayPatientName = 'Select Patient';
@@ -818,6 +818,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
     print(result[0]);
     print(result[1]);
     print(result[2]);
+    print(result[3]);
 
     if (result != null) {
       setState(() {
