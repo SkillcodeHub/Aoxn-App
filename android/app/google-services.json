@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "878936700070",
-    "project_id": "axon-notifications",
-    "storage_bucket": "axon-notifications.appspot.com"
+    "project_number": "807773773685",
+    "project_id": "flutter-notifications-8d7de",
+    "storage_bucket": "flutter-notifications-8d7de.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:878936700070:android:47b7166bc1ce1110cdb067",
+        "mobilesdk_app_id": "1:807773773685:android:576e5a7e3722352a907d3c",
         "android_client_info": {
           "package_name": "com.axon.axonweb"
         }
       },
       "oauth_client": [
         {
-          "client_id": "878936700070-2oc36crsudf984rndju9divv4kq49jg1.apps.googleusercontent.com",
+          "client_id": "807773773685-1cp8864vu9mial80j65ok439sa92u12u.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAsrMsiVSYZ0RVSlSRL0c0jGEKXIdpWu0c"
+          "current_key": "AIzaSyC952WLEI3xR3U8_q20QYOlsn6YNIyjp-Y"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "878936700070-2oc36crsudf984rndju9divv4kq49jg1.apps.googleusercontent.com",
+              "client_id": "807773773685-1cp8864vu9mial80j65ok439sa92u12u.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
