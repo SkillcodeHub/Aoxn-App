@@ -64,6 +64,37 @@ class _WhatsappWidgetState extends State<WhatsappWidget> {
     }
   }
 
+//   whatsapp() async {
+//   String? whatsappUrl = settingsViewModel
+//       .doctorDetailsList.data!.data![0].whatsapplink
+//       .toString();
+
+//   if (whatsappUrl != null && whatsappUrl.isNotEmpty) {
+//     final uri = Uri.parse(whatsappUrl);
+//     final phoneNumber = uri.pathSegments.last;
+
+//     final cleanedPhoneNumber = phoneNumber.replaceAll(RegExp(r'\D+'), '');
+//     final encodedMessage = Uri.encodeComponent('');
+
+//     try {
+//       if (Platform.isIOS) {
+//         // Construct the WhatsApp URL for iOS
+//         final iosUrl = "whatsapp://send?phone=$cleanedPhoneNumber&text=$encodedMessage";
+//         await launchUrl(iosUrl as Uri);
+//       } else {
+//         // Construct the WhatsApp URL for Android
+//         final androidUrl = "https://wa.me/$cleanedPhoneNumber?text=$encodedMessage";
+//         await launch(androidUrl);
+//       }
+//     } catch (e) {
+//       Utils.snackBar('WhatsApp is not installed.', context);
+//     }
+//   } else {
+//     Utils.snackBar('WhatsApp link is not available.', context);
+//   }
+// }
+
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
