@@ -35,15 +35,21 @@ class _WhatsappWidgetState extends State<WhatsappWidget> {
   }
 
   whatsapp() async {
-    var contact = "+916353335967";
-    var androidUrl = settingsViewModel
-        .doctorDetailsList.data!.data![0].customerContact
+    print('object');
+    print(settingsViewModel.doctorDetailsList.data!.data![0].whatsapplink
+        .toString());
+    print('object');
+
+    var whatsAppUrl = settingsViewModel
+        .doctorDetailsList.data!.data![0].whatsapplink
         .toString();
-    var iosUrl = settingsViewModel
-        .doctorDetailsList.data!.data![0].customerContact
-        .toString();
-    // var androidUrl = "whatsapp://send?phone=$contact&text=";
-    // var iosUrl = "https://wa.me/$contact?text=${Uri.parse('')}";
+    final uri = Uri.parse(whatsAppUrl);
+    final phoneNumber = uri.pathSegments.last;
+
+    var contact = "'+$phoneNumber'";
+
+    var androidUrl = "whatsapp://send?phone=$contact&text=";
+    var iosUrl = "https://wa.me/$contact?text=${Uri.parse('')}";
 
     try {
       if (Platform.isIOS) {
