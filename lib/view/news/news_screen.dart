@@ -12,7 +12,6 @@ import '../../Utils/routes/routes_name.dart';
 import '../../View_Model/News_View_Model/news_view_model.dart';
 import '../../View_Model/News_View_Model/notification_services.dart';
 import '../../View_Model/Settings_View_Model/settings_view_model.dart';
-import '../../demo2.dart';
 import '../../res/components/appbar/axonimage_appbar-widget.dart';
 import '../../res/components/appbar/screen_name_widget.dart';
 import '../../res/components/appbar/settings_widget.dart';
@@ -54,14 +53,11 @@ class _NewsScreenState extends State<NewsScreen> {
     });
     // _newsRepository.fetchCustomerToken();
     super.initState();
-    // getUniqueDeviceId().then((deviceId) {
-    //   setState(() {
-    //     this.deviceId = deviceId;
-    //   });
-    // });
     notificationServices.requestNotificationPermission();
-    notificationServices.firebaseInit();
-    // notificationServices.isTokenRefresh();
+    notificationServices.forgroundMessage();
+    notificationServices.firebaseInit(context);
+    notificationServices.setupInteractMessage(context);
+    notificationServices.isTokenRefresh();
     notificationServices.getDeviceToken().then((value) {
       print('device token');
       print(value);

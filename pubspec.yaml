@@ -49,10 +49,10 @@ dependencies:
   path_provider: ^2.0.15
   pdf: ^3.4.0
   url_launcher: ^6.1.10
-  firebase_messaging: ^14.6.3
-  firebase_core: ^2.14.0
-  # flutter_local_notifications: ^13.0.0
-  flutter_local_notifications: ^14.1.1
+  firebase_messaging: ^14.4.0
+  firebase_core: ^2.7.0
+  flutter_local_notifications: ^13.0.0
+  # flutter_local_notifications: ^14.1.1
   flutter_svg: ">=0.22.0 <2.0.0"
   pin_field: ^0.0.1
   app_settings: ^4.2.0
