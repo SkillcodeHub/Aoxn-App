@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:axonweb/View_Model/NewsDetails_View_model/newsdetails_view_model.dart';
 import 'package:axonweb/data/response/status.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:intl/intl.dart';
@@ -17,6 +19,7 @@ import '../../res/components/appbar/screen_name_widget.dart';
 import '../../res/components/appbar/settings_widget.dart';
 import '../../res/components/appbar/whatsapp_widget.dart';
 import '../../view_model/services/SharePreference/SharePreference.dart';
+import 'package:http/http.dart' as http;
 
 class NewsScreen extends StatefulWidget {
   const NewsScreen({super.key});
@@ -332,6 +335,45 @@ class _NewsScreenState extends State<NewsScreen> {
                 //           MaterialPageRoute(builder: (context) => MyApp()));
                 //     },
                 //     icon: Icon(Icons.abc)),
+
+                TextButton(
+                    onPressed: () {
+                      // send notification from one device to another
+                      notificationServices.getDeviceToken().then((value) async {
+                        var data = {
+                          'to': value.toString(),
+                          'notification': {
+                            'title': 'Asif',
+                            'body': 'Subscribe to my channel',
+                            // "sound": "jetsons_doorbell.mp3"
+                          },
+                          'android': {
+                            'notification': {
+                              'notification_count': 23,
+                            },
+                          },
+                          'data': {'type': 'msj', 'id': 'Asif Taj'}
+                        };
+
+                        await http.post(
+                            Uri.parse('https://fcm.googleapis.com/fcm/send'),
+                            body: jsonEncode(data),
+                            headers: {
+                              'Content-Type': 'application/json; charset=UTF-8',
+                              'Authorization':
+                                  'AAAAvBMRn3U:APA91bGGlWrUcxB0-rMwitxpG2KS_gysw9II5sBE8WXgFxGcvKuJSas8H9QI0fcg_kl3gEOiKoVWXetAspdweJ06FHZ6hzXlFNOQVymjOH2YaRxEDLS8SMM4bZPuq7P3_ljkgYVnt_Ta'
+                            }).then((value) {
+                          if (kDebugMode) {
+                            print(value.body.toString());
+                          }
+                        }).onError((error, stackTrace) {
+                          if (kDebugMode) {
+                            print(error);
+                          }
+                        });
+                      });
+                    },
+                    child: Text('S')),
                 ScreenNameWidget(
                   title: '  Notice Board',
                 ),
