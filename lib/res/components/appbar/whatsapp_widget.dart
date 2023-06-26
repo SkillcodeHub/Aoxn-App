@@ -47,9 +47,15 @@ class _WhatsappWidgetState extends State<WhatsappWidget> {
     final phoneNumber = uri.pathSegments.last;
 
     var contact = "'+$phoneNumber'";
+        print('aaaaaaaaaaaa');
+    print(phoneNumber);
+        print(contact);
+
+    print('aaaaaaaaaaaaa');
+
 
     var androidUrl = "whatsapp://send?phone=$contact&text=";
-    var iosUrl = "https://wa.me/$contact?text=${Uri.parse('')}";
+    var iosUrl = "https://wa.me/$phoneNumber?text=${Uri.parse('')}";
 
     try {
       if (Platform.isIOS) {
