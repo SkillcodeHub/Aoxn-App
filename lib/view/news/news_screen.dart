@@ -364,7 +364,6 @@ class _NewsScreenState extends State<NewsScreen> {
                 //               'Authorization':
                 //                   'AAAAvBMRn3U:APA91bGGlWrUcxB0-rMwitxpG2KS_gysw9II5sBE8WXgFxGcvKuJSas8H9QI0fcg_kl3gEOiKoVWXetAspdweJ06FHZ6hzXlFNOQVymjOH2YaRxEDLS8SMM4bZPuq7P3_ljkgYVnt_Ta'
                 //             }).then((value) {
-                //           if (kDebugMode) {
                 //             print(value.body.toString());
                 //           }
                 //         }).onError((error, stackTrace) {
