@@ -4,6 +4,7 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+import '../../Res/Components/Appbar/payment_widget.dart';
 import '../../Res/colors.dart';
 import '../../Utils/routes/routes_name.dart';
 import '../../View_Model/Event_View_Model/event_view_model.dart';
@@ -271,7 +272,7 @@ class _EventScreenState extends State<EventScreen> {
                   title: '  Events',
                 ),
                 WhatsappWidget(),
-                // PaymentWidget(),
+                PaymentWidget(),
                 SettingsWidget(),
               ],
             ),

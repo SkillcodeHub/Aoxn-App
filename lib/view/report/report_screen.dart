@@ -4,6 +4,7 @@ import 'package:axonweb/View_Model/Report_View_Model/report_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+import '../../Res/Components/Appbar/payment_widget.dart';
 import '../../Res/colors.dart';
 import '../../Utils/routes/routes_name.dart';
 import '../../View_Model/Settings_View_Model/settings_view_model.dart';
@@ -188,7 +189,7 @@ class _ReportScreenState extends State<ReportScreen> {
                   title: 'Recent Precription',
                 ),
                 WhatsappWidget(),
-                // PaymentWidget(),
+                PaymentWidget(),
                 SettingsWidget(),
               ],
             ),

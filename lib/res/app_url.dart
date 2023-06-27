@@ -45,4 +45,7 @@ class AppUrl {
 
   //Appointment History
   static var getEventList = baseUrl + "BookAppointment/GetAppointmentHistory";
+
+  //Get CustomerPayhead
+  static var getcustomerpayhead = baseUrl + "payment/getcustomerpayhead";
 }

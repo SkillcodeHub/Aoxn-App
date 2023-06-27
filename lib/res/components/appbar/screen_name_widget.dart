@@ -1,3 +1,6 @@
+import 'package:axonweb/Res/Components/Appbar/payment_widget.dart';
+import 'package:axonweb/Res/Components/Appbar/settings_widget.dart';
+import 'package:axonweb/Res/Components/Appbar/whatsapp_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -12,17 +15,27 @@ class ScreenNameWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 59.w,
+      // width: 48.w,
       // width: 59.w,
-      child: Text(
-        title,
-        style: TextStyle(
-          color: Colors.black,
-          fontWeight: FontWeight.w500,
-          fontSize: 21,
-        ),
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
+      child: Row(
+        children: [
+          Container(
+            width: 48.w,
+            child: Text(
+              title,
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w500,
+                fontSize: 21,
+              ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          // WhatsappWidget(),
+          // PaymentWidget(),
+          // SettingsWidget(),
+        ],
       ),
     );
   }

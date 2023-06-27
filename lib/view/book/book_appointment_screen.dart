@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../Res/Components/Appbar/payment_widget.dart';
 import '../../Res/Components/loader.dart';
 import '../../Res/colors.dart';
 import '../../Utils/utils.dart';
@@ -109,7 +110,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                   title: 'Book Appointment',
                 ),
                 WhatsappWidget(),
-                // PaymentWidget(),
+                PaymentWidget(),
                 SettingsWidget(),
               ],
             ),

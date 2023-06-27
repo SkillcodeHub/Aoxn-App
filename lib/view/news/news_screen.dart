@@ -9,6 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:platform_device_id/platform_device_id.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+import '../../Res/Components/Appbar/payment_widget.dart';
 import '../../Res/colors.dart';
 import '../../Utils/routes/routes_name.dart';
 import '../../View_Model/News_View_Model/news_view_model.dart';
@@ -336,48 +337,49 @@ class _NewsScreenState extends State<NewsScreen> {
                 //     },
                 //     icon: Icon(Icons.abc)),
 
-                TextButton(
-                    onPressed: () {
-                      // send notification from one device to another
-                      notificationServices.getDeviceToken().then((value) async {
-                        var data = {
-                          'to': value.toString(),
-                          'notification': {
-                            'title': 'Asif',
-                            'body': 'Subscribe to my channel',
-                            // "sound": "jetsons_doorbell.mp3"
-                          },
-                          'android': {
-                            'notification': {
-                              'notification_count': 23,
-                            },
-                          },
-                          'data': {'type': 'msj', 'id': 'Asif Taj'}
-                        };
+                // TextButton(
+                //     onPressed: () {
+                //       // send notification from one device to another
+                //       notificationServices.getDeviceToken().then((value) async {
+                //         var data = {
+                //           'to': value.toString(),
+                //           'notification': {
+                //             'title': 'Asif',
+                //             'body': 'Subscribe to my channel',
+                //             // "sound": "jetsons_doorbell.mp3"
+                //           },
+                //           'android': {
+                //             'notification': {
+                //               'notification_count': 23,
+                //             },
+                //           },
+                //           'data': {'type': 'msj', 'id': 'Asif Taj'}
+                //         };
 
-                        await http.post(
-                            Uri.parse('https://fcm.googleapis.com/fcm/send'),
-                            body: jsonEncode(data),
-                            headers: {
-                              'Content-Type': 'application/json; charset=UTF-8',
-                              'Authorization':
-                                  'AAAAvBMRn3U:APA91bGGlWrUcxB0-rMwitxpG2KS_gysw9II5sBE8WXgFxGcvKuJSas8H9QI0fcg_kl3gEOiKoVWXetAspdweJ06FHZ6hzXlFNOQVymjOH2YaRxEDLS8SMM4bZPuq7P3_ljkgYVnt_Ta'
-                            }).then((value) {
-                          if (kDebugMode) {
-                            print(value.body.toString());
-                          }
-                        }).onError((error, stackTrace) {
-                          if (kDebugMode) {
-                            print(error);
-                          }
-                        });
-                      });
-                    },
-                    child: Text('S')),
+                //         await http.post(
+                //             Uri.parse('https://fcm.googleapis.com/fcm/send'),
+                //             body: jsonEncode(data),
+                //             headers: {
+                //               'Content-Type': 'application/json; charset=UTF-8',
+                //               'Authorization':
+                //                   'AAAAvBMRn3U:APA91bGGlWrUcxB0-rMwitxpG2KS_gysw9II5sBE8WXgFxGcvKuJSas8H9QI0fcg_kl3gEOiKoVWXetAspdweJ06FHZ6hzXlFNOQVymjOH2YaRxEDLS8SMM4bZPuq7P3_ljkgYVnt_Ta'
+                //             }).then((value) {
+                //           if (kDebugMode) {
+                //             print(value.body.toString());
+                //           }
+                //         }).onError((error, stackTrace) {
+                //           if (kDebugMode) {
+                //             print(error);
+                //           }
+                //         });
+                //       });
+                //     },
+                //     child: Text('S')),
                 ScreenNameWidget(
                   title: '  Notice Board',
                 ),
                 WhatsappWidget(),
+                PaymentWidget(),
                 SettingsWidget(),
               ],
             ),
