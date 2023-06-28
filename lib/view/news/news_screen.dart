@@ -118,7 +118,7 @@ class _NewsScreenState extends State<NewsScreen> {
     var outputFormat2 = DateFormat('d MMM');
     var outputFormat3 = DateFormat('hh:mm a');
     var outputFormat4 = DateFormat('d-MM-yyyy');
-    var outputFormat5 = DateFormat('d-MMM-yyyy,hh:mm a');
+    var outputFormat5 = DateFormat('d-MMM-yyyy, hh:mm a');
     // var outputFormat = DateFormat('MM/dd/yyyy hh:mm a');
     var outputDate = outputFormat.format(inputDate);
     var outputDate1 = outputFormat1.format(inputDate);

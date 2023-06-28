@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:axonweb/View_Model/Book_View_Model/Book_view_Model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -33,6 +32,8 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
   UserPreferences userPreference = UserPreferences();
   DoctorListViewmodel doctorListViewmodel = DoctorListViewmodel();
   SettingsViewModel settingsViewModel = SettingsViewModel();
+  BookAppointmentViewModel bookAppointmentViewModel =
+      BookAppointmentViewModel();
   late String number;
 
   late String selectedDocotrId;
@@ -77,6 +78,10 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
     // setState(() {});
     // super.initState();
     super.initState();
+    // final doctorListViewmodel =
+    //     Provider.of<DoctorListViewmodel>(context, listen: false);
+    // final settingsViewModel =
+    //     Provider.of<SettingsViewModel>(context, listen: false);
     // final bookAppointmentViewModel =
     //     Provider.of<BookAppointmentViewModel>(context, listen: false);
     Timer(Duration(microseconds: 20), () {
@@ -88,8 +93,12 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
   @override
   Widget build(BuildContext context) {
     print('ParthParthParth');
-    final bookAppointmentViewModel =
-        Provider.of<BookAppointmentViewModel>(context, listen: false);
+    // final bookAppointmentViewModel =
+    //     Provider.of<BookAppointmentViewModel>(context, listen: false);
+    // final doctorListViewmodel =
+    //     Provider.of<DoctorListViewmodel>(context, listen: false);
+    // final settingsViewModel =
+    //     Provider.of<SettingsViewModel>(context, listen: false);
 
     return Scaffold(
       backgroundColor: BackgroundColor,

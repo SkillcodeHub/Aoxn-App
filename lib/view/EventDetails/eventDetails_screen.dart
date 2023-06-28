@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 
 import '../../View_Model/Book_View_Model/cancelAppointment_view_model.dart';
@@ -23,6 +24,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
   String? outputDate3;
   String? patientName;
   String? status;
+  String cancelStatus = "Appointment cancelled";
   @override
   void initState() {
     userPreference.getToken().then((value) {
@@ -108,9 +110,14 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
         ),
       ),
       onPressed: () {
+        status = 'Canceled';
+        print('cancelStatus');
+        print(status);
+        print('cancelStatus');
         Navigator.of(context)
           ..pop()
           ..pop();
+
         // status = 'canceled';
       },
     );
@@ -118,7 +125,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text("Alert"),
-      content: Text("Appointment cancelled"),
+      content: Text(cancelStatus),
       actions: [
         okButton,
       ],
@@ -131,6 +138,11 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
         return alert;
       },
     );
+  }
+
+  Future refresh() async {
+    setState(() {});
+    // Timer(Duration(microseconds: 20), () {});
   }
 
   @override
@@ -173,214 +185,219 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
           ),
         ),
       ),
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            physics: AlwaysScrollableScrollPhysics(),
-            child: Padding(
-              padding: EdgeInsets.only(top: 20, left: 8, right: 8),
-              child: Column(
-                children: [
-                  SizedBox(height: 6),
-                  Card(
-                    // margin: EdgeInsets.all(3),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            width: 400,
-                            height: 5,
-                          ),
-                          Text(
-                            'Your Appointment is booked for:',
-                            style: TextStyle(
-                              fontSize: 17,
+      body: RefreshIndicator(
+        onRefresh: refresh,
+        child: Stack(
+          children: [
+            SingleChildScrollView(
+              physics: AlwaysScrollableScrollPhysics(),
+              child: Padding(
+                padding: EdgeInsets.only(top: 20, left: 8, right: 8),
+                child: Column(
+                  children: [
+                    SizedBox(height: 6),
+                    Card(
+                      // margin: EdgeInsets.all(3),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width: 400,
+                              height: 5,
                             ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            'Provider',
-                            style: TextStyle(
-                              fontSize: 15,
-                              color: Colors.grey,
+                            Text(
+                              'Your Appointment is booked for:',
+                              style: TextStyle(
+                                fontSize: 17,
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 3,
-                          ),
-                          Text(
-                            doctorName.toString(),
-                            // appointmentData['doctorName'],
-                            style: TextStyle(
-                              fontSize: 17,
+                            SizedBox(
+                              height: 10,
                             ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            'Patient',
-                            style: TextStyle(fontSize: 15, color: Colors.grey),
-                          ),
-                          SizedBox(
-                            height: 3,
-                          ),
-                          Text(
-                            patientName.toString(),
-                            // appointmentData['name'],
-                            style: TextStyle(
-                              fontSize: 17,
+                            Text(
+                              'Provider',
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.grey,
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          )
-                        ],
+                            SizedBox(
+                              height: 3,
+                            ),
+                            Text(
+                              doctorName.toString(),
+                              // appointmentData['doctorName'],
+                              style: TextStyle(
+                                fontSize: 17,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              'Patient',
+                              style:
+                                  TextStyle(fontSize: 15, color: Colors.grey),
+                            ),
+                            SizedBox(
+                              height: 3,
+                            ),
+                            Text(
+                              patientName.toString(),
+                              // appointmentData['name'],
+                              style: TextStyle(
+                                fontSize: 17,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            width: 400,
-                            height: 5,
-                          ),
-                          Text(
-                            // 'aaa',
-                            'Remember to visit' + ' ' + doctorName.toString(),
-                            style: TextStyle(
-                              fontSize: 17,
+                    Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width: 400,
+                              height: 5,
                             ),
-                          ),
-                          SizedBox(height: 10),
-                          Row(
-                            children: [
-                              Icon(Icons.perm_contact_calendar),
-                              Text(
-                                outputDate.toString(),
-                                style: TextStyle(
-                                  fontSize: 19,
-                                ),
+                            Text(
+                              // 'aaa',
+                              'Remember to visit' + ' ' + doctorName.toString(),
+                              style: TextStyle(
+                                fontSize: 17,
                               ),
-                            ],
-                          ),
-                          SizedBox(height: 8),
-                          Row(
-                            children: [
-                              Icon(Icons.access_time_rounded),
-                              Text(
-                                outputDate3.toString(),
-                                style: TextStyle(
-                                  fontSize: 19,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.50,
-                              ),
-                              TextButton(
-                                  onPressed: () {},
-                                  child: Text(
-                                    "SAVE TO CALENDER",
-                                    style: TextStyle(
-                                      color: Color(0xFFFD5722),
-                                    ),
-                                  ))
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            width: 400,
-                            // height: 10,
-                          ),
-                          Text(
-                            'Your Appointment Status:',
-                            style: TextStyle(
-                              fontSize: 17,
                             ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                // width: MediaQuery.of(context).size.width * 0.71,
-                                child: Text(
-                                  status.toString(),
+                            SizedBox(height: 10),
+                            Row(
+                              children: [
+                                Icon(Icons.perm_contact_calendar),
+                                Text(
+                                  outputDate.toString(),
                                   style: TextStyle(
-                                    fontSize: 20,
-                                    color: Color(0xFFFD5722),
+                                    fontSize: 19,
                                   ),
                                 ),
-                              ),
-                              // SizedBox(
-                              //   width: MediaQuery.of(context).size.width * 0.60,
-                              // ),
-                              TextButton(
-                                onPressed: () {
-                                  showAlertDialog(context);
-                                },
-                                child: status == 'Booked'
-                                    ? Text(
-                                        'CANCEL',
-                                        style: TextStyle(
-                                          fontSize: 15,
-                                          color: Color(0xFFFD5722),
-                                        ),
-                                      )
-                                    : Container(),
-                              ),
-                            ],
-                          ),
-                        ],
+                              ],
+                            ),
+                            SizedBox(height: 8),
+                            Row(
+                              children: [
+                                Icon(Icons.access_time_rounded),
+                                Text(
+                                  outputDate3.toString(),
+                                  style: TextStyle(
+                                    fontSize: 19,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.50,
+                                ),
+                                TextButton(
+                                    onPressed: () {},
+                                    child: Text(
+                                      "SAVE TO CALENDER",
+                                      style: TextStyle(
+                                        color: Color(0xFFFD5722),
+                                      ),
+                                    ))
+                              ],
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  // Container(
-                  //   height: 40,
-                  //   width: 170,
-                  //   child: ElevatedButton(
-                  //     onPressed: () {
-                  //       Navigator.pop(context);
-                  //     },
-                  //     style: ElevatedButton.styleFrom(
-                  //       primary: Color(0xFFFD5722),
-                  //     ),
-                  //     child: Text(
-                  //       'RETURN TO HOME',
-                  //     ),
-                  //   ),
-                  // )
-                ],
+                    Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width: 400,
+                              // height: 10,
+                            ),
+                            Text(
+                              'Your Appointment Status:',
+                              style: TextStyle(
+                                fontSize: 17,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  // width: MediaQuery.of(context).size.width * 0.71,
+                                  child: Text(
+                                    status.toString(),
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      color: Color(0xFFFD5722),
+                                    ),
+                                  ),
+                                ),
+                                // SizedBox(
+                                //   width: MediaQuery.of(context).size.width * 0.60,
+                                // ),
+                                TextButton(
+                                  onPressed: () {
+                                    showAlertDialog(context);
+                                  },
+                                  child: status == 'Booked'
+                                      ? Text(
+                                          'CANCEL',
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                            color: Color(0xFFFD5722),
+                                          ),
+                                        )
+                                      : Container(),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    // Container(
+                    //   height: 40,
+                    //   width: 170,
+                    //   child: ElevatedButton(
+                    //     onPressed: () {
+                    //       Navigator.pop(context);
+                    //     },
+                    //     style: ElevatedButton.styleFrom(
+                    //       primary: Color(0xFFFD5722),
+                    //     ),
+                    //     child: Text(
+                    //       'RETURN TO HOME',
+                    //     ),
+                    //   ),
+                    // )
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

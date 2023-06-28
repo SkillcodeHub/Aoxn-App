@@ -94,7 +94,7 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
                   DateTime parseDate =
                       new DateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(date);
                   var inputDate = DateTime.parse(parseDate.toString());
-                  var outputFormat5 = DateFormat('d-MMM-yyyy,hh:mm a');
+                  var outputFormat5 = DateFormat('d-MMM-yyyy, hh:mm a');
                   var outputDate5 = outputFormat5.format(inputDate);
                   displayDate = outputDate5;
                   return RefreshIndicator(
@@ -155,7 +155,6 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
                                                   .toString(),
                                               tagsList: Html.tags
                                                 ..addAll(["bird", "flutter"]),
-                                              
                                             ),
                                           ),
                                         ),
