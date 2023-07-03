@@ -13,6 +13,23 @@ class DoctorListViewmodel with ChangeNotifier {
     notifyListeners();
   }
 
+  late String _selectedDoctorId;
+
+  String get selectedDoctorId => _selectedDoctorId;
+
+  set selectedDoctorId(String newValue) {
+    _selectedDoctorId = newValue;
+    notifyListeners();
+  }
+
+  bool _loading = false;
+  bool get loading => _loading;
+
+  setLoading(bool value) {
+    _loading = value;
+    notifyListeners();
+  }
+
   Future<void> fetchDoctorListApi(String token) async {
     setDoctorList(ApiResponse.loading());
     _myRepo.fetchDoctorList(token).then((value) {

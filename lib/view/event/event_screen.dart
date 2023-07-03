@@ -49,7 +49,7 @@ class _EventScreenState extends State<EventScreen> {
     DateTime parseDate = new DateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(date);
     var inputDate = DateTime.parse(parseDate.toString());
     var outputFormat = DateFormat('E d-MMMM-yyyy');
-    var outputFormat1 = DateFormat('E,yyyy');
+    var outputFormat1 = DateFormat('E, yyyy');
     var outputFormat2 = DateFormat('d MMM');
     var outputFormat3 = DateFormat('hh:mm a');
     // var outputFormat = DateFormat('MM/dd/yyyy hh:mm a');

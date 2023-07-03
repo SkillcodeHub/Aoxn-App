@@ -35,9 +35,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
   BookAppointmentViewModel bookAppointmentViewModel =
       BookAppointmentViewModel();
   late String number;
-
   late String selectedDocotrId;
-
   bool isLoading = false;
   var mobile;
   late String token;
@@ -54,8 +52,8 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
   String CaseNo = "";
   String PatType = "";
 
-  // List doctorData = [];
-  // List customerData = [];
+  bool isFirstLoad = true; // Flag to track the first API call
+  late Future<void> fetchDataFuture;
 
   @override
   void initState() {
@@ -75,9 +73,9 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
         deviceId = value!;
       });
     });
-    // setState(() {});
-    // super.initState();
     super.initState();
+    fetchDataFuture = fetchData(); // Call the API only once
+
     // final doctorListViewmodel =
     //     Provider.of<DoctorListViewmodel>(context, listen: false);
     // final settingsViewModel =
@@ -90,15 +88,30 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
     });
   }
 
+  Future<void> fetchData() async {
+    final doctorListViewmodel =
+        Provider.of<DoctorListViewmodel>(context, listen: false);
+
+    if (!doctorListViewmodel.loading) {
+      doctorListViewmodel.setLoading(true);
+
+      await doctorListViewmodel.fetchDoctorListApi(token);
+
+      final settingsViewModel =
+          Provider.of<SettingsViewModel>(context, listen: false);
+      await settingsViewModel.fetchDoctorDetailsListApi(token);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     print('ParthParthParth');
-    // final bookAppointmentViewModel =
-    //     Provider.of<BookAppointmentViewModel>(context, listen: false);
-    // final doctorListViewmodel =
-    //     Provider.of<DoctorListViewmodel>(context, listen: false);
-    // final settingsViewModel =
-    //     Provider.of<SettingsViewModel>(context, listen: false);
+    final bookAppointmentViewModel =
+        Provider.of<BookAppointmentViewModel>(context, listen: false);
+    final doctorListViewmodel =
+        Provider.of<DoctorListViewmodel>(context, listen: false);
+    final settingsViewModel =
+        Provider.of<SettingsViewModel>(context, listen: false);
 
     return Scaffold(
       backgroundColor: BackgroundColor,
@@ -157,9 +170,14 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                         switch (
                                             value.doctorDetailsList.status!) {
                                           case Status.LOADING:
-                                            return Center(
-                                                child:
-                                                    CircularProgressIndicator());
+                                            return ImageSkelton(
+                                              height: 26.h,
+                                              width: 100.w,
+                                            );
+
+                                          // Center(
+                                          //     child:
+                                          //         CircularProgressIndicator());
                                           case Status.ERROR:
                                             return Center(
                                                 child: Text(value
@@ -340,7 +358,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  'Provider',
+                                                  '     Provider',
                                                   style: TextStyle(
                                                       fontSize: 15,
                                                       fontWeight:
@@ -350,6 +368,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                 ),
                                                 SizedBox(height: 1.h),
                                                 Container(
+                                                  padding: EdgeInsets.all(0),
                                                   alignment:
                                                       Alignment.centerLeft,
                                                   child:
@@ -385,10 +404,10 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                     .toString(),
                                                         onChanged:
                                                             (String? newValue) {
-                                                          setState(() {
-                                                            selectedDocotrId =
-                                                                newValue!;
-                                                          });
+                                                          // setState(() {
+                                                          selectedDocotrId =
+                                                              newValue!;
+                                                          // });
 
                                                           print(
                                                               selectedDocotrId);
@@ -408,11 +427,6 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                               children: <
                                                                   Widget>[
                                                                 Container(
-                                                                    // width: 249,
-                                                                    // margin: EdgeInsets
-                                                                    //     .only(
-                                                                    //         left:
-                                                                    //             10),
                                                                     child: Text(
                                                                   map.doctorName
                                                                       .toString(),
@@ -460,19 +474,9 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                     ),
                                     InkWell(
                                       onTap: () {
-                                        // Map selectedDocotrIdData = {
-                                        //   'selectedDocotrId':
-                                        //       selectedDocotrId.toString(),
-                                        // };
                                         selectedDocotrId != "null"
                                             ? _navigateDateAndTimeSelaction(
                                                 context)
-                                            // Navigator.pushNamed(
-                                            //     context,
-                                            //     RoutesName
-                                            //         .selectAppointmentDate,
-                                            //     arguments: selectedDocotrIdData)
-                                            // _navigateDateAndTimeSelaction(context)
                                             : Utils.snackBar(
                                                 'Please Select a Doctor',
                                                 context);
@@ -487,11 +491,6 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                         margin: EdgeInsets.only(
                                             left: 8, right: 8, top: 5),
                                         color: Colors.white,
-                                        // shadowColor: Colors.white,
-                                        // // shape: RoundedRectangleBorder(
-                                        // //     borderRadius: BorderRadius.all(Radius.circular(5))),
-                                        // elevation: 10,
-                                        // dff
                                         child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
@@ -654,8 +653,6 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                             left: 8, right: 8, top: 5),
                                         color: Colors.white,
                                         shadowColor: Colors.white,
-                                        // shape: RoundedRectangleBorder(
-                                        //     borderRadius: BorderRadius.all(Radius.circular(5))),
                                         elevation: 10,
                                         child: Row(
                                           mainAxisAlignment:
@@ -679,8 +676,6 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                       ),
                                                       child: Text(
                                                         displayPatientName,
-                                                        // 'Select Patient',
-                                                        // displayPatientName,
                                                         maxLines: 1,
                                                         overflow: TextOverflow
                                                             .ellipsis,
@@ -865,5 +860,26 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
         PatType = result[4];
       });
     }
+  }
+}
+
+class ImageSkelton extends StatelessWidget {
+  const ImageSkelton({Key? key, this.height, this.width}) : super(key: key);
+
+  final double? height, width;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: height,
+      width: width,
+      padding: EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: Colors.black.withOpacity(0.04),
+        borderRadius: BorderRadius.all(
+          Radius.circular(16),
+        ),
+      ),
+    );
   }
 }

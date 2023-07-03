@@ -2,7 +2,7 @@ import 'package:axonweb/view/News/news_screen.dart';
 import 'package:axonweb/view/report/report_screen.dart';
 import 'package:flutter/material.dart';
 
-import '../book/book_appointment_screen.dart';
+import '../../demo2.dart';
 import '../event/event_screen.dart';
 
 class MyNavigationBar extends StatefulWidget {

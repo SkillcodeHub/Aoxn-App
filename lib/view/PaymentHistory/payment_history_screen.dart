@@ -537,6 +537,10 @@ class _PaymentSheetState extends State<PaymentSheet> {
       });
     });
     super.initState();
+    Timer(Duration(microseconds: 20), () {
+      print(token);
+      customerPayHeadViewmodel.fetchCustomerPayHeadListApi(token.toString());
+    });
     _razorpay = Razorpay();
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
@@ -564,10 +568,6 @@ class _PaymentSheetState extends State<PaymentSheet> {
 
   @override
   Widget build(BuildContext context) {
-    Timer(Duration(microseconds: 20), () {
-      print(token);
-      customerPayHeadViewmodel.fetchCustomerPayHeadListApi(token.toString());
-    });
     return StatefulBuilder(builder: (context, state) {
       return DraggableScrollableSheet(
           initialChildSize: 0.87,
