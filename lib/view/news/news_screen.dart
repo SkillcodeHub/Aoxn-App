@@ -11,7 +11,6 @@ import '../../Res/colors.dart';
 import '../../Utils/routes/routes_name.dart';
 import '../../View_Model/News_View_Model/news_view_model.dart';
 import '../../res/components/appbar/axonimage_appbar-widget.dart';
-import '../../res/components/appbar/payment_widget.dart';
 import '../../res/components/appbar/screen_name_widget.dart';
 import '../../res/components/appbar/settings_widget.dart';
 import '../../res/components/appbar/whatsapp_widget.dart';
@@ -193,6 +192,7 @@ class _NewsScreenState extends State<NewsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print('ParthParthParth');
     Timer(Duration(microseconds: 20),
         () => newsViewmodel.fetchNewsListApi(token));
     // newsViewmodel.fetchNewsListApi(token);

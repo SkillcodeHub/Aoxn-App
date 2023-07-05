@@ -9,6 +9,7 @@ import 'Model/DoctorList_Model/doctorlist_model.dart';
 import 'Model/NewsDetails_Model/newsdetails_model.dart';
 import 'View_Model/ChangeProvider_View_Model/provider_view_model.dart';
 import 'View_Model/Login_View_Model/auth_view_model.dart';
+import 'View_Model/NewsDetails_View_model/newsdetails_view_model.dart';
 import 'View_Model/News_View_Model/news_view_model.dart';
 import 'View_Model/Settings_View_Model/settings_view_model.dart';
 import 'utils/routes/routes_name.dart';
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => GetProviderTokenViewModel()),
         ChangeNotifierProvider(create: (_) => NewsViewmodel()),
         ChangeNotifierProvider(create: (_) => SettingsViewModel()),
-        // ChangeNotifierProvider(create: (_) => NewsDetailsListModel()),
+        ChangeNotifierProvider(create: (_) => NewsDetailsViewmodel()),
         // ChangeNotifierProvider(create: (_) => DoctorListModel()),
       ],
       child: Sizer(builder: (context, orientation, DeviceType) {

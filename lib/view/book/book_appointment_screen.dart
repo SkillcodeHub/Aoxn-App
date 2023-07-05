@@ -62,6 +62,8 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print('ParthParthParth');
+
     Timer(Duration(microseconds: 20), () {
       doctorListViewmodel.fetchDoctorListApi(token);
       settingsViewModel.fetchDoctorDetailsListApi(token);
