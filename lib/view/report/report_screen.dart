@@ -189,7 +189,7 @@ class _ReportScreenState extends State<ReportScreen> {
                   title: 'Recent Precription',
                 ),
                 WhatsappWidget(),
-                PaymentWidget(),
+                // PaymentWidget(),
                 SettingsWidget(),
               ],
             ),

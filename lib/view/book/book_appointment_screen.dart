@@ -138,7 +138,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                   title: 'Book Appointment',
                 ),
                 WhatsappWidget(),
-                PaymentWidget(),
+                // PaymentWidget(),
                 SettingsWidget(),
               ],
             ),

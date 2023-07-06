@@ -40,7 +40,7 @@ class RegisterAppUserViewModel with ChangeNotifier {
       // Utils.flushBarErrorMessage(
       //     'Otp is Valid'.toString(), Duration(seconds: 5), context);
       if (value['status'] == true) {
-        Utils.snackBar(value['messageCode'], context);
+        // Utils.snackBar(value['messageCode'], context);
         print(value);
         String platform = 'Mobile';
         String deviceId = result.toString();
@@ -59,7 +59,7 @@ class RegisterAppUserViewModel with ChangeNotifier {
           print(value.toString());
         }
       } else {
-        Utils.snackBar(value['displayMessage'], context);
+        // Utils.snackBar(value['displayMessage'], context);
         if (kDebugMode) {
           print(value.toString());
         }
