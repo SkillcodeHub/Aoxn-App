@@ -74,7 +74,6 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
       });
     });
     super.initState();
-    fetchDataFuture = fetchData(); // Call the API only once
 
     // final doctorListViewmodel =
     //     Provider.of<DoctorListViewmodel>(context, listen: false);
@@ -82,25 +81,32 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
     //     Provider.of<SettingsViewModel>(context, listen: false);
     // final bookAppointmentViewModel =
     //     Provider.of<BookAppointmentViewModel>(context, listen: false);
-    Timer(Duration(microseconds: 20), () {
-      doctorListViewmodel.fetchDoctorListApi(token);
-      settingsViewModel.fetchDoctorDetailsListApi(token);
-    });
+    // Timer(Duration(microseconds: 20), () {
+    //   // doctorListViewmodel.fetchDoctorListApi(token);
+    //   // settingsViewModel.fetchDoctorDetailsListApi(token);
+    // });
+    fetchDataFuture = fetchData(); // Call the API only once
   }
 
   Future<void> fetchData() async {
-    final doctorListViewmodel =
-        Provider.of<DoctorListViewmodel>(context, listen: false);
+    Timer(Duration(microseconds: 20), () {
+      final doctorListViewmodel =
+          Provider.of<DoctorListViewmodel>(context, listen: false);
 
-    if (!doctorListViewmodel.loading) {
-      doctorListViewmodel.setLoading(true);
+      if (!doctorListViewmodel.loading) {
+        doctorListViewmodel.setLoading(true);
 
-      await doctorListViewmodel.fetchDoctorListApi(token);
-
+        doctorListViewmodel.fetchDoctorListApi(token);
+      }
       final settingsViewModel =
           Provider.of<SettingsViewModel>(context, listen: false);
-      await settingsViewModel.fetchDoctorDetailsListApi(token);
-    }
+
+      if (!settingsViewModel.loading) {
+        settingsViewModel.setLoading(true);
+
+        settingsViewModel.fetchDoctorDetailsListApi(token);
+      }
+    });
   }
 
   @override
@@ -139,386 +145,585 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
           ),
         ),
       ),
-      body: ChangeNotifierProvider<DoctorListViewmodel>.value(
-          value: doctorListViewmodel,
-          child: Consumer<DoctorListViewmodel>(
-            builder: (context, value, child) {
-              switch (value.doctorList.status!) {
-                case Status.LOADING:
-                  return Center(child: CircularProgressIndicator());
-                case Status.ERROR:
-                  return Center(
-                      child: Text(value.doctorList.message.toString()));
-                case Status.COMPLETED:
-                  return Stack(
-                    children: [
-                      SingleChildScrollView(
-                        // physics: BouncingScrollPhysics(),
-                        child: Padding(
-                          padding: EdgeInsets.all(0),
-                          child: isLoading
-                              ? isLoading
-                                  ? Container()
-                                  : Container()
-                              : Column(
-                                  children: [
-                                    ChangeNotifierProvider<
-                                        SettingsViewModel>.value(
-                                      value: settingsViewModel,
-                                      child: Consumer<SettingsViewModel>(
-                                          builder: (context, value, child) {
-                                        switch (
-                                            value.doctorDetailsList.status!) {
-                                          case Status.LOADING:
-                                            return ImageSkelton(
-                                              height: 26.h,
-                                              width: 100.w,
-                                            );
+      body: FutureBuilder<void>(
+        future: fetchDataFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (snapshot.hasError) {
+            return Center(
+              child: Text('Error occurred: ${snapshot.error}'),
+            );
+          } else {
+            // Render the UI with the fetched data
+            return ChangeNotifierProvider<DoctorListViewmodel>.value(
+                value: doctorListViewmodel,
+                child: Consumer<DoctorListViewmodel>(
+                  builder: (context, value, child) {
+                    switch (value.doctorList.status!) {
+                      case Status.LOADING:
+                        return Center(child: CircularProgressIndicator());
+                      case Status.ERROR:
+                        return Center(
+                            child: Text(value.doctorList.message.toString()));
+                      case Status.COMPLETED:
+                        return Stack(
+                          children: [
+                            SingleChildScrollView(
+                              // physics: BouncingScrollPhysics(),
+                              child: Padding(
+                                padding: EdgeInsets.all(0),
+                                child: isLoading
+                                    ? isLoading
+                                        ? Container()
+                                        : Container()
+                                    : Column(
+                                        children: [
+                                          ChangeNotifierProvider<
+                                              SettingsViewModel>.value(
+                                            value: settingsViewModel,
+                                            child: Consumer<SettingsViewModel>(
+                                                builder:
+                                                    (context, value, child) {
+                                              switch (value
+                                                  .doctorDetailsList.status!) {
+                                                case Status.LOADING:
+                                                  return ImageSkelton(
+                                                    height: 26.h,
+                                                    width: 100.w,
+                                                  );
 
-                                          // Center(
-                                          //     child:
-                                          //         CircularProgressIndicator());
-                                          case Status.ERROR:
-                                            return Center(
-                                                child: Text(value
-                                                    .doctorDetailsList.message
-                                                    .toString()));
-                                          case Status.COMPLETED:
-                                            number = value.doctorDetailsList
-                                                .data!.data![0].customerContact
-                                                .toString();
-                                            return Stack(
-                                              children: [
-                                                Container(
-                                                  height: 26.h,
-                                                  width: 100.w,
-                                                  decoration: BoxDecoration(
-                                                    image: DecorationImage(
-                                                      image: MemoryImage(
-                                                        base64Decode(
-                                                          value
-                                                              .doctorDetailsList
-                                                              .data!
-                                                              .data![0]
-                                                              .logoImageURL
-                                                              .toString(),
+                                                // Center(
+                                                //     child:
+                                                //         CircularProgressIndicator());
+                                                case Status.ERROR:
+                                                  return Center(
+                                                      child: Text(value
+                                                          .doctorDetailsList
+                                                          .message
+                                                          .toString()));
+                                                case Status.COMPLETED:
+                                                  number = value
+                                                      .doctorDetailsList
+                                                      .data!
+                                                      .data![0]
+                                                      .customerContact
+                                                      .toString();
+                                                  return Stack(
+                                                    children: [
+                                                      Container(
+                                                        height: 26.h,
+                                                        width: 100.w,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          image:
+                                                              DecorationImage(
+                                                            image: MemoryImage(
+                                                              base64Decode(
+                                                                value
+                                                                    .doctorDetailsList
+                                                                    .data!
+                                                                    .data![0]
+                                                                    .logoImageURL
+                                                                    .toString(),
+                                                              ),
+                                                            ),
+                                                            fit: BoxFit.cover,
+                                                          ),
                                                         ),
                                                       ),
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                  ),
-                                                ),
-                                                Positioned(
-                                                  bottom: 3,
-                                                  left: 0,
-                                                  right: 0,
-                                                  child: Transform.translate(
-                                                    offset: Offset(0, 4),
-                                                    child: Container(
-                                                      height: 70,
-                                                      decoration: BoxDecoration(
-                                                        gradient: LinearGradient(
-                                                            begin: Alignment
-                                                                .topCenter,
-                                                            end: Alignment
-                                                                .bottomCenter,
-                                                            colors: [
-                                                              Colors
-                                                                  .transparent,
-                                                              Colors
-                                                                  .grey.shade700
-                                                            ]),
-                                                      ),
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                left: 14,
-                                                                top: 8,
-                                                                bottom: 8,
-                                                                right: 8),
-                                                        child: Row(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .end,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Container(
-                                                              width: 70.w,
-                                                              child: Column(
+                                                      Positioned(
+                                                        bottom: 3,
+                                                        left: 0,
+                                                        right: 0,
+                                                        child:
+                                                            Transform.translate(
+                                                          offset: Offset(0, 4),
+                                                          child: Container(
+                                                            height: 70,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              gradient: LinearGradient(
+                                                                  begin: Alignment
+                                                                      .topCenter,
+                                                                  end: Alignment.bottomCenter,
+                                                                  colors: [
+                                                                    Colors
+                                                                        .transparent,
+                                                                    Colors.grey
+                                                                        .shade700
+                                                                  ]),
+                                                            ),
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                          .only(
+                                                                      left: 14,
+                                                                      top: 8,
+                                                                      bottom: 8,
+                                                                      right: 8),
+                                                              child: Row(
                                                                 crossAxisAlignment:
                                                                     CrossAxisAlignment
-                                                                        .start,
+                                                                        .end,
                                                                 mainAxisAlignment:
                                                                     MainAxisAlignment
-                                                                        .end,
+                                                                        .spaceBetween,
                                                                 children: [
-                                                                  Text(
-                                                                    value
-                                                                        .doctorDetailsList
-                                                                        .data!
-                                                                        .data![
-                                                                            0]
-                                                                        .customerName
-                                                                        .toString(),
-                                                                    style:
-                                                                        TextStyle(
-                                                                      fontSize:
-                                                                          13,
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
+                                                                  Container(
+                                                                    width: 70.w,
+                                                                    child:
+                                                                        Column(
+                                                                      crossAxisAlignment:
+                                                                          CrossAxisAlignment
+                                                                              .start,
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .end,
+                                                                      children: [
+                                                                        Text(
+                                                                          value
+                                                                              .doctorDetailsList
+                                                                              .data!
+                                                                              .data![0]
+                                                                              .customerName
+                                                                              .toString(),
+                                                                          style:
+                                                                              TextStyle(
+                                                                            fontSize:
+                                                                                13,
+                                                                            color:
+                                                                                Colors.white,
+                                                                            fontWeight:
+                                                                                FontWeight.bold,
+                                                                          ),
+                                                                          maxLines:
+                                                                              1,
+                                                                          overflow:
+                                                                              TextOverflow.ellipsis,
+                                                                        ),
+                                                                        Text(
+                                                                          value
+                                                                              .doctorDetailsList
+                                                                              .data!
+                                                                              .data![0]
+                                                                              .customerAddress
+                                                                              .toString(),
+                                                                          style:
+                                                                              TextStyle(
+                                                                            fontSize:
+                                                                                13,
+                                                                            color:
+                                                                                Colors.white,
+                                                                            fontStyle:
+                                                                                FontStyle.italic,
+                                                                          ),
+                                                                          maxLines:
+                                                                              1,
+                                                                          overflow:
+                                                                              TextOverflow.ellipsis,
+                                                                        ),
+                                                                      ],
                                                                     ),
-                                                                    maxLines: 1,
-                                                                    overflow:
-                                                                        TextOverflow
-                                                                            .ellipsis,
                                                                   ),
-                                                                  Text(
-                                                                    value
-                                                                        .doctorDetailsList
-                                                                        .data!
-                                                                        .data![
-                                                                            0]
-                                                                        .customerAddress
-                                                                        .toString(),
-                                                                    style:
-                                                                        TextStyle(
-                                                                      fontSize:
-                                                                          13,
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontStyle:
-                                                                          FontStyle
-                                                                              .italic,
+                                                                  InkWell(
+                                                                    onTap: () {
+                                                                      number == null ||
+                                                                              number ==
+                                                                                  ''
+                                                                          ? Utils.snackBar(
+                                                                              'MobileNo Not Available',
+                                                                              context)
+                                                                          : launch(
+                                                                              'tel://$number');
+                                                                    },
+                                                                    child:
+                                                                        Container(
+                                                                      width:
+                                                                          15.w,
+                                                                      height:
+                                                                          5.h,
+                                                                      child: Image
+                                                                          .asset(
+                                                                              "images/phone-call.png"),
                                                                     ),
-                                                                    maxLines: 1,
-                                                                    overflow:
-                                                                        TextOverflow
-                                                                            .ellipsis,
                                                                   ),
                                                                 ],
                                                               ),
                                                             ),
-                                                            InkWell(
-                                                              onTap: () {
-                                                                number == null ||
-                                                                        number ==
-                                                                            ''
-                                                                    ? Utils.snackBar(
-                                                                        'MobileNo Not Available',
-                                                                        context)
-                                                                    : launch(
-                                                                        'tel://$number');
-                                                              },
-                                                              child: Container(
-                                                                width: 15.w,
-                                                                height: 5.h,
-                                                                child: Image.asset(
-                                                                    "images/phone-call.png"),
-                                                              ),
-                                                            ),
-                                                          ],
+                                                          ),
                                                         ),
                                                       ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            );
-                                        }
-                                      }),
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Card(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      margin:
-                                          EdgeInsets.only(left: 8, right: 8),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: <Widget>[
-                                          Container(
-                                            height: 12.h,
-                                            width: 78.w,
-                                            padding: EdgeInsets.all(8),
-                                            child: Column(
+                                                    ],
+                                                  );
+                                              }
+                                            }),
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Card(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                            ),
+                                            margin: EdgeInsets.only(
+                                                left: 8, right: 8),
+                                            child: Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment
                                                       .spaceBetween,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  '     Provider',
-                                                  style: TextStyle(
-                                                      fontSize: 15,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      color:
-                                                          Colors.grey.shade700),
-                                                ),
-                                                SizedBox(height: 1.h),
+                                              children: <Widget>[
                                                 Container(
-                                                  padding: EdgeInsets.all(0),
-                                                  alignment:
-                                                      Alignment.centerLeft,
-                                                  child:
-                                                      DropdownButtonHideUnderline(
-                                                    child: ButtonTheme(
-                                                      alignedDropdown: true,
-                                                      child: DropdownButton<
-                                                          String>(
-                                                        isDense: true,
-                                                        hint: Text(
-                                                          // "Select Doctor",
-                                                          value
-                                                              .doctorList
-                                                              .data!
-                                                              .data![0]
-                                                              .doctorName
-                                                              .toString(),
-                                                          style: TextStyle(
-                                                              fontSize: 20,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              color:
-                                                                  Colors.black),
-                                                        ),
-                                                        value:
-                                                            selectedDocotrId =
+                                                  height: 12.h,
+                                                  width: 78.w,
+                                                  padding: EdgeInsets.all(8),
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        '     Provider',
+                                                        style: TextStyle(
+                                                            fontSize: 15,
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                            color: Colors
+                                                                .grey.shade700),
+                                                      ),
+                                                      SizedBox(height: 1.h),
+                                                      Container(
+                                                        padding:
+                                                            EdgeInsets.all(0),
+                                                        alignment: Alignment
+                                                            .centerLeft,
+                                                        child:
+                                                            DropdownButtonHideUnderline(
+                                                          child: ButtonTheme(
+                                                            alignedDropdown:
+                                                                true,
+                                                            child:
+                                                                DropdownButton<
+                                                                    String>(
+                                                              isDense: true,
+                                                              hint: Text(
+                                                                // "Select Doctor",
                                                                 value
                                                                     .doctorList
                                                                     .data!
                                                                     .data![0]
-                                                                    .doctorId
+                                                                    .doctorName
                                                                     .toString(),
-                                                        onChanged:
-                                                            (String? newValue) {
-                                                          // setState(() {
-                                                          selectedDocotrId =
-                                                              newValue!;
-                                                          // });
-
-                                                          print(
-                                                              selectedDocotrId);
-                                                        },
-                                                        items: value.doctorList
-                                                            .data!.data!
-                                                            .map((map) {
-                                                          return new DropdownMenuItem<
-                                                              String>(
-                                                            value: map.doctorId
-                                                                .toString(),
-                                                            // value: _mySelection,
-                                                            child: Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .start,
-                                                              children: <
-                                                                  Widget>[
-                                                                Container(
-                                                                    child: Text(
-                                                                  map.doctorName
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        20,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    color: Colors
+                                                                        .black),
+                                                              ),
+                                                              value: selectedDocotrId =
+                                                                  value
+                                                                      .doctorList
+                                                                      .data!
+                                                                      .data![0]
+                                                                      .doctorId
                                                                       .toString(),
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          14.sp,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500),
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .start,
-                                                                )),
-                                                              ],
+                                                              onChanged: (String?
+                                                                  newValue) {
+                                                                // setState(() {
+                                                                selectedDocotrId =
+                                                                    newValue!;
+                                                                // });
+
+                                                                print(
+                                                                    selectedDocotrId);
+                                                              },
+                                                              items: value
+                                                                  .doctorList
+                                                                  .data!
+                                                                  .data!
+                                                                  .map((map) {
+                                                                return new DropdownMenuItem<
+                                                                    String>(
+                                                                  value: map
+                                                                      .doctorId
+                                                                      .toString(),
+                                                                  // value: _mySelection,
+                                                                  child: Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .start,
+                                                                    children: <
+                                                                        Widget>[
+                                                                      Container(
+                                                                          child:
+                                                                              Text(
+                                                                        map.doctorName
+                                                                            .toString(),
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                                14.sp,
+                                                                            fontWeight: FontWeight.w500),
+                                                                        textAlign:
+                                                                            TextAlign.start,
+                                                                      )),
+                                                                    ],
+                                                                  ),
+                                                                );
+                                                              }).toList(),
                                                             ),
-                                                          );
-                                                        }).toList(),
+                                                          ),
+                                                        ),
                                                       ),
-                                                    ),
+                                                      SizedBox(height: 20),
+                                                    ],
                                                   ),
                                                 ),
-                                                SizedBox(height: 20),
+                                                Container(
+                                                  decoration: BoxDecoration(
+                                                      color: Color(0xFFFD5722),
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                              topRight: Radius
+                                                                  .circular(8),
+                                                              bottomRight:
+                                                                  Radius
+                                                                      .circular(
+                                                                          8))),
+                                                  height: 12.h,
+                                                  width: 16.w,
+                                                  child: Icon(
+                                                    Icons.refresh_outlined,
+                                                    color: Colors.white,
+                                                    size: 30,
+                                                  ),
+                                                ),
+                                                // isLoading ? Loader() : Container(),
                                               ],
                                             ),
                                           ),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                                color: Color(0xFFFD5722),
-                                                borderRadius: BorderRadius.only(
-                                                    topRight:
-                                                        Radius.circular(8),
-                                                    bottomRight:
-                                                        Radius.circular(8))),
-                                            height: 12.h,
-                                            width: 16.w,
-                                            child: Icon(
-                                              Icons.refresh_outlined,
+                                          InkWell(
+                                            onTap: () {
+                                              selectedDocotrId != "null"
+                                                  ? _navigateDateAndTimeSelaction(
+                                                      context)
+                                                  : Utils.snackBar(
+                                                      'Please Select a Doctor',
+                                                      context);
+
+                                              ;
+                                            },
+                                            child: Card(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
+                                              margin: EdgeInsets.only(
+                                                  left: 8, right: 8, top: 5),
                                               color: Colors.white,
-                                              size: 30,
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Container(
+                                                    height: 12.h,
+                                                    width: 78.w,
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 8,
+                                                              right: 8,
+                                                              bottom: 8,
+                                                              top: 12),
+                                                      child: displayDate.isEmpty
+                                                          ? Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                SizedBox(
+                                                                    height: 18),
+                                                                Container(
+                                                                  padding: EdgeInsets
+                                                                      .only(
+                                                                          left:
+                                                                              10,
+                                                                          top:
+                                                                              10),
+                                                                  child: Text(
+                                                                    displaySelectAppointmentDate,
+                                                                    // displayDate,
+                                                                    style: TextStyle(
+                                                                        fontSize: 14
+                                                                            .sp,
+                                                                        fontWeight:
+                                                                            FontWeight.w500),
+                                                                  ),
+                                                                ),
+                                                                SizedBox(
+                                                                    height: 10),
+                                                              ],
+                                                            )
+                                                          : Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                Text(
+                                                                  'Appointment',
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          15,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w400,
+                                                                      color: Colors
+                                                                          .grey
+                                                                          .shade700),
+                                                                ),
+                                                                SizedBox(
+                                                                    height: 1),
+                                                                Container(
+                                                                  padding: EdgeInsets
+                                                                      .only(
+                                                                          left:
+                                                                              10,
+                                                                          top:
+                                                                              8),
+                                                                  child: Row(
+                                                                    children: [
+                                                                      Text(
+                                                                        'Date   ',
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                                15,
+                                                                            fontWeight:
+                                                                                FontWeight.w400,
+                                                                            color: Colors.grey.shade700),
+                                                                      ),
+                                                                      Text(
+                                                                        appointmentDate,
+                                                                        // displayDate,
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                                13.sp,
+                                                                            fontWeight: FontWeight.w500),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                                SizedBox(
+                                                                    height: 4),
+                                                                Container(
+                                                                  padding: EdgeInsets
+                                                                      .only(
+                                                                          left:
+                                                                              10),
+                                                                  child: Row(
+                                                                    children: [
+                                                                      Text(
+                                                                        'Time  ',
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                                15,
+                                                                            fontWeight:
+                                                                                FontWeight.w400,
+                                                                            color: Colors.grey.shade700),
+                                                                      ),
+                                                                      Text(
+                                                                        displayTimeSlot,
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                                12.sp,
+                                                                            fontWeight: FontWeight.w500),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    decoration: BoxDecoration(
+                                                        color:
+                                                            Color(0xFFFD5722),
+                                                        borderRadius:
+                                                            BorderRadius.only(
+                                                                topRight: Radius
+                                                                    .circular(
+                                                                        8),
+                                                                bottomRight: Radius
+                                                                    .circular(
+                                                                        8))),
+                                                    height: 12.h,
+                                                    width: 16.w,
+                                                    child: Icon(
+                                                      Icons.access_time_rounded,
+                                                      color: Colors.white,
+                                                      size: 30,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           ),
-                                          // isLoading ? Loader() : Container(),
-                                        ],
-                                      ),
-                                    ),
-                                    InkWell(
-                                      onTap: () {
-                                        selectedDocotrId != "null"
-                                            ? _navigateDateAndTimeSelaction(
-                                                context)
-                                            : Utils.snackBar(
-                                                'Please Select a Doctor',
-                                                context);
-
-                                        ;
-                                      },
-                                      child: Card(
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                        ),
-                                        margin: EdgeInsets.only(
-                                            left: 8, right: 8, top: 5),
-                                        color: Colors.white,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Container(
-                                              height: 12.h,
-                                              width: 78.w,
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 8,
-                                                    right: 8,
-                                                    bottom: 8,
-                                                    top: 12),
-                                                child: displayDate.isEmpty
-                                                    ? Column(
+                                          InkWell(
+                                            onTap: () {
+                                              _navigateNameAndGenderSelaction(
+                                                  context);
+                                              // Navigator.pushNamed(
+                                              //     context, RoutesName.selectPatient);
+                                            },
+                                            child: Card(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
+                                              margin: EdgeInsets.only(
+                                                  left: 8, right: 8, top: 5),
+                                              color: Colors.white,
+                                              shadowColor: Colors.white,
+                                              elevation: 10,
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Container(
+                                                    height: 12.h,
+                                                    width: 78.w,
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
+                                                      child: Column(
                                                         crossAxisAlignment:
                                                             CrossAxisAlignment
                                                                 .start,
                                                         children: [
-                                                          SizedBox(height: 18),
                                                           Container(
+                                                            width: 77.w,
                                                             padding:
                                                                 EdgeInsets.only(
-                                                                    left: 10,
-                                                                    top: 10),
+                                                              left: 10,
+                                                              top: 29,
+                                                            ),
                                                             child: Text(
-                                                              displaySelectAppointmentDate,
-                                                              // displayDate,
+                                                              displayPatientName,
+                                                              maxLines: 1,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
                                                               style: TextStyle(
                                                                   fontSize:
                                                                       14.sp,
@@ -527,285 +732,143 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                           .w500),
                                                             ),
                                                           ),
-                                                          SizedBox(height: 10),
+                                                          //
                                                         ],
-                                                      )
-                                                    : Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Text(
-                                                            'Appointment',
-                                                            style: TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
-                                                                color: Colors
-                                                                    .grey
-                                                                    .shade700),
-                                                          ),
-                                                          SizedBox(height: 1),
-                                                          Container(
-                                                            padding:
-                                                                EdgeInsets.only(
-                                                                    left: 10,
-                                                                    top: 8),
-                                                            child: Row(
-                                                              children: [
-                                                                Text(
-                                                                  'Date   ',
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          15,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w400,
-                                                                      color: Colors
-                                                                          .grey
-                                                                          .shade700),
-                                                                ),
-                                                                Text(
-                                                                  appointmentDate,
-                                                                  // displayDate,
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          13.sp,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                          SizedBox(height: 4),
-                                                          Container(
-                                                            padding:
-                                                                EdgeInsets.only(
-                                                                    left: 10),
-                                                            child: Row(
-                                                              children: [
-                                                                Text(
-                                                                  'Time  ',
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          15,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w400,
-                                                                      color: Colors
-                                                                          .grey
-                                                                          .shade700),
-                                                                ),
-                                                                Text(
-                                                                  displayTimeSlot,
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          12.sp,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                              ),
-                                            ),
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                  color: Color(0xFFFD5722),
-                                                  borderRadius:
-                                                      BorderRadius.only(
-                                                          topRight:
-                                                              Radius.circular(
-                                                                  8),
-                                                          bottomRight:
-                                                              Radius.circular(
-                                                                  8))),
-                                              height: 12.h,
-                                              width: 16.w,
-                                              child: Icon(
-                                                Icons.access_time_rounded,
-                                                color: Colors.white,
-                                                size: 30,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    InkWell(
-                                      onTap: () {
-                                        _navigateNameAndGenderSelaction(
-                                            context);
-                                        // Navigator.pushNamed(
-                                        //     context, RoutesName.selectPatient);
-                                      },
-                                      child: Card(
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                        ),
-                                        margin: EdgeInsets.only(
-                                            left: 8, right: 8, top: 5),
-                                        color: Colors.white,
-                                        shadowColor: Colors.white,
-                                        elevation: 10,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Container(
-                                              height: 12.h,
-                                              width: 78.w,
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Container(
-                                                      width: 77.w,
-                                                      padding: EdgeInsets.only(
-                                                        left: 10,
-                                                        top: 29,
-                                                      ),
-                                                      child: Text(
-                                                        displayPatientName,
-                                                        maxLines: 1,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        style: TextStyle(
-                                                            fontSize: 14.sp,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w500),
                                                       ),
                                                     ),
-                                                    //
-                                                  ],
+                                                  ),
+                                                  Container(
+                                                    decoration: BoxDecoration(
+                                                        color:
+                                                            Color(0xFFFD5722),
+                                                        borderRadius:
+                                                            BorderRadius.only(
+                                                                topRight: Radius
+                                                                    .circular(
+                                                                        8),
+                                                                bottomRight: Radius
+                                                                    .circular(
+                                                                        8))),
+                                                    height: 12.h,
+                                                    width: 16.w,
+                                                    child: Icon(
+                                                      Icons.person_outline,
+                                                      color: Colors.white,
+                                                      size: 30,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          Container(
+                                            height: 7.h,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Container(
+                                                  height: 5.h,
+                                                  child: ElevatedButton(
+                                                    onPressed: () {
+                                                      if (displayDate.isEmpty) {
+                                                        Utils.snackBar(
+                                                            'Please Select Appointment Date',
+                                                            context);
+                                                      } else if (displayPatientName ==
+                                                          'Select Patient') {
+                                                        Utils.snackBar(
+                                                            'Please Select Patient',
+                                                            context);
+                                                      } else {
+                                                        Map data = {
+                                                          "CaseNo": CaseNo,
+                                                          "Name":
+                                                              displayPatientName,
+                                                          "Mobile":
+                                                              mobile.toString(),
+                                                          "Email": "",
+                                                          "Gender":
+                                                              displayGender
+                                                                  .toString(),
+                                                          "PatType": PatType,
+                                                          "ApptDate":
+                                                              displayDate,
+                                                          "CustomerToken":
+                                                              token,
+                                                          "DelayMinute":
+                                                              DelayMinute
+                                                                  .toString(),
+                                                          "DeviceId": deviceId,
+                                                          "DoctorId":
+                                                              selectedDocotrId,
+                                                          "TimingId":
+                                                              displaytimingId
+                                                                  .toString(),
+                                                        };
+                                                        bookAppointmentViewModel
+                                                            .bookApointmentApi(
+                                                                data, context);
+                                                        Timer(
+                                                            Duration(
+                                                                seconds: 5),
+                                                            () {});
+                                                      }
+                                                    },
+                                                    child: Text(
+                                                      'BOOK APPOINTMENT',
+                                                    ),
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                            backgroundColor:
+                                                                Color(
+                                                                    0xFFFD5722)),
+                                                  ),
                                                 ),
-                                              ),
-                                            ),
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                  color: Color(0xFFFD5722),
-                                                  borderRadius:
-                                                      BorderRadius.only(
-                                                          topRight:
-                                                              Radius.circular(
-                                                                  8),
-                                                          bottomRight:
-                                                              Radius.circular(
-                                                                  8))),
-                                              height: 12.h,
-                                              width: 16.w,
-                                              child: Icon(
-                                                Icons.person_outline,
-                                                color: Colors.white,
-                                                size: 30,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      height: 7.h,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            height: 5.h,
-                                            child: ElevatedButton(
-                                              onPressed: () {
-                                                if (displayDate.isEmpty) {
-                                                  Utils.snackBar(
-                                                      'Please Select Appointment Date',
-                                                      context);
-                                                } else if (displayPatientName ==
-                                                    'Select Patient') {
-                                                  Utils.snackBar(
-                                                      'Please Select Patient',
-                                                      context);
-                                                } else {
-                                                  Map data = {
-                                                    "CaseNo": CaseNo,
-                                                    "Name": displayPatientName,
-                                                    "Mobile": mobile.toString(),
-                                                    "Email": "",
-                                                    "Gender": displayGender
-                                                        .toString(),
-                                                    "PatType": PatType,
-                                                    "ApptDate": displayDate,
-                                                    "CustomerToken": token,
-                                                    "DelayMinute":
-                                                        DelayMinute.toString(),
-                                                    "DeviceId": deviceId,
-                                                    "DoctorId":
-                                                        selectedDocotrId,
-                                                    "TimingId": displaytimingId
-                                                        .toString(),
-                                                  };
-                                                  bookAppointmentViewModel
-                                                      .bookApointmentApi(
-                                                          data, context);
-                                                  Timer(Duration(seconds: 5),
-                                                      () {});
-                                                }
-                                              },
-                                              child: Text(
-                                                'BOOK APPOINTMENT',
-                                              ),
-                                              style: ElevatedButton.styleFrom(
-                                                  backgroundColor:
-                                                      Color(0xFFFD5722)),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Container(
+                                                  height: 5.h,
+                                                  child: ElevatedButton(
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        displayDate = '';
+                                                        displayTimeSlot = '';
+                                                        displaytimingId = '';
+                                                        displayPatientName =
+                                                            'Select Patient';
+                                                        displayBirthDate = '';
+                                                        displayGender = '';
+                                                      });
+                                                    },
+                                                    child: Text('RESET'),
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                            backgroundColor:
+                                                                Color(
+                                                                    0xFFFD5722)),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
                                           Container(
-                                            height: 5.h,
-                                            child: ElevatedButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  displayDate = '';
-                                                  displayTimeSlot = '';
-                                                  displaytimingId = '';
-                                                  displayPatientName =
-                                                      'Select Patient';
-                                                  displayBirthDate = '';
-                                                  displayGender = '';
-                                                });
-                                              },
-                                              child: Text('RESET'),
-                                              style: ElevatedButton.styleFrom(
-                                                  backgroundColor:
-                                                      Color(0xFFFD5722)),
-                                            ),
+                                            height: 10.h,
                                           ),
                                         ],
                                       ),
-                                    ),
-                                    Container(
-                                      height: 10.h,
-                                    ),
-                                  ],
-                                ),
-                        ),
-                      ),
-                      isLoading ? Loader() : Container(),
-                    ],
-                  );
-              }
-            },
-          )),
+                              ),
+                            ),
+                            isLoading ? Loader() : Container(),
+                          ],
+                        );
+                    }
+                  },
+                ));
+          }
+        },
+      ),
     );
   }
 

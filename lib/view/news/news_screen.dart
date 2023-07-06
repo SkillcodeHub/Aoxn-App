@@ -1,8 +1,6 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:axonweb/View_Model/NewsDetails_View_model/newsdetails_view_model.dart';
 import 'package:axonweb/data/response/status.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:intl/intl.dart';
@@ -35,12 +33,12 @@ class _NewsScreenState extends State<NewsScreen> {
   String? newsdate;
   String deviceId = 'Unknown';
   String? _id;
+  late Future<void> fetchDataFuture;
 
   SettingsViewModel settingsViewModel = SettingsViewModel();
-  NewsViewmodel newsViewmodel = NewsViewmodel();
+  // NewsViewmodel newsViewmodel = NewsViewmodel();
   NewsDetailsViewmodel newsDetailsViewmodel = NewsDetailsViewmodel();
   NotificationServices notificationServices = NotificationServices();
-
   @override
   void initState() {
     userPreference.getToken().then((value) {
@@ -57,6 +55,7 @@ class _NewsScreenState extends State<NewsScreen> {
     });
     // _newsRepository.fetchCustomerToken();
     super.initState();
+    fetchDataFuture = fetchData(); // Call the API only once
     notificationServices.requestNotificationPermission();
     notificationServices.forgroundMessage();
     notificationServices.firebaseInit(context);
@@ -101,7 +100,9 @@ class _NewsScreenState extends State<NewsScreen> {
     }
   }
 
-  createNewsListContainer<NewsViewmodel>(BuildContext context, int index) {
+  createNewsListContainer(BuildContext context, int index) {
+    final newsViewmodel = Provider.of<NewsViewmodel>(context, listen: false);
+
     // final notificationObj = listOfColumns[itemIndex];
     String newsId = newsViewmodel.newsList.data!.data![index].newsId.toString();
     String discription = Bidi.stripHtmlIfNeeded(
@@ -302,17 +303,38 @@ class _NewsScreenState extends State<NewsScreen> {
     );
   }
 
+  Future<void> fetchData() async {
+    Timer(Duration(microseconds: 20), () {
+      final newsViewmodel = Provider.of<NewsViewmodel>(context, listen: false);
+
+      if (!newsViewmodel.loading) {
+        newsViewmodel.setLoading(true);
+
+        newsViewmodel.fetchNewsListApi(token);
+      }
+      final settingsViewModel =
+          Provider.of<SettingsViewModel>(context, listen: false);
+
+      if (!settingsViewModel.loading) {
+        settingsViewModel.setLoading(true);
+
+        settingsViewModel.fetchDoctorDetailsListApi(token);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     print('ParthParthParth');
+    final newsViewmodel = Provider.of<NewsViewmodel>(context, listen: false);
 
-    Timer(Duration(microseconds: 20), () {
-      newsViewmodel.fetchNewsListApi(token);
-      settingsViewModel.fetchDoctorDetailsListApi(token);
-    });
+    // Timer(Duration(microseconds: 20), () {
+    //   newsViewmodel.fetchNewsListApi(token);
+    //   settingsViewModel.fetchDoctorDetailsListApi(token);
+    // });
     // newsViewmodel.fetchNewsListApi(token);
     Future refresh() async {
-      newsViewmodel.fetchNewsListApi(token);
+      // newsViewmodel.fetchNewsListApi(token);
     }
 
     return Scaffold(
@@ -330,50 +352,6 @@ class _NewsScreenState extends State<NewsScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 AxonIconForAppBarrWidget(),
-                // IconButton(
-                //     onPressed: () {
-                //       Navigator.push(context,
-                //           MaterialPageRoute(builder: (context) => MyApp()));
-                //     },
-                //     icon: Icon(Icons.abc)),
-
-                // TextButton(
-                //     onPressed: () {
-                //       // send notification from one device to another
-                //       notificationServices.getDeviceToken().then((value) async {
-                //         var data = {
-                //           'to': value.toString(),
-                //           'notification': {
-                //             'title': 'Asif',
-                //             'body': 'Subscribe to my channel',
-                //             // "sound": "jetsons_doorbell.mp3"
-                //           },
-                //           'android': {
-                //             'notification': {
-                //               'notification_count': 23,
-                //             },
-                //           },
-                //           'data': {'type': 'msj', 'id': 'Asif Taj'}
-                //         };
-
-                //         await http.post(
-                //             Uri.parse('https://fcm.googleapis.com/fcm/send'),
-                //             body: jsonEncode(data),
-                //             headers: {
-                //               'Content-Type': 'application/json; charset=UTF-8',
-                //               'Authorization':
-                //                   'AAAAvBMRn3U:APA91bGGlWrUcxB0-rMwitxpG2KS_gysw9II5sBE8WXgFxGcvKuJSas8H9QI0fcg_kl3gEOiKoVWXetAspdweJ06FHZ6hzXlFNOQVymjOH2YaRxEDLS8SMM4bZPuq7P3_ljkgYVnt_Ta'
-                //             }).then((value) {
-                //             print(value.body.toString());
-                //           }
-                //         }).onError((error, stackTrace) {
-                //           if (kDebugMode) {
-                //             print(error);
-                //           }
-                //         });
-                //       });
-                //     },
-                //     child: Text('S')),
                 ScreenNameWidget(
                   title: '  Notice Board',
                 ),
@@ -385,40 +363,60 @@ class _NewsScreenState extends State<NewsScreen> {
           ),
         ),
       ),
-      body: ChangeNotifierProvider<NewsViewmodel>(
-        create: (BuildContext context) => newsViewmodel,
-        child: Consumer<NewsViewmodel>(
-          builder: (context, value, _) {
-            switch (value.newsList.status!) {
-              case Status.LOADING:
-                return Center(child: CircularProgressIndicator());
-              case Status.ERROR:
-                return Center(child: Text(value.newsList.message.toString()));
-              case Status.COMPLETED:
-                return RefreshIndicator(
-                  onRefresh: refresh,
-                  child: SingleChildScrollView(
-                    // Wrap with SingleChildScrollView
-                    physics:
-                        AlwaysScrollableScrollPhysics(), // Enable scrolling
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 6, left: 4, right: 6),
-                      child: ListView.builder(
-                        padding: EdgeInsets.only(bottom: 10),
-                        physics:
-                            NeverScrollableScrollPhysics(), // Disable scrolling
-                        shrinkWrap: true,
-                        itemCount: value.newsList.data!.data!.length,
-                        itemBuilder: (BuildContext context, int itemIndex) {
-                          return createNewsListContainer(context, itemIndex);
-                        },
-                      ),
-                    ),
-                  ),
-                );
-            }
-          },
-        ),
+      body: FutureBuilder<void>(
+        future: fetchDataFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (snapshot.hasError) {
+            return Center(
+              child: Text('Error occurred: ${snapshot.error}'),
+            );
+          } else {
+            // Render the UI with the fetched data
+            return ChangeNotifierProvider<NewsViewmodel>.value(
+              value: newsViewmodel,
+              child: Consumer<NewsViewmodel>(
+                builder: (context, value, _) {
+                  switch (value.newsList.status!) {
+                    case Status.LOADING:
+                      return Center(child: CircularProgressIndicator());
+                    case Status.ERROR:
+                      return Center(
+                          child: Text(value.newsList.message.toString()));
+                    case Status.COMPLETED:
+                      return RefreshIndicator(
+                        onRefresh: refresh,
+                        child: SingleChildScrollView(
+                          // Wrap with SingleChildScrollView
+                          physics:
+                              AlwaysScrollableScrollPhysics(), // Enable scrolling
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                top: 6, left: 4, right: 6),
+                            child: ListView.builder(
+                              padding: EdgeInsets.only(bottom: 10),
+                              physics:
+                                  NeverScrollableScrollPhysics(), // Disable scrolling
+                              shrinkWrap: true,
+                              itemCount: value.newsList.data!.data!.length,
+                              itemBuilder:
+                                  (BuildContext context, int itemIndex) {
+                                return createNewsListContainer(
+                                    context, itemIndex);
+                              },
+                            ),
+                          ),
+                        ),
+                      );
+                  }
+                },
+              ),
+            );
+          }
+        },
       ),
     );
   }

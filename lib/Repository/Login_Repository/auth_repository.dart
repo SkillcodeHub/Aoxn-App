@@ -16,10 +16,10 @@ class AuthRepository {
     }
   }
 
-  Future<dynamic> otpverifyapi(dynamic data) async {
+  Future<dynamic> otpverifyapi(dynamic otpVerifyData) async {
     try {
-      dynamic response =
-          await _apiServices.getPostApiResponse(AppUrl.otpverifyUrl, data);
+      dynamic response = await _apiServices.getPostApiResponse(
+          AppUrl.otpverifyUrl, otpVerifyData);
       print(response);
       return response;
     } catch (e) {

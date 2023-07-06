@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'Provider/current_time_provider.dart';
+import 'View_Model/App_User_View_Model/register_appuser_view_model.dart';
+import 'View_Model/App_User_View_Model/validate_appuser_view_model.dart';
 import 'View_Model/Book_View_Model/bookAppointment_view_model.dart';
 import 'View_Model/Book_View_Model/cancelAppointment_view_model.dart';
 import 'View_Model/Event_View_Model/event_view_model.dart';
@@ -38,7 +40,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AuthViewModel()),
         ChangeNotifierProvider(create: (_) => TimeProvider()),
         // ChangeNotifierProvider(create: (_) => GetProviderTokenViewModel()),
-        ChangeNotifierProvider(create: (_) => NewsViewmodel()),
+        // ChangeNotifierProvider(create: (_) => NewsViewmodel()),
+        ChangeNotifierProvider<NewsViewmodel>.value(value: NewsViewmodel()),
         ChangeNotifierProvider<DoctorListViewmodel>.value(
             value: DoctorListViewmodel()),
         ChangeNotifierProvider<SettingsViewModel>.value(
@@ -53,6 +56,10 @@ class MyApp extends StatelessWidget {
             value: EventListViewmodel()),
         ChangeNotifierProvider<CancelAppointmentViewModel>.value(
             value: CancelAppointmentViewModel()),
+        ChangeNotifierProvider<RegisterAppUserViewModel>.value(
+            value: RegisterAppUserViewModel()),
+        ChangeNotifierProvider<ValidateAppUserViewmodel>.value(
+            value: ValidateAppUserViewmodel()),
       ],
       child: Sizer(builder: (context, orientation, DeviceType) {
         return MaterialApp(

@@ -27,11 +27,14 @@ class AppUrl {
   //Get Rx Visit History
   static var getrxvisithistoryUrl =
       baseUrl + "BookAppointment/GetRxVisitHistory";
+
   //Get Appointments Timeslot
   static var getAppointmentstimeslot =
       baseUrl + "BookAppointment/GetAppointmentsInIntervals";
+
   //Get Appointments Timeslot
   static var getpatientbyid = baseUrl + "BookAppointment/GetPatientByCaseno";
+
   //Get Appointments Timeslot
   static var getpatientbymobile =
       baseUrl + "BookAppointment/GetPatientByMobileNo";
@@ -48,4 +51,13 @@ class AppUrl {
 
   //Get CustomerPayhead
   static var getcustomerpayhead = baseUrl + "payment/getcustomerpayhead";
+
+  // Initiate Payment Url
+  static var initiatepaymenturl = baseUrl + "payment/initiate-payment";
+
+  //  register app user Url
+  static var registerappuserurl = baseUrl + "Registration/RegisterAppUser";
+
+  //  validate app user Url
+  static var validateappuserurl = baseUrl + "Registration/ValidateAppUser";
 }

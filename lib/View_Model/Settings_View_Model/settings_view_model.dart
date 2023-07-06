@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 import '../../Repository/Settings_Repository/settings_repository.dart';
 import '../Services/SharePreference/SharePreference.dart';
-import 'package:collection/collection.dart';
 
 UserPreferences userPreference = UserPreferences();
 
@@ -16,6 +15,23 @@ class SettingsViewModel with ChangeNotifier {
     print('doctorDetailsList');
     print(doctorDetailsList);
     print("doctorDetailsList");
+    notifyListeners();
+  }
+
+  late String _doctorData;
+
+  String get doctorData => _doctorData;
+
+  set doctorData(String newValue) {
+    _doctorData = newValue;
+    notifyListeners();
+  }
+
+  bool _loading = false;
+  bool get loading => _loading;
+
+  setLoading(bool value) {
+    _loading = value;
     notifyListeners();
   }
 

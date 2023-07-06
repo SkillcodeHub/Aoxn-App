@@ -12,9 +12,9 @@ class SettingsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        // Navigator.pushNamed(context, RoutesName.settings);
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => BookApointmentScreen()));
+        Navigator.pushNamed(context, RoutesName.settings);
+        // Navigator.push(context,
+        //     MaterialPageRoute(builder: (context) => BookApointmentScreen()));
       },
       child: Container(
         margin: EdgeInsets.fromLTRB(8, 8, 0, 8),

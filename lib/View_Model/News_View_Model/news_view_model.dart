@@ -12,6 +12,14 @@ class NewsViewmodel with ChangeNotifier {
     notifyListeners();
   }
 
+  bool _loading = false;
+  bool get loading => _loading;
+
+  setLoading(bool value) {
+    _loading = value;
+    notifyListeners();
+  }
+
   Future<void> fetchNewsListApi(String token) async {
     setNewsList(ApiResponse.loading());
     _myRepo.fetchNewsList(token).then((value) {

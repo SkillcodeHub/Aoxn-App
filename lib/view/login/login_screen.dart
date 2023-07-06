@@ -1,232 +1,16 @@
-// import 'dart:async';
-// import 'package:flutter/material.dart';
-// import 'package:provider/provider.dart';
-// import 'package:sizer/sizer.dart';
-// import 'package:sms_autofill/sms_autofill.dart';
-
-// import '../../View_Model/Login_View_Model/auth_view_model.dart';
-// import '../../utils/utils.dart';
-
-// class LoginScreen extends StatefulWidget {
-//   const LoginScreen({super.key});
-
-//   @override
-//   State<LoginScreen> createState() => _LoginScreenState();
-// }
-
-// class _LoginScreenState extends State<LoginScreen> {
-//   bool viewVisible = false;
-//   String codeValue = "";
-
-//   TextEditingController _mobileController = TextEditingController();
-//   FocusNode mobileFocusNode = FocusNode();
-
-//   void showWidget() {
-//     setState(() {
-//       viewVisible = true;
-//     });
-//   }
-
-//   void hideWidget() {
-//     setState(() {
-//       viewVisible = false;
-//     });
-//   }
-
-//   void showWidget1() {
-//     setState(() {
-//       if (_mobileController.text.isEmpty) {
-//         Utils.snackBar('Please enter MobileNo*', context);
-//       } else if (_mobileController.text.length < 10) {
-//         Utils.snackBar('Please enter 10 Digit MobileNo*', context);
-//       } else {
-//         showWidget;
-//       }
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final authViewModel = Provider.of<AuthViewModel>(context);
-//     return Scaffold(
-//       body: SafeArea(
-//         child: SingleChildScrollView(
-//           child: Padding(
-//             padding: const EdgeInsets.all(8.0),
-//             child: Column(
-//               children: <Widget>[
-//                 SizedBox(
-//                   height: 10.h,
-//                 ),
-//                 Container(
-//                   height: 200,
-//                   child: Image.asset(
-//                     'images/axon.png',
-//                   ),
-//                 ),
-//                 SizedBox(
-//                   height: 10,
-//                 ),
-//                 Card(
-//                   child: Padding(
-//                     padding: const EdgeInsets.all(8.0),
-//                     child: Column(
-//                       children: [
-//                         TextFormField(
-//                           controller: _mobileController,
-//                           keyboardType: TextInputType.number,
-//                           focusNode: mobileFocusNode,
-//                           decoration: InputDecoration(
-//                             hintText: 'Mobile Number(10 digit)',
-//                             labelText: 'Mobile',
-//                             // prefixIcon: Icon(Icons.alternate_email),
-//                           ),
-//                           // onFieldSubmitted: (value) {
-//                           //   Utils.fieldFocusChange(
-//                           //       context, emailFocusNode, passwordFocusNode);
-//                           // },
-//                         ),
-//                         Row(
-//                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                           children: [
-//                             SizedBox(
-//                                 //   width: 60.w,
-//                                 ),
-//                             TextButton(
-//                               child: Text(
-//                                 'Request OTP',
-//                                 style: TextStyle(
-//                                   fontSize: 16,
-//                                   fontWeight: FontWeight.w600,
-//                                 ),
-//                               ),
-//                               onPressed: () {
-//                                 if (_mobileController.text.isEmpty) {
-//                                   Utils.snackBar(
-//                                       'Please enter MobileNo*', context);
-//                                 } else if (_mobileController.text.length < 10) {
-//                                   Utils.snackBar(
-//                                       'Please enter 10 Digit MobileNo*',
-//                                       context);
-//                                 } else if (_mobileController.text.length > 10) {
-//                                   Utils.snackBar(
-//                                       'Please enter 10 Digit MobileNo*',
-//                                       context);
-//                                 } else {
-//                                   // Navigator.push(
-//                                   //     context,
-//                                   //     MaterialPageRoute(
-//                                   //         builder: (context) =>
-//                                   //             OtpVerifyScreen()));
-//                                   Map data = {
-//                                     'Mobile': _mobileController.text.toString()
-//                                   };
-//                                   // authViewModel.loginApi(data, context);
-//                                   // Timer(Duration(seconds: 5), () {
-//                                   //   _mobileController.clear();
-//                                   // });
-
-//                                   // showWidget1;
-//                                 }
-//                               },
-//                               // showWidget,
-//                               style: TextButton.styleFrom(
-//                                   elevation: 0, primary: Color(0xFFFD5722)),
-//                             ),
-//                           ],
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                 ),
-//                 SizedBox(
-//                   height: 10.h,
-//                 ),
-//                 Visibility(
-//                   maintainSize: true,
-//                   maintainAnimation: true,
-//                   maintainState: true,
-//                   visible: viewVisible,
-//                   child: Card(
-//                     color: Colors.amber,
-//                     child: Padding(
-//                       padding: const EdgeInsets.all(8.0),
-//                       child: Column(
-//                         children: [
-//                           Center(
-//                             child: PinFieldAutoFill(
-//                               currentCode: codeValue,
-//                               codeLength: 4,
-//                               onCodeChanged: (code) {
-//                                 print("onCodeChanged $code");
-//                                 setState(() {
-//                                   codeValue = code.toString();
-//                                 });
-//                               },
-//                               onCodeSubmitted: (val) {
-//                                 print("onCodeSubmitted $val");
-//                               },
-//                             ),
-//                           ),
-//                           const SizedBox(
-//                             height: 20,
-//                           ),
-//                           Row(
-//                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                             children: [
-//                               TextButton(
-//                                 onPressed: () {
-//                                   // listenOtp
-//                                 },
-//                                 child: const Text(
-//                                   "Resend",
-//                                   style: TextStyle(
-//                                     fontSize: 16,
-//                                     fontWeight: FontWeight.w600,
-//                                   ),
-//                                 ),
-//                               ),
-//                               TextButton(
-//                                   onPressed: () {
-//                                     print("codeValue");
-//                                     print(codeValue);
-//                                     print("codeValue");
-//                                     // _verifyOTP();
-//                                   },
-//                                   child: const Text(
-//                                     "Verify OTP",
-//                                     style: TextStyle(
-//                                       fontSize: 16,
-//                                       fontWeight: FontWeight.w600,
-//                                     ),
-//                                   )),
-//                             ],
-//                           ),
-//                         ],
-//                       ),
-//                     ),
-//                   ),
-//                 ),
-//               ],
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-
 import 'dart:async';
 import 'dart:io';
 import 'package:axonweb/Res/colors.dart';
 import 'package:axonweb/View_Model/Settings_View_Model/settings_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:platform_device_id/platform_device_id.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 import 'package:mobile_number/mobile_number.dart';
 import '../../View_Model/Login_View_Model/auth_view_model.dart';
+import '../../View_Model/News_View_Model/notification_services.dart';
 import '../../utils/utils.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -238,6 +22,8 @@ class LoginScreenState extends State {
   bool viewVisible = false;
   bool saveButton = false;
   String codeValue = "";
+  late String fcmToken;
+  String? _id;
 
   TextEditingController _mobileController = TextEditingController();
   TextEditingController _nameController = TextEditingController();
@@ -247,10 +33,13 @@ class LoginScreenState extends State {
   FocusNode birthFocusNode = FocusNode();
   String genderValue = "Male";
   List _simCardNumbers = [];
-  // TextEditingController _phoneNumberController = TextEditingController();
-  // NotificationServices notificationServices = NotificationServices();
+  NotificationServices notificationServices = NotificationServices();
+
   @override
   void initState() {
+    setState(() {
+      _getInfo();
+    });
     super.initState();
     MobileNumber.listenPhonePermission((isPermissionGranted) {
       if (isPermissionGranted) {
@@ -259,6 +48,11 @@ class LoginScreenState extends State {
     });
 
     initMobileNumberState();
+    notificationServices.getDeviceToken().then((value) {
+      fcmToken = value;
+      print('device token');
+      print(fcmToken);
+    });
     // notificationServices.requestNotificationPermission();
   }
 
@@ -282,6 +76,19 @@ class LoginScreenState extends State {
     if (!mounted) return;
 
     setState(() {});
+  }
+
+  void _getInfo() async {
+    // Get device id
+    String? result = await PlatformDeviceId.getDeviceId;
+
+    // Update the UI
+    setState(() {
+      _id = result;
+      userPreference.setDeviceId(_id.toString());
+      print('----------------------------------------');
+      print(_id);
+    });
   }
 
   Widget buildCard(String simCardNumber) {
@@ -643,7 +450,18 @@ class LoginScreenState extends State {
                                       Map data = {
                                         "Mobile":
                                             _mobileController.text.toString(),
-                                        'OTP': codeValue.toString()
+                                        'OTP': codeValue.toString(),
+                                        "platform": "Mobile",
+                                        "deviceId": _id.toString(),
+                                        "fullName":
+                                            _nameController.text.toString(),
+                                        "mobile":
+                                            _mobileController.text.toString(),
+                                        "fcmToken": fcmToken,
+                                        "gender": genderValue,
+                                        "userType": 1,
+                                        "birthDate":
+                                            _birthController.text.toString(),
                                       };
                                       authViewModel.otpVerifyApi(data, context);
                                     }
