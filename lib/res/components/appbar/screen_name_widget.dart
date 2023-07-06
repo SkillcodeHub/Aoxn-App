@@ -20,7 +20,8 @@ class ScreenNameWidget extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 48.w,
+            // color: Colors.amber,
+            width: 59.w,
             child: Text(
               title,
               style: TextStyle(

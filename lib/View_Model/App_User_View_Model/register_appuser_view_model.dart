@@ -44,7 +44,15 @@ class RegisterAppUserViewModel with ChangeNotifier {
         print(value);
         String platform = 'Mobile';
         String deviceId = result.toString();
+        // String deviceId = "134DF283-87B1-498A-B07C-7BE43F9E9D21";
+
         String loginAuthToken = value['displayMessage'];
+        print('platform');
+        print(platform);
+        print(deviceId);
+        print(loginAuthToken);
+        print('platform');
+
         validateAppUserViewmodel.fetchValidateAppUserApi(
             platform, deviceId, loginAuthToken);
         if (kDebugMode) {

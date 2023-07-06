@@ -8,12 +8,12 @@ class NewsRepository {
   CustomerTokenModel customerTokenViewmodel = CustomerTokenModel();
   BaseApiServices _apiServices = NetworkApiService();
 
-  Future<NewsListModel> fetchNewsList(String token) async {
+  Future<NewsListModel> fetchNewsList(String token, String letId) async {
     try {
       dynamic response = await _apiServices.getGetApiResponse(AppUrl.newsUrl +
           '?CustomerToken=' +
           token.toString() +
-          '&lat=3af64010-f4cd-11ed-b2ab-021afc3343fe');
+          '&lat='+ letId.toString());
       return response = NewsListModel.fromJson(response);
     } catch (e) {
       throw e;

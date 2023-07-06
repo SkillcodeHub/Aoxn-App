@@ -1,7 +1,7 @@
 import '../../Model/ValidateAppUser_Model/validateappuser_model.dart';
-import '../../Res/app_url.dart';
 import '../../data/network/BaseApiServices.dart';
 import '../../data/network/NetworkApiService.dart';
+import '../../res/app_url.dart';
 
 class ValidateAppUserRepository {
   BaseApiServices _apiServices = NetworkApiService();
@@ -16,7 +16,7 @@ class ValidateAppUserRepository {
           AppUrl.validateappuserurl +
               '?platform=' +
               platform.toString() +
-              '&device=' +
+              '&deviceId=' +
               deviceId.toString() +
               '&loginAuthToken=' +
               loginAuthToken.toString());

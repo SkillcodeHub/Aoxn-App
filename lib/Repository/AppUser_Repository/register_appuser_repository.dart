@@ -1,6 +1,6 @@
 import '../../Data/Network/BaseApiServices.dart';
 import '../../Data/Network/NetworkApiService.dart';
-import '../../Res/app_url.dart';
+import '../../res/app_url.dart';
 
 class RegisterAppUserRepository {
   BaseApiServices _apiServices = NetworkApiService();

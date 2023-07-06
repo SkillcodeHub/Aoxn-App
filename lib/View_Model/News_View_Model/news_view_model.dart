@@ -20,9 +20,9 @@ class NewsViewmodel with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> fetchNewsListApi(String token) async {
+  Future<void> fetchNewsListApi(String token, String letId) async {
     setNewsList(ApiResponse.loading());
-    _myRepo.fetchNewsList(token).then((value) {
+    _myRepo.fetchNewsList(token,letId).then((value) {
       setNewsList(ApiResponse.completed(value));
     }).onError((error, stackTrace) {
       setNewsList(ApiResponse.error(error.toString()));

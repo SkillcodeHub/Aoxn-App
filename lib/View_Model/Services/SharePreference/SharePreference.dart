@@ -53,6 +53,16 @@ class UserPreferences {
     prefs.setString("access_age", args);
   }
 
+  Future<String?> getletId() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString("access_letId");
+  }
+
+  void setletId(String args) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("access_letId", args);
+  }
+
   void logoutProcess() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     // prefs.remove("isLoggedIn");
@@ -60,6 +70,8 @@ class UserPreferences {
     prefs.remove("access_mobile");
     prefs.remove("access_token");
     prefs.remove("data");
+       
+
     // prefs.remove("access_doctor");
   }
 

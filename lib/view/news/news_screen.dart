@@ -12,13 +12,14 @@ import '../../Res/colors.dart';
 import '../../Utils/routes/routes_name.dart';
 import '../../View_Model/News_View_Model/news_view_model.dart';
 import '../../View_Model/News_View_Model/notification_services.dart';
+import '../../View_Model/Services/SharePreference/SharePreference.dart';
 import '../../View_Model/Settings_View_Model/settings_view_model.dart';
 import '../../res/components/appbar/axonimage_appbar-widget.dart';
 import '../../res/components/appbar/screen_name_widget.dart';
 import '../../res/components/appbar/settings_widget.dart';
 import '../../res/components/appbar/whatsapp_widget.dart';
-import '../../view_model/services/SharePreference/SharePreference.dart';
 import 'package:http/http.dart' as http;
+
 
 class NewsScreen extends StatefulWidget {
   const NewsScreen({super.key});
@@ -29,6 +30,8 @@ class NewsScreen extends StatefulWidget {
 
 class _NewsScreenState extends State<NewsScreen> {
   late String token;
+    late String letId;
+
   UserPreferences userPreference = UserPreferences();
   String? newsdate;
   String deviceId = 'Unknown';
@@ -45,6 +48,15 @@ class _NewsScreenState extends State<NewsScreen> {
       setState(() {
         token = value!;
         print(token);
+      });
+    });
+    userPreference.getletId().then((value) {
+      setState(() {
+        letId = value!;
+        print('letId');
+                print(letId);
+        print('letId');
+
       });
     });
     setState(() {
@@ -310,7 +322,7 @@ class _NewsScreenState extends State<NewsScreen> {
       if (!newsViewmodel.loading) {
         newsViewmodel.setLoading(true);
 
-        newsViewmodel.fetchNewsListApi(token);
+        newsViewmodel.fetchNewsListApi(token,letId);
       }
       final settingsViewModel =
           Provider.of<SettingsViewModel>(context, listen: false);
@@ -356,7 +368,7 @@ class _NewsScreenState extends State<NewsScreen> {
                   title: '  Notice Board',
                 ),
                 WhatsappWidget(),
-                PaymentWidget(),
+                // PaymentWidget(),
                 SettingsWidget(),
               ],
             ),
