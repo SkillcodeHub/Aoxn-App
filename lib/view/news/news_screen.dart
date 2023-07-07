@@ -322,7 +322,7 @@ class _NewsScreenState extends State<NewsScreen> {
       if (!newsViewmodel.loading) {
         newsViewmodel.setLoading(true);
 
-        newsViewmodel.fetchNewsListApi(token,letId);
+        newsViewmodel.fetchNewsListApi(token);
       }
       final settingsViewModel =
           Provider.of<SettingsViewModel>(context, listen: false);

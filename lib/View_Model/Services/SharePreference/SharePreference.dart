@@ -63,16 +63,14 @@ class UserPreferences {
     prefs.setString("access_letId", args);
   }
 
-  void logoutProcess() async {
+  Future<String?> getKeyForCallLetIdApi() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    // prefs.remove("isLoggedIn");
-    // prefs.remove("loginInfo");
-    prefs.remove("access_mobile");
-    prefs.remove("access_token");
-    prefs.remove("data");
-       
+    return prefs.getString("access_keyforcallletidapi");
+  }
 
-    // prefs.remove("access_doctor");
+  void setKeyForCallLetIdApi(String args) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("access_keyforcallletidapi", args);
   }
 
   // Save the list to SharedPreferences
@@ -114,4 +112,38 @@ class UserPreferences {
 
     return []; // Return null if no data is found in SharedPreferences
   }
+
+
+void saveUserData(Map<String, dynamic> userData) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.setString('userData', jsonEncode(userData));
+}
+
+Future<Map<String, dynamic>?> getUserData() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String? userDataString = prefs.getString('userData');
+  if (userDataString != null) {
+    Map<String, dynamic> userData = jsonDecode(userDataString);
+    return userData;
+  } else {
+    return null;
+  }
+}
+
+
+
+void logoutProcess() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    // prefs.remove("isLoggedIn");
+    // prefs.remove("loginInfo");
+    prefs.remove("access_mobile");
+    prefs.remove("access_token");
+    prefs.remove("data");
+    prefs.remove("access_keyforcallletidapi");
+
+       
+
+    // prefs.remove("access_doctor");
+  }
+
 }
