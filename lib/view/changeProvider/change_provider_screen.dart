@@ -253,12 +253,15 @@
 // }
 
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import '../../Res/colors.dart';
+import '../../View_Model/App_User_View_Model/register_appuser_view_model.dart';
 import '../../View_Model/ChangeProvider_View_Model/provider_view_model.dart';
-import '../../demo2.dart';
-import '../../view_model/services/SharePreference/SharePreference.dart';
+import '../../View_Model/Services/SharePreference/SharePreference.dart';
 import '../NevigationBar/my_navigationbar.dart';
 import '../QR_Code/qr_code_screen.dart';
 
@@ -278,6 +281,7 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
   CustomerTokenByQRViewmodel customerTokenByQRViewmodel =
       CustomerTokenByQRViewmodel();
   String? token;
+  String getKeyForCallLetId = 'false';
   String? customerName;
   String? appCode;
   String showAlertDialog = ' ';
@@ -290,6 +294,12 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
         print(token);
       });
     });
+    // userPreference.getKeyForCallLetIdApi().then((value) {
+    //   setState(() {
+    //     getKeyForCallLetId = value!;
+    //     print(getKeyForCallLetId);
+    //   });
+    // });
     super.initState();
     // fetchData();
     setState(() {
@@ -299,6 +309,8 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
       } else {}
     });
     fetchData1();
+    retrieveUserData();
+    
   }
 
   Future<List<String>> fetchData() async {
@@ -372,9 +384,52 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
         await userPreference.getDataFromSharedPreferences();
     return storedData;
   }
+  late Map<String, dynamic> userData = {};
+
+Future<void> retrieveUserData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? userDataString = prefs.getString('userData');
+    if (userDataString != null) {
+      setState(() {
+        userData = jsonDecode(userDataString);
+      });
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
+print('userData');
+print(userData);
+print('userData');
+
+
+// Map registerUserData = {
+//   "platform": "Mobile",
+//                                         "deviceId": '134DF283-87B1-498A-B07C-7BE43F9E9D21',
+//                                         "fullName":
+//                                            'parth',
+//                                         "mobile":
+//                                             '9316019087',
+//                                         "fcmToken": 'dwIUvw3_JEmMsTFaFhsG6B:APA91bHeqG_PLSnfojV9vyVF2eyZ9oWeeeqwCnTYkRSeUDDDv63hn3oL6VszRi2D0kMEsNCkAgoNnj0LAUW3QUV-ripWc3ZBlpf_MqzgbJAX3scbvz1jwjeOdQzbzq8EGiQD124texQ8',
+//                                         "gender": 'Male',
+//                                         "userType": '1',
+//                                         "birthDate":
+//                                             '',};
+// final registerAppUserViewModel =
+      //   Provider.of<RegisterAppUserViewModel>(context, listen: false);
+
+      //    Timer(Duration(microseconds: 20), () {
+      // if (userData != {} && getKeyForCallLetId == 'false' ){
+       
+
+      //   registerAppUserViewModel.registerAppUserApi(userData, context);
+      // userPreference.setKeyForCallLetIdApi('true');
+        
+        
+// }
+    // });
+
     return FutureBuilder<List<Map<String, dynamic>>?>(
       // future: fetchData(),
       future: fetchData1(),

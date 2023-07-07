@@ -31,6 +31,7 @@ class LoginScreenState extends State {
   FocusNode mobileFocusNode = FocusNode();
   FocusNode nameFocusNode = FocusNode();
   FocusNode birthFocusNode = FocusNode();
+  FocusNode otpFocusNode = FocusNode();
   String genderValue = "Male";
   List _simCardNumbers = [];
   NotificationServices notificationServices = NotificationServices();
@@ -399,6 +400,8 @@ class LoginScreenState extends State {
                         children: [
                           Center(
                             child: PinFieldAutoFill(
+                                                        focusNode: otpFocusNode,
+keyboardType: TextInputType.numberWithOptions(signed: true, decimal: true),
                               currentCode: codeValue,
                               codeLength: 4,
                               onCodeChanged: (code) {
@@ -420,6 +423,7 @@ class LoginScreenState extends State {
                             children: [
                               TextButton(
                                 onPressed: () {
+
                                   Map data = {
                                     'Mobile': _mobileController.text.toString()
                                   };
@@ -447,21 +451,24 @@ class LoginScreenState extends State {
                                       Utils.snackBar(
                                           'Please enter OTP*', context);
                                     } else {
+                                    mobileFocusNode.unfocus();
+                                    otpFocusNode.unfocus();
+
                                       Map data = {
                                         "Mobile":
                                             _mobileController.text.toString(),
                                         'OTP': codeValue.toString(),
-                                        "platform": "Mobile",
-                                        "deviceId": _id.toString(),
-                                        "fullName":
-                                            _nameController.text.toString(),
-                                        "mobile":
-                                            _mobileController.text.toString(),
-                                        "fcmToken": fcmToken,
-                                        "gender": genderValue,
-                                        "userType": 1,
-                                        "birthDate":
-                                            _birthController.text.toString(),
+                                        // "platform": "Mobile",
+                                        // "deviceId": _id.toString(),
+                                        // "fullName":
+                                        //     _nameController.text.toString(),
+                                        // "mobile":
+                                        //     _mobileController.text.toString(),
+                                        // "fcmToken": fcmToken,
+                                        // "gender": genderValue,
+                                        // "userType": 1,
+                                        // "birthDate":
+                                        //     _birthController.text.toString(),
                                       };
                                       authViewModel.otpVerifyApi(data, context);
                                     }

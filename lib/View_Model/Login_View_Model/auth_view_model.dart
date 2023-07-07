@@ -9,6 +9,7 @@ import '../App_User_View_Model/register_appuser_view_model.dart';
 import '../Services/SharePreference/SharePreference.dart';
 
 class AuthViewModel with ChangeNotifier {
+  
   final _myRepo = AuthRepository();
 
   bool _loading = false;
@@ -58,23 +59,23 @@ class AuthViewModel with ChangeNotifier {
   }
 
   Future<void> otpVerifyApi(dynamic data, BuildContext context) async {
-    final registerAppUserViewModel =
-        Provider.of<RegisterAppUserViewModel>(context, listen: false);
+    // final registerAppUserViewModel =
+    //     Provider.of<RegisterAppUserViewModel>(context, listen: false);
     UserPreferences userPreference = UserPreferences();
     dynamic otpVerifyData = {
       "Mobile": data['Mobile'].toString(),
       'OTP': data['OTP'].toString(),
     };
-    dynamic registerUserData = {
-      "platform": data['platform'].toString(),
-      'deviceId': data['deviceId'].toString(),
-      'fullName': data['fullName'].toString(),
-      'mobile': data['mobile'].toString(),
-      'fcmToken': data['fcmToken'].toString(),
-      'gender': data['gender'].toString(),
-      'userType': data['userType'].toString(),
-      'birthDate': data['birthDate'].toString(),
-    };
+    // dynamic registerUserData = {
+    //   "platform": data['platform'].toString(),
+    //   'deviceId': data['deviceId'].toString(),
+    //   'fullName': data['fullName'].toString(),
+    //   'mobile': data['mobile'].toString(),
+    //   'fcmToken': data['fcmToken'].toString(),
+    //   'gender': data['gender'].toString(),
+    //   'userType': data['userType'].toString(),
+    //   'birthDate': data['birthDate'].toString(),
+    // };
     print('wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww');
     print(data['platform']);
     print(data['deviceId']);
@@ -94,14 +95,14 @@ class AuthViewModel with ChangeNotifier {
       if (value['status'] == true) {
         Utils.snackBar('Otp is Valid', context);
         userPreference.setMobile(data['Mobile']);
-
+        // userPreference.saveUserData(registerUserData);
+      // registerAppUserViewModel.registerAppUserApi(registerUserData, context);
         Timer(
             Duration(seconds: 2),
             () => Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (context) => ChangeProviderScreen())));
-        registerAppUserViewModel.registerAppUserApi(registerUserData, context);
         if (kDebugMode) {
           print(value.toString());
         }
