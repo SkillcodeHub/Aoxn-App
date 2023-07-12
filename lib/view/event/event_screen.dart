@@ -104,11 +104,11 @@ class _EventScreenState extends State<EventScreen> {
             child: Row(
               children: [
                 Container(
-                    height: 110,
-                    width: MediaQuery.of(context).size.width * 0.25,
+                    height: 16.h,
+                    width: 25.w,
                     color: status == 'Booked' ? Colors.green : Colors.grey,
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(6.0),
                       child: Column(
                         children: [
                           Text(
@@ -119,7 +119,7 @@ class _EventScreenState extends State<EventScreen> {
                               fontSize: 12.sp,
                             ),
                           ),
-                          SizedBox(height: 6),
+                          SizedBox(height: 1.h),
                           Text(
                             outputDate2,
                             style: TextStyle(
@@ -128,7 +128,7 @@ class _EventScreenState extends State<EventScreen> {
                             ),
                           ),
                           SizedBox(
-                            height: 22,
+                            height: 5.h,
                           ),
                           Text(
                             outputDate3,
@@ -141,8 +141,8 @@ class _EventScreenState extends State<EventScreen> {
                       ),
                     )),
                 Container(
-                  height: 110,
-                  width: MediaQuery.of(context).size.width * 0.65,
+                  height: 16.h,
+                  width: 63.w,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
@@ -162,7 +162,7 @@ class _EventScreenState extends State<EventScreen> {
                           overflow: TextOverflow.ellipsis,
                         ),
                         SizedBox(
-                          height: 7,
+                          height: 1.7.h,
                         ),
                         Text(
                           'Patient  ' +
@@ -177,7 +177,7 @@ class _EventScreenState extends State<EventScreen> {
                           overflow: TextOverflow.ellipsis,
                         ),
                         SizedBox(
-                          height: 7,
+                          height: 1.7.h,
                         ),
                         Text(
                           'Mobile  ' +
@@ -190,7 +190,7 @@ class _EventScreenState extends State<EventScreen> {
                           overflow: TextOverflow.ellipsis,
                         ),
                         SizedBox(
-                          height: 5,
+                          height: 1.5.h,
                         ),
                         Container(
                           child: Row(
@@ -220,7 +220,7 @@ class _EventScreenState extends State<EventScreen> {
                                           arguments: data)
                                       : null;
                                 },
-                                child: Icon(Icons.info_outline),
+                                child: Icon(Icons.info_outline,size: 3.h,),
                               ),
                             ],
                           ),
@@ -256,7 +256,7 @@ class _EventScreenState extends State<EventScreen> {
     return Scaffold(
       backgroundColor: BackgroundColor,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(60.0),
+        preferredSize: Size.fromHeight(7.h),
         child: AppBar(
           automaticallyImplyLeading: false,
           centerTitle: false,
@@ -296,19 +296,22 @@ class _EventScreenState extends State<EventScreen> {
                           onRefresh: refresh,
                           child: Stack(
                             children: [
-                              SingleChildScrollView(
-                                physics: AlwaysScrollableScrollPhysics(),
-                                child: ListView.builder(
-                                    padding: EdgeInsets.only(bottom: 10),
-                                    physics: BouncingScrollPhysics(),
-                                    shrinkWrap: true,
-                                    itemCount: eventListViewmodel
-                                        .EventList.data!.data!.length,
-                                    itemBuilder:
-                                        (BuildContext context, int itemIndex) {
-                                      return createAppointmentListContainer(
-                                          context, itemIndex);
-                                    }),
+                              Container(
+                                height: 100.h,
+                                child: SingleChildScrollView(
+                                  physics: AlwaysScrollableScrollPhysics(),
+                                  child: ListView.builder(
+                                      padding: EdgeInsets.only(bottom: 10),
+                                      physics: BouncingScrollPhysics(),
+                                      shrinkWrap: true,
+                                      itemCount: eventListViewmodel
+                                          .EventList.data!.data!.length,
+                                      itemBuilder:
+                                          (BuildContext context, int itemIndex) {
+                                        return createAppointmentListContainer(
+                                            context, itemIndex);
+                                      }),
+                                ),
                               ),
                             ],
                           ),
@@ -327,36 +330,36 @@ class _EventScreenState extends State<EventScreen> {
                                         CrossAxisAlignment.center,
                                     children: [
                                       SizedBox(
-                                        height: 30,
+                                        height: 2.h,
                                       ),
                                       Text(
                                         'Swipe down to refresh page',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
-                                          fontSize: 20,
+                                          fontSize: 14.sp,
                                           color: Color(0XFF545454),
                                           fontWeight: FontWeight.w600,
                                         ),
                                       ),
                                       SizedBox(
-                                        height: 120,
+                                        height: 20.h,
                                       ),
                                       Center(
                                         child: Image.asset(
                                           'images/axon.png',
-                                          height: 90,
-                                          width: 90,
+                                          height: 10.h,
+                                          // width: 90,
                                         ),
                                       ),
                                       SizedBox(
-                                        height: 20,
+                                        height: 4.h,
                                       ),
                                       Center(
                                         child: Text(
                                           'You  don\'t have any bookings or upcoming events',
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
-                                              fontSize: 20,
+                                              fontSize: 14.sp,
                                               color: Color(0XFF545454),
                                               fontWeight: FontWeight.w600),
                                         ),

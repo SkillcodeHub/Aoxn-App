@@ -1,267 +1,19 @@
-// import 'package:flutter/material.dart';
-// import '../../Res/colors.dart';
-// import '../../View_Model/News_View_Model/news_view_model.dart';
-// import '../../view_model/services/SharePreference/SharePreference.dart';
 
-// class ChangeProviderScreen extends StatefulWidget {
-//   const ChangeProviderScreen({super.key});
-
-//   @override
-//   State<ChangeProviderScreen> createState() => _ChangeProviderScreenState();
-// }
-
-// class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
-//   final FocusNode _nodeAppcode = FocusNode();
-//   TextEditingController strAppcode = TextEditingController();
-//   UserPreferences userPreference = UserPreferences();
-//   late String mobile;
-//   CustomerTkenViewmodel customerTkenViewmodel = CustomerTkenViewmodel();
-//   List<String> providerList = [];
-//   @override
-//   void initState() {
-//     setState(() {
-//       main();
-//     });
-//     // _newsRepository.fetchCustomerToken();
-//     super.initState();
-//   }
-
-//   void main() async {
-//     // Retrieve the list
-//     List<String> retrievedList =
-//         await userPreference.getListFromSharedPreferences();
-//     print('Retrieved list from SharedPreferences:');
-//     print(retrievedList);
-//     providerList = retrievedList;
-//     print('providerList');
-//     print(providerList);
-//     print('providerList');
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: BackgroundColor,
-//       appBar: PreferredSize(
-//         preferredSize: Size.fromHeight(70.0),
-//         child: AppBar(
-//           automaticallyImplyLeading: false,
-//           centerTitle: false,
-//           elevation: 0,
-//           backgroundColor: Color(0xffffffff),
-//           leading: Padding(
-//             padding: EdgeInsets.only(top: 20),
-//             child: IconButton(
-//               color: Colors.black,
-//               onPressed: () {
-//                 Navigator.pop(context);
-//               },
-//               icon: Icon(Icons.arrow_back_rounded),
-//             ),
-//           ),
-//           title: Padding(
-//             padding: EdgeInsets.only(
-//               top: 16.0,
-//             ),
-//             child: Row(
-//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//               children: [
-//                 Text(
-//                   "Change Provider",
-//                   style: TextStyle(
-//                     color: Colors.black,
-//                     fontSize: 25,
-//                   ),
-//                 ),
-//               ],
-//             ),
-//           ),
-//         ),
-//       ),
-//       body: Stack(
-//         children: [
-//           SingleChildScrollView(
-//             child: Padding(
-//               padding: const EdgeInsets.all(8.0),
-//               child: Column(
-//                 children: [
-//                   SizedBox(
-//                     height: 5,
-//                   ),
-//                   Card(
-//                     elevation: 3,
-//                     // color: Colors.amber,
-//                     child: Padding(
-//                       padding: const EdgeInsets.all(8.0),
-//                       child: Column(
-//                         children: [
-//                           Container(
-//                             height: 100,
-//                             child: Image(image: AssetImage('images/axon.png')),
-//                           ),
-//                           SizedBox(height: 10),
-//                           Container(
-//                             alignment: Alignment.centerLeft,
-//                             child: Text(
-//                               'Select Hospital by: ',
-//                               style: TextStyle(
-//                                 fontSize: 25,
-//                                 fontWeight: FontWeight.w500,
-//                               ),
-//                             ),
-//                           ),
-//                           SizedBox(height: 10),
-//                           InkWell(
-//                             onTap: () {
-//                               // _qrScanner();
-//                             },
-//                             child: Row(
-//                               children: [
-//                                 SizedBox(width: 10),
-//                                 Container(
-//                                   height: 40,
-//                                   child: Image(
-//                                       image: AssetImage('images/axon.png')),
-//                                 ),
-//                                 SizedBox(width: 10),
-//                                 Container(
-//                                   alignment: Alignment.centerLeft,
-//                                   child: Text(
-//                                     'SCANNING APP CODE',
-//                                     style: TextStyle(fontSize: 20),
-//                                   ),
-//                                 ),
-//                               ],
-//                             ),
-//                           ),
-//                           SizedBox(height: 10),
-//                           Row(
-//                             children: [
-//                               Container(
-//                                 height: 1,
-//                                 width: 132,
-//                                 color: Colors.black,
-//                               ),
-//                               SizedBox(width: 5),
-//                               Text('or'),
-//                               SizedBox(width: 5),
-//                               Container(
-//                                 height: 1,
-//                                 width: 164,
-//                                 color: Colors.black,
-//                               ),
-//                             ],
-//                           ),
-//                           SizedBox(height: 10),
-//                           InkWell(
-//                             onTap: () {
-//                               showDialog(
-//                                   context: context,
-//                                   builder: (context) {
-//                                     return Container(
-//                                       child: AlertDialog(
-//                                         title: Text('Code'),
-//                                         content: TextField(
-//                                           focusNode: _nodeAppcode,
-//                                           controller: strAppcode,
-//                                           cursorColor: Color(0xFFFD5722),
-//                                           onChanged: (value) {},
-//                                           decoration: InputDecoration(
-//                                               hintText: 'Write App Code'),
-//                                         ),
-//                                         actions: [
-//                                           TextButton(
-//                                               onPressed: () {
-//                                                 Navigator.pop(context);
-//                                               },
-//                                               child: Text(
-//                                                 'Cancel',
-//                                                 style: TextStyle(
-//                                                     color: Color(0xFFFD5722)),
-//                                               )),
-//                                           TextButton(
-//                                               onPressed: () {
-//                                                 customerTkenViewmodel
-//                                                     .fetchCustomerTokenApi(
-//                                                         context,
-//                                                         strAppcode.text
-//                                                             .toString());
-//                                               },
-//                                               child: Text(
-//                                                 'OK',
-//                                                 style: TextStyle(
-//                                                     color: Color(0xFFFD5722)),
-//                                               ))
-//                                         ],
-//                                       ),
-//                                     );
-//                                   });
-//                             },
-//                             child: Row(
-//                               children: [
-//                                 SizedBox(width: 10),
-//                                 Container(
-//                                   height: 40,
-//                                   child: Image(
-//                                       image: AssetImage('images/axon.png')),
-//                                 ),
-//                                 SizedBox(width: 10),
-//                                 Container(
-//                                   alignment: Alignment.centerLeft,
-//                                   child: Text(
-//                                     'WRITING CODE MANUALLY',
-//                                     style: TextStyle(fontSize: 20),
-//                                   ),
-//                                 ),
-//                               ],
-//                             ),
-//                           ),
-//                           SizedBox(height: 10),
-//                         ],
-//                       ),
-//                     ),
-//                   ),
-//                   SizedBox(height: 10),
-//                   Text(
-//                     'OR',
-//                     style: TextStyle(fontSize: 20),
-//                   ),
-//                   SizedBox(height: 10),
-//                   Card(
-//                       elevation: 3,
-//                       // shape: ,
-//                       child: providerList.length != 0
-//                           ? ListView.builder(
-//                               itemCount: providerList.length,
-//                               itemBuilder: (BuildContext context, int index) {
-//                                 return ListTile(
-//                                   title: Text('data'
-//                                       // providerList[index].toString()
-//                                       ),
-//                                 );
-//                               },
-//                             )
-//                           : CircularProgressIndicator()),
-//                 ],
-//               ),
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
 
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import '../../Res/colors.dart';
 import '../../View_Model/App_User_View_Model/register_appuser_view_model.dart';
+import '../../View_Model/Book_View_Model/Book_view_Model.dart';
 import '../../View_Model/ChangeProvider_View_Model/provider_view_model.dart';
+import '../../View_Model/News_View_Model/news_view_model.dart';
 import '../../View_Model/Services/SharePreference/SharePreference.dart';
+import '../../View_Model/Settings_View_Model/settings_view_model.dart';
 import '../NevigationBar/my_navigationbar.dart';
 import '../QR_Code/qr_code_screen.dart';
 
@@ -301,6 +53,8 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
     //   });
     // });
     super.initState();
+          checkPermission(Permission.notification, context);
+
     // fetchData();
     setState(() {
       print(showAlertDialog);
@@ -313,6 +67,16 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
     
   }
 
+
+Future<void> checkPermission(Permission permission, BuildContext context) async{
+    final status = await permission.request();
+    // if(status.isGranted){
+    //   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Permission is Granted")));
+    // }else{
+    //   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Permission is not Granted")));
+
+    // }
+  }
   Future<List<String>> fetchData() async {
     List<String> retrievedList =
         await userPreference.getListFromSharedPreferences();
@@ -486,7 +250,7 @@ print('userData');
           return Scaffold(
             backgroundColor: BackgroundColor,
             appBar: PreferredSize(
-              preferredSize: Size.fromHeight(70.0),
+              preferredSize: Size.fromHeight(10.h),
               child: AppBar(
                 automaticallyImplyLeading: false,
                 centerTitle: false,
@@ -513,7 +277,7 @@ print('userData');
                         "Change Provider",
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 25,
+                          fontSize: 17.sp,
                         ),
                       ),
                     ],
@@ -530,7 +294,7 @@ print('userData');
                           child: Column(
                             children: [
                               SizedBox(
-                                height: 5,
+                                height: 1.h,
                               ),
                               Card(
                                 shape: RoundedRectangleBorder(
@@ -600,7 +364,7 @@ print('userData');
                                           SizedBox(width: 2.w),
                                           Container(
                                             height: 1,
-                                            width: 39.w,
+                                            width: 38.w,
                                             color: Colors.black,
                                           ),
                                         ],
@@ -622,7 +386,7 @@ print('userData');
                                                       onChanged: (value) {},
                                                       decoration: InputDecoration(
                                                           hintText:
-                                                              'Write App Code'),
+                                                              'Write App Code',),style: TextStyle(fontSize: 13.sp),
                                                     ),
                                                     actions: [
                                                       TextButton(
@@ -633,21 +397,39 @@ print('userData');
                                                           child: Text(
                                                             'Cancel',
                                                             style: TextStyle(
+                                                              fontSize: 14.sp,
                                                                 color: Color(
                                                                     0xFFFD5722)),
                                                           )),
                                                       TextButton(
                                                           onPressed: () {
+                                                            final newsViewmodel = Provider.of<NewsViewmodel>(context, listen: false);
+
+        newsViewmodel.setLoading(false);
+
+final doctorListViewmodel =
+          Provider.of<DoctorListViewmodel>(context, listen: false);
+
+      
+        doctorListViewmodel.setLoading(false);
+
+      
+      final settingsViewModel =
+          Provider.of<SettingsViewModel>(context, listen: false);
+
+        settingsViewModel.setLoading(false);
                                                             customerTkenViewmodel
                                                                 .fetchCustomerTokenApi(
                                                                     context,
                                                                     strAppcode
                                                                         .text
                                                                         .toString());
+
+
                                                           },
                                                           child: Text(
                                                             'OK',
-                                                            style: TextStyle(
+                                                            style: TextStyle(fontSize: 14.sp,
                                                                 color: Color(
                                                                     0xFFFD5722)),
                                                           ))
@@ -708,6 +490,7 @@ print('userData');
                                                     title: Text(
                                                       'Confirm',
                                                       style: TextStyle(
+                                                        fontSize: 15.sp,
                                                           fontWeight:
                                                               FontWeight.bold),
                                                     ),
@@ -716,13 +499,13 @@ print('userData');
                                                       style: TextStyle(
                                                           fontWeight:
                                                               FontWeight.bold,
-                                                          fontSize: 14),
+                                                          fontSize: 13.sp),
                                                     ),
                                                     actions: <Widget>[
                                                       TextButton(
                                                         child: Text(
                                                           'CANCEL',
-                                                          style: TextStyle(
+                                                          style: TextStyle(fontSize: 14.sp,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .bold),
@@ -737,7 +520,7 @@ print('userData');
                                                       TextButton(
                                                         child: Text(
                                                           'CONFIRM',
-                                                          style: TextStyle(
+                                                          style: TextStyle(fontSize: 14.sp,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .bold),
@@ -754,6 +537,23 @@ print('userData');
                                                                   .toString());
                                                           userPreference
                                                               .setToken(token);
+
+
+final newsViewmodel = Provider.of<NewsViewmodel>(context, listen: false);
+
+        newsViewmodel.setLoading(false);
+
+final doctorListViewmodel =
+          Provider.of<DoctorListViewmodel>(context, listen: false);
+
+      
+        doctorListViewmodel.setLoading(false);
+
+      
+      final settingsViewModel =
+          Provider.of<SettingsViewModel>(context, listen: false);
+
+        settingsViewModel.setLoading(false);
 
                                                           // customerTkenViewmodel
                                                           //     .fetchCustomerTokenApi(
@@ -821,7 +621,7 @@ print('userData');
                                                                 .toString()
                                                         ? Image.asset(
                                                             'images/true.png',
-                                                            height: 13,
+                                                            height: 2.5.h,
                                                           )
                                                         : Container()
                                                   ],
@@ -838,7 +638,7 @@ print('userData');
                                 style: TextStyle(fontSize: 12.sp),
                               ),
                               SizedBox(
-                                height: 5,
+                                height: 1.h,
                               )
                             ],
                           ),
@@ -926,7 +726,7 @@ print('userData');
                                             SizedBox(width: 2.w),
                                             Container(
                                               height: 1,
-                                              width: 40.w,
+                                              width: 38.w,
                                               color: Colors.black,
                                             ),
                                           ],
@@ -948,7 +748,7 @@ print('userData');
                                                         onChanged: (value) {},
                                                         decoration: InputDecoration(
                                                             hintText:
-                                                                'Write App Code'),
+                                                                'Write App Code'),style:TextStyle(fontSize: 13.sp) ,
                                                       ),
                                                       actions: [
                                                         TextButton(
@@ -959,11 +759,27 @@ print('userData');
                                                             child: Text(
                                                               'Cancel',
                                                               style: TextStyle(
+                                                                fontSize: 14.sp,
                                                                   color: Color(
                                                                       0xFFFD5722)),
                                                             )),
                                                         TextButton(
                                                             onPressed: () {
+                                                              final newsViewmodel = Provider.of<NewsViewmodel>(context, listen: false);
+
+        newsViewmodel.setLoading(false);
+
+final doctorListViewmodel =
+          Provider.of<DoctorListViewmodel>(context, listen: false);
+
+      
+        doctorListViewmodel.setLoading(false);
+
+      
+      final settingsViewModel =
+          Provider.of<SettingsViewModel>(context, listen: false);
+
+        settingsViewModel.setLoading(false);
                                                               customerTkenViewmodel
                                                                   .fetchCustomerTokenApi(
                                                                       context,
@@ -973,7 +789,7 @@ print('userData');
                                                             },
                                                             child: Text(
                                                               'OK',
-                                                              style: TextStyle(
+                                                              style: TextStyle(fontSize: 14.sp,
                                                                   color: Color(
                                                                       0xFFFD5722)),
                                                             ))
@@ -1015,7 +831,7 @@ print('userData');
                               //   style: TextStyle(fontSize: 12.sp),
                               // ),
                               SizedBox(
-                                height: 5,
+                                height: 1.h,
                               )
                             ],
                           ),

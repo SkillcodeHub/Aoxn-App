@@ -145,7 +145,7 @@ class _NewsScreenState extends State<NewsScreen> {
     return Column(
       children: [
         SizedBox(
-          height: 3,
+          height: 1.h,
         ),
         InkWell(
           onTap: () {
@@ -166,26 +166,29 @@ class _NewsScreenState extends State<NewsScreen> {
               children: [
                 Container(
                     height: 18.h,
-                    width: MediaQuery.of(context).size.width * 0.15,
+                    // width: MediaQuery.of(context).size.width * 0.15,
+                    width: 15.w,
                     color: Color(0xFFFD5722),
                     child: Center(
                       child: Image.asset(
                         'images/Iicon.png',
                         // width: 2,
-                        height: 25,
+                        height: 3.h,
                       ),
                     )),
                 Container(
                   height: 18.h,
-                  width: MediaQuery.of(context).size.width * 0.79,
+                  // width: MediaQuery.of(context).size.width * 0.79,
+                  width: 78.w,
                   child: Padding(
-                    padding: const EdgeInsets.fromLTRB(8, 5, 0, 8),
+                    padding: const EdgeInsets.fromLTRB(0, 5, 0, 8),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          width: 90.w,
+                          padding: EdgeInsets.only(left: 5),
+                          width: 85.w,
                           child: Text(
                             newsViewmodel.newsList.data!.data![index].title
                                 .toString(),
@@ -199,8 +202,7 @@ class _NewsScreenState extends State<NewsScreen> {
                           height: 1.h,
                         ),
                         Container(
-                          // color: Colors.amber,
-                          height: 55,
+                          height: 7.h,
                           width: 85.w,
                           child: Html(
                             data: _getFirstTwoLines(newsViewmodel
@@ -211,7 +213,7 @@ class _NewsScreenState extends State<NewsScreen> {
                                 ),
                             style: {
                               'h3': Style(
-                                fontWeight: FontWeight
+                               fontWeight: FontWeight
                                     .normal, // Remove bold style from h3 tag
                                 fontStyle: FontStyle
                                     .normal, // Remove italic style from h3 tag
@@ -266,13 +268,15 @@ class _NewsScreenState extends State<NewsScreen> {
                           ),
                         ),
                         SizedBox(
-                          height: 13,
+                          // height: 1.h,
                         ),
                         Container(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Container(
+                                                          padding: EdgeInsets.only(left: 5),
+
                                 width: 65.w,
                                 child: Text(
                                   newsdate!,
@@ -346,13 +350,13 @@ class _NewsScreenState extends State<NewsScreen> {
     // });
     // newsViewmodel.fetchNewsListApi(token);
     Future refresh() async {
-      // newsViewmodel.fetchNewsListApi(token);
+      newsViewmodel.fetchNewsListApi(token);
     }
 
     return Scaffold(
       backgroundColor: BackgroundColor,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(60.0),
+        preferredSize: Size.fromHeight(7.h),
         child: AppBar(
           automaticallyImplyLeading: false,
           centerTitle: false,
@@ -401,24 +405,27 @@ class _NewsScreenState extends State<NewsScreen> {
                     case Status.COMPLETED:
                       return RefreshIndicator(
                         onRefresh: refresh,
-                        child: SingleChildScrollView(
-                          // Wrap with SingleChildScrollView
-                          physics:
-                              AlwaysScrollableScrollPhysics(), // Enable scrolling
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                top: 6, left: 4, right: 6),
-                            child: ListView.builder(
-                              padding: EdgeInsets.only(bottom: 10),
-                              physics:
-                                  NeverScrollableScrollPhysics(), // Disable scrolling
-                              shrinkWrap: true,
-                              itemCount: value.newsList.data!.data!.length,
-                              itemBuilder:
-                                  (BuildContext context, int itemIndex) {
-                                return createNewsListContainer(
-                                    context, itemIndex);
-                              },
+                        child: Container(
+                          height: 100.h,
+                          child: SingleChildScrollView(
+                            // Wrap with SingleChildScrollView
+                            physics:
+                                AlwaysScrollableScrollPhysics(), // Enable scrolling
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 6, left: 4, right: 6),
+                              child: ListView.builder(
+                                padding: EdgeInsets.only(bottom: 10),
+                                physics:
+                                    NeverScrollableScrollPhysics(), // Disable scrolling
+                                shrinkWrap: true,
+                                itemCount: value.newsList.data!.data!.length,
+                                itemBuilder:
+                                    (BuildContext context, int itemIndex) {
+                                  return createNewsListContainer(
+                                      context, itemIndex);
+                                },
+                              ),
                             ),
                           ),
                         ),

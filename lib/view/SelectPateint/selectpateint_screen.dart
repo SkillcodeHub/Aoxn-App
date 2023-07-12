@@ -137,7 +137,7 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                             .patientMobile
                             .toString()),
                         SizedBox(
-                          height: 10,
+                          height: 2.h,
                         ),
                         Text(registeredpatientBirth!),
                       ],
@@ -215,19 +215,39 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
             ),
           ),
           bottom: TabBar(
-              indicatorColor: Color(0xFFFD5722),
-              labelColor: Colors.black,
-              tabs: [
-                Tab(
-                  text: 'REGISTERED',
-                ),
-                Tab(
-                  text: 'UNREGISTERED',
-                ),
-                Tab(
-                  text: 'PATIENT ID',
-                ),
-              ]),
+  indicatorColor: Color(0xFFFD5722),
+  labelColor: Colors.black,
+  tabs: [
+    Tab(
+      child: Text(
+        'REGISTERED',
+        style: TextStyle(fontSize: 10.sp,fontWeight: FontWeight.w600),maxLines:
+                                                                              1,
+                                                                          overflow:
+                                                                              TextOverflow.ellipsis, // Set the desired font size
+      ),
+    ),
+    Tab(
+      child: Text(
+        'UNREGISTERED',
+        style: TextStyle(fontSize: 10.sp,fontWeight: FontWeight.w600),maxLines:
+                                                                              1,
+                                                                          overflow:
+                                                                              TextOverflow.ellipsis, // Set the desired font size
+      ),
+    ),
+    Tab(
+      child: Text(
+        'PATIENT ID',
+        style: TextStyle(fontSize: 10.sp,fontWeight: FontWeight.w600  ),maxLines:
+                                                                              1,
+                                                                          overflow:
+                                                                              TextOverflow.ellipsis,// Set the desired font size
+      ),
+    ),
+  ],
+),
+
         ),
         body: TabBarView(
           children: [
@@ -334,13 +354,13 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                             'Add new Patient',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 15.sp,
                               color: Color(0XFF545454),
                               fontWeight: FontWeight.w600,
                             ),
                           ),
                         ),
-                        SizedBox(height: 10),
+                        SizedBox(height: 2.h),
                         Form(
                             key: formKey,
                             onChanged: () => setState(() =>
@@ -348,6 +368,7 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                             child: Column(
                               children: [
                                 TextFormField(
+                                  
                                   focusNode: _nodeName,
                                   controller: strName,
                                   keyboardType: TextInputType.text,
@@ -359,10 +380,15 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                                   textInputAction: TextInputAction.next,
                                   decoration: InputDecoration(
                                     hintText: 'Full Name',
+                            ),
+                                    style: TextStyle(
+                              fontSize: 12.sp,
+                              color: Color(0XFF545454),
+                              fontWeight: FontWeight.w500,
                                   ),
                                 ),
                                 SizedBox(
-                                  height: 15,
+                                  height: 3.h,
                                 ),
                                 TextFormField(
                                   focusNode: _nodeBirth,
@@ -377,8 +403,13 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                                   decoration: InputDecoration(
                                     hintText: 'Birthday(optional)',
                                   ),
+                                  style: TextStyle(
+                              fontSize: 12.sp,
+                              color: Color(0XFF545454),
+                              fontWeight: FontWeight.w500,
+                                  ),
                                 ),
-                                SizedBox(height: 20),
+                                SizedBox(height: 4.h),
                                 Row(
                                   children: [
                                     Container(
@@ -397,8 +428,8 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                                           Container(
                                             child: Text(
                                               "Male",
-                                              style: const TextStyle(
-                                                fontSize: 20.0,
+                                              style:  TextStyle(
+                                                fontSize: 15.sp,
                                               ),
                                             ),
                                           ),
@@ -406,7 +437,7 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                                       ),
                                     ),
                                     SizedBox(
-                                      width: 30,
+                                      width: 7.w,
                                     ),
                                     Container(
                                       child: Row(
@@ -424,8 +455,8 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                                           Container(
                                             child: Text(
                                               "Female",
-                                              style: const TextStyle(
-                                                fontSize: 20.0,
+                                              style:  TextStyle(
+                                                fontSize: 15.sp,
                                               ),
                                             ),
                                           ),
@@ -435,14 +466,14 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                                   ],
                                 ),
                                 SizedBox(
-                                  height: 20,
+                                  height: 4.h,
                                 ),
                                 Center(
                                   child: Container(
                                     padding:
                                         const EdgeInsets.fromLTRB(8, 0, 8, 0),
-                                    height: 36,
-                                    width: 180,
+                                    height: 5.h,
+                                    width: 55.w,
                                     child: ElevatedButton(
                                       onPressed: _enableBtn
                                           ? () => Navigator.pop(context, [
@@ -456,7 +487,7 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                                       child: Text(
                                         'SAVE',
                                         style: TextStyle(
-                                            fontSize: 16,
+                                            fontSize: 13.sp,
                                             fontWeight: FontWeight.w600,
                                             color: Colors.white),
                                       ),
@@ -522,9 +553,14 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                                     Icons.search,
                                     color: Colors.black,
                                   )),
-                            )),
+                            ),
+                            style: TextStyle(
+                              fontSize: 12.sp,
+                              color: Color(0XFF545454),
+                              fontWeight: FontWeight.w500,
+                                  ),),
                         SizedBox(
-                          height: 10,
+                          height: 2.h,
                         ),
                         Container(
                           child: patientById.isNotEmpty
@@ -665,16 +701,19 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                                                                   CrossAxisAlignment
                                                                       .center,
                                                               children: [
-                                                                Text('#' +
+                                                                Text('# ' +
                                                                     selectPatientByIdViewmodel
                                                                         .SelectPatientById
                                                                         .data!
                                                                         .data![
                                                                             0]
                                                                         .caseNo
-                                                                        .toString()),
+                                                                        .toString(),style: TextStyle(
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w500,
+                                  ),),
                                                                 SizedBox(
-                                                                  height: 5,
+                                                                  height: 1.h,
                                                                 ),
                                                                 Container(
                                                                   height: 5.h,
@@ -700,12 +739,15 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                                                                         .data![
                                                                             0]
                                                                         .patientName
-                                                                        .toString(),
+                                                                        .toString(),style: TextStyle(
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w500,
+                                  ),
                                                                     maxLines: 1,
                                                                   ),
                                                                 ),
                                                                 SizedBox(
-                                                                  height: 10,
+                                                                  height: 2.h,
                                                                 ),
                                                                 Text(selectPatientByIdViewmodel
                                                                     .SelectPatientById
@@ -716,12 +758,18 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                                                                     .replaceRange(
                                                                         0,
                                                                         10,
-                                                                        'xxxxxxxxxx')),
+                                                                        'xxxxxxxxxx'),style: TextStyle(
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w500,
+                                  ),),
                                                                 SizedBox(
-                                                                  height: 10,
+                                                                  height: 2.h,
                                                                 ),
                                                                 Text(patientBirth
-                                                                    .toString()),
+                                                                    .toString(),style: TextStyle(
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w500,
+                                  ),),
                                                               ],
                                                             ),
                                                           ),
@@ -746,7 +794,7 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                                                             'images/loading.png'),
                                                       ),
                                                       SizedBox(
-                                                        height: 10,
+                                                        height: 2.h,
                                                       ),
                                                       Container(
                                                         width: 80.w,
@@ -780,7 +828,7 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                                             Image.asset('images/loading.png'),
                                       ),
                                       SizedBox(
-                                        height: 10,
+                                        height: 2.h,
                                       ),
                                       Container(
                                         width: 80.w,

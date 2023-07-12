@@ -10,12 +10,7 @@ import '../../Utils/utils.dart';
 class BookAppointmentViewModel with ChangeNotifier {
   final _myRepo = BookAppointmentRepository();
 
-  bool _loading = false;
-  bool get loading => _loading;
-  setLoading(bool value) {
-    _loading = value;
-    notifyListeners();
-  }
+  
 
   bool _signUpLoading = false;
   bool get signUpLoading => _signUpLoading;
@@ -25,17 +20,19 @@ class BookAppointmentViewModel with ChangeNotifier {
     notifyListeners();
   }
 
+
+
   Future<void> bookApointmentApi(dynamic data, BuildContext context) async {
+    setSignUpLoading(true);
     print('datadatadatadatadatadatadatadatadatadata');
     print(data);
     print('datadatadatadatadatadatadatadatadatadatadatadata');
-    setSignUpLoading(true);
     _myRepo.bookappointmentapi(data).then((value) {
-      setSignUpLoading(false);
       // Utils.flushBarErrorMessage(
       //     'Otp is Valid'.toString(), Duration(seconds: 5), context);
 
       if (value['status'] == true) {
+      setSignUpLoading(false);
         Utils.snackBar('Appointment Book Successfully', context);
         print(value);
         Timer(
@@ -47,12 +44,16 @@ class BookAppointmentViewModel with ChangeNotifier {
           print(value.toString());
         }
       } else {
+              setSignUpLoading(false);
+
         Utils.snackBar(value['displayMessage'], context);
         if (kDebugMode) {
           print(value.toString());
         }
       }
     }).onError((error, stackTrace) {
+                    setSignUpLoading(false);
+
       if (kDebugMode) {
         Utils.flushBarErrorMessage(
             error.toString(), Duration(seconds: 3), context);

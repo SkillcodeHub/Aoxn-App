@@ -113,7 +113,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
   Widget build(BuildContext context) {
     print('ParthParthParth');
     final bookAppointmentViewModel =
-        Provider.of<BookAppointmentViewModel>(context, listen: false);
+        Provider.of<BookAppointmentViewModel>(context);
     final doctorListViewmodel =
         Provider.of<DoctorListViewmodel>(context, listen: false);
     final settingsViewModel =
@@ -122,7 +122,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
     return Scaffold(
       backgroundColor: BackgroundColor,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(60.0),
+        preferredSize: Size.fromHeight(7.h),
         child: AppBar(
           automaticallyImplyLeading: false,
           centerTitle: false,
@@ -293,7 +293,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                           style:
                                                                               TextStyle(
                                                                             fontSize:
-                                                                                13,
+                                                                                10.sp,
                                                                             color:
                                                                                 Colors.white,
                                                                             fontWeight:
@@ -314,7 +314,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                           style:
                                                                               TextStyle(
                                                                             fontSize:
-                                                                                13,
+                                                                                10.sp,
                                                                             color:
                                                                                 Colors.white,
                                                                             fontStyle:
@@ -362,7 +362,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                             }),
                                           ),
                                           SizedBox(
-                                            height: 10,
+                                            height: 2.h,
                                           ),
                                           Card(
                                             shape: RoundedRectangleBorder(
@@ -381,9 +381,9 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                   width: 78.w,
                                                   padding: EdgeInsets.all(8),
                                                   child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
+                                                    // mainAxisAlignment:
+                                                    //     MainAxisAlignment
+                                                    //         .spaceBetween,
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment
                                                             .start,
@@ -391,13 +391,13 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                       Text(
                                                         '     Provider',
                                                         style: TextStyle(
-                                                            fontSize: 15,
+                                                            fontSize: 12.sp,
                                                             fontWeight:
                                                                 FontWeight.w400,
                                                             color: Colors
                                                                 .grey.shade700),
                                                       ),
-                                                      SizedBox(height: 1.h),
+                                                      SizedBox(height: 2.h),
                                                       Container(
                                                         padding:
                                                             EdgeInsets.all(0),
@@ -422,7 +422,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                     .toString(),
                                                                 style: TextStyle(
                                                                     fontSize:
-                                                                        20,
+                                                                        15.sp,
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .w500,
@@ -483,7 +483,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                           ),
                                                         ),
                                                       ),
-                                                      SizedBox(height: 20),
+                                                      // SizedBox(height: 2.h),
                                                     ],
                                                   ),
                                                 ),
@@ -503,7 +503,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                   child: Icon(
                                                     Icons.refresh_outlined,
                                                     color: Colors.white,
-                                                    size: 30,
+                                                    size: 3.5.h,
                                                   ),
                                                 ),
                                                 // isLoading ? Loader() : Container(),
@@ -543,7 +543,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                               left: 8,
                                                               right: 8,
                                                               bottom: 8,
-                                                              top: 12),
+                                                              top: 8),
                                                       child: displayDate.isEmpty
                                                           ? Column(
                                                               crossAxisAlignment:
@@ -551,7 +551,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                       .start,
                                                               children: [
                                                                 SizedBox(
-                                                                    height: 18),
+                                                                    height: 2.h),
                                                                 Container(
                                                                   padding: EdgeInsets
                                                                       .only(
@@ -570,19 +570,20 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                   ),
                                                                 ),
                                                                 SizedBox(
-                                                                    height: 10),
+                                                                    height: 2.h),
                                                               ],
                                                             )
                                                           : Column(
+                                                            
                                                               crossAxisAlignment:
                                                                   CrossAxisAlignment
                                                                       .start,
                                                               children: [
                                                                 Text(
-                                                                  'Appointment',
+                                                                  '   Appointment',
                                                                   style: TextStyle(
                                                                       fontSize:
-                                                                          15,
+                                                                          12.sp,
                                                                       fontWeight:
                                                                           FontWeight
                                                                               .w400,
@@ -598,14 +599,14 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                           left:
                                                                               10,
                                                                           top:
-                                                                              8),
+                                                                              5),
                                                                   child: Row(
                                                                     children: [
                                                                       Text(
                                                                         'Date   ',
                                                                         style: TextStyle(
                                                                             fontSize:
-                                                                                15,
+                                                                                12.sp,
                                                                             fontWeight:
                                                                                 FontWeight.w400,
                                                                             color: Colors.grey.shade700),
@@ -615,14 +616,14 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                         // displayDate,
                                                                         style: TextStyle(
                                                                             fontSize:
-                                                                                13.sp,
+                                                                                12.sp,
                                                                             fontWeight: FontWeight.w500),
                                                                       ),
                                                                     ],
                                                                   ),
                                                                 ),
-                                                                SizedBox(
-                                                                    height: 4),
+                                                                // SizedBox(
+                                                                //     height: 4),
                                                                 Container(
                                                                   padding: EdgeInsets
                                                                       .only(
@@ -634,7 +635,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                         'Time  ',
                                                                         style: TextStyle(
                                                                             fontSize:
-                                                                                15,
+                                                                                12.sp,
                                                                             fontWeight:
                                                                                 FontWeight.w400,
                                                                             color: Colors.grey.shade700),
@@ -670,7 +671,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                     child: Icon(
                                                       Icons.access_time_rounded,
                                                       color: Colors.white,
-                                                      size: 30,
+                                                      size: 3.5.h,
                                                     ),
                                                   ),
                                                 ],
@@ -716,7 +717,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                             padding:
                                                                 EdgeInsets.only(
                                                               left: 10,
-                                                              top: 29,
+                                                              top: 3.h,
                                                             ),
                                                             child: Text(
                                                               displayPatientName,
@@ -754,7 +755,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                     child: Icon(
                                                       Icons.person_outline,
                                                       color: Colors.white,
-                                                      size: 30,
+                                                      size: 3.5.h,
                                                     ),
                                                   ),
                                                 ],
@@ -781,6 +782,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                             'Please Select Patient',
                                                             context);
                                                       } else {
+
                                                         Map data = {
                                                           "CaseNo": CaseNo,
                                                           "Name":
@@ -806,17 +808,34 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                               displaytimingId
                                                                   .toString(),
                                                         };
-                                                        bookAppointmentViewModel
+
+                                                       bookAppointmentViewModel
                                                             .bookApointmentApi(
                                                                 data, context);
+
                                                         Timer(
                                                             Duration(
                                                                 seconds: 5),
                                                             () {});
+                                                        
+                                                        
                                                       }
                                                     },
-                                                    child: Text(
-                                                      'BOOK APPOINTMENT',
+                                                    child:
+                                                    
+                                                    bookAppointmentViewModel.signUpLoading
+                                                    
+                                                    
+                                                    ? Container(
+                                                      child: Container(
+                                                                                                          
+
+                                                        
+                                                        child: CircularProgressIndicator(color: Colors.white,strokeWidth: 2.0,)))
+                                                    
+                                                    :Text(
+                                                      'BOOK APPOINTMENT',style: TextStyle(
+                            fontWeight: FontWeight.w500, fontSize: 12.sp),
                                                     ),
                                                     style: ElevatedButton
                                                         .styleFrom(
@@ -826,7 +845,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                   ),
                                                 ),
                                                 SizedBox(
-                                                  width: 10,
+                                                  width: 2.w,
                                                 ),
                                                 Container(
                                                   height: 5.h,
@@ -842,7 +861,8 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                         displayGender = '';
                                                       });
                                                     },
-                                                    child: Text('RESET'),
+                                                    child: Text('RESET',style: TextStyle(
+                            fontWeight: FontWeight.w500, fontSize: 12.sp),),
                                                     style: ElevatedButton
                                                         .styleFrom(
                                                             backgroundColor:

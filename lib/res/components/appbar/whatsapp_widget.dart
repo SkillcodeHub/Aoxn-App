@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:axonweb/View_Model/Settings_View_Model/settings_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../Utils/utils.dart';
@@ -108,8 +109,9 @@ class _WhatsappWidgetState extends State<WhatsappWidget> {
         whatsapp();
       },
       child: Container(
-        margin: EdgeInsets.all(8),
-        height: 27,
+        margin: EdgeInsets.all(6),
+        // height: 15.h,
+        width: 7.w,
         child: Image.asset('images/whatsapp.png'),
       ),
     );

@@ -16,27 +16,16 @@ class ScreenNameWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       // width: 48.w,
-      // width: 59.w,
-      child: Row(
-        children: [
-          Container(
-            // color: Colors.amber,
-            width: 59.w,
-            child: Text(
-              title,
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.w500,
-                fontSize: 21,
-              ),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-          // WhatsappWidget(),
-          // PaymentWidget(),
-          // SettingsWidget(),
-        ],
+      width: 59.w,
+      child: Text(
+        title,
+        style: TextStyle(
+          color: Colors.black,
+          fontWeight: FontWeight.w500,
+          fontSize: 17.sp,
+        ),
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
       ),
     );
   }

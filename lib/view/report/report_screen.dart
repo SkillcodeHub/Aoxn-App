@@ -173,7 +173,7 @@ class _ReportScreenState extends State<ReportScreen> {
     return Scaffold(
       backgroundColor: BackgroundColor,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(60.0),
+        preferredSize: Size.fromHeight(7.h),
         child: AppBar(
           automaticallyImplyLeading: false,
           centerTitle: false,
@@ -209,80 +209,83 @@ class _ReportScreenState extends State<ReportScreen> {
                 case Status.COMPLETED:
                   return RefreshIndicator(
                     onRefresh: refresh,
-                    child: SingleChildScrollView(
-                      physics: AlwaysScrollableScrollPhysics(),
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 6),
-                        child: reportViewmodel.reportsList.data!.data!.length !=
-                                0
-                            ? ListView.builder(
-                                padding: EdgeInsets.only(bottom: 0),
-                                physics: BouncingScrollPhysics(),
-                                // shrinkWrap: true,
-                                itemCount: reportViewmodel
-                                    .reportsList.data!.data!.length,
-                                itemBuilder:
-                                    (BuildContext context, int itemIndex) {
-                                  return createNewsListContainer(
-                                      context, itemIndex);
-                                })
-                            : Stack(
-                                children: [
-                                  SingleChildScrollView(
-                                    physics: BouncingScrollPhysics(),
-                                    child: Padding(
-                                      padding: EdgeInsets.all(15),
-                                      child: Container(
-                                        height: 74.h,
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            SizedBox(
-                                              height: 30,
-                                            ),
-                                            Text(
-                                              'Swipe down to refresh page',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                fontSize: 20,
-                                                color: Color(0XFF545454),
-                                                fontWeight: FontWeight.w600,
+                    child: Container(
+                      height: 100.h,
+                      child: SingleChildScrollView(
+                        physics: AlwaysScrollableScrollPhysics(),
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 6),
+                          child: reportViewmodel.reportsList.data!.data!.length !=
+                                  0
+                              ? ListView.builder(
+                                  padding: EdgeInsets.only(bottom: 0),
+                                  physics: BouncingScrollPhysics(),
+                                  // shrinkWrap: true,
+                                  itemCount: reportViewmodel
+                                      .reportsList.data!.data!.length,
+                                  itemBuilder:
+                                      (BuildContext context, int itemIndex) {
+                                    return createNewsListContainer(
+                                        context, itemIndex);
+                                  })
+                              : Stack(
+                                  children: [
+                                    SingleChildScrollView(
+                                      physics: BouncingScrollPhysics(),
+                                      child: Padding(
+                                        padding: EdgeInsets.all(15),
+                                        child: Container(
+                                          height: 74.h,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              SizedBox(
+                                                height: 2.h,
                                               ),
-                                            ),
-                                            SizedBox(
-                                              height: 120,
-                                            ),
-                                            Center(
-                                              child: Image.asset(
-                                                'images/axon.png',
-                                                height: 90,
-                                                width: 90,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: 20,
-                                            ),
-                                            Center(
-                                              child: Text(
-                                                'You  don\'t have any bookings or upcoming events',
+                                              Text(
+                                                'Swipe down to refresh page',
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
-                                                    fontSize: 20,
-                                                    color: Color(0XFF545454),
-                                                    fontWeight:
-                                                        FontWeight.w600),
+                                                  fontSize: 14.sp,
+                                                  color: Color(0XFF545454),
+                                                  fontWeight: FontWeight.w600,
+                                                ),
                                               ),
-                                            ),
-                                          ],
+                                              SizedBox(
+                                                height: 20.h,
+                                              ),
+                                              Center(
+                                                child: Image.asset(
+                                                  'images/axon.png',
+                                                  height: 10.h,
+                                                  // width: 90,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 4.h,
+                                              ),
+                                              Center(
+                                                child: Text(
+                                                  'You  don\'t have any bookings or upcoming events',
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      fontSize: 14.sp,
+                                                      color: Color(0XFF545454),
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
+                                  ],
+                                ),
+                        ),
                       ),
                     ),
                   );

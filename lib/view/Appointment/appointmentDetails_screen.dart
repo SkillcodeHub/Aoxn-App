@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 import '../../Res/Components/Appbar/screen_name_widget.dart';
 import '../../Res/colors.dart';
+import '../../View_Model/Book_View_Model/cancelAppointment_view_model.dart';
+import '../../view_model/services/SharePreference/SharePreference.dart';
 
 class AppointmentDetails extends StatefulWidget {
   final dynamic appointmentData;
@@ -13,6 +17,132 @@ class AppointmentDetails extends StatefulWidget {
 }
 
 class _AppointmentDetailsState extends State<AppointmentDetails> {
+    UserPreferences userPreference = UserPreferences();
+  late String token;
+  String? status;
+  String cancelStatus = "Appointment cancelled";
+
+@override
+  void initState() {
+    
+
+    userPreference.getToken().then((value) {
+      setState(() {
+        token = value!;
+      });
+    });
+    setState(() {
+      
+      status = widget.appointmentData['data']['statusText'] as String?;
+    });
+    super.initState();
+  }
+
+showAlertDialog(BuildContext context) {
+    final cancelAppointmentViewModel =
+        Provider.of<CancelAppointmentViewModel>(context, listen: false);
+    // set up the buttons
+    Widget cancelButton = TextButton(
+      child: Text(
+        "Cancel",
+        style: TextStyle(
+          fontSize: 14.sp,
+          color: Color(0xFFFD5722),
+        ),
+      ),
+      onPressed: () {
+        Navigator.pop(context);
+      }
+    );
+    Widget continueButton = TextButton(
+      child: Text(
+        "Continue",
+        style: TextStyle(
+          fontSize: 14.sp,
+          color: Color(0xFFFD5722),
+        ),
+      ),
+      onPressed: () {
+        Map data = {
+          "customerToken": token.toString(),
+          "appointmentId": widget.appointmentData['data']['appointmentId'].toString(),
+        };
+        cancelAppointmentViewModel.cancelApointmentApi(data, context);
+
+        // showAlert(context);
+        // _cancelAppointmentDetails();
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Confirm",style: TextStyle(
+          fontSize: 15.sp,
+        ),),
+      content: Text("Are you sure want to cancel Appointment?",style: TextStyle(
+          fontSize: 13.sp,
+        ),),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  showAlert(BuildContext context) {
+    // set up the button
+    Widget okButton = TextButton(
+      child: Text(
+        "OK",
+        style: TextStyle(
+          fontSize: 14.sp,
+          color: Color(0xFFFD5722),
+        ),
+      ),
+      onPressed: () {
+        status = 'Canceled';
+        print('cancelStatus');
+        print(status);
+        print('cancelStatus');
+        Navigator.of(context)
+          ..pop()
+          ..pop();
+
+        // status = 'canceled';
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Alert"),
+      content: Text(cancelStatus),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
   String date =
@@ -74,12 +204,12 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                   Text(
                     'Booking Successful',
                     style: TextStyle(
-                      fontSize: 33,
+                      fontSize: 22.sp,
                       fontWeight: FontWeight.bold,
                       color: Color(0xFFFD5722),
                     ),
                   ),
-                  SizedBox(height: 6),
+                  SizedBox(height: 1.h),
                   Card(
                     // margin: EdgeInsets.all(3),
                     child: Padding(
@@ -88,22 +218,22 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(
-                            width: 400,
-                            height: 5,
+                            width: 100.w,
+                            height: 1.h,
                           ),
                           Text(
                             'Your Appointment is booked for:',
                             style: TextStyle(
-                              fontSize: 17,
+                              fontSize: 14.sp,
                             ),
                           ),
                           SizedBox(
-                            height: 10,
+                            height: 2.h,
                           ),
                           Text(
                             'Provider',
                             style: TextStyle(
-                              fontSize: 15,
+                              fontSize: 14.sp,
                               color: Colors.grey,
                             ),
                           ),
@@ -114,15 +244,15 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                             widget.appointmentData['data']['doctorName'],
                             // appointmentData['doctorName'],
                             style: TextStyle(
-                              fontSize: 17,
+                              fontSize: 15.sp,
                             ),
                           ),
                           SizedBox(
-                            height: 10,
+                            height: 2.h,
                           ),
                           Text(
                             'Patient',
-                            style: TextStyle(fontSize: 15, color: Colors.grey),
+                            style: TextStyle(fontSize: 14.sp, color: Colors.grey),
                           ),
                           SizedBox(
                             height: 3,
@@ -131,11 +261,11 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                             // 'aaa',
                             widget.appointmentData['data']['name'],
                             style: TextStyle(
-                              fontSize: 17,
+                              fontSize: 15.sp,
                             ),
                           ),
                           SizedBox(
-                            height: 5,
+                            height: 1.h,
                           )
                         ],
                       ),
@@ -148,8 +278,8 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(
-                            width: 400,
-                            height: 5,
+                            width: 100.w,
+                            height: 1.h,
                           ),
                           Text(
                             // 'aaa',
@@ -158,37 +288,38 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                                 widget.appointmentData['data']['doctorName'],
                             // + historyData['doctorName'],
                             style: TextStyle(
-                              fontSize: 17,
+                              fontSize: 12.sp,
                             ),
                           ),
-                          SizedBox(height: 10),
+                          SizedBox(height: 2.h),
                           Row(
                             children: [
                               Icon(Icons.perm_contact_calendar),
                               Text(
                                 outputDate,
                                 style: TextStyle(
-                                  fontSize: 19,
+                                  fontSize: 15.sp,
                                 ),
                               ),
                             ],
                           ),
-                          SizedBox(height: 8),
+                          SizedBox(height: 1.h),
                           Row(
                             children: [
-                              Icon(Icons.punch_clock),
+                              Icon(Icons.access_time_rounded,),
                               Text(
                                 outputDate3,
                                 style: TextStyle(
-                                  fontSize: 19,
+                                  fontSize: 15.sp,
                                 ),
                               ),
                             ],
                           ),
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.50,
+                                width: 2.w,
                               ),
                               TextButton(
                                   onPressed: () {},
@@ -196,6 +327,8 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                                     "SAVE TO CALENDER",
                                     style: TextStyle(
                                       color: Color(0xFFFD5722),
+                                                                        fontSize: 12.sp,
+
                                     ),
                                   ))
                             ],
@@ -211,17 +344,17 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(
-                            width: 400,
+                            width: 100.w,
                             // height: 10,
                           ),
                           Text(
                             'Your Appointment Status:',
                             style: TextStyle(
-                              fontSize: 17,
+                              fontSize: 14.sp,
                             ),
                           ),
                           SizedBox(
-                            height: 10,
+                            height: 2.h,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -232,8 +365,8 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                                   widget.appointmentData['data']['statusText'],
                                   //'aaaa',
                                   style: TextStyle(
-                                    fontSize: 20,
-                                    color: Color(0xFFFD5722),
+                                    fontSize: 18.sp,
+                                    // color: Color(0xFFFD5722),
                                   ),
                                 ),
                               ),
@@ -242,7 +375,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                               // ),
                               TextButton(
                                 onPressed: () {
-                                  // showAlertDialog(context);
+                                  showAlertDialog(context);
                                 },
                                 child: widget.appointmentData['data']
                                             ['statusText'] ==
@@ -250,7 +383,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                                     ? Text(
                                         'CANCEL',
                                         style: TextStyle(
-                                          fontSize: 15,
+                                          fontSize: 12.sp,
                                           color: Color(0xFFFD5722),
                                         ),
                                       )

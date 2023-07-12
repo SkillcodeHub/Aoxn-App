@@ -535,7 +535,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                               color: Colors.grey.shade600,
                                             ),
                                           ),
-                                          SizedBox(height: 5),
+                                          SizedBox(height: 1.h),
                                           Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
@@ -556,7 +556,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                     ),
                                                     SizedBox(width: 5),
                                                     Container(
-                                                      width: 52.w,
+                                                      width: 45.w,
                                                       child: Text(
                                                         settingsViewModel
                                                             .doctorDetailsList
@@ -578,7 +578,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                 ),
                                               ),
                                               Container(
-                                                height: 30,
+                                                height: 4.h,
                                                 child: ElevatedButton(
                                                   onPressed: () {
                                                     Navigator.pushNamed(
@@ -586,7 +586,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                         RoutesName
                                                             .changeProvider);
                                                   },
-                                                  child: Text('CHANGE'),
+                                                  child: Text('CHANGE',style: TextStyle(fontSize: 12.sp,),),
                                                   style:
                                                       ElevatedButton.styleFrom(
                                                     backgroundColor:
@@ -618,7 +618,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       ),
                                     ),
                                   ),
-                                  SizedBox(height: 5),
+                                  SizedBox(height: 1.h),
                                   Card(
                                     color: Colors.white,
                                     child: Padding(
@@ -634,8 +634,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                               color: Colors.grey.shade600,
                                             ),
                                           ),
-                                          SizedBox(height: 10),
-                                          SizedBox(height: 5),
+                                          SizedBox(height: 2.h),
                                           Row(
                                             children: [
                                               Container(
@@ -658,7 +657,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                       mobile.replaceRange(
                                                           0, 7, 'xxxxxxx'),
                                                       style: TextStyle(
-                                                        fontSize: 17,
+                                                        fontSize: 12.sp,
                                                         fontWeight:
                                                             FontWeight.w500,
                                                       ),
@@ -674,12 +673,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                             children: [
                                               Container(height: 2),
                                               Container(
-                                                height: 30,
+                                                height: 4.h,
                                                 child: ElevatedButton(
                                                   onPressed: () {
                                                     showAlertDialog(context);
                                                   },
-                                                  child: Text('LOGOUT'),
+                                                  child: Text('LOGOUT',style: TextStyle(fontSize: 12.sp,),),
                                                   style:
                                                       ElevatedButton.styleFrom(
                                                     backgroundColor:

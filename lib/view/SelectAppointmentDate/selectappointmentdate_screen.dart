@@ -189,16 +189,16 @@ class _SelectAppointmentDateScreenState
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: 10),
+                      SizedBox(height: 2.h),
                       Text(
                         // datetime1 == defultDate1 ? str : prefix,
                         outputDate3 + ' - ' + outputDate13,
                         // appointmentData[itemIndex]["displayTime"],
                         // listOftimeslot[itemIndex],
                         style: TextStyle(
-                            fontWeight: FontWeight.w500, fontSize: 18),
+                            fontWeight: FontWeight.w500, fontSize: 12.sp),
                       ),
-                      SizedBox(height: 25),
+                      SizedBox(height: 2.h),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -206,11 +206,12 @@ class _SelectAppointmentDateScreenState
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(total.toString() + " - Available"),
-                                SizedBox(height: 5),
+                                Text(total.toString() + " - Available",style: TextStyle(
+                            fontWeight: FontWeight.w500, fontSize: 12.sp),),
+                                SizedBox(height: 1.h),
                                 Container(
                                   height: 3,
-                                  width: 82.w,
+                                  width: 80.w,
                                   color: Colors.green,
                                 ),
                               ],
@@ -222,7 +223,7 @@ class _SelectAppointmentDateScreenState
                               color: currentDateSelectedIndex1 == itemIndex
                                   ? Color(0xFFFD5722)
                                   : Colors.grey.shade300,
-                              size: 20,
+                              size: 3.h,
                             ),
                           )
                         ],
@@ -254,15 +255,15 @@ class _SelectAppointmentDateScreenState
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 10),
+                    SizedBox(height: 2.h),
                     Text(
                       outputDate3 + ' - ' + outputDate13,
                       style: TextStyle(
                           fontWeight: FontWeight.w500,
-                          fontSize: 18,
+                          fontSize: 12.sp,
                           color: Colors.grey.shade700),
                     ),
-                    SizedBox(height: 25),
+                    SizedBox(height: 5.h),
                     // SizedBox(height: 5),
                   ],
                 ),
@@ -315,14 +316,16 @@ class _SelectAppointmentDateScreenState
             SizedBox(height: 15),
             Text(
               'Choose Time',
-              style: TextStyle(color: Colors.black),
+              style: TextStyle(
+                fontSize: 14.sp,
+                color: Colors.black),
             ),
             Consumer<TimeProvider>(builder: (context, value, child) {
               return Text(
                 '${DateFormat("dd-MMM-yyyy").format(DateTime.now())}' +
                     ', ' +
                     "${value.currentTime.toString()} IST ",
-                style: TextStyle(fontSize: 15, color: Colors.black),
+                style: TextStyle(fontSize: 12.sp, color: Colors.black),
               );
             }),
             SizedBox(height: 10),
@@ -334,7 +337,7 @@ class _SelectAppointmentDateScreenState
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-                height: 80,
+                height: 10.h,
                 child: Container(
                     child: ListView.separated(
                   separatorBuilder: (BuildContext context, int index) {
@@ -362,8 +365,8 @@ class _SelectAppointmentDateScreenState
                         print(selectedDate);
                       },
                       child: Container(
-                        height: 80,
-                        width: 80,
+                        height: 10.h,
+                        width: 20.3.w,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                             color: currentDateSelectedIndex == index
@@ -385,13 +388,13 @@ class _SelectAppointmentDateScreenState
                                           1]
                                       .toString(),
                               style: TextStyle(
-                                  fontSize: 13,
+                                  fontSize: 12.sp,
                                   color: currentDateSelectedIndex == index
                                       ? Colors.white
                                       : Colors.grey),
                             ),
                             SizedBox(
-                              height: 10,
+                              height: 2.h,
                             ),
                             Text(
                               DateTime.now()
@@ -399,14 +402,14 @@ class _SelectAppointmentDateScreenState
                                   .day
                                   .toString(),
                               style: TextStyle(
-                                  fontSize: 22,
+                                  fontSize: 17.sp,
                                   fontWeight: FontWeight.w700,
                                   color: currentDateSelectedIndex == index
                                       ? Colors.white
                                       : Colors.grey),
                             ),
                             SizedBox(
-                              height: 5,
+                              height: 1.h,
                             ),
                           ],
                         ),

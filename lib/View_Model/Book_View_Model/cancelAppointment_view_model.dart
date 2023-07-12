@@ -1,10 +1,12 @@
 import 'dart:async';
 
+import 'package:axonweb/view/nevigationBar/my_navigationbar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../Repository/Book_Repository/cancelAppointment_repository.dart';
 import '../../Utils/utils.dart';
+import '../../View/event/event_screen.dart';
 import '../../utils/routes/routes_name.dart';
 
 class CancelAppointmentViewModel with ChangeNotifier {
@@ -35,7 +37,7 @@ class CancelAppointmentViewModel with ChangeNotifier {
       // Utils.flushBarErrorMessage(
       //     'Otp is Valid'.toString(), Duration(seconds: 5), context);
 
-      if (value['status'] == true) {
+      if (value['displayMessage'] == 'Appointment cannot be cancelled') {
         // Utils.snackBar('Appointment Cancel Successfully', context);
         // showAlert(BuildContext context) {
         // set up the button
@@ -49,8 +51,10 @@ class CancelAppointmentViewModel with ChangeNotifier {
           ),
           onPressed: () {
             Navigator.of(context)
+            //   ..pop()
               ..pop()
               ..pop();
+            // Navigator.push(context, MaterialPageRoute(builder: (context)=>EventScreen()));
             // status = 'canceled';
           },
         );
@@ -95,8 +99,9 @@ class CancelAppointmentViewModel with ChangeNotifier {
           onPressed: () {
             Navigator.of(context)
               ..pop()
+              ..pop()
               ..pop();
-            // status = 'canceled';
+            // Navigator.push(context, MaterialPageRoute(builder: (context)=>MyNavigationBar()));
           },
         );
 

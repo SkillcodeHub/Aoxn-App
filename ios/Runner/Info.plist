@@ -33,7 +33,11 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>This app needs camera access to scan QR codes</string>
+	<key>PermissionGroupNotification</key>
+	<string>This app needs Notification access to send Notification</string>
+	
 	<key>UIApplicationSupportsIndirectInputEvents</key>
+
 	<true/>
 	<key>UIBackgroundModes</key>
 	<array>
