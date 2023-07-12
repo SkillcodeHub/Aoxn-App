@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
+import '../../View/event/event_screen.dart';
 import '../../View_Model/Book_View_Model/cancelAppointment_view_model.dart';
 import '../../View_Model/Services/SharePreference/SharePreference.dart';
 
@@ -24,7 +26,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
   String? outputDate3;
   String? patientName;
   String? status;
-  String cancelStatus = "Appointment cancelled";
+  String ?cancelStatus ;
   @override
   void initState() {
     userPreference.getToken().then((value) {
@@ -52,19 +54,19 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
       child: Text(
         "Cancel",
         style: TextStyle(
-          fontSize: 15,
+          fontSize: 14.sp,
           color: Color(0xFFFD5722),
         ),
       ),
       onPressed: () {
         Navigator.pop(context);
-      },
+      }
     );
     Widget continueButton = TextButton(
       child: Text(
         "Continue",
         style: TextStyle(
-          fontSize: 15,
+          fontSize: 14.sp,
           color: Color(0xFFFD5722),
         ),
       ),
@@ -82,8 +84,12 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("Confirm"),
-      content: Text("Are you sure want to cancel Appointment?"),
+      title: Text("Confirm",style: TextStyle(
+          fontSize: 15.sp,
+        ),),
+      content: Text("Are you sure want to cancel Appointment?",style: TextStyle(
+          fontSize: 13.sp,
+        ),),
       actions: [
         cancelButton,
         continueButton,
@@ -99,49 +105,90 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
     );
   }
 
-  showAlert(BuildContext context) {
-    // set up the button
-    Widget okButton = TextButton(
-      child: Text(
-        "OK",
-        style: TextStyle(
-          fontSize: 15,
-          color: Color(0xFFFD5722),
-        ),
-      ),
-      onPressed: () {
-        status = 'Canceled';
-        print('cancelStatus');
-        print(status);
-        print('cancelStatus');
-        Navigator.of(context)
-          ..pop()
-          ..pop();
+  // showAlert(BuildContext context) {
+  //   // set up the button
+  //   Widget okButton = TextButton(
+  //     child: Text(
+  //       "OK",
+  //       style: TextStyle(
+  //         fontSize: 14.sp,
+  //         color: Color(0xFFFD5722),
+  //       ),
+  //     ),
+  //     onPressed: () {
+  //       // status = 'Canceled';
+  //       // print('cancelStatus');
+  //       // print(status);
+  //       // print('cancelStatus');
+  //       // Navigator.of(context)
+  //       //   ..pop()
+  //       //   ..pop()
+  //       //   ;
+  //         setState(() {
+  //           Navigator.push(context, MaterialPageRoute(builder: (context)=>EventScreen()));
 
-        // status = 'canceled';
-      },
-    );
+  //         });
+  //       // status = 'canceled';
+  //     },
+  //   );
 
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text("Alert"),
-      content: Text(cancelStatus),
-      actions: [
-        okButton,
-      ],
-    );
+  //   // set up the AlertDialog
+  //   AlertDialog alert = AlertDialog(
+  //     title: Text("Alert"),
+  //     content: Text(cancelStatus),
+  //     actions: [
+  //       okButton,
+  //     ],
+  //   );
 
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
+  //   // show the dialog
+  //   showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return alert;
+  //     },
+  //   );
+  // }
+
+// showAlert(BuildContext context) {
+//   // set up the button
+//   Widget okButton = TextButton(
+//     child: Text(
+//       "OK",
+//       style: TextStyle(
+//         fontSize: 14.sp,
+//         color: Color(0xFFFD5722),
+//       ),
+//     ),
+//     onPressed: () {
+//       Navigator.push(context, MaterialPageRoute(builder: (context) => EventScreen()));
+//     },
+//   );
+
+//   // set up the AlertDialog
+//   AlertDialog alert = AlertDialog(
+//     title: Text("Alert"),
+//     content: Text(cancelStatus),
+//     actions: [
+//       okButton,
+//     ],
+//   );
+
+//   // show the dialog
+//   showDialog(
+//     context: context,
+//     builder: (BuildContext context) {
+//       return alert;
+//     },
+//   );
+// }
 
   Future refresh() async {
-    setState(() {});
+    setState(() {
+      
+      // status;
+    
+    });
     // Timer(Duration(microseconds: 20), () {});
   }
 
@@ -150,7 +197,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(70.0),
+        preferredSize: Size.fromHeight(10.h),
         child: AppBar(
           automaticallyImplyLeading: false,
           centerTitle: false,
@@ -177,7 +224,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                   "Appointment",
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: 25,
+                    fontSize: 17.sp,
                   ),
                 ),
               ],
@@ -195,7 +242,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                 padding: EdgeInsets.only(top: 20, left: 8, right: 8),
                 child: Column(
                   children: [
-                    SizedBox(height: 6),
+                    SizedBox(height: 1.h),
                     Card(
                       // margin: EdgeInsets.all(3),
                       child: Padding(
@@ -204,22 +251,22 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(
-                              width: 400,
-                              height: 5,
+                              width: 100.w,
+                              height: 1.h,
                             ),
                             Text(
                               'Your Appointment is booked for:',
                               style: TextStyle(
-                                fontSize: 17,
+                                fontSize: 14.sp,
                               ),
                             ),
                             SizedBox(
-                              height: 10,
+                              height: 2.h,
                             ),
                             Text(
                               'Provider',
                               style: TextStyle(
-                                fontSize: 15,
+                                fontSize: 14.sp,
                                 color: Colors.grey,
                               ),
                             ),
@@ -230,16 +277,16 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                               doctorName.toString(),
                               // appointmentData['doctorName'],
                               style: TextStyle(
-                                fontSize: 17,
+                                fontSize: 15.sp,
                               ),
                             ),
                             SizedBox(
-                              height: 10,
+                              height: 2.h,
                             ),
                             Text(
                               'Patient',
                               style:
-                                  TextStyle(fontSize: 15, color: Colors.grey),
+                                  TextStyle(fontSize: 14.sp, color: Colors.grey),
                             ),
                             SizedBox(
                               height: 3,
@@ -248,11 +295,11 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                               patientName.toString(),
                               // appointmentData['name'],
                               style: TextStyle(
-                                fontSize: 17,
+                                fontSize: 15.sp,
                               ),
                             ),
                             SizedBox(
-                              height: 5,
+                              height: 1.h,
                             )
                           ],
                         ),
@@ -265,51 +312,53 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(
-                              width: 400,
-                              height: 5,
+                              width: 100.w,
+                              height: 1.h,
                             ),
                             Text(
                               // 'aaa',
                               'Remember to visit' + ' ' + doctorName.toString(),
                               style: TextStyle(
-                                fontSize: 17,
+                                fontSize: 12.sp,
                               ),
                             ),
-                            SizedBox(height: 10),
+                            SizedBox(height: 2.h),
                             Row(
                               children: [
                                 Icon(Icons.perm_contact_calendar),
                                 Text(
                                   outputDate.toString(),
                                   style: TextStyle(
-                                    fontSize: 19,
+                                    fontSize: 15.sp,
                                   ),
                                 ),
                               ],
                             ),
-                            SizedBox(height: 8),
+                            SizedBox(height: 1.h),
                             Row(
                               children: [
                                 Icon(Icons.access_time_rounded),
                                 Text(
                                   outputDate3.toString(),
                                   style: TextStyle(
-                                    fontSize: 19,
+                                    fontSize: 15.sp,
                                   ),
                                 ),
                               ],
                             ),
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 SizedBox(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.50,
+                                      2.w,
                                 ),
                                 TextButton(
                                     onPressed: () {},
                                     child: Text(
                                       "SAVE TO CALENDER",
                                       style: TextStyle(
+                                        fontSize: 12.sp,
                                         color: Color(0xFFFD5722),
                                       ),
                                     ))
@@ -332,11 +381,11 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                             Text(
                               'Your Appointment Status:',
                               style: TextStyle(
-                                fontSize: 17,
+                                fontSize: 14.sp,
                               ),
                             ),
                             SizedBox(
-                              height: 10,
+                              height: 2.h,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -346,8 +395,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                                   child: Text(
                                     status.toString(),
                                     style: TextStyle(
-                                      fontSize: 20,
-                                      color: Color(0xFFFD5722),
+                                      fontSize: 15.sp,
                                     ),
                                   ),
                                 ),
@@ -362,7 +410,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                                       ? Text(
                                           'CANCEL',
                                           style: TextStyle(
-                                            fontSize: 15,
+                                            fontSize: 12.sp,
                                             color: Color(0xFFFD5722),
                                           ),
                                         )
@@ -375,7 +423,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                       ),
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 4.h,
                     ),
                     // Container(
                     //   height: 40,
@@ -402,3 +450,5 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
     );
   }
 }
+
+

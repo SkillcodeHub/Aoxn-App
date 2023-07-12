@@ -1,6 +1,4 @@
 PODS:
-  - "app_settings (3.0.0+1)":
-    - Flutter
   - device_info (0.0.1):
     - Flutter
   - Firebase/CoreOnly (10.10.0):
@@ -93,7 +91,6 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
-  - app_settings (from `.symlinks/plugins/app_settings/ios`)
   - device_info (from `.symlinks/plugins/device_info/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
@@ -125,8 +122,6 @@ SPEC REPOS:
     - PromisesObjC
 
 EXTERNAL SOURCES:
-  app_settings:
-    :path: ".symlinks/plugins/app_settings/ios"
   device_info:
     :path: ".symlinks/plugins/device_info/ios"
   firebase_core:
@@ -161,7 +156,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/webview_flutter_wkwebview/ios"
 
 SPEC CHECKSUMS:
-  app_settings: d103828c9f5d515c4df9ee754dabd443f7cedcf3
   device_info: d7d233b645a32c40dfdc212de5cf646ca482f175
   Firebase: facd334e557a979bd03a0b58d90fd56b52b8aba0
   firebase_core: 85b6664038311940ad60584eaabc73103c61f5de
@@ -189,6 +183,6 @@ SPEC CHECKSUMS:
   wakelock: d0fc7c864128eac40eba1617cb5264d9c940b46f
   webview_flutter_wkwebview: b7e70ef1ddded7e69c796c7390ee74180182971f
 
-PODFILE CHECKSUM: c1bb1afc22dbdbe45a7fb1ff712f4cef9abe12bc
+PODFILE CHECKSUM: e735f52c163993ba5f924988074374db36c8d1df
 
 COCOAPODS: 1.11.3
