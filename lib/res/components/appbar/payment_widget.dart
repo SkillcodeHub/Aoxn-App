@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../View/PaymentHistory/payment_history_screen.dart';
 
 class PaymentWidget extends StatelessWidget {
   const PaymentWidget({
@@ -9,8 +10,8 @@ class PaymentWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        // Navigator.push(
-        //     context, MaterialPageRoute(builder: (context) => PaymentHistory()));
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => PaymentHistory()));
       },
       child: Container(
         margin: EdgeInsets.all(8),

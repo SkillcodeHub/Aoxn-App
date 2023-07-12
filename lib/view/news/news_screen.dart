@@ -20,7 +20,6 @@ import '../../res/components/appbar/settings_widget.dart';
 import '../../res/components/appbar/whatsapp_widget.dart';
 import 'package:http/http.dart' as http;
 
-
 class NewsScreen extends StatefulWidget {
   const NewsScreen({super.key});
 
@@ -30,7 +29,7 @@ class NewsScreen extends StatefulWidget {
 
 class _NewsScreenState extends State<NewsScreen> {
   late String token;
-    late String letId;
+  late String letId;
 
   UserPreferences userPreference = UserPreferences();
   String? newsdate;
@@ -54,9 +53,8 @@ class _NewsScreenState extends State<NewsScreen> {
       setState(() {
         letId = value!;
         print('letId');
-                print(letId);
+        print(letId);
         print('letId');
-
       });
     });
     setState(() {
@@ -368,7 +366,7 @@ class _NewsScreenState extends State<NewsScreen> {
                   title: '  Notice Board',
                 ),
                 WhatsappWidget(),
-                // PaymentWidget(),
+                PaymentWidget(),
                 SettingsWidget(),
               ],
             ),

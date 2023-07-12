@@ -53,7 +53,7 @@ class AppUrl {
   static var getcustomerpayhead = baseUrl + "payment/getcustomerpayhead";
 
   // Initiate Payment Url
-  static var initiatepaymenturl = baseUrl + "payment/initiate-payment";
+  static var initiatepaymenturl = baseUrl + "payment/razorpay/initiate-payment";
 
   //  register app user Url
   static var registerappuserurl = baseUrl + "Registration/RegisterAppUser";

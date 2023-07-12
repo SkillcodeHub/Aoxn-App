@@ -21,7 +21,7 @@ class ScreenNameWidget extends StatelessWidget {
         children: [
           Container(
             // color: Colors.amber,
-            width: 59.w,
+            width: 48.w,
             child: Text(
               title,
               style: TextStyle(
