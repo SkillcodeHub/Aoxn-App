@@ -353,15 +353,15 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                                   width:
                                       2.w,
                                 ),
-                                TextButton(
-                                    onPressed: () {},
-                                    child: Text(
-                                      "SAVE TO CALENDER",
-                                      style: TextStyle(
-                                        fontSize: 12.sp,
-                                        color: Color(0xFFFD5722),
-                                      ),
-                                    ))
+                                // TextButton(
+                                //     onPressed: () {},
+                                //     child: Text(
+                                //       "SAVE TO CALENDER",
+                                //       style: TextStyle(
+                                //         fontSize: 12.sp,
+                                //         color: Color(0xFFFD5722),
+                                //       ),
+                                //     ))
                               ],
                             )
                           ],

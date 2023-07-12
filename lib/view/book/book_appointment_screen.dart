@@ -622,8 +622,8 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                     ],
                                                                   ),
                                                                 ),
-                                                                // SizedBox(
-                                                                //     height: 4),
+                                                                SizedBox(
+                                                                    height: 1.h),
                                                                 Container(
                                                                   padding: EdgeInsets
                                                                       .only(

@@ -97,46 +97,46 @@ showAlertDialog(BuildContext context) {
     );
   }
 
-  showAlert(BuildContext context) {
-    // set up the button
-    Widget okButton = TextButton(
-      child: Text(
-        "OK",
-        style: TextStyle(
-          fontSize: 14.sp,
-          color: Color(0xFFFD5722),
-        ),
-      ),
-      onPressed: () {
-        status = 'Canceled';
-        print('cancelStatus');
-        print(status);
-        print('cancelStatus');
-        Navigator.of(context)
-          ..pop()
-          ..pop();
+  // showAlert(BuildContext context) {
+  //   // set up the button
+  //   Widget okButton = TextButton(
+  //     child: Text(
+  //       "OK",
+  //       style: TextStyle(
+  //         fontSize: 14.sp,
+  //         color: Color(0xFFFD5722),
+  //       ),
+  //     ),
+  //     onPressed: () {
+  //       status = 'Canceled';
+  //       print('cancelStatus');
+  //       print(status);
+  //       print('cancelStatus');
+  //       Navigator.of(context)
+  //         ..pop()
+  //         ..pop();
 
-        // status = 'canceled';
-      },
-    );
+  //       // status = 'canceled';
+  //     },
+  //   );
 
     // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text("Alert"),
-      content: Text(cancelStatus),
-      actions: [
-        okButton,
-      ],
-    );
+  //   AlertDialog alert = AlertDialog(
+  //     title: Text("Alert"),
+  //     content: Text(cancelStatus),
+  //     actions: [
+  //       okButton,
+  //     ],
+  //   );
 
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
+  //   // show the dialog
+  //   showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return alert;
+  //     },
+  //   );
+  // }
 
 
 
@@ -321,16 +321,19 @@ showAlertDialog(BuildContext context) {
                               SizedBox(
                                 width: 2.w,
                               ),
-                              TextButton(
-                                  onPressed: () {},
-                                  child: Text(
-                                    "SAVE TO CALENDER",
-                                    style: TextStyle(
-                                      color: Color(0xFFFD5722),
-                                                                        fontSize: 12.sp,
+                              // TextButton(
+                              //     onPressed: () {},
+                                  // child: Text(
+                                  //   "SAVE TO CALENDER",
+                                  //   style: TextStyle(
+                                  //     color: Color(0xFFFD5722),
+                                  //                                       fontSize: 12.sp,
 
-                                    ),
-                                  ))
+                                  //   ),
+                                  // )
+
+                                  // )
+
                             ],
                           )
                         ],
@@ -365,7 +368,7 @@ showAlertDialog(BuildContext context) {
                                   widget.appointmentData['data']['statusText'],
                                   //'aaaa',
                                   style: TextStyle(
-                                    fontSize: 18.sp,
+                                    fontSize: 15.sp,
                                     // color: Color(0xFFFD5722),
                                   ),
                                 ),
@@ -373,22 +376,22 @@ showAlertDialog(BuildContext context) {
                               // SizedBox(
                               //   width: MediaQuery.of(context).size.width * 0.60,
                               // ),
-                              TextButton(
-                                onPressed: () {
-                                  showAlertDialog(context);
-                                },
-                                child: widget.appointmentData['data']
-                                            ['statusText'] ==
-                                        'Booked'
-                                    ? Text(
-                                        'CANCEL',
-                                        style: TextStyle(
-                                          fontSize: 12.sp,
-                                          color: Color(0xFFFD5722),
-                                        ),
-                                      )
-                                    : Container(),
-                              ),
+                              // TextButton(
+                              //   onPressed: () {
+                              //     showAlertDialog(context);
+                              //   },
+                              //   child: widget.appointmentData['data']
+                              //               ['statusText'] ==
+                              //           'Booked'
+                              //       ? Text(
+                              //           'CANCEL',
+                              //           style: TextStyle(
+                              //             fontSize: 12.sp,
+                              //             color: Color(0xFFFD5722),
+                              //           ),
+                              //         )
+                              //       : Container(),
+                              // ),
                             ],
                           ),
                         ],
