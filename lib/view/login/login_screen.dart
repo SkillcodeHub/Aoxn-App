@@ -4,6 +4,7 @@ import 'package:axonweb/Res/colors.dart';
 import 'package:axonweb/View_Model/Settings_View_Model/settings_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_udid/flutter_udid.dart';
 import 'package:platform_device_id/platform_device_id.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -35,13 +36,16 @@ class LoginScreenState extends State {
   String genderValue = "Male";
   List _simCardNumbers = [];
   NotificationServices notificationServices = NotificationServices();
+  String _udid = 'Unknown';
 
   @override
   void initState() {
-    setState(() {
-      _getInfo();
-    });
+    // setState(() {
+    //   _getInfo();
+    // });
     super.initState();
+        initPlatformState();
+
     MobileNumber.listenPhonePermission((isPermissionGranted) {
       if (isPermissionGranted) {
         initMobileNumberState();
@@ -79,19 +83,37 @@ class LoginScreenState extends State {
     setState(() {});
   }
 
-  void _getInfo() async {
-    // Get device id
-    String? result = await PlatformDeviceId.getDeviceId;
+  // void _getInfo() async {
+  //   // Get device id
+  //   String? result = await PlatformDeviceId.getDeviceId;
 
-    // Update the UI
+  //   // Update the UI
+  //   setState(() {
+  //     _id = result;
+  //     print('----------------------------------------');
+  //     print(_id);
+  //   });
+  // }
+
+Future<void> initPlatformState() async {
+    String udid;
+    try {
+      udid = await FlutterUdid.udid;
+    } on PlatformException {
+      udid = 'Failed to get UDID.';
+    }
+
+    if (!mounted) return;
+
     setState(() {
-      _id = result;
-      userPreference.setDeviceId(_id.toString());
-      print('----------------------------------------');
-      print(_id);
+      _udid = udid;
+      print('_udid_udid_udid_udid_udid_udid_udid_udid');
+      print(_udid);
+            print('_udid_udid_udid_udid_udid_udid_udid_udid');
+      userPreference.setDeviceId(_udid.toString());
+
     });
   }
-
   Widget buildCard(String simCardNumber) {
     return InkWell(
       onTap: () {

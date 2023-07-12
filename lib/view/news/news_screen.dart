@@ -1,8 +1,12 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:axonweb/View_Model/NewsDetails_View_model/newsdetails_view_model.dart';
 import 'package:axonweb/data/response/status.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_udid/flutter_udid.dart';
 import 'package:intl/intl.dart';
 import 'package:platform_device_id/platform_device_id.dart';
 import 'package:provider/provider.dart';
@@ -36,6 +40,7 @@ class _NewsScreenState extends State<NewsScreen> {
   String deviceId = 'Unknown';
   String? _id;
   late Future<void> fetchDataFuture;
+  String _udid = 'Unknown';
 
   SettingsViewModel settingsViewModel = SettingsViewModel();
   // NewsViewmodel newsViewmodel = NewsViewmodel();
@@ -57,14 +62,25 @@ class _NewsScreenState extends State<NewsScreen> {
         print('letId');
       });
     });
+    userPreference.getDeviceId().then((value) {
+      setState(() {
+        value!;
+        print('value');
+        print(value);
+        print('value');
+      });
+    });
     setState(() {
       main();
     });
-    setState(() {
-      _getInfo();
-    });
+    // setState(() {
+    //   _getInfo();
+    // });
     // _newsRepository.fetchCustomerToken();
     super.initState();
+            initPlatformState();
+  // String deviceId =  _get1Id().toString();
+
     fetchDataFuture = fetchData(); // Call the API only once
     notificationServices.requestNotificationPermission();
     notificationServices.forgroundMessage();
@@ -77,18 +93,60 @@ class _NewsScreenState extends State<NewsScreen> {
     });
   }
 
-  void _getInfo() async {
-    // Get device id
-    String? result = await PlatformDeviceId.getDeviceId;
+  // void _getInfo() async {
+  //   // Get device id
+  //   String? result = await PlatformDeviceId.getDeviceId;
 
-    // Update the UI
+  //   // Update the UI
+  //   setState(() {
+  //     _id = result;
+  //     userPreference.setDeviceId(_id.toString());
+  //     print('----------------------------------------');
+  //     print(_id);
+  //           print('----------------------------------------');
+
+  //     // D0CA3591-B5B6-4CE2-9002-FABD18DB3F84
+
+  //   });
+  // }
+
+Future<void> initPlatformState() async {
+    String udid;
+    try {
+      udid = await FlutterUdid.udid;
+    } on PlatformException {
+      udid = 'Failed to get UDID.';
+    }
+
+    if (!mounted) return;
+
     setState(() {
-      _id = result;
-      userPreference.setDeviceId(_id.toString());
-      print('----------------------------------------');
-      print(_id);
+      _udid = udid;
+      print('_udid_udid_udid_udid_udid_udid_udid_udid');
+      print(_udid);
+      print('_udid_udid_udid_udid_udid_udid_udid_udid');
+      // userPreference.setDeviceId(_udid.toString());
+
+
     });
   }
+
+// Future<String?> _get1Id() async {
+//   var deviceInfo = DeviceInfoPlugin();
+//   if (Platform.isIOS) { // import 'dart:io'
+//     var iosDeviceInfo = await deviceInfo.iosInfo;
+//         print('1111111111111111111111111111111111111111');
+//         print(iosDeviceInfo.identifierForVendor);
+
+//     return iosDeviceInfo.identifierForVendor; // unique ID on iOS
+//   } else if(Platform.isAndroid) {
+//     var androidDeviceInfo = await deviceInfo.androidInfo;
+//     print('0000000000000000000000000000000000000000000');
+//     return androidDeviceInfo.id; // unique ID on Android
+    
+//   }
+//   return null;
+// }
 
   void main() async {
     // Retrieve the list

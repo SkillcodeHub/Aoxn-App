@@ -104,7 +104,7 @@ class _EventScreenState extends State<EventScreen> {
             child: Row(
               children: [
                 Container(
-                    height: 16.h,
+                    height: 18.h,
                     width: 25.w,
                     color: status == 'Booked' ? Colors.green : Colors.grey,
                     child: Padding(
@@ -141,53 +141,59 @@ class _EventScreenState extends State<EventScreen> {
                       ),
                     )),
                 Container(
-                  height: 16.h,
+                  height: 18.h,
                   width: 63.w,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Provider  ' +
-                              eventListViewmodel
-                                  .EventList.data!.data![itemIndex].doctorName
-                                  .toString(),
-                          // 'Why 100% PCR Testing Required?',
-                          style: TextStyle(
-                            fontSize: 11.sp,
-                            fontWeight: FontWeight.w500,
+                        Container(
+                          child: Text(
+                            'Provider  ' +
+                                eventListViewmodel
+                                    .EventList.data!.data![itemIndex].doctorName
+                                    .toString(),
+                            // 'Why 100% PCR Testing Required?',
+                            style: TextStyle(
+                              fontSize: 11.sp,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
                         ),
                         SizedBox(
-                          height: 1.7.h,
+                          height: 1.5.h,
                         ),
-                        Text(
-                          'Patient  ' +
-                              eventListViewmodel
-                                  .EventList.data!.data![itemIndex].name
-                                  .toString(),
-                          style: TextStyle(
-                            fontSize: 11.sp,
-                            fontWeight: FontWeight.w500,
+                        Container(
+                          child: Text(
+                            'Patient  ' +
+                                eventListViewmodel
+                                    .EventList.data!.data![itemIndex].name
+                                    .toString(),
+                            style: TextStyle(
+                              fontSize: 11.sp,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
                         ),
                         SizedBox(
-                          height: 1.7.h,
+                          height: 1.5.h,
                         ),
-                        Text(
-                          'Mobile  ' +
-                              eventListViewmodel
-                                  .EventList.data!.data![itemIndex].mobile
-                                  .toString(),
-                          style: TextStyle(
-                              fontSize: 11.sp, fontWeight: FontWeight.w500),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
+                        Container(
+                          child: Text(
+                            'Mobile  ' +
+                                eventListViewmodel
+                                    .EventList.data!.data![itemIndex].mobile
+                                    .toString(),
+                            style: TextStyle(
+                                fontSize: 11.sp, fontWeight: FontWeight.w500),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                         SizedBox(
                           height: 1.5.h,

@@ -579,20 +579,22 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                   CrossAxisAlignment
                                                                       .start,
                                                               children: [
-                                                                Text(
-                                                                  '   Appointment',
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          12.sp,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w400,
-                                                                      color: Colors
-                                                                          .grey
-                                                                          .shade700),
+                                                                Container(
+                                                                  child: Text(
+                                                                    '   Appointment',
+                                                                    style: TextStyle(
+                                                                        fontSize:
+                                                                            12.sp,
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .w400,
+                                                                        color: Colors
+                                                                            .grey
+                                                                            .shade700),
+                                                                  ),
                                                                 ),
-                                                                SizedBox(
-                                                                    height: 1),
+                                                                // SizedBox(
+                                                                //     height: 1),
                                                                 Container(
                                                                   padding: EdgeInsets
                                                                       .only(
@@ -623,7 +625,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                   ),
                                                                 ),
                                                                 SizedBox(
-                                                                    height: 1.h),
+                                                                    height: 0.3.h),
                                                                 Container(
                                                                   padding: EdgeInsets
                                                                       .only(
