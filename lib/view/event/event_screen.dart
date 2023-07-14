@@ -322,61 +322,64 @@ class _EventScreenState extends State<EventScreen> {
                             ],
                           ),
                         )
-                      : Stack(
-                          children: [
-                            SingleChildScrollView(
-                              physics: BouncingScrollPhysics(),
-                              child: Padding(
-                                padding: EdgeInsets.all(15),
-                                child: Container(
-                                  height: 74.h,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      SizedBox(
-                                        height: 2.h,
-                                      ),
-                                      Text(
-                                        'Swipe down to refresh page',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontSize: 14.sp,
-                                          color: Color(0XFF545454),
-                                          fontWeight: FontWeight.w600,
+                      : RefreshIndicator(
+                        onRefresh: refresh,
+                        child: Stack(
+                            children: [
+                              SingleChildScrollView(
+                                physics: BouncingScrollPhysics(),
+                                child: Padding(
+                                  padding: EdgeInsets.all(15),
+                                  child: Container(
+                                    height: 74.h,
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        SizedBox(
+                                          height: 2.h,
                                         ),
-                                      ),
-                                      SizedBox(
-                                        height: 20.h,
-                                      ),
-                                      Center(
-                                        child: Image.asset(
-                                          'images/axon.png',
-                                          height: 10.h,
-                                          // width: 90,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 4.h,
-                                      ),
-                                      Center(
-                                        child: Text(
-                                          'You  don\'t have any bookings or upcoming events',
+                                        Text(
+                                          'Swipe down to refresh page',
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
-                                              fontSize: 14.sp,
-                                              color: Color(0XFF545454),
-                                              fontWeight: FontWeight.w600),
+                                            fontSize: 14.sp,
+                                            color: Color(0XFF545454),
+                                            fontWeight: FontWeight.w600,
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                        SizedBox(
+                                          height: 20.h,
+                                        ),
+                                        Center(
+                                          child: Image.asset(
+                                            'images/axon.png',
+                                            height: 10.h,
+                                            // width: 90,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 4.h,
+                                        ),
+                                        Center(
+                                          child: Text(
+                                            'You  don\'t have any bookings or upcoming events',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                fontSize: 14.sp,
+                                                color: Color(0XFF545454),
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
-                        );
+                            ],
+                          ),
+                      );
               }
             },
           )),
