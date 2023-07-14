@@ -33,6 +33,27 @@ class UserPreferences {
     prefs.setString("access_deviceId", args);
   }
 
+Future<String?> getFcmToken() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString("access_fcmToken");
+  }
+
+  void setFcmToken(String args) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("access_fcmToken", args);
+  }
+
+
+Future<String?> getBirth() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString("access_birth");
+  }
+
+  void setBirth(String args) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("access_birth", args);
+  }
+
   Future<String?> getName() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString("access_name");
@@ -134,16 +155,59 @@ Future<Map<String, dynamic>?> getUserData() async {
 
 void logoutProcess() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    // prefs.remove("isLoggedIn");
-    // prefs.remove("loginInfo");
     prefs.remove("access_mobile");
+    
+    prefs.remove("access_fcmToken");
+    prefs.remove("access_birth");
     prefs.remove("access_token");
-    prefs.remove("data");
+    // prefs.remove("data");
     prefs.remove("access_keyforcallletidapi");
+    prefs.remove("access_name");
+    prefs.remove("access_age");
+    prefs.remove("access_letId");
+
 
        
 
     // prefs.remove("access_doctor");
   }
+
+
+// Future<void> saveUserDataToSharedPreferences(Map<String, dynamic> userData) async {
+//   SharedPreferences prefs = await SharedPreferences.getInstance();
+//   await prefs.setString('platform', userData['platform']);
+//   await prefs.setString('deviceId', userData['deviceId']);
+//   await prefs.setString('fullName', userData['fullName']);
+//   await prefs.setString('mobile', userData['mobile']);
+//   await prefs.setString('fcmToken', userData['fcmToken']);
+//   await prefs.setString('gender', userData['gender']);
+//   await prefs.setInt('userType', userData['userType']);
+//   await prefs.setString('birthDate', userData['birthDate']);
+// }
+
+// Retrieve data from shared preferences
+// Future<Map<String, dynamic>> getUserDataFromSharedPreferences() async {
+//   SharedPreferences prefs = await SharedPreferences.getInstance();
+//   String platform = prefs.getString('platform') ?? '';
+//   String deviceId = prefs.getString('deviceId') ?? '';
+//   String fullName = prefs.getString('fullName') ?? '';
+//   String mobile = prefs.getString('mobile') ?? '';
+//   String fcmToken = prefs.getString('fcmToken') ?? '';
+//   String gender = prefs.getString('gender') ?? '';
+//   int userType = prefs.getInt('userType') ?? 0;
+//   String birthDate = prefs.getString('birthDate') ?? '';
+
+//   return {
+//     "platform": platform,
+//     "deviceId": deviceId,
+//     "fullName": fullName,
+//     "mobile": mobile,
+//     "fcmToken": fcmToken,
+//     "gender": gender,
+//     "userType": userType,
+//     "birthDate": birthDate,
+//   };
+// }
+
 
 }

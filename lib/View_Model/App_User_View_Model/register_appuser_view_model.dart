@@ -27,7 +27,7 @@ class RegisterAppUserViewModel with ChangeNotifier {
 
   Future<void> registerAppUserApi(dynamic data, BuildContext context) async {
     // Get device id
-    String? result = await PlatformDeviceId.getDeviceId;
+    // String? result = await PlatformDeviceId.getDeviceId;
 
     final validateAppUserViewmodel =
         Provider.of<ValidateAppUserViewmodel>(context, listen: false);
@@ -43,7 +43,7 @@ class RegisterAppUserViewModel with ChangeNotifier {
         // Utils.snackBar(value['messageCode'], context);
         print(value);
         String platform = 'Mobile';
-        String deviceId = result.toString();
+        String deviceId = data['deviceId'];
         // String deviceId = "134DF283-87B1-498A-B07C-7BE43F9E9D21";
 
         String loginAuthToken = value['displayMessage'];

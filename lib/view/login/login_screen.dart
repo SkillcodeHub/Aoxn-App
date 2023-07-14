@@ -6,7 +6,6 @@ import 'package:axonweb/view/nevigationBar/my_navigationbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_udid/flutter_udid.dart';
-import 'package:platform_device_id/platform_device_id.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:sms_autofill/sms_autofill.dart';
@@ -41,9 +40,6 @@ class LoginScreenState extends State {
 
   @override
   void initState() {
-    // setState(() {
-    //   _getInfo();
-    // });
     super.initState();
         initPlatformState();
 
@@ -58,6 +54,7 @@ class LoginScreenState extends State {
       fcmToken = value;
       print('device token');
       print(fcmToken);
+      userPreference.setFcmToken(fcmToken.toString());
     });
     // notificationServices.requestNotificationPermission();
   }
@@ -83,18 +80,6 @@ class LoginScreenState extends State {
 
     setState(() {});
   }
-
-  // void _getInfo() async {
-  //   // Get device id
-  //   String? result = await PlatformDeviceId.getDeviceId;
-
-  //   // Update the UI
-  //   setState(() {
-  //     _id = result;
-  //     print('----------------------------------------');
-  //     print(_id);
-  //   });
-  // }
 
 Future<void> initPlatformState() async {
     String udid;
@@ -288,27 +273,6 @@ Future<void> initPlatformState() async {
                             SizedBox(
                                 //   width: 60.w,
                                 ),
-                            // TextButton(
-                            //   child: Text(
-                            //     'save',
-                            //     style: TextStyle(
-                            //       fontSize: 16,
-                            //       fontWeight: FontWeight.w600,
-                            //     ),
-                            //   ),
-                            //   onPressed: () {
-                            //     setState(() {
-                            //       if (_nameController.text.isEmpty) {
-                            //         Utils.snackBar(
-                            //             'Please enter Name*', context);
-                            //       } else {
-                            //         saveButton = true;
-                            //       }
-                            //     });
-                            //   },
-                            //   style: TextButton.styleFrom(
-                            //       elevation: 0, primary: Color(0xFFFD5722)),
-                            // ),
                           ],
                         ),
                       ],
@@ -388,6 +352,9 @@ Future<void> initPlatformState() async {
                                         _nameController.text.toString());
                                     userPreference
                                         .setAge(genderValue.toString());
+                                        userPreference
+                                        .setBirth(_birthController.text.toString());
+
 
 
 
@@ -475,7 +442,7 @@ keyboardType: TextInputType.numberWithOptions(signed: true, decimal: true),
                                 ),
                               ),
                               TextButton(
-                                  onPressed: () {
+                                  onPressed: () async {
                                     print("codeValue");
                                     print(codeValue);
                                     print("codeValue");
@@ -491,7 +458,7 @@ keyboardType: TextInputType.numberWithOptions(signed: true, decimal: true),
                                             _mobileController.text.toString(),
                                         'OTP': codeValue.toString(),
                                         // "platform": "Mobile",
-                                        // "deviceId": _id.toString(),
+                                        // "deviceId": _udid.toString(),
                                         // "fullName":
                                         //     _nameController.text.toString(),
                                         // "mobile":
@@ -502,13 +469,31 @@ keyboardType: TextInputType.numberWithOptions(signed: true, decimal: true),
                                         // "birthDate":
                                         //     _birthController.text.toString(),
                                       };
+
+    //                                   Map<String, dynamic> registerUserData = {
+    //                                     "platform": "Mobile",
+    //                                     "deviceId": _udid.toString(),
+    //                                     "fullName":
+    //                                         _nameController.text.toString(),
+    //                                     "mobile":
+    //                                         _mobileController.text.toString(),
+    //                                     "fcmToken": fcmToken.toString(),
+    //                                     "gender": genderValue.toString(),
+    //                                     "userType": 1,
+    //                                     "birthDate":
+    //                                         _birthController.text.toString(),
+    // };
                                     if(codeValue.toString() == '1234'){
-        userPreference.setMobile('9999999999');
-      userPreference.setToken('68cb311f-585a-4e86-8e89-06edf1814080');
+                                                   userPreference.setMobile('9999999999');
+                                                  userPreference.setToken('68cb311f-585a-4e86-8e89-06edf1814080');
 
                                       Navigator.push(context, MaterialPageRoute(builder: (context)=>MyNavigationBar()));
-                                    }else{authViewModel.otpVerifyApi(data, context);
-};
+                                    }else{
+
+                                          authViewModel.otpVerifyApi(data, context);
+                                      // userPreference.saveUserData(registerUserData);                                 
+                                      // authViewModel.otpVerifyApi(data, context);
+                                      };
                                     }
                                   },
                                   child: const Text(

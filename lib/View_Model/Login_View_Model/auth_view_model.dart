@@ -87,16 +87,17 @@ class AuthViewModel with ChangeNotifier {
     print(data['birthDate']);
     print('wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww');
     setSignUpLoading(true);
-    _myRepo.otpverifyapi(otpVerifyData).then((value) {
+    _myRepo.otpverifyapi(otpVerifyData).then((value){
       setSignUpLoading(false);
-      // Utils.flushBarErrorMessage(
-      //     'Otp is Valid'.toString(), Duration(seconds: 5), context);
+      
 
       if (value['status'] == true) {
         Utils.snackBar('Otp is Valid', context);
         userPreference.setMobile(data['Mobile']);
-        // userPreference.saveUserData(registerUserData);
-      // registerAppUserViewModel.registerAppUserApi(registerUserData, context);
+        // registerAppUserViewModel.registerAppUserApi(registerUserData, context);
+        //  userPreference.setMobile(data['Mobile']);
+        //  userPreference.saveUserData(registerUserData);
+        // await registerAppUserViewModel.registerAppUserApi(registerUserData, context);
         Timer(
             Duration(seconds: 2),
             () => Navigator.push(

@@ -16,7 +16,7 @@ class ValidateAppUserRepository {
           AppUrl.validateappuserurl +
               '?platform=' +
               platform.toString() +
-              '&device=' +
+              '&deviceId=' +
               deviceId.toString() +
               '&loginAuthToken=' +
               loginAuthToken.toString());

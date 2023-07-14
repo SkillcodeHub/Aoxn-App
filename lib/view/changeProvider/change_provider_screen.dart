@@ -1,5 +1,3 @@
-
-
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
@@ -14,6 +12,7 @@ import '../../View_Model/ChangeProvider_View_Model/provider_view_model.dart';
 import '../../View_Model/News_View_Model/news_view_model.dart';
 import '../../View_Model/Services/SharePreference/SharePreference.dart';
 import '../../View_Model/Settings_View_Model/settings_view_model.dart';
+import '../../res/components/appbar/axonimage_appbar-widget.dart';
 import '../NevigationBar/my_navigationbar.dart';
 import '../QR_Code/qr_code_screen.dart';
 
@@ -32,12 +31,18 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
   CustomerTkenViewmodel customerTkenViewmodel = CustomerTkenViewmodel();
   CustomerTokenByQRViewmodel customerTokenByQRViewmodel =
       CustomerTokenByQRViewmodel();
+  bool? backButton;
   String? token;
+  String? deviceId;
+  String? name;
+  String? fcmToken;
+  String?  birthDate;
+  String? gender;
   String getKeyForCallLetId = 'false';
   String? customerName;
   String? appCode;
   String showAlertDialog = ' ';
-
+// late Map<String, dynamic> storedUserData;
   @override
   void initState() {
     userPreference.getToken().then((value) {
@@ -46,15 +51,54 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
         print(token);
       });
     });
-    // userPreference.getKeyForCallLetIdApi().then((value) {
-    //   setState(() {
-    //     getKeyForCallLetId = value!;
-    //     print(getKeyForCallLetId);
-    //   });
-    // });
+    userPreference.getDeviceId().then((value) {
+      setState(() {
+        deviceId = value!;
+        print(token);
+      });
+    });
+    userPreference.getName().then((value) {
+      setState(() {
+        name = value!;
+        print(token);
+      });
+    });
+    userPreference.getMobile().then((value) {
+      setState(() {
+        mobile = value!;
+        print(token);
+      });
+    });
+    userPreference.getKeyForCallLetIdApi().then((value) {
+      setState(() {
+        getKeyForCallLetId = value!;
+        print(getKeyForCallLetId);
+      });
+    });
+    userPreference.getFcmToken().then((value) {
+      setState(() {
+       fcmToken  = value!;
+        print(fcmToken);
+      });
+    });
+    userPreference.getBirth().then((value) {
+      setState(() {
+       birthDate  = value!;
+        print(birthDate);
+      });
+    });
+userPreference.getBirth().then((value) {
+      setState(() {
+       gender  = value!;
+        print(gender);
+      });
+    });
     super.initState();
           checkPermission(Permission.notification, context);
 
+setState(() {
+  
+});
     // fetchData();
     setState(() {
       print(showAlertDialog);
@@ -83,66 +127,7 @@ Future<void> checkPermission(Permission permission, BuildContext context) async{
     return retrievedList;
   }
 
-  // Future _qrScanner() async {
-  //   var camaraStatus = await Permission.camera.status;
-  //   if (camaraStatus.isGranted) {
-  //     String? qrdata = '';
-
-  //     //  await scanner.scan();
-  //     print('--------------------------------------------------------------');
-  //     // print(qrdata);
-  //     print(
-  //         'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
-  //     Codec<String, String> stringToBase64 = utf8.fuse(base64);
-  //     String decoded = stringToBase64.decode(qrdata!); // username:password
-  //     print(decoded);
-  //     Map<String, dynamic> jsonMap = jsonDecode(decoded.toString());
-
-  //     String customerName = jsonMap['CustomerName'];
-  //     String appCode = jsonMap['AppCode'];
-
-  //     print('CustomerName: $customerName');
-  //     print('AppCode: $appCode');
-  //     print('cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc');
-  //     print(appCode);
-  //     customerTokenByQRViewmodel.fetchCustomerTokenByQR(
-  //         context, appCode.toString());
-  //     print(
-  //         'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
-
-  //     print('-------------------------------------------------------------');
-  //   } else {
-  //     var isGrant = await Permission.camera.request();
-
-  //     if (isGrant.isGranted) {
-  //       String? qrdata = '';
-
-  //       // await scanner.scan();
-  //       print('--------------------------------------------------------------');
-  //       print(qrdata);
-  //       print(
-  //           'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
-  //       Codec<String, String> stringToBase64 = utf8.fuse(base64);
-  //       String decoded = stringToBase64.decode(qrdata!); // username:password
-  //       print(decoded);
-  //       Map<String, dynamic> jsonMap = jsonDecode(decoded.toString());
-
-  //       String customerName = jsonMap['CustomerName'];
-  //       String appCode = jsonMap['AppCode'];
-
-  //       print('CustomerName: $customerName');
-  //       print('AppCode: $appCode');
-  //       print('cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc');
-  //       print(appCode);
-  //       customerTokenByQRViewmodel.fetchCustomerTokenByQR(
-  //           context, appCode.toString());
-  //       print(
-  //           'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
-  //       print('--------------------------------------------------------------');
-  //     }
-  //   }
-  // }
-
+  
   Future<List<Map<String, dynamic>>?> fetchData1() async {
     List<Map<String, dynamic>>? storedData =
         await userPreference.getDataFromSharedPreferences();
@@ -166,6 +151,22 @@ Future<void> retrieveUserData() async {
 print('userData');
 print(userData);
 print('userData');
+// print('storedUserData');
+// print(storedUserData);
+// print('storedUserData');
+Map data1 ={
+
+                                      "platform": 'Mobile',
+                                        "deviceId": deviceId.toString(),
+                                        "fullName":
+                                          name.toString(),
+                                        "mobile":
+                                             mobile.toString(),
+                                        "fcmToken":  fcmToken.toString(),
+                                        "gender":  gender.toString(),
+                                        "userType":  '1',
+                                        "birthDate": birthDate.toString(),
+};
 
 
 // Map registerUserData = {
@@ -180,19 +181,23 @@ print('userData');
 //                                         "userType": '1',
 //                                         "birthDate":
 //                                             '',};
-// final registerAppUserViewModel =
-      //   Provider.of<RegisterAppUserViewModel>(context, listen: false);
+final registerAppUserViewModel =
+        Provider.of<RegisterAppUserViewModel>(context, listen: false);
 
-      //    Timer(Duration(microseconds: 20), () {
-      // if (userData != {} && getKeyForCallLetId == 'false' ){
+         Timer(Duration(microseconds: 20), () {
+          print('getKeyForCallLetId');
+                    print(getKeyForCallLetId);
+          print('getKeyForCallLetId');
+
+      if (data1 != {} && getKeyForCallLetId == 'false' ){
        
 
-      //   registerAppUserViewModel.registerAppUserApi(userData, context);
-      // userPreference.setKeyForCallLetIdApi('true');
+        registerAppUserViewModel.registerAppUserApi(data1, context);
+      userPreference.setKeyForCallLetIdApi('true');
         
         
-// }
-    // });
+}
+    });
 
     return FutureBuilder<List<Map<String, dynamic>>?>(
       // future: fetchData(),
@@ -250,15 +255,17 @@ print('userData');
           return Scaffold(
             backgroundColor: BackgroundColor,
             appBar: PreferredSize(
-              preferredSize: Size.fromHeight(10.h),
-              child: AppBar(
+              preferredSize: Size.fromHeight(8.h),
+              child:  getKeyForCallLetId == 'true' ? AppBar(
                 automaticallyImplyLeading: false,
                 centerTitle: false,
                 elevation: 0,
                 backgroundColor: Color(0xffffffff),
                 leading: Padding(
                   padding: EdgeInsets.only(top: 20),
-                  child: IconButton(
+                  child: 
+                  
+                  IconButton(
                     color: Colors.black,
                     onPressed: () {
                       Navigator.pop(context);
@@ -275,6 +282,31 @@ print('userData');
                     children: [
                       Text(
                         "Change Provider",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 17.sp,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ):AppBar(
+                automaticallyImplyLeading: false,
+                centerTitle: false,
+                elevation: 0,
+                backgroundColor: Color(0xffffffff),
+                title: Padding(
+                  padding: EdgeInsets.only(
+                    top: 16.0,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+
+                                      AxonIconForAppBarrWidget(),
+
+                      Text(
+                        " Change Provider",
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 17.sp,
@@ -547,9 +579,8 @@ final doctorListViewmodel =
           Provider.of<DoctorListViewmodel>(context, listen: false);
 
       
-        doctorListViewmodel.setLoading(false);
+        doctorListViewmodel.setLoading(false); 
 
-      
       final settingsViewModel =
           Provider.of<SettingsViewModel>(context, listen: false);
 

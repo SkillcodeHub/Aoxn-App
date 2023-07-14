@@ -20,6 +20,14 @@ class CustomerTkenViewmodel with ChangeNotifier {
     notifyListeners();
   }
 
+bool _backButton = false;
+  bool get backButton => _backButton;
+  setBackButton(bool value) {
+    _backButton = value;
+    notifyListeners();
+  }
+
+
   Future<void> fetchCustomerTokenApi(context, String appCode) async {
     // List<String> myList = [];
 

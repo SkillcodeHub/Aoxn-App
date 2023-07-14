@@ -33,12 +33,11 @@ class NewsScreen extends StatefulWidget {
 
 class _NewsScreenState extends State<NewsScreen> {
   late String token;
-  late String letId;
+   String ? letId ;
 
   UserPreferences userPreference = UserPreferences();
   String? newsdate;
   String deviceId = 'Unknown';
-  String? _id;
   late Future<void> fetchDataFuture;
   String _udid = 'Unknown';
 
@@ -73,13 +72,9 @@ class _NewsScreenState extends State<NewsScreen> {
     setState(() {
       main();
     });
-    // setState(() {
-    //   _getInfo();
-    // });
-    // _newsRepository.fetchCustomerToken();
+    
     super.initState();
-            initPlatformState();
-  // String deviceId =  _get1Id().toString();
+      initPlatformState();
 
     fetchDataFuture = fetchData(); // Call the API only once
     notificationServices.requestNotificationPermission();
@@ -92,23 +87,6 @@ class _NewsScreenState extends State<NewsScreen> {
       print(value);
     });
   }
-
-  // void _getInfo() async {
-  //   // Get device id
-  //   String? result = await PlatformDeviceId.getDeviceId;
-
-  //   // Update the UI
-  //   setState(() {
-  //     _id = result;
-  //     userPreference.setDeviceId(_id.toString());
-  //     print('----------------------------------------');
-  //     print(_id);
-  //           print('----------------------------------------');
-
-  //     // D0CA3591-B5B6-4CE2-9002-FABD18DB3F84
-
-  //   });
-  // }
 
 Future<void> initPlatformState() async {
     String udid;
@@ -130,23 +108,6 @@ Future<void> initPlatformState() async {
 
     });
   }
-
-// Future<String?> _get1Id() async {
-//   var deviceInfo = DeviceInfoPlugin();
-//   if (Platform.isIOS) { // import 'dart:io'
-//     var iosDeviceInfo = await deviceInfo.iosInfo;
-//         print('1111111111111111111111111111111111111111');
-//         print(iosDeviceInfo.identifierForVendor);
-
-//     return iosDeviceInfo.identifierForVendor; // unique ID on iOS
-//   } else if(Platform.isAndroid) {
-//     var androidDeviceInfo = await deviceInfo.androidInfo;
-//     print('0000000000000000000000000000000000000000000');
-//     return androidDeviceInfo.id; // unique ID on Android
-    
-//   }
-//   return null;
-// }
 
   void main() async {
     // Retrieve the list
@@ -382,7 +343,7 @@ Future<void> initPlatformState() async {
       if (!newsViewmodel.loading) {
         newsViewmodel.setLoading(true);
 
-        newsViewmodel.fetchNewsListApi(token);
+        newsViewmodel.fetchNewsListApi(token,letId.toString());
       }
       final settingsViewModel =
           Provider.of<SettingsViewModel>(context, listen: false);
@@ -406,7 +367,7 @@ Future<void> initPlatformState() async {
     // });
     // newsViewmodel.fetchNewsListApi(token);
     Future refresh() async {
-      newsViewmodel.fetchNewsListApi(token);
+      newsViewmodel.fetchNewsListApi(token, letId.toString());
     }
 
     return Scaffold(
