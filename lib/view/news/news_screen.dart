@@ -389,7 +389,7 @@ Future<void> initPlatformState() async {
                   title: '  Notice Board',
                 ),
                 WhatsappWidget(),
-                // PaymentWidget(),
+                PaymentWidget(),
                 SettingsWidget(),
               ],
             ),
