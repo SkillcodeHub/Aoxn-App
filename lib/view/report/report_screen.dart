@@ -161,6 +161,8 @@ class _ReportScreenState extends State<ReportScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(
+        'rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr');
     Timer(Duration(microseconds: 20), () {
       reportViewmodel.fetchReportsListApi(token, mobile);
     });
@@ -196,102 +198,107 @@ class _ReportScreenState extends State<ReportScreen> {
           ),
         ),
       ),
-      body: ChangeNotifierProvider<ReportViewmodel>(
-          create: (BuildContext context) => reportViewmodel,
-          child: Consumer<ReportViewmodel>(
-            builder: (context, value, _) {
-              switch (value.reportsList.status!) {
-                case Status.LOADING:
-                  return Center(child: CircularProgressIndicator());
-                case Status.ERROR:
-                  return Center(
-                      child: Text(value.reportsList.message.toString()));
-                case Status.COMPLETED:
-                  return RefreshIndicator(
-                    onRefresh: refresh,
-                    child: Container(
-                      height: 100.h,
-                      child: SingleChildScrollView(
-                        physics: AlwaysScrollableScrollPhysics(),
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 6),
-                          child: reportViewmodel.reportsList.data!.data!.length !=
-                                  0
-                              ? ListView.builder(
-                                  padding: EdgeInsets.only(bottom: 0),
-                                  physics: BouncingScrollPhysics(),
-                                  // shrinkWrap: true,
-                                  itemCount: reportViewmodel
-                                      .reportsList.data!.data!.length,
-                                  itemBuilder:
-                                      (BuildContext context, int itemIndex) {
-                                    return createNewsListContainer(
-                                        context, itemIndex);
-                                  })
-                              : Stack(
-                                  children: [
-                                    SingleChildScrollView(
-                                      physics: BouncingScrollPhysics(),
-                                      child: Padding(
-                                        padding: EdgeInsets.all(15),
-                                        child: Container(
-                                          height: 74.h,
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              SizedBox(
-                                                height: 2.h,
-                                              ),
-                                              Text(
-                                                'Swipe down to refresh page',
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  fontSize: 14.sp,
-                                                  color: Color(0XFF545454),
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height: 20.h,
-                                              ),
-                                              Center(
-                                                child: Image.asset(
-                                                  'images/axon.png',
-                                                  height: 10.h,
-                                                  // width: 90,
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height: 4.h,
-                                              ),
-                                              Center(
-                                                child: Text(
-                                                  'You  don\'t have any bookings or upcoming events',
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                      fontSize: 14.sp,
-                                                      color: Color(0XFF545454),
-                                                      fontWeight:
-                                                          FontWeight.w600),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
+      body: ChangeNotifierProvider<ReportViewmodel>.value(
+        value: reportViewmodel,
+        child: Consumer<ReportViewmodel>(
+          builder: (context, value, _) {
+            switch (value.reportsList.status!) {
+              case Status.LOADING:
+                return Center(child: CircularProgressIndicator());
+              case Status.ERROR:
+                return Center(
+                    child: Text(value.reportsList.message.toString()));
+              case Status.COMPLETED:
+                print('providerNameproviderNameproviderNameproviderName');
+                print(reportViewmodel.reportsList.data!.data![1].providerName
+                    .toString());
+                return reportViewmodel.reportsList.data!.data!.length != 0
+                    ? RefreshIndicator(
+                        onRefresh: refresh,
+                        child: Stack(
+                          children: [
+                            Container(
+                              height: 100.h,
+                              child: SingleChildScrollView(
+                                physics: AlwaysScrollableScrollPhysics(),
+                                child: ListView.builder(
+                                    padding: EdgeInsets.only(bottom: 0),
+                                    physics: BouncingScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemCount: reportViewmodel
+                                        .reportsList.data!.data!.length,
+                                    itemBuilder:
+                                        (BuildContext context, int itemIndex) {
+                                      return createNewsListContainer(
+                                          context, itemIndex);
+                                    }),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    : RefreshIndicator(
+                        onRefresh: refresh,
+                        child: Stack(
+                          children: [
+                            SingleChildScrollView(
+                              physics: BouncingScrollPhysics(),
+                              child: Padding(
+                                padding: EdgeInsets.all(15),
+                                child: Container(
+                                  height: 74.h,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      SizedBox(
+                                        height: 2.h,
+                                      ),
+                                      Text(
+                                        'Swipe down to refresh page',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 14.sp,
+                                          color: Color(0XFF545454),
+                                          fontWeight: FontWeight.w600,
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                      SizedBox(
+                                        height: 20.h,
+                                      ),
+                                      Center(
+                                        child: Image.asset(
+                                          'images/axon.png',
+                                          height: 10.h,
+                                          // width: 90,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 4.h,
+                                      ),
+                                      Center(
+                                        child: Text(
+                                          'You  don\'t have any bookings or upcoming events',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              fontSize: 14.sp,
+                                              color: Color(0XFF545454),
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ),
-                  );
-              }
-            },
-          )),
+                      );
+            }
+          },
+        ),
+      ),
     );
   }
 }

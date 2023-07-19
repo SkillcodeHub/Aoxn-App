@@ -52,8 +52,12 @@ class SplashServices {
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => ChangeProviderScreen()));
       } else if (mobile != null && token != null) {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => MyNavigationBar()));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => MyNavigationBar(
+                      indexNumber: 0,
+                    )));
       }
     }).onError((error, stackTrace) {
       if (kDebugMode) {

@@ -60,4 +60,7 @@ class AppUrl {
 
   //  validate app user Url
   static var validateappuserurl = baseUrl + "Registration/ValidateAppUser";
+
+  //  validate app user Url
+  static var validatePaymentUrl = baseUrl + "payment/razorpay/validate-payment";
 }

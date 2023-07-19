@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 import 'package:axonweb/Res/colors.dart';
 import 'package:axonweb/View_Model/Settings_View_Model/settings_view_model.dart';
-import 'package:axonweb/view/nevigationBar/my_navigationbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_udid/flutter_udid.dart';
@@ -13,6 +12,7 @@ import 'package:mobile_number/mobile_number.dart';
 import '../../View_Model/Login_View_Model/auth_view_model.dart';
 import '../../View_Model/News_View_Model/notification_services.dart';
 import '../../utils/utils.dart';
+import '../NevigationBar/my_navigationbar.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -41,7 +41,7 @@ class LoginScreenState extends State {
   @override
   void initState() {
     super.initState();
-        initPlatformState();
+    initPlatformState();
 
     MobileNumber.listenPhonePermission((isPermissionGranted) {
       if (isPermissionGranted) {
@@ -81,7 +81,7 @@ class LoginScreenState extends State {
     setState(() {});
   }
 
-Future<void> initPlatformState() async {
+  Future<void> initPlatformState() async {
     String udid;
     try {
       udid = await FlutterUdid.udid;
@@ -95,11 +95,11 @@ Future<void> initPlatformState() async {
       _udid = udid;
       print('_udid_udid_udid_udid_udid_udid_udid_udid');
       print(_udid);
-            print('_udid_udid_udid_udid_udid_udid_udid_udid');
+      print('_udid_udid_udid_udid_udid_udid_udid_udid');
       userPreference.setDeviceId(_udid.toString());
-
     });
   }
+
   Widget buildCard(String simCardNumber) {
     return InkWell(
       onTap: () {
@@ -334,40 +334,37 @@ Future<void> initPlatformState() async {
                                         'Please enter 10 Digit MobileNo*',
                                         context);
                                     viewVisible = false;
-                                  }
-
-                                  else if (_mobileController.text.toString() == '9999999999'
-                                      ) {
-                                   mobileFocusNode.unfocus();
-                                    userPreference.setName(
-                                        _nameController.text.toString());
-                                    userPreference
-                                        .setAge(genderValue.toString());
-                                                                            viewVisible = true;
-
-                                  }
-                                  else {
+                                  } else if (_mobileController.text
+                                          .toString() ==
+                                      '9999999999') {
                                     mobileFocusNode.unfocus();
                                     userPreference.setName(
                                         _nameController.text.toString());
                                     userPreference
                                         .setAge(genderValue.toString());
-                                        userPreference
-                                        .setBirth(_birthController.text.toString());
-
-
-
-
+                                    viewVisible = true;
+                                  } else {
+                                    mobileFocusNode.unfocus();
+                                    userPreference.setName(
+                                        _nameController.text.toString());
+                                    userPreference
+                                        .setAge(genderValue.toString());
+                                    userPreference.setBirth(
+                                        _birthController.text.toString());
 
                                     Map data = {
                                       'Mobile':
                                           _mobileController.text.toString()
                                     };
 
-                                    if(_mobileController.text.toString() == '9999999999'){viewVisible = true;
-}else{authViewModel.loginApi(data, context);   viewVisible = true;
-}
-                                    
+                                    if (_mobileController.text.toString() ==
+                                        '9999999999') {
+                                      viewVisible = true;
+                                    } else {
+                                      authViewModel.loginApi(data, context);
+                                      viewVisible = true;
+                                    }
+
                                     // Timer(Duration(seconds: 5), () {
                                     //   _mobileController.clear();
                                     // });
@@ -400,8 +397,9 @@ Future<void> initPlatformState() async {
                         children: [
                           Center(
                             child: PinFieldAutoFill(
-                                                        focusNode: otpFocusNode,
-keyboardType: TextInputType.numberWithOptions(signed: true, decimal: true),
+                              focusNode: otpFocusNode,
+                              keyboardType: TextInputType.numberWithOptions(
+                                  signed: true, decimal: true),
                               currentCode: codeValue,
                               codeLength: 4,
                               onCodeChanged: (code) {
@@ -423,7 +421,6 @@ keyboardType: TextInputType.numberWithOptions(signed: true, decimal: true),
                             children: [
                               TextButton(
                                 onPressed: () {
-
                                   Map data = {
                                     'Mobile': _mobileController.text.toString()
                                   };
@@ -451,8 +448,8 @@ keyboardType: TextInputType.numberWithOptions(signed: true, decimal: true),
                                       Utils.snackBar(
                                           'Please enter OTP*', context);
                                     } else {
-                                    mobileFocusNode.unfocus();
-                                    otpFocusNode.unfocus();
+                                      mobileFocusNode.unfocus();
+                                      otpFocusNode.unfocus();
                                       Map data = {
                                         "Mobile":
                                             _mobileController.text.toString(),
@@ -470,30 +467,38 @@ keyboardType: TextInputType.numberWithOptions(signed: true, decimal: true),
                                         //     _birthController.text.toString(),
                                       };
 
-    //                                   Map<String, dynamic> registerUserData = {
-    //                                     "platform": "Mobile",
-    //                                     "deviceId": _udid.toString(),
-    //                                     "fullName":
-    //                                         _nameController.text.toString(),
-    //                                     "mobile":
-    //                                         _mobileController.text.toString(),
-    //                                     "fcmToken": fcmToken.toString(),
-    //                                     "gender": genderValue.toString(),
-    //                                     "userType": 1,
-    //                                     "birthDate":
-    //                                         _birthController.text.toString(),
-    // };
-                                    if(codeValue.toString() == '1234'){
-                                                   userPreference.setMobile('9999999999');
-                                                  userPreference.setToken('68cb311f-585a-4e86-8e89-06edf1814080');
+                                      //                                   Map<String, dynamic> registerUserData = {
+                                      //                                     "platform": "Mobile",
+                                      //                                     "deviceId": _udid.toString(),
+                                      //                                     "fullName":
+                                      //                                         _nameController.text.toString(),
+                                      //                                     "mobile":
+                                      //                                         _mobileController.text.toString(),
+                                      //                                     "fcmToken": fcmToken.toString(),
+                                      //                                     "gender": genderValue.toString(),
+                                      //                                     "userType": 1,
+                                      //                                     "birthDate":
+                                      //                                         _birthController.text.toString(),
+                                      // };
+                                      if (codeValue.toString() == '1234') {
+                                        userPreference.setMobile('9999999999');
+                                        userPreference.setToken(
+                                            '68cb311f-585a-4e86-8e89-06edf1814080');
 
-                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>MyNavigationBar()));
-                                    }else{
-
-                                          authViewModel.otpVerifyApi(data, context);
-                                      // userPreference.saveUserData(registerUserData);                                 
-                                      // authViewModel.otpVerifyApi(data, context);
-                                      };
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    MyNavigationBar(
+                                                      indexNumber: 0,
+                                                    )));
+                                      } else {
+                                        authViewModel.otpVerifyApi(
+                                            data, context);
+                                        // userPreference.saveUserData(registerUserData);
+                                        // authViewModel.otpVerifyApi(data, context);
+                                      }
+                                      ;
                                     }
                                   },
                                   child: const Text(

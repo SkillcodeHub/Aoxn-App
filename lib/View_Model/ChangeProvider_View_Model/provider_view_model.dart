@@ -20,13 +20,12 @@ class CustomerTkenViewmodel with ChangeNotifier {
     notifyListeners();
   }
 
-bool _backButton = false;
+  bool _backButton = false;
   bool get backButton => _backButton;
   setBackButton(bool value) {
     _backButton = value;
     notifyListeners();
   }
-
 
   Future<void> fetchCustomerTokenApi(context, String appCode) async {
     // List<String> myList = [];
@@ -54,8 +53,12 @@ bool _backButton = false;
 
       Timer(
           Duration(seconds: 1),
-          () => Navigator.push(context,
-              MaterialPageRoute(builder: (context) => MyNavigationBar())));
+          () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => MyNavigationBar(
+                        indexNumber: 0,
+                      ))));
     }).onError((error, stackTrace) {
       setCustomerToken(ApiResponse.error(error.toString()));
     });
@@ -99,8 +102,12 @@ class CustomerTokenByQRViewmodel with ChangeNotifier {
 
       Timer(
           Duration(seconds: 1),
-          () => Navigator.push(context,
-              MaterialPageRoute(builder: (context) => MyNavigationBar())));
+          () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => MyNavigationBar(
+                        indexNumber: 0,
+                      ))));
     }).onError((error, stackTrace) {
       setCustomerToken(ApiResponse.error(error.toString()));
     });

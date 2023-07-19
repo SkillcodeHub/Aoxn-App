@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 import '../../../view/PaymentHistory/payment_history_screen.dart';
-
 
 class PaymentWidget extends StatelessWidget {
   const PaymentWidget({
@@ -16,7 +16,7 @@ class PaymentWidget extends StatelessWidget {
       },
       child: Container(
         margin: EdgeInsets.all(0),
-        height: 5,
+        height: 3.h,
         child: Image.asset('images/rupee.png'),
       ),
     );

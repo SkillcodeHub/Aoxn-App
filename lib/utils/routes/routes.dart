@@ -11,11 +11,11 @@ import 'package:axonweb/view/Event/event_screen.dart';
 import 'package:axonweb/view/News/news_screen.dart';
 import 'package:axonweb/view/otp/otp_verifyscreen.dart';
 import 'package:axonweb/view/report/report_screen.dart';
-import 'package:axonweb/view/Splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../View/NevigationBar/my_navigationbar.dart';
 import '../../View/SelectPateint/selectpateint_screen.dart';
+import '../../View/Splash/splash_screen.dart';
 import '../../view/Login/login_screen.dart';
 
 class Routes {
@@ -37,7 +37,9 @@ class Routes {
             builder: (BuildContext context) => ChangeProviderScreen());
       case RoutesName.myNevigationBar:
         return MaterialPageRoute(
-            builder: (BuildContext context) => MyNavigationBar());
+            builder: (BuildContext context) => MyNavigationBar(
+                  indexNumber: 0,
+                ));
       case RoutesName.news:
         return MaterialPageRoute(
             builder: (BuildContext context) => NewsScreen());

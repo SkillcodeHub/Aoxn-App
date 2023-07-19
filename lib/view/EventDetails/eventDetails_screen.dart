@@ -26,7 +26,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
   String? outputDate3;
   String? patientName;
   String? status;
-  String ?cancelStatus ;
+  String? cancelStatus;
   @override
   void initState() {
     userPreference.getToken().then((value) {
@@ -51,17 +51,16 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
         Provider.of<CancelAppointmentViewModel>(context, listen: false);
     // set up the buttons
     Widget cancelButton = TextButton(
-      child: Text(
-        "Cancel",
-        style: TextStyle(
-          fontSize: 14.sp,
-          color: Color(0xFFFD5722),
+        child: Text(
+          "Cancel",
+          style: TextStyle(
+            fontSize: 14.sp,
+            color: Color(0xFFFD5722),
+          ),
         ),
-      ),
-      onPressed: () {
-        Navigator.pop(context);
-      }
-    );
+        onPressed: () {
+          Navigator.pop(context);
+        });
     Widget continueButton = TextButton(
       child: Text(
         "Continue",
@@ -84,12 +83,18 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("Confirm",style: TextStyle(
+      title: Text(
+        "Confirm",
+        style: TextStyle(
           fontSize: 15.sp,
-        ),),
-      content: Text("Are you sure want to cancel Appointment?",style: TextStyle(
+        ),
+      ),
+      content: Text(
+        "Are you sure want to cancel Appointment?",
+        style: TextStyle(
           fontSize: 13.sp,
-        ),),
+        ),
+      ),
       actions: [
         cancelButton,
         continueButton,
@@ -185,9 +190,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
 
   Future refresh() async {
     setState(() {
-      
       // status;
-    
     });
     // Timer(Duration(microseconds: 20), () {});
   }
@@ -285,8 +288,8 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                             ),
                             Text(
                               'Patient',
-                              style:
-                                  TextStyle(fontSize: 14.sp, color: Colors.grey),
+                              style: TextStyle(
+                                  fontSize: 14.sp, color: Colors.grey),
                             ),
                             SizedBox(
                               height: 3,
@@ -350,8 +353,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 SizedBox(
-                                  width:
-                                      2.w,
+                                  width: 2.w,
                                 ),
                                 // TextButton(
                                 //     onPressed: () {},
@@ -450,5 +452,3 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
     );
   }
 }
-
-

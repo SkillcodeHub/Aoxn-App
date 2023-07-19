@@ -1,18 +1,17 @@
-import 'dart:async';
+import 'package:axonweb/View_Model/Payment_View_Model/validatePayment_view_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:pdf/widgets.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 import '../../Repository/Payment_Repository/initiatePayment_repository.dart';
 import '../../Utils/utils.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class InitiatePaymentViewModel with ChangeNotifier {
-  final _myRepo = InitiatePaymentRepository();
+  late Razorpay _razorpay;
 
-  // bool _loading = false;
-  // bool get loading => _loading;
-  // setLoading(bool value) {
-  //   _loading = value;
-  //   notifyListeners();
-  // }
+  final _myRepo = InitiatePaymentRepository();
+  dynamic userData;
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -23,6 +22,53 @@ class InitiatePaymentViewModel with ChangeNotifier {
   }
 
   Future<void> initiatePaymentApi(dynamic data, BuildContext context) async {
+    ValidatePaymentViewModel validatePaymentViewModel =
+        ValidatePaymentViewModel();
+    userData = data;
+    void _handlePaymentSuccess(PaymentSuccessResponse response) {
+      print("++++++============");
+      print("paymentId: ${response.paymentId}");
+      print("orderId: ${response.orderId}");
+      print("signature: ${response.signature}");
+      print("userData: ${userData}");
+
+      Map paymentData = {
+        'customerId': '999999',
+        'razorpayOrderId': response.orderId.toString(),
+        'razorpayPaymentId': response.paymentId.toString(),
+        'razorpaySignature': response.signature.toString(),
+        'customerToken': userData['customerToken'],
+        'lat': userData['lat'],
+      };
+
+      validatePaymentViewModel.validatePaymentApi(paymentData, context);
+
+      Fluttertoast.showToast(
+          msg: "SUCCESS PAYMENT: ${response.paymentId}", timeInSecForIosWeb: 4);
+    }
+
+    void _handlePaymentError(PaymentFailureResponse response) {
+      Fluttertoast.showToast(
+          msg: "ERROR HERE: ${response.code} - ${response.message}",
+          timeInSecForIosWeb: 4);
+    }
+
+    void _handleExternalWallet(ExternalWalletResponse response) {
+      Fluttertoast.showToast(
+          msg: "EXTERNAL_WALLET IS: ${response.walletName}",
+          timeInSecForIosWeb: 4);
+    }
+    // bool _loading = false;
+    // bool get loading => _loading;
+    // setLoading(bool value) {
+    //   _loading = value;
+    //   notifyListeners();
+    // }
+
+    _razorpay = Razorpay();
+    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
     print('datadatadatadatadatadatadatadatadatadata');
     print(data);
     print('datadatadatadatadatadatadatadatadatadatadatadata');
@@ -35,11 +81,26 @@ class InitiatePaymentViewModel with ChangeNotifier {
       if (value['status'] == true) {
         // Utils.snackBar('Appointment Book Successfully', context);
         print(value);
-        // Timer(
-        //     Duration(seconds: 2),
-        //     () => Navigator.pushNamed(context, RoutesName.appointmentDetails,
-        //         arguments: value));
 
+        var options = {
+          'key': 'rzp_test_8aGQyjie2ef5rn',
+          // 'key': value['data']['razorpayKey'],
+          'order_id': value['data']['razorpayOrderId'],
+
+          'amount': (int.parse(data['amount']) * 100).toString(), // Rs 200
+          'name': data['name'],
+          'description': 'User Payment Request',
+          'prefill': {
+            'contact': data['mobile'],
+            'email': data['email'],
+          }
+        };
+
+        try {
+          _razorpay.open(options);
+        } catch (e) {
+          debugPrint(e.toString());
+        }
         if (kDebugMode) {
           print(value.toString());
         }

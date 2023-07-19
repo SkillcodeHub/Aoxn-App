@@ -36,7 +36,7 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
   String? deviceId;
   String? name;
   String? fcmToken;
-  String?  birthDate;
+  String? birthDate;
   String? gender;
   String getKeyForCallLetId = 'false';
   String? customerName;
@@ -77,28 +77,26 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
     });
     userPreference.getFcmToken().then((value) {
       setState(() {
-       fcmToken  = value!;
+        fcmToken = value!;
         print(fcmToken);
       });
     });
     userPreference.getBirth().then((value) {
       setState(() {
-       birthDate  = value!;
+        birthDate = value!;
         print(birthDate);
       });
     });
-userPreference.getBirth().then((value) {
+    userPreference.getBirth().then((value) {
       setState(() {
-       gender  = value!;
+        gender = value!;
         print(gender);
       });
     });
     super.initState();
-          checkPermission(Permission.notification, context);
+    checkPermission(Permission.notification, context);
 
-setState(() {
-  
-});
+    setState(() {});
     // fetchData();
     setState(() {
       print(showAlertDialog);
@@ -108,11 +106,10 @@ setState(() {
     });
     fetchData1();
     retrieveUserData();
-    
   }
 
-
-Future<void> checkPermission(Permission permission, BuildContext context) async{
+  Future<void> checkPermission(
+      Permission permission, BuildContext context) async {
     final status = await permission.request();
     // if(status.isGranted){
     //   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Permission is Granted")));
@@ -121,21 +118,22 @@ Future<void> checkPermission(Permission permission, BuildContext context) async{
 
     // }
   }
+
   Future<List<String>> fetchData() async {
     List<String> retrievedList =
         await userPreference.getListFromSharedPreferences();
     return retrievedList;
   }
 
-  
   Future<List<Map<String, dynamic>>?> fetchData1() async {
     List<Map<String, dynamic>>? storedData =
         await userPreference.getDataFromSharedPreferences();
     return storedData;
   }
+
   late Map<String, dynamic> userData = {};
 
-Future<void> retrieveUserData() async {
+  Future<void> retrieveUserData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? userDataString = prefs.getString('userData');
     if (userDataString != null) {
@@ -145,29 +143,24 @@ Future<void> retrieveUserData() async {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
-print('userData');
-print(userData);
-print('userData');
+    print('userData');
+    print(userData);
+    print('userData');
 // print('storedUserData');
 // print(storedUserData);
 // print('storedUserData');
-Map data1 ={
-
-                                      "platform": 'Mobile',
-                                        "deviceId": deviceId.toString(),
-                                        "fullName":
-                                          name.toString(),
-                                        "mobile":
-                                             mobile.toString(),
-                                        "fcmToken":  fcmToken.toString(),
-                                        "gender":  gender.toString(),
-                                        "userType":  '1',
-                                        "birthDate": birthDate.toString(),
-};
-
+    Map data1 = {
+      "platform": 'Mobile',
+      "deviceId": deviceId.toString(),
+      "fullName": name.toString(),
+      "mobile": mobile.toString(),
+      "fcmToken": fcmToken.toString(),
+      "gender": gender.toString(),
+      "userType": '1',
+      "birthDate": birthDate.toString(),
+    };
 
 // Map registerUserData = {
 //   "platform": "Mobile",
@@ -181,22 +174,18 @@ Map data1 ={
 //                                         "userType": '1',
 //                                         "birthDate":
 //                                             '',};
-final registerAppUserViewModel =
+    final registerAppUserViewModel =
         Provider.of<RegisterAppUserViewModel>(context, listen: false);
 
-         Timer(Duration(microseconds: 20), () {
-          print('getKeyForCallLetId');
-                    print(getKeyForCallLetId);
-          print('getKeyForCallLetId');
+    Timer(Duration(microseconds: 20), () {
+      print('getKeyForCallLetId');
+      print(getKeyForCallLetId);
+      print('getKeyForCallLetId');
 
-      if (data1 != {} && getKeyForCallLetId == 'false' ){
-       
-
+      if (data1 != {} && getKeyForCallLetId == 'false') {
         registerAppUserViewModel.registerAppUserApi(data1, context);
-      userPreference.setKeyForCallLetIdApi('true');
-        
-        
-}
+        userPreference.setKeyForCallLetIdApi('true');
+      }
     });
 
     return FutureBuilder<List<Map<String, dynamic>>?>(
@@ -256,66 +245,64 @@ final registerAppUserViewModel =
             backgroundColor: BackgroundColor,
             appBar: PreferredSize(
               preferredSize: Size.fromHeight(8.h),
-              child:  getKeyForCallLetId == 'true' ? AppBar(
-                automaticallyImplyLeading: false,
-                centerTitle: false,
-                elevation: 0,
-                backgroundColor: Color(0xffffffff),
-                leading: Padding(
-                  padding: EdgeInsets.only(top: 20),
-                  child: 
-                  
-                  IconButton(
-                    color: Colors.black,
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: Icon(Icons.arrow_back_rounded),
-                  ),
-                ),
-                title: Padding(
-                  padding: EdgeInsets.only(
-                    top: 16.0,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Change Provider",
-                        style: TextStyle(
+              child: getKeyForCallLetId == 'true'
+                  ? AppBar(
+                      automaticallyImplyLeading: false,
+                      centerTitle: false,
+                      elevation: 0,
+                      backgroundColor: Color(0xffffffff),
+                      leading: Padding(
+                        padding: EdgeInsets.only(top: 20),
+                        child: IconButton(
                           color: Colors.black,
-                          fontSize: 17.sp,
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          icon: Icon(Icons.arrow_back_rounded),
                         ),
                       ),
-                    ],
-                  ),
-                ),
-              ):AppBar(
-                automaticallyImplyLeading: false,
-                centerTitle: false,
-                elevation: 0,
-                backgroundColor: Color(0xffffffff),
-                title: Padding(
-                  padding: EdgeInsets.only(
-                    top: 16.0,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-
-                                      AxonIconForAppBarrWidget(),
-
-                      Text(
-                        " Change Provider",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 17.sp,
+                      title: Padding(
+                        padding: EdgeInsets.only(
+                          top: 16.0,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Change Provider",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 17.sp,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
-                ),
-              ),
+                    )
+                  : AppBar(
+                      automaticallyImplyLeading: false,
+                      centerTitle: false,
+                      elevation: 0,
+                      backgroundColor: Color(0xffffffff),
+                      title: Padding(
+                        padding: EdgeInsets.only(
+                          top: 16.0,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            AxonIconForAppBarrWidget(),
+                            Text(
+                              " Change Provider",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 17.sp,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
             ),
             body: providerList.length != 0
                 ? Stack(
@@ -416,9 +403,13 @@ final registerAppUserViewModel =
                                                       cursorColor:
                                                           Color(0xFFFD5722),
                                                       onChanged: (value) {},
-                                                      decoration: InputDecoration(
-                                                          hintText:
-                                                              'Write App Code',),style: TextStyle(fontSize: 13.sp),
+                                                      decoration:
+                                                          InputDecoration(
+                                                        hintText:
+                                                            'Write App Code',
+                                                      ),
+                                                      style: TextStyle(
+                                                          fontSize: 13.sp),
                                                     ),
                                                     actions: [
                                                       TextButton(
@@ -429,39 +420,55 @@ final registerAppUserViewModel =
                                                           child: Text(
                                                             'Cancel',
                                                             style: TextStyle(
-                                                              fontSize: 14.sp,
+                                                                fontSize: 14.sp,
                                                                 color: Color(
                                                                     0xFFFD5722)),
                                                           )),
                                                       TextButton(
                                                           onPressed: () {
-                                                            final newsViewmodel = Provider.of<NewsViewmodel>(context, listen: false);
+                                                            final newsViewmodel =
+                                                                Provider.of<
+                                                                        NewsViewmodel>(
+                                                                    context,
+                                                                    listen:
+                                                                        false);
 
-        newsViewmodel.setLoading(false);
+                                                            newsViewmodel
+                                                                .setLoading(
+                                                                    false);
 
-final doctorListViewmodel =
-          Provider.of<DoctorListViewmodel>(context, listen: false);
+                                                            final doctorListViewmodel =
+                                                                Provider.of<
+                                                                        DoctorListViewmodel>(
+                                                                    context,
+                                                                    listen:
+                                                                        false);
 
-      
-        doctorListViewmodel.setLoading(false);
+                                                            doctorListViewmodel
+                                                                .setLoading(
+                                                                    false);
 
-      
-      final settingsViewModel =
-          Provider.of<SettingsViewModel>(context, listen: false);
+                                                            final settingsViewModel =
+                                                                Provider.of<
+                                                                        SettingsViewModel>(
+                                                                    context,
+                                                                    listen:
+                                                                        false);
 
-        settingsViewModel.setLoading(false);
+                                                            settingsViewModel
+                                                                .setLoading(
+                                                                    false);
                                                             customerTkenViewmodel
                                                                 .fetchCustomerTokenApi(
                                                                     context,
                                                                     strAppcode
                                                                         .text
                                                                         .toString());
-
-
                                                           },
                                                           child: Text(
                                                             'OK',
-                                                            style: TextStyle(fontSize: 14.sp,
+                                                            style: TextStyle(
+                                                                fontSize: 14.sp,
                                                                 color: Color(
                                                                     0xFFFD5722)),
                                                           ))
@@ -522,7 +529,7 @@ final doctorListViewmodel =
                                                     title: Text(
                                                       'Confirm',
                                                       style: TextStyle(
-                                                        fontSize: 15.sp,
+                                                          fontSize: 15.sp,
                                                           fontWeight:
                                                               FontWeight.bold),
                                                     ),
@@ -537,7 +544,8 @@ final doctorListViewmodel =
                                                       TextButton(
                                                         child: Text(
                                                           'CANCEL',
-                                                          style: TextStyle(fontSize: 14.sp,
+                                                          style: TextStyle(
+                                                              fontSize: 14.sp,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .bold),
@@ -552,7 +560,8 @@ final doctorListViewmodel =
                                                       TextButton(
                                                         child: Text(
                                                           'CONFIRM',
-                                                          style: TextStyle(fontSize: 14.sp,
+                                                          style: TextStyle(
+                                                              fontSize: 14.sp,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .bold),
@@ -570,21 +579,38 @@ final doctorListViewmodel =
                                                           userPreference
                                                               .setToken(token);
 
+                                                          final newsViewmodel =
+                                                              Provider.of<
+                                                                      NewsViewmodel>(
+                                                                  context,
+                                                                  listen:
+                                                                      false);
 
-final newsViewmodel = Provider.of<NewsViewmodel>(context, listen: false);
+                                                          newsViewmodel
+                                                              .setLoading(
+                                                                  false);
 
-        newsViewmodel.setLoading(false);
+                                                          final doctorListViewmodel =
+                                                              Provider.of<
+                                                                      DoctorListViewmodel>(
+                                                                  context,
+                                                                  listen:
+                                                                      false);
 
-final doctorListViewmodel =
-          Provider.of<DoctorListViewmodel>(context, listen: false);
+                                                          doctorListViewmodel
+                                                              .setLoading(
+                                                                  false);
 
-      
-        doctorListViewmodel.setLoading(false); 
+                                                          final settingsViewModel =
+                                                              Provider.of<
+                                                                      SettingsViewModel>(
+                                                                  context,
+                                                                  listen:
+                                                                      false);
 
-      final settingsViewModel =
-          Provider.of<SettingsViewModel>(context, listen: false);
-
-        settingsViewModel.setLoading(false);
+                                                          settingsViewModel
+                                                              .setLoading(
+                                                                  false);
 
                                                           // customerTkenViewmodel
                                                           //     .fetchCustomerTokenApi(
@@ -597,9 +623,10 @@ final doctorListViewmodel =
                                                               () => Navigator.push(
                                                                   context,
                                                                   MaterialPageRoute(
-                                                                      builder:
-                                                                          (context) =>
-                                                                              MyNavigationBar())));
+                                                                      builder: (context) => MyNavigationBar(
+                                                                            indexNumber:
+                                                                                0,
+                                                                          ))));
                                                         },
                                                       ),
                                                     ],
@@ -779,7 +806,9 @@ final doctorListViewmodel =
                                                         onChanged: (value) {},
                                                         decoration: InputDecoration(
                                                             hintText:
-                                                                'Write App Code'),style:TextStyle(fontSize: 13.sp) ,
+                                                                'Write App Code'),
+                                                        style: TextStyle(
+                                                            fontSize: 13.sp),
                                                       ),
                                                       actions: [
                                                         TextButton(
@@ -790,27 +819,45 @@ final doctorListViewmodel =
                                                             child: Text(
                                                               'Cancel',
                                                               style: TextStyle(
-                                                                fontSize: 14.sp,
+                                                                  fontSize:
+                                                                      14.sp,
                                                                   color: Color(
                                                                       0xFFFD5722)),
                                                             )),
                                                         TextButton(
                                                             onPressed: () {
-                                                              final newsViewmodel = Provider.of<NewsViewmodel>(context, listen: false);
+                                                              final newsViewmodel =
+                                                                  Provider.of<
+                                                                          NewsViewmodel>(
+                                                                      context,
+                                                                      listen:
+                                                                          false);
 
-        newsViewmodel.setLoading(false);
+                                                              newsViewmodel
+                                                                  .setLoading(
+                                                                      false);
 
-final doctorListViewmodel =
-          Provider.of<DoctorListViewmodel>(context, listen: false);
+                                                              final doctorListViewmodel =
+                                                                  Provider.of<
+                                                                          DoctorListViewmodel>(
+                                                                      context,
+                                                                      listen:
+                                                                          false);
 
-      
-        doctorListViewmodel.setLoading(false);
+                                                              doctorListViewmodel
+                                                                  .setLoading(
+                                                                      false);
 
-      
-      final settingsViewModel =
-          Provider.of<SettingsViewModel>(context, listen: false);
+                                                              final settingsViewModel =
+                                                                  Provider.of<
+                                                                          SettingsViewModel>(
+                                                                      context,
+                                                                      listen:
+                                                                          false);
 
-        settingsViewModel.setLoading(false);
+                                                              settingsViewModel
+                                                                  .setLoading(
+                                                                      false);
                                                               customerTkenViewmodel
                                                                   .fetchCustomerTokenApi(
                                                                       context,
@@ -820,7 +867,9 @@ final doctorListViewmodel =
                                                             },
                                                             child: Text(
                                                               'OK',
-                                                              style: TextStyle(fontSize: 14.sp,
+                                                              style: TextStyle(
+                                                                  fontSize:
+                                                                      14.sp,
                                                                   color: Color(
                                                                       0xFFFD5722)),
                                                             ))

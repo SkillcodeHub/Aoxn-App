@@ -39,3 +39,14 @@ class DoctorListViewmodel with ChangeNotifier {
     });
   }
 }
+
+class DoctorNameProvider extends ChangeNotifier {
+  String doctorName = ' ';
+  String doctorid = '0';
+
+  void updateTextValues(String doctorName, String doctorid) {
+    doctorName = doctorName;
+    doctorid = doctorid;
+    notifyListeners();
+  }
+}

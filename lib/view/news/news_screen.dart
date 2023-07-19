@@ -1,14 +1,11 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:axonweb/View_Model/NewsDetails_View_model/newsdetails_view_model.dart';
 import 'package:axonweb/data/response/status.dart';
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_udid/flutter_udid.dart';
 import 'package:intl/intl.dart';
-import 'package:platform_device_id/platform_device_id.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import '../../Res/Components/Appbar/payment_widget.dart';
@@ -22,7 +19,6 @@ import '../../res/components/appbar/axonimage_appbar-widget.dart';
 import '../../res/components/appbar/screen_name_widget.dart';
 import '../../res/components/appbar/settings_widget.dart';
 import '../../res/components/appbar/whatsapp_widget.dart';
-import 'package:http/http.dart' as http;
 
 class NewsScreen extends StatefulWidget {
   const NewsScreen({super.key});
@@ -33,7 +29,7 @@ class NewsScreen extends StatefulWidget {
 
 class _NewsScreenState extends State<NewsScreen> {
   late String token;
-   String ? letId ;
+  String? letId;
 
   UserPreferences userPreference = UserPreferences();
   String? newsdate;
@@ -72,9 +68,9 @@ class _NewsScreenState extends State<NewsScreen> {
     setState(() {
       main();
     });
-    
+
     super.initState();
-      initPlatformState();
+    initPlatformState();
 
     fetchDataFuture = fetchData(); // Call the API only once
     notificationServices.requestNotificationPermission();
@@ -88,7 +84,7 @@ class _NewsScreenState extends State<NewsScreen> {
     });
   }
 
-Future<void> initPlatformState() async {
+  Future<void> initPlatformState() async {
     String udid;
     try {
       udid = await FlutterUdid.udid;
@@ -104,8 +100,6 @@ Future<void> initPlatformState() async {
       print(_udid);
       print('_udid_udid_udid_udid_udid_udid_udid_udid');
       // userPreference.setDeviceId(_udid.toString());
-
-
     });
   }
 
@@ -230,7 +224,7 @@ Future<void> initPlatformState() async {
                                 ),
                             style: {
                               'h3': Style(
-                               fontWeight: FontWeight
+                                fontWeight: FontWeight
                                     .normal, // Remove bold style from h3 tag
                                 fontStyle: FontStyle
                                     .normal, // Remove italic style from h3 tag
@@ -285,15 +279,14 @@ Future<void> initPlatformState() async {
                           ),
                         ),
                         SizedBox(
-                          // height: 1.h,
-                        ),
+                            // height: 1.h,
+                            ),
                         Container(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Container(
-                                                          padding: EdgeInsets.only(left: 5),
-
+                                padding: EdgeInsets.only(left: 5),
                                 width: 65.w,
                                 child: Text(
                                   newsdate!,
@@ -343,7 +336,7 @@ Future<void> initPlatformState() async {
       if (!newsViewmodel.loading) {
         newsViewmodel.setLoading(true);
 
-        newsViewmodel.fetchNewsListApi(token,letId.toString());
+        newsViewmodel.fetchNewsListApi(token, letId.toString());
       }
       final settingsViewModel =
           Provider.of<SettingsViewModel>(context, listen: false);

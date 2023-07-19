@@ -1,11 +1,10 @@
 import 'dart:io';
-import 'dart:math';
+import 'package:axonweb/View/NevigationBar/my_navigationbar.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:path_provider/path_provider.dart';
 
 class NotificationServices {
   //initialising firebase message plugin
@@ -69,22 +68,19 @@ class NotificationServices {
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
       if (kDebugMode) {
         print('user granted permission');
-                print('========================================================');
-
+        print('========================================================');
       }
     } else if (settings.authorizationStatus ==
         AuthorizationStatus.provisional) {
       if (kDebugMode) {
         print('user granted provisional permission');
-                        print('========================================================');
-
+        print('========================================================');
       }
     } else {
       //appsetting.AppSettings.openNotificationSettings();
       if (kDebugMode) {
         print('user denied permission');
-                        print('========================================================');
-
+        print('========================================================');
       }
     }
   }
@@ -166,12 +162,12 @@ class NotificationServices {
 
   void handleMessage(BuildContext context, RemoteMessage message) {
     if (message.data['type'] == 'msj') {
-      // Navigator.push(
-      //     context,
-      //     MaterialPageRoute(
-      //         builder: (context) => MessageScreen(
-      //               id: message.data['id'],
-      //             )));
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => MyNavigationBar(
+                    indexNumber: int.parse(message.data['id']),
+                  )));
     }
   }
 

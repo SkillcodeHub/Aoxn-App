@@ -6,7 +6,6 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../Res/Components/Appbar/payment_widget.dart';
 import '../../Res/Components/loader.dart';
 import '../../Res/colors.dart';
 import '../../Utils/utils.dart';
@@ -35,7 +34,8 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
   BookAppointmentViewModel bookAppointmentViewModel =
       BookAppointmentViewModel();
   late String number;
-  late String selectedDocotrId;
+  late String selectedDocotrId = '0';
+  late String selectedDoctor = ' ';
   bool isLoading = false;
   var mobile;
   late String token;
@@ -169,6 +169,9 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                         return Center(
                             child: Text(value.doctorList.message.toString()));
                       case Status.COMPLETED:
+                        print('object');
+                        selectedDocotrId =
+                            value.doctorList.data!.data![0].doctorId.toString();
                         return Stack(
                           children: [
                             SingleChildScrollView(
@@ -381,9 +384,6 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                   width: 78.w,
                                                   padding: EdgeInsets.all(8),
                                                   child: Column(
-                                                    // mainAxisAlignment:
-                                                    //     MainAxisAlignment
-                                                    //         .spaceBetween,
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment
                                                             .start,
@@ -398,92 +398,104 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                 .grey.shade700),
                                                       ),
                                                       SizedBox(height: 2.h),
-                                                      Container(
-                                                        padding:
-                                                            EdgeInsets.all(0),
-                                                        alignment: Alignment
-                                                            .centerLeft,
-                                                        child:
-                                                            DropdownButtonHideUnderline(
-                                                          child: ButtonTheme(
-                                                            alignedDropdown:
-                                                                true,
-                                                            child:
-                                                                DropdownButton<
-                                                                    String>(
-                                                              isDense: true,
-                                                              hint: Text(
-                                                                // "Select Doctor",
-                                                                value
-                                                                    .doctorList
-                                                                    .data!
-                                                                    .data![0]
-                                                                    .doctorName
-                                                                    .toString(),
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        15.sp,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                    color: Colors
-                                                                        .black),
-                                                              ),
-                                                              value: selectedDocotrId =
-                                                                  value
+                                                      Consumer<
+                                                              DoctorNameProvider>(
+                                                          builder: (context,
+                                                              doctorNameProvider,
+                                                              _) {
+                                                        print('qqqqqqq');
+                                                        print(
+                                                            'provider ${selectedDoctor}');
+                                                        print(
+                                                            'provider ${selectedDocotrId}');
+                                                        return Container(
+                                                          padding:
+                                                              EdgeInsets.all(0),
+                                                          alignment: Alignment
+                                                              .centerLeft,
+                                                          child:
+                                                              DropdownButtonHideUnderline(
+                                                            child: ButtonTheme(
+                                                              alignedDropdown:
+                                                                  true,
+                                                              child:
+                                                                  DropdownButton<
+                                                                      String>(
+                                                                isDense: true,
+                                                                // hint: Text(
+                                                                //   "Select Doctor",
+                                                                //   style: TextStyle(
+                                                                //       fontSize:
+                                                                //           15.sp,
+                                                                //       fontWeight:
+                                                                //           FontWeight
+                                                                //               .w500,
+                                                                //       color: Colors
+                                                                //           .black),
+                                                                // ),
+                                                                value:
+                                                                    selectedDocotrId,
+                                                                onChanged: (String?
+                                                                    newValue) {
+                                                                  selectedDocotrId =
+                                                                      newValue!;
+                                                                  selectedDoctor = value
                                                                       .doctorList
                                                                       .data!
-                                                                      .data![0]
-                                                                      .doctorId
-                                                                      .toString(),
-                                                              onChanged: (String?
-                                                                  newValue) {
-                                                                // setState(() {
-                                                                selectedDocotrId =
-                                                                    newValue!;
-                                                                // });
-
-                                                                print(
-                                                                    selectedDocotrId);
-                                                              },
-                                                              items: value
-                                                                  .doctorList
-                                                                  .data!
-                                                                  .data!
-                                                                  .map((map) {
-                                                                return new DropdownMenuItem<
-                                                                    String>(
-                                                                  value: map
-                                                                      .doctorId
-                                                                      .toString(),
-                                                                  // value: _mySelection,
-                                                                  child: Row(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .start,
-                                                                    children: <
-                                                                        Widget>[
-                                                                      Container(
-                                                                          child:
-                                                                              Text(
-                                                                        map.doctorName
-                                                                            .toString(),
-                                                                        style: TextStyle(
-                                                                            fontSize:
-                                                                                14.sp,
-                                                                            fontWeight: FontWeight.w500),
-                                                                        textAlign:
-                                                                            TextAlign.start,
-                                                                      )),
-                                                                    ],
-                                                                  ),
-                                                                );
-                                                              }).toList(),
+                                                                      .data!
+                                                                      .firstWhere(
+                                                                        (doctor) =>
+                                                                            doctor.doctorId.toString() ==
+                                                                            newValue,
+                                                                      )
+                                                                      .doctorName
+                                                                      .toString();
+                                                                  // print(
+                                                                  //     selectedDocotrId);
+                                                                  // print(
+                                                                  //     selectedDoctor);
+                                                                  doctorNameProvider
+                                                                      .updateTextValues(
+                                                                    '${selectedDoctor}',
+                                                                    '${selectedDocotrId}',
+                                                                  );
+                                                                },
+                                                                items: value
+                                                                    .doctorList
+                                                                    .data!
+                                                                    .data!
+                                                                    .map((map) {
+                                                                  return new DropdownMenuItem<
+                                                                      String>(
+                                                                    value: map
+                                                                        .doctorId
+                                                                        .toString(),
+                                                                    child: Row(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .start,
+                                                                      children: <
+                                                                          Widget>[
+                                                                        Container(
+                                                                            child:
+                                                                                Text(
+                                                                          map.doctorName
+                                                                              .toString(),
+                                                                          style: TextStyle(
+                                                                              fontSize: 14.sp,
+                                                                              fontWeight: FontWeight.w500),
+                                                                          textAlign:
+                                                                              TextAlign.start,
+                                                                        )),
+                                                                      ],
+                                                                    ),
+                                                                  );
+                                                                }).toList(),
+                                                              ),
                                                             ),
                                                           ),
-                                                        ),
-                                                      ),
-                                                      // SizedBox(height: 2.h),
+                                                        );
+                                                      })
                                                     ],
                                                   ),
                                                 ),
@@ -506,7 +518,6 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                     size: 3.5.h,
                                                   ),
                                                 ),
-                                                // isLoading ? Loader() : Container(),
                                               ],
                                             ),
                                           ),
@@ -551,7 +562,8 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                       .start,
                                                               children: [
                                                                 SizedBox(
-                                                                    height: 2.h),
+                                                                    height:
+                                                                        2.h),
                                                                 Container(
                                                                   padding: EdgeInsets
                                                                       .only(
@@ -570,11 +582,11 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                   ),
                                                                 ),
                                                                 SizedBox(
-                                                                    height: 2.h),
+                                                                    height:
+                                                                        2.h),
                                                               ],
                                                             )
                                                           : Column(
-                                                            
                                                               crossAxisAlignment:
                                                                   CrossAxisAlignment
                                                                       .start,
@@ -583,8 +595,8 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                   child: Text(
                                                                     '   Appointment',
                                                                     style: TextStyle(
-                                                                        fontSize:
-                                                                            12.sp,
+                                                                        fontSize: 12
+                                                                            .sp,
                                                                         fontWeight:
                                                                             FontWeight
                                                                                 .w400,
@@ -609,8 +621,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                         style: TextStyle(
                                                                             fontSize:
                                                                                 12.sp,
-                                                                            fontWeight:
-                                                                                FontWeight.w400,
+                                                                            fontWeight: FontWeight.w400,
                                                                             color: Colors.grey.shade700),
                                                                       ),
                                                                       Text(
@@ -625,7 +636,8 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                   ),
                                                                 ),
                                                                 SizedBox(
-                                                                    height: 0.3.h),
+                                                                    height:
+                                                                        0.3.h),
                                                                 Container(
                                                                   padding: EdgeInsets
                                                                       .only(
@@ -638,8 +650,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                         style: TextStyle(
                                                                             fontSize:
                                                                                 12.sp,
-                                                                            fontWeight:
-                                                                                FontWeight.w400,
+                                                                            fontWeight: FontWeight.w400,
                                                                             color: Colors.grey.shade700),
                                                                       ),
                                                                       Text(
@@ -784,7 +795,6 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                             'Please Select Patient',
                                                             context);
                                                       } else {
-
                                                         Map data = {
                                                           "CaseNo": CaseNo,
                                                           "Name":
@@ -811,7 +821,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                   .toString(),
                                                         };
 
-                                                       bookAppointmentViewModel
+                                                        bookAppointmentViewModel
                                                             .bookApointmentApi(
                                                                 data, context);
 
@@ -819,26 +829,26 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                             Duration(
                                                                 seconds: 5),
                                                             () {});
-                                                        
-                                                        
                                                       }
                                                     },
-                                                    child:
-                                                    
-                                                    bookAppointmentViewModel.signUpLoading
-                                                    
-                                                    
-                                                    ? Container(
-                                                      child: Container(
-                                                                                                          
-
-                                                        
-                                                        child: CircularProgressIndicator(color: Colors.white,strokeWidth: 2.0,)))
-                                                    
-                                                    :Text(
-                                                      'BOOK APPOINTMENT',style: TextStyle(
-                            fontWeight: FontWeight.w500, fontSize: 12.sp),
-                                                    ),
+                                                    child: bookAppointmentViewModel
+                                                            .signUpLoading
+                                                        ? Container(
+                                                            child: Container(
+                                                                child:
+                                                                    CircularProgressIndicator(
+                                                            color: Colors.white,
+                                                            strokeWidth: 2.0,
+                                                          )))
+                                                        : Text(
+                                                            'BOOK APPOINTMENT',
+                                                            style: TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                                fontSize:
+                                                                    12.sp),
+                                                          ),
                                                     style: ElevatedButton
                                                         .styleFrom(
                                                             backgroundColor:
@@ -863,8 +873,13 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                         displayGender = '';
                                                       });
                                                     },
-                                                    child: Text('RESET',style: TextStyle(
-                            fontWeight: FontWeight.w500, fontSize: 12.sp),),
+                                                    child: Text(
+                                                      'RESET',
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          fontSize: 12.sp),
+                                                    ),
                                                     style: ElevatedButton
                                                         .styleFrom(
                                                             backgroundColor:

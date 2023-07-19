@@ -11,7 +11,7 @@ class ReportsRepository {
       dynamic response = await _apiServices.getGetApiResponse(
           AppUrl.getrxvisithistoryUrl +
               '?CustomerToken=' +
-              token.toString() +
+              '9549a931-ad43-11e9-8427-02a80849fdb4' +
               "&Mobile=" +
               "8140629967");
       return response = ReportsListModel.fromJson(response);

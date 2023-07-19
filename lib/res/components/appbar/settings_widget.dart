@@ -19,8 +19,8 @@ class SettingsWidget extends StatelessWidget {
       },
       child: Container(
         margin: EdgeInsets.fromLTRB(6, 8, 0, 8),
-        // height: 27,
-        width: 7.w,
+        height: 3.h,
+        // width: 7.w,
         child: Image.asset('images/settings.png'),
       ),
     );
