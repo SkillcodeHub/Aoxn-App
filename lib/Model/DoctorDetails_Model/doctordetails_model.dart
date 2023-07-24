@@ -39,19 +39,19 @@ class Data {
   int? customerId;
   String? customerName;
   String? customerAddress;
-  var customerContact;
+  dynamic customerContact;
   String? email;
   String? website;
   String? customerLogo;
   String? logoFileName;
   String? logoPath;
   String? logoImageURL;
-  var advanceBookingFrom;
-  var advanceBookingTo;
-  var realtimeSlotOpenBeforeMinute;
-  var realtimeSlotCloseBeforeMinute;
-  var packageId;
-  var maxLicenseDoctor;
+  dynamic advanceBookingFrom;
+  dynamic advanceBookingTo;
+  dynamic realtimeSlotOpenBeforeMinute;
+  dynamic realtimeSlotCloseBeforeMinute;
+  dynamic packageId;
+  dynamic maxLicenseDoctor;
   String? applySlotOpenFlag;
   String? applySlotCloseFlag;
   String? subscriptionUpto;
@@ -63,13 +63,14 @@ class Data {
   bool? displayDueVaccine;
   bool? paymentGatewayEnabled;
   String? termsLink;
-  var paymentDailyTransactionCount;
-  var paymentAmountLimitPerTrans;
+  dynamic paymentDailyTransactionCount;
+  dynamic paymentAmountLimitPerTrans;
   bool? disableRxDownload;
   String? appCode;
   String? whatsapplink;
   String? timeZoneId;
   dynamic thirdpartyPaymentAPI;
+  bool? isAdvanceBookingRequired;
 
   Data(
       {this.id,
@@ -106,7 +107,8 @@ class Data {
       this.appCode,
       this.whatsapplink,
       this.timeZoneId,
-      this.thirdpartyPaymentAPI});
+      this.thirdpartyPaymentAPI,
+      this.isAdvanceBookingRequired});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['$id'];
@@ -144,6 +146,7 @@ class Data {
     whatsapplink = json['whatsapplink'];
     timeZoneId = json['timeZoneId'];
     thirdpartyPaymentAPI = json['thirdpartyPaymentAPI'];
+    isAdvanceBookingRequired = json['isAdvanceBookingRequired'];
   }
 
   Map<String, dynamic> toJson() {
@@ -183,6 +186,7 @@ class Data {
     data['whatsapplink'] = this.whatsapplink;
     data['timeZoneId'] = this.timeZoneId;
     data['thirdpartyPaymentAPI'] = this.thirdpartyPaymentAPI;
+    data['isAdvanceBookingRequired'] = this.isAdvanceBookingRequired;
     return data;
   }
 }
