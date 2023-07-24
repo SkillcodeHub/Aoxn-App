@@ -37,7 +37,7 @@ class CustomerPayHeadListModel {
 class Data {
   String? id;
   String? payHead;
-  int? actionCode;
+  dynamic actionCode;
   double? defaultAmount;
 
   Data({this.id, this.payHead, this.actionCode, this.defaultAmount});

@@ -178,6 +178,10 @@ class _PaymentSheetState extends State<PaymentSheet> {
   TextEditingController strAmount = TextEditingController();
   TextEditingController strEmail = TextEditingController();
   late String token;
+    late String mobile;    late String name;
+    late String letId;
+
+
   UserPreferences userPreference = UserPreferences();
   String selectedPayHeadIndex =
       'Consultation'; // Index of the selected payHead, initially set to -1
@@ -197,6 +201,26 @@ class _PaymentSheetState extends State<PaymentSheet> {
         print(token);
       });
     });
+    userPreference.getMobile().then((value) {
+      setState(() {
+        mobile = value!;
+        print(token);
+      });
+    });
+     userPreference.getName().then((value) {
+      setState(() {
+        name = value!;
+        print(token);
+      });
+    });
+     userPreference.getletId().then((value) {
+      setState(() {
+        letId = value!;
+        print(token);
+      });
+    });
+    
+    
     super.initState();
     Timer(Duration(microseconds: 20), () {
       print(token);
@@ -209,23 +233,35 @@ class _PaymentSheetState extends State<PaymentSheet> {
     _nodeEmail.unfocus();
 
     Map<String, dynamic> data = {
-      "customerId": '99999999',
-      "mobile": '6353335967',
+      // "customerId": '99999999',
+      // "mobile": '6353335967',
+      // "patientId": '1647895',
+      // "caseNo": '20731',
+      // "name": "Parth Patel",
+      // "email": "dhaval.karolia@gmail.com",
+      // "payHead": "OPD",
+      // "amount": '200',
+      // "customerToken": '68cb311f-585a-4e86-8e89-06edf1814080',
+      // "lat": "0985ceb0-247b-11ee-994d-02ba2b92742c"
+
+      "customerId":       settingsViewModel.doctorDetailsList.data!.data![0].customerId.toString(),
+
+      "mobile": mobile.toString(),
       "patientId": '1647895',
       "caseNo": '20731',
-      "name": "Parth Patel",
-      "email": "dhaval.karolia@gmail.com",
-      "payHead": "OPD",
+      "name":name,
+      "email": strEmail.text.toString(),
+      "payHead": selectedPayHeadIndex.toString(),
       "amount": '200',
       "customerToken": token.toString(),
-      "lat": "0985ceb0-247b-11ee-994d-02ba2b92742c"
+      "lat":letId.toString(),
     };
     initiatePaymentViewModel.initiatePaymentApi(data, context);
   }
 
   @override
   Widget build(BuildContext context) {
-    settingsViewModel.fetchDoctorDetailsListApi(token);
+    settingsViewModel.fetchDoctorDetailsListApi(token.toString());
 
     return Scaffold(
       // persistentFooterAlignment: AlignmentDirectional.centerEnd,
