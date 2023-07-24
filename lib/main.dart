@@ -22,6 +22,7 @@ import 'View_Model/Report_View_Model/report_view_model.dart';
 import 'View_Model/SelectPateint_View_Model/getPatientByMobileNo_view_model.dart';
 import 'View_Model/SelectPateint_View_Model/selectPateintById_view_model.dart';
 import 'View_Model/Settings_View_Model/settings_view_model.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {

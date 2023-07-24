@@ -379,6 +379,7 @@ import '../../Res/Components/Appbar/screen_name_widget.dart';
 import '../../Res/Components/loader.dart';
 import '../../Res/colors.dart';
 import '../../View_Model/Services/SharePreference/SharePreference.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -400,6 +401,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   void initState() {
     super.initState();
+    FirebaseCrashlytics.instance.crash();
+
     userPreference.getMobile().then((value1) {
       setState(() {
         mobile = value1!;
@@ -586,7 +589,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                         RoutesName
                                                             .changeProvider);
                                                   },
-                                                  child: Text('CHANGE',style: TextStyle(fontSize: 12.sp,),),
+                                                  child: Text(
+                                                    'CHANGE',
+                                                    style: TextStyle(
+                                                      fontSize: 12.sp,
+                                                    ),
+                                                  ),
                                                   style:
                                                       ElevatedButton.styleFrom(
                                                     backgroundColor:
@@ -678,7 +686,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                   onPressed: () {
                                                     showAlertDialog(context);
                                                   },
-                                                  child: Text('LOGOUT',style: TextStyle(fontSize: 12.sp,),),
+                                                  child: Text(
+                                                    'LOGOUT',
+                                                    style: TextStyle(
+                                                      fontSize: 12.sp,
+                                                    ),
+                                                  ),
                                                   style:
                                                       ElevatedButton.styleFrom(
                                                     backgroundColor:

@@ -33,7 +33,7 @@ class InitiatePaymentViewModel with ChangeNotifier {
       print("userData: ${userData}");
 
       Map paymentData = {
-        'customerId': '999999',
+        'customerId': '99999999',
         'razorpayOrderId': response.orderId.toString(),
         'razorpayPaymentId': response.paymentId.toString(),
         'razorpaySignature': response.signature.toString(),

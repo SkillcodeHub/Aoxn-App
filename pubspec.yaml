@@ -64,6 +64,7 @@ dependencies:
   flutter_html_to_pdf: ^0.7.0
   pdf_viewer_plugin: ^2.0.1
   syncfusion_flutter_pdfviewer: ^20.1.58-beta
+  firebase_crashlytics: ^3.3.4
 
 dev_dependencies:
   flutter_test:
