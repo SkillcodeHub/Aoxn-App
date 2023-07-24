@@ -119,3 +119,8 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+
+
+
+// export PATH="$PATH:/Users/dweeppatel/Documents/FlutterDev/sdk/flutter/bin"

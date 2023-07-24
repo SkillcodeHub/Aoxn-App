@@ -16,7 +16,7 @@ class ScreenNameWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       // width: 48.w,
-      width: 59.w,
+      width: 55.w,
       child: Text(
         title,
         style: TextStyle(

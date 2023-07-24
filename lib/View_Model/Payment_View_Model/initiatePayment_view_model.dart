@@ -41,7 +41,14 @@ class InitiatePaymentViewModel with ChangeNotifier {
         'lat': userData['lat'],
       };
 
-      validatePaymentViewModel.validatePaymentApi(paymentData, context);
+      print(response.orderId.toString());
+            print(response.paymentId.toString(),);
+      print(response.signature.toString());
+      print(userData['customerToken']);
+      print(userData['lat']);
+
+
+      // validatePaymentViewModel.validatePaymentApi(paymentData, context);
 
       Fluttertoast.showToast(
           msg: "SUCCESS PAYMENT: ${response.paymentId}", timeInSecForIosWeb: 4);

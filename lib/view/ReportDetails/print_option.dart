@@ -402,7 +402,8 @@ class _html_to_pdfState extends State<html_to_pdf> {
     // Save the PDF file to disk
     final downloadDirectory = await _getDownloadDirectory();
     final pdfFile = File('${downloadDirectory!.path}/$name.pdf');
-    await pdfFile.writeAsBytes(bytes);
+    await pdfFile.writeAsBytes(bytes,flush: true);
+
 
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text('PDF file downloaded'),
