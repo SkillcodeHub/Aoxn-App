@@ -215,39 +215,38 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
             ),
           ),
           bottom: TabBar(
-  indicatorColor: Color(0xFFFD5722),
-  labelColor: Colors.black,
-  tabs: [
-    Tab(
-      child: Text(
-        'REGISTERED',
-        style: TextStyle(fontSize: 10.sp,fontWeight: FontWeight.w600),maxLines:
-                                                                              1,
-                                                                          overflow:
-                                                                              TextOverflow.ellipsis, // Set the desired font size
-      ),
-    ),
-    Tab(
-      child: Text(
-        'UNREGISTERED',
-        style: TextStyle(fontSize: 10.sp,fontWeight: FontWeight.w600),maxLines:
-                                                                              1,
-                                                                          overflow:
-                                                                              TextOverflow.ellipsis, // Set the desired font size
-      ),
-    ),
-    Tab(
-      child: Text(
-        'PATIENT ID',
-        style: TextStyle(fontSize: 10.sp,fontWeight: FontWeight.w600  ),maxLines:
-                                                                              1,
-                                                                          overflow:
-                                                                              TextOverflow.ellipsis,// Set the desired font size
-      ),
-    ),
-  ],
-),
-
+            indicatorColor: Color(0xFFFD5722),
+            labelColor: Colors.black,
+            tabs: [
+              Tab(
+                child: Text(
+                  'REGISTERED',
+                  style:
+                      TextStyle(fontSize: 10.sp, fontWeight: FontWeight.w600),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis, // Set the desired font size
+                ),
+              ),
+              Tab(
+                child: Text(
+                  'UNREGISTERED',
+                  style:
+                      TextStyle(fontSize: 10.sp, fontWeight: FontWeight.w600),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis, // Set the desired font size
+                ),
+              ),
+              Tab(
+                child: Text(
+                  'PATIENT ID',
+                  style:
+                      TextStyle(fontSize: 10.sp, fontWeight: FontWeight.w600),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis, // Set the desired font size
+                ),
+              ),
+            ],
+          ),
         ),
         body: TabBarView(
           children: [
@@ -347,11 +346,11 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         SizedBox(
-                          height: 8,
+                          height: 30.h,
                         ),
                         Center(
                           child: Text(
-                            'Add new Patient',
+                            'Plz Register Patient from Hospital!',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: 15.sp,
@@ -360,149 +359,163 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 2.h),
-                        Form(
-                            key: formKey,
-                            onChanged: () => setState(() =>
-                                _enableBtn = formKey.currentState!.validate()),
-                            child: Column(
-                              children: [
-                                TextFormField(
-                                  
-                                  focusNode: _nodeName,
-                                  controller: strName,
-                                  keyboardType: TextInputType.text,
-                                  validator: (value) => value!.isEmpty
-                                      ? "Please enter full name"
-                                      : null,
-                                  autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
-                                  textInputAction: TextInputAction.next,
-                                  decoration: InputDecoration(
-                                    hintText: 'Full Name',
-                            ),
-                                    style: TextStyle(
-                              fontSize: 12.sp,
-                              color: Color(0XFF545454),
-                              fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 3.h,
-                                ),
-                                TextFormField(
-                                  focusNode: _nodeBirth,
-                                  controller: strBirthDate,
-                                  keyboardType: TextInputType.text,
-                                  // // validator: (value) => value.isEmpty
-                                  //     ? "Please enter BirthDate"
-                                  //     : null,
-                                  autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
-                                  textInputAction: TextInputAction.next,
-                                  decoration: InputDecoration(
-                                    hintText: 'Birthday(optional)',
-                                  ),
-                                  style: TextStyle(
-                              fontSize: 12.sp,
-                              color: Color(0XFF545454),
-                              fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                                SizedBox(height: 4.h),
-                                Row(
-                                  children: [
-                                    Container(
-                                      child: Row(
-                                        children: [
-                                          Radio(
-                                            value: 'Male',
-                                            activeColor: Color(0xFFFD5722),
-                                            groupValue: genderValue,
-                                            onChanged: (value) {
-                                              setState(() {
-                                                genderValue = value!;
-                                              });
-                                            },
-                                          ),
-                                          Container(
-                                            child: Text(
-                                              "Male",
-                                              style:  TextStyle(
-                                                fontSize: 15.sp,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 7.w,
-                                    ),
-                                    Container(
-                                      child: Row(
-                                        children: [
-                                          Radio(
-                                            value: 'Female',
-                                            activeColor: Color(0xFFFD5722),
-                                            groupValue: genderValue,
-                                            onChanged: (value) {
-                                              setState(() {
-                                                genderValue = value!;
-                                              });
-                                            },
-                                          ),
-                                          Container(
-                                            child: Text(
-                                              "Female",
-                                              style:  TextStyle(
-                                                fontSize: 15.sp,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 4.h,
-                                ),
-                                Center(
-                                  child: Container(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(8, 0, 8, 0),
-                                    height: 5.h,
-                                    width: 55.w,
-                                    child: ElevatedButton(
-                                      onPressed: _enableBtn
-                                          ? () => Navigator.pop(context, [
-                                                strName.text,
-                                                strBirthDate.text,
-                                                genderValue,
-                                                CaseNo,
-                                                PatType = "New",
-                                              ])
-                                          : null,
-                                      child: Text(
-                                        'SAVE',
-                                        style: TextStyle(
-                                            fontSize: 13.sp,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.white),
-                                      ),
-                                      style: ElevatedButton.styleFrom(
-                                        primary: Color(0xFFFD5722),
-                                        // shape: RoundedRectangleBorder(
-                                        //   borderRadius: BorderRadius.circular(
-                                        //       25), // <-- Radius
-                                        // ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ))
+                        //     SizedBox(
+                        //       height: 8,
+                        //     ),
+                        //     Center(
+                        //       child: Text(
+                        //         'Add new Patient',
+                        //         textAlign: TextAlign.center,
+                        //         style: TextStyle(
+                        //           fontSize: 15.sp,
+                        //           color: Color(0XFF545454),
+                        //           fontWeight: FontWeight.w600,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //     SizedBox(height: 2.h),
+                        //     Form(
+                        //         key: formKey,
+                        //         onChanged: () => setState(() =>
+                        //             _enableBtn = formKey.currentState!.validate()),
+                        //         child: Column(
+                        //           children: [
+                        //             TextFormField(
+
+                        //               focusNode: _nodeName,
+                        //               controller: strName,
+                        //               keyboardType: TextInputType.text,
+                        //               validator: (value) => value!.isEmpty
+                        //                   ? "Please enter full name"
+                        //                   : null,
+                        //               autovalidateMode:
+                        //                   AutovalidateMode.onUserInteraction,
+                        //               textInputAction: TextInputAction.next,
+                        //               decoration: InputDecoration(
+                        //                 hintText: 'Full Name',
+                        //         ),
+                        //                 style: TextStyle(
+                        //           fontSize: 12.sp,
+                        //           color: Color(0XFF545454),
+                        //           fontWeight: FontWeight.w500,
+                        //               ),
+                        //             ),
+                        //             SizedBox(
+                        //               height: 3.h,
+                        //             ),
+                        //             TextFormField(
+                        //               focusNode: _nodeBirth,
+                        //               controller: strBirthDate,
+                        //               keyboardType: TextInputType.text,
+                        //               // // validator: (value) => value.isEmpty
+                        //               //     ? "Please enter BirthDate"
+                        //               //     : null,
+                        //               autovalidateMode:
+                        //                   AutovalidateMode.onUserInteraction,
+                        //               textInputAction: TextInputAction.next,
+                        //               decoration: InputDecoration(
+                        //                 hintText: 'Birthday(optional)',
+                        //               ),
+                        //               style: TextStyle(
+                        //           fontSize: 12.sp,
+                        //           color: Color(0XFF545454),
+                        //           fontWeight: FontWeight.w500,
+                        //               ),
+                        //             ),
+                        //             SizedBox(height: 4.h),
+                        //             Row(
+                        //               children: [
+                        //                 Container(
+                        //                   child: Row(
+                        //                     children: [
+                        //                       Radio(
+                        //                         value: 'Male',
+                        //                         activeColor: Color(0xFFFD5722),
+                        //                         groupValue: genderValue,
+                        //                         onChanged: (value) {
+                        //                           setState(() {
+                        //                             genderValue = value!;
+                        //                           });
+                        //                         },
+                        //                       ),
+                        //                       Container(
+                        //                         child: Text(
+                        //                           "Male",
+                        //                           style:  TextStyle(
+                        //                             fontSize: 15.sp,
+                        //                           ),
+                        //                         ),
+                        //                       ),
+                        //                     ],
+                        //                   ),
+                        //                 ),
+                        //                 SizedBox(
+                        //                   width: 7.w,
+                        //                 ),
+                        //                 Container(
+                        //                   child: Row(
+                        //                     children: [
+                        //                       Radio(
+                        //                         value: 'Female',
+                        //                         activeColor: Color(0xFFFD5722),
+                        //                         groupValue: genderValue,
+                        //                         onChanged: (value) {
+                        //                           setState(() {
+                        //                             genderValue = value!;
+                        //                           });
+                        //                         },
+                        //                       ),
+                        //                       Container(
+                        //                         child: Text(
+                        //                           "Female",
+                        //                           style:  TextStyle(
+                        //                             fontSize: 15.sp,
+                        //                           ),
+                        //                         ),
+                        //                       ),
+                        //                     ],
+                        //                   ),
+                        //                 ),
+                        //               ],
+                        //             ),
+                        //             SizedBox(
+                        //               height: 4.h,
+                        //             ),
+                        //             Center(
+                        //               child: Container(
+                        //                 padding:
+                        //                     const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                        //                 height: 5.h,
+                        //                 width: 55.w,
+                        //                 child: ElevatedButton(
+                        //                   onPressed: _enableBtn
+                        //                       ? () => Navigator.pop(context, [
+                        //                             strName.text,
+                        //                             strBirthDate.text,
+                        //                             genderValue,
+                        //                             CaseNo,
+                        //                             PatType = "New",
+                        //                           ])
+                        //                       : null,
+                        //                   child: Text(
+                        //                     'SAVE',
+                        //                     style: TextStyle(
+                        //                         fontSize: 13.sp,
+                        //                         fontWeight: FontWeight.w600,
+                        //                         color: Colors.white),
+                        //                   ),
+                        //                   style: ElevatedButton.styleFrom(
+                        //                     primary: Color(0xFFFD5722),
+                        //                     // shape: RoundedRectangleBorder(
+                        //                     //   borderRadius: BorderRadius.circular(
+                        //                     //       25), // <-- Radius
+                        //                     // ),
+                        //                   ),
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //           ],
+                        //         ))
                       ],
                     ),
                   ),
@@ -519,46 +532,46 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                       // crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         TextFormField(
-                            onFieldSubmitted: (value) {
-                              setState(() {
-                                print(token);
-                                strPatientId.text = value;
-                                print('qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq');
-                                print(value);
-                                print(strPatientId.text);
-                                print('qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq');
-                                _GetById();
-                                // selectPatientByIdViewmodel
-                                //     .fetchSelectPatientByIdApi(
-                                //         token.toString(), strPatientId.text);
+                          onFieldSubmitted: (value) {
+                            setState(() {
+                              print(token);
+                              strPatientId.text = value;
+                              print('qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq');
+                              print(value);
+                              print(strPatientId.text);
+                              print('qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq');
+                              _GetById();
+                              // selectPatientByIdViewmodel
+                              //     .fetchSelectPatientByIdApi(
+                              //         token.toString(), strPatientId.text);
 
-                                print(patientById);
-                              });
-                            },
-                            scrollPadding: EdgeInsets.only(bottom: 60),
-                            keyboardType: TextInputType.numberWithOptions(
-                                signed: true, decimal: true),
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            textInputAction: TextInputAction.done,
-                            decoration: InputDecoration(
-                              errorMaxLines: 10,
-                              contentPadding: const EdgeInsets.all(10.0),
-                              hintText: ' Unique ID',
-                              prefixIconConstraints:
-                                  BoxConstraints(maxHeight: 28, maxWidth: 28),
-                              prefixIcon: Padding(
-                                  padding: const EdgeInsets.only(right: 8.0),
-                                  child: Icon(
-                                    Icons.search,
-                                    color: Colors.black,
-                                  )),
-                            ),
-                            style: TextStyle(
-                              fontSize: 12.sp,
-                              color: Color(0XFF545454),
-                              fontWeight: FontWeight.w500,
-                                  ),),
+                              print(patientById);
+                            });
+                          },
+                          scrollPadding: EdgeInsets.only(bottom: 60),
+                          keyboardType: TextInputType.numberWithOptions(
+                              signed: true, decimal: true),
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          textInputAction: TextInputAction.done,
+                          decoration: InputDecoration(
+                            errorMaxLines: 10,
+                            contentPadding: const EdgeInsets.all(10.0),
+                            hintText: ' Unique ID',
+                            prefixIconConstraints:
+                                BoxConstraints(maxHeight: 28, maxWidth: 28),
+                            prefixIcon: Padding(
+                                padding: const EdgeInsets.only(right: 8.0),
+                                child: Icon(
+                                  Icons.search,
+                                  color: Colors.black,
+                                )),
+                          ),
+                          style: TextStyle(
+                            fontSize: 12.sp,
+                            color: Color(0XFF545454),
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
                         SizedBox(
                           height: 2.h,
                         ),
@@ -701,17 +714,24 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                                                                   CrossAxisAlignment
                                                                       .center,
                                                               children: [
-                                                                Text('# ' +
-                                                                    selectPatientByIdViewmodel
-                                                                        .SelectPatientById
-                                                                        .data!
-                                                                        .data![
-                                                                            0]
-                                                                        .caseNo
-                                                                        .toString(),style: TextStyle(
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w500,
-                                  ),),
+                                                                Text(
+                                                                  '# ' +
+                                                                      selectPatientByIdViewmodel
+                                                                          .SelectPatientById
+                                                                          .data!
+                                                                          .data![
+                                                                              0]
+                                                                          .caseNo
+                                                                          .toString(),
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontSize:
+                                                                        12.sp,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                  ),
+                                                                ),
                                                                 SizedBox(
                                                                   height: 1.h,
                                                                 ),
@@ -739,37 +759,56 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                                                                         .data![
                                                                             0]
                                                                         .patientName
-                                                                        .toString(),style: TextStyle(
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w500,
-                                  ),
+                                                                        .toString(),
+                                                                    style:
+                                                                        TextStyle(
+                                                                      fontSize:
+                                                                          12.sp,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                    ),
                                                                     maxLines: 1,
                                                                   ),
                                                                 ),
                                                                 SizedBox(
                                                                   height: 2.h,
                                                                 ),
-                                                                Text(selectPatientByIdViewmodel
-                                                                    .SelectPatientById
-                                                                    .data!
-                                                                    .data![0]
-                                                                    .patientMobile
-                                                                    .toString()
-                                                                    .replaceRange(
-                                                                        0,
-                                                                        10,
-                                                                        'xxxxxxxxxx'),style: TextStyle(
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w500,
-                                  ),),
+                                                                Text(
+                                                                  selectPatientByIdViewmodel
+                                                                      .SelectPatientById
+                                                                      .data!
+                                                                      .data![0]
+                                                                      .patientMobile
+                                                                      .toString()
+                                                                      .replaceRange(
+                                                                          0,
+                                                                          10,
+                                                                          'xxxxxxxxxx'),
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontSize:
+                                                                        12.sp,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                  ),
+                                                                ),
                                                                 SizedBox(
                                                                   height: 2.h,
                                                                 ),
-                                                                Text(patientBirth
-                                                                    .toString(),style: TextStyle(
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w500,
-                                  ),),
+                                                                Text(
+                                                                  patientBirth
+                                                                      .toString(),
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontSize:
+                                                                        12.sp,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                  ),
+                                                                ),
                                                               ],
                                                             ),
                                                           ),

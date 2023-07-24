@@ -401,7 +401,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   void initState() {
     super.initState();
-    FirebaseCrashlytics.instance.crash();
+    // FirebaseCrashlytics.instance.crash();
 
     userPreference.getMobile().then((value1) {
       setState(() {
