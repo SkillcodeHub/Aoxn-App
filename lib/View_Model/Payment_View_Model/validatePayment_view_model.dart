@@ -1,8 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../Repository/Payment_Repository/validatePayment_repository.dart';
 import '../../utils/utils.dart';
+import '../Book_View_Model/bookAppointment_view_model.dart';
 import '../Services/SharePreference/SharePreference.dart';
+import '../Settings_View_Model/settings_view_model.dart';
 
 class ValidatePaymentViewModel with ChangeNotifier {
   final _myRepo = ValidatePaymentRepository();
@@ -23,13 +26,24 @@ class ValidatePaymentViewModel with ChangeNotifier {
       setLoading(false);
 
       if (value['status'] == true) {
-        Utils.snackBar('OTP Send Successfully', context);
-        userPreference.getUserData().then((value) {
-          data = value!;
-          print('data1');
-          print(data);
-          print('data1');
-        });
+        // Utils.snackBar('', context);
+        final settingsViewModel =
+            Provider.of<SettingsViewModel>(context, listen: false);
+        if (settingsViewModel
+                .doctorDetailsList.data!.data![0].isAdvanceBookingRequired
+                .toString() ==
+            'true') {
+          userPreference.getUserData().then((value) {
+            data = value!;
+            print('data1');
+            print(data);
+            print('data1');
+          });
+          final bookAppointmentViewModel =
+              Provider.of<BookAppointmentViewModel>(context);
+          bookAppointmentViewModel.bookApointmentApi(data, context);
+        }
+
         // Timer(
         //     Duration(seconds: 2),
         //     () =>

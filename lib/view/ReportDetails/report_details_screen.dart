@@ -17,7 +17,7 @@ class ReportDetailsScreen extends StatefulWidget {
 
 class _ReportDetailsScreenState extends State<ReportDetailsScreen> {
   String? cfData;
-   convert(String cfData, String name) async {
+  convert(String cfData, String name) async {
     var targetPath = await _localPath;
     if (targetPath == null) {
       print("Error: Local path is null.");
@@ -28,8 +28,8 @@ class _ReportDetailsScreenState extends State<ReportDetailsScreen> {
     var random = Random().nextInt(10000);
     var targetFileName = '$name-$currentTime-$random';
 
-    var generatedPdfFile =
-        await FlutterHtmlToPdf.convertFromHtmlContent(cfData, targetPath, targetFileName);
+    var generatedPdfFile = await FlutterHtmlToPdf.convertFromHtmlContent(
+        cfData, targetPath, targetFileName);
 
     if (generatedPdfFile == null) {
       print("Error: Failed to generate PDF file.");
