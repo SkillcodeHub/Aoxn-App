@@ -42,11 +42,18 @@ class DoctorListViewmodel with ChangeNotifier {
 
 class DoctorNameProvider extends ChangeNotifier {
   String doctorName = ' ';
-  String doctorid = '0';
+  String doctorId = '0';
 
-  void updateTextValues(String doctorName, String doctorid) {
-    doctorName = doctorName;
-    doctorid = doctorid;
+  Future<void> updateTextValues(String doctorname, String doctorid) async {
+    doctorName = doctorname;
+    doctorId = doctorid;
+    notifyListeners();
+    await Future.delayed(Duration.zero);
+  }
+
+  void resetData() {
+    doctorName = ' '; // Set default doctorName value here
+    doctorId = '0'; // Set default doctorid value here
     notifyListeners();
   }
 }

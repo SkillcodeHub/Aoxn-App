@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../Res/Components/Appbar/payment_widget.dart';
 import '../../Res/Components/loader.dart';
 import '../../Res/colors.dart';
 import '../../Utils/utils.dart';
@@ -17,6 +18,7 @@ import '../../res/components/appbar/axonimage_appbar-widget.dart';
 import '../../res/components/appbar/screen_name_widget.dart';
 import '../../res/components/appbar/settings_widget.dart';
 import '../../res/components/appbar/whatsapp_widget.dart';
+import '../PaymentHistory/payment_history_screen.dart';
 import '../SelectAppointmentDate/selectappointmentdate_screen.dart';
 import '../SelectPateint/selectpateint_screen.dart';
 
@@ -94,6 +96,10 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
           Provider.of<DoctorListViewmodel>(context, listen: false);
 
       if (!doctorListViewmodel.loading) {
+        final doctorNameProvider =
+            Provider.of<DoctorNameProvider>(context, listen: false);
+
+        doctorNameProvider.resetData();
         doctorListViewmodel.setLoading(true);
 
         doctorListViewmodel.fetchDoctorListApi(token);
@@ -123,26 +129,84 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
       backgroundColor: BackgroundColor,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(7.h),
-        child: AppBar(
-          automaticallyImplyLeading: false,
-          centerTitle: false,
-          backgroundColor: Color(0xffffffff),
-          elevation: 0,
-          title: Padding(
-            padding: const EdgeInsets.only(top: 5.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                AxonIconForAppBarrWidget(),
-                ScreenNameWidget(
-                  title: 'Book Appointment',
+        child: FutureBuilder<void>(
+          future: fetchDataFuture,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (snapshot.hasError) {
+              return Center(
+                child: Text('Error occurred: ${snapshot.error}'),
+              );
+            } else {
+              // Render the UI with the fetched data
+              return ChangeNotifierProvider<SettingsViewModel>.value(
+                value: settingsViewModel,
+                child: Consumer<SettingsViewModel>(
+                  builder: (context, value, _) {
+                    switch (value.doctorDetailsList.status!) {
+                      case Status.LOADING:
+                        return Center(child: Container());
+                      case Status.ERROR:
+                        return Center(
+                            child: Text(
+                                value.doctorDetailsList.message.toString()));
+                      case Status.COMPLETED:
+                        return settingsViewModel.doctorDetailsList.data!
+                                    .data![0].paymentGatewayEnabled
+                                    .toString() ==
+                                'true'
+                            ? AppBar(
+                                automaticallyImplyLeading: false,
+                                centerTitle: false,
+                                backgroundColor: Color(0xffffffff),
+                                elevation: 0,
+                                title: Padding(
+                                  padding: const EdgeInsets.only(top: 5.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      AxonIconForAppBarrWidget(),
+                                      ScreenNameWidget(
+                                        title: '  Book Appointment',
+                                      ),
+                                      WhatsappWidget(),
+                                      PaymentWidget(),
+                                      SettingsWidget(),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            : AppBar(
+                                automaticallyImplyLeading: false,
+                                centerTitle: false,
+                                backgroundColor: Color(0xffffffff),
+                                elevation: 0,
+                                title: Padding(
+                                  padding: const EdgeInsets.only(top: 5.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      AxonIconForAppBarrWidget(),
+                                      ScreenNameWidget(
+                                        title: '  Notice Board',
+                                      ),
+                                      WhatsappWidget(),
+                                      SettingsWidget(),
+                                    ],
+                                  ),
+                                ),
+                              );
+                    }
+                  },
                 ),
-                WhatsappWidget(),
-                // PaymentWidget(),
-                SettingsWidget(),
-              ],
-            ),
-          ),
+              );
+            }
+          },
         ),
       ),
       body: FutureBuilder<void>(
@@ -403,11 +467,11 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                           builder: (context,
                                                               doctorNameProvider,
                                                               _) {
-                                                        print('qqqqqqq');
-                                                        print(
-                                                            'provider ${selectedDoctor}');
-                                                        print(
-                                                            'provider ${selectedDocotrId}');
+                                                        // print('qqqqqqq');
+                                                        // print(
+                                                        //     'provider ${selectedDoctor}');
+                                                        // print(
+                                                        //     'provider ${selectedDocotrId}');
                                                         return Container(
                                                           padding:
                                                               EdgeInsets.all(0),
@@ -455,10 +519,19 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                   // print(
                                                                   //     selectedDoctor);
                                                                   doctorNameProvider
+                                                                      .resetData();
+
+                                                                  doctorNameProvider
                                                                       .updateTextValues(
                                                                     '${selectedDoctor}',
                                                                     '${selectedDocotrId}',
                                                                   );
+                                                                  print(
+                                                                      'updateTextValues');
+                                                                  print(
+                                                                      'provider ${selectedDoctor}');
+                                                                  print(
+                                                                      'provider ${selectedDocotrId}');
                                                                 },
                                                                 items: value
                                                                     .doctorList
@@ -523,6 +596,11 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                           ),
                                           InkWell(
                                             onTap: () {
+                                              print(
+                                                  'selectedDocotrIdselectedDocotrIdselectedDocotrIdselectedDocotrId');
+                                              print(selectedDocotrId);
+                                              print('selectedDocotrId');
+
                                               selectedDocotrId != "null"
                                                   ? _navigateDateAndTimeSelaction(
                                                       context)
@@ -795,35 +873,70 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                             'Please Select Patient',
                                                             context);
                                                       } else {
-                                                        Map data = {
-                                                          "CaseNo": CaseNo,
+                                                        Map<String, dynamic>
+                                                            data = {
+                                                          "CaseNo":
+                                                              CaseNo.toString(),
                                                           "Name":
-                                                              displayPatientName,
+                                                              displayPatientName
+                                                                  .toString(),
                                                           "Mobile":
                                                               mobile.toString(),
                                                           "Email": "",
                                                           "Gender":
                                                               displayGender
                                                                   .toString(),
-                                                          "PatType": PatType,
+                                                          "PatType": PatType
+                                                              .toString(),
                                                           "ApptDate":
-                                                              displayDate,
+                                                              displayDate
+                                                                  .toString(),
                                                           "CustomerToken":
-                                                              token,
+                                                              token.toString(),
                                                           "DelayMinute":
                                                               DelayMinute
                                                                   .toString(),
                                                           "DeviceId": deviceId,
                                                           "DoctorId":
-                                                              selectedDocotrId,
+                                                              selectedDocotrId
+                                                                  .toString(),
                                                           "TimingId":
                                                               displaytimingId
                                                                   .toString(),
                                                         };
+                                                        userPreference
+                                                            .saveUserData(data);
 
-                                                        bookAppointmentViewModel
-                                                            .bookApointmentApi(
-                                                                data, context);
+                                                        if (settingsViewModel
+                                                                .doctorDetailsList
+                                                                .data!
+                                                                .data![0]
+                                                                .isAdvanceBookingRequired
+                                                                .toString() ==
+                                                            'true') {
+                                                          // Utils.snackBar(
+                                                          //     'Appointment Book aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+                                                          //     context);
+                                                          showModalBottomSheet<
+                                                              void>(
+                                                            isScrollControlled:
+                                                                true,
+                                                            backgroundColor:
+                                                                Colors
+                                                                    .transparent,
+                                                            context: context,
+                                                            builder:
+                                                                (BuildContext
+                                                                    context) {
+                                                              return PaymentSheet();
+                                                            },
+                                                          );
+                                                        } else {
+                                                          bookAppointmentViewModel
+                                                              .bookApointmentApi(
+                                                                  data,
+                                                                  context);
+                                                        }
 
                                                         Timer(
                                                             Duration(

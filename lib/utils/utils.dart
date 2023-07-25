@@ -57,7 +57,13 @@ class Utils {
             SizedBox(
               width: 3.w,
             ),
-            Text(message),
+            Expanded(
+              // Wrap the Text widget with Expanded
+              child: Text(
+                message,
+                overflow: TextOverflow.visible, // Set overflow to visible
+              ),
+            ),
           ],
         ),
         duration: Duration(seconds: 1),

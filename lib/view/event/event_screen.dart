@@ -9,6 +9,7 @@ import '../../Res/colors.dart';
 import '../../Utils/routes/routes_name.dart';
 import '../../View_Model/Event_View_Model/event_view_model.dart';
 import '../../View_Model/Services/SharePreference/SharePreference.dart';
+import '../../View_Model/Settings_View_Model/settings_view_model.dart';
 import '../../data/response/status.dart';
 import '../../res/components/appbar/axonimage_appbar-widget.dart';
 import '../../res/components/appbar/screen_name_widget.dart';
@@ -27,6 +28,8 @@ class _EventScreenState extends State<EventScreen> {
   late String token;
   late String deviceId;
   EventListViewmodel eventListViewmodel = EventListViewmodel();
+  late Future<void> fetchDataFuture;
+
   @override
   void initState() {
     userPreference.getToken().then((value) {
@@ -41,6 +44,7 @@ class _EventScreenState extends State<EventScreen> {
     });
     // super.initState();
     super.initState();
+    fetchDataFuture = fetchData(); // Call the API only once
   }
 
   createAppointmentListContainer(BuildContext context, int itemIndex) {
@@ -226,7 +230,10 @@ class _EventScreenState extends State<EventScreen> {
                                           arguments: data)
                                       : null;
                                 },
-                                child: Icon(Icons.info_outline,size: 3.h,),
+                                child: Icon(
+                                  Icons.info_outline,
+                                  size: 3.h,
+                                ),
                               ),
                             ],
                           ),
@@ -246,12 +253,27 @@ class _EventScreenState extends State<EventScreen> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
+  Future<void> fetchData() async {
     Timer(Duration(microseconds: 20), () {
       eventListViewmodel.fetchEventListApi(
           deviceId.toString(), token.toString());
+      final settingsViewModel =
+          Provider.of<SettingsViewModel>(context, listen: false);
+
+      ;
+
+      settingsViewModel.fetchDoctorDetailsListApi(token);
     });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final settingsViewModel =
+        Provider.of<SettingsViewModel>(context, listen: false);
+    // Timer(Duration(microseconds: 20), () {
+    //   eventListViewmodel.fetchEventListApi(
+    //       deviceId.toString(), token.toString());
+    // });
     Future refresh() async {
       Timer(Duration(microseconds: 20), () {
         eventListViewmodel.fetchEventListApi(
@@ -263,26 +285,84 @@ class _EventScreenState extends State<EventScreen> {
       backgroundColor: BackgroundColor,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(7.h),
-        child: AppBar(
-          automaticallyImplyLeading: false,
-          centerTitle: false,
-          backgroundColor: Color(0xffffffff),
-          elevation: 0,
-          title: Padding(
-            padding: const EdgeInsets.only(top: 5.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                AxonIconForAppBarrWidget(),
-                ScreenNameWidget(
-                  title: '  Events',
+        child: FutureBuilder<void>(
+          future: fetchDataFuture,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (snapshot.hasError) {
+              return Center(
+                child: Text('Error occurred: ${snapshot.error}'),
+              );
+            } else {
+              // Render the UI with the fetched data
+              return ChangeNotifierProvider<SettingsViewModel>.value(
+                value: settingsViewModel,
+                child: Consumer<SettingsViewModel>(
+                  builder: (context, value, _) {
+                    switch (value.doctorDetailsList.status!) {
+                      case Status.LOADING:
+                        return Center(child: Container());
+                      case Status.ERROR:
+                        return Center(
+                            child: Text(
+                                value.doctorDetailsList.message.toString()));
+                      case Status.COMPLETED:
+                        return settingsViewModel.doctorDetailsList.data!
+                                    .data![0].paymentGatewayEnabled
+                                    .toString() ==
+                                'true'
+                            ? AppBar(
+                                automaticallyImplyLeading: false,
+                                centerTitle: false,
+                                backgroundColor: Color(0xffffffff),
+                                elevation: 0,
+                                title: Padding(
+                                  padding: const EdgeInsets.only(top: 5.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      AxonIconForAppBarrWidget(),
+                                      ScreenNameWidget(
+                                        title: '  Notice Board',
+                                      ),
+                                      WhatsappWidget(),
+                                      PaymentWidget(),
+                                      SettingsWidget(),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            : AppBar(
+                                automaticallyImplyLeading: false,
+                                centerTitle: false,
+                                backgroundColor: Color(0xffffffff),
+                                elevation: 0,
+                                title: Padding(
+                                  padding: const EdgeInsets.only(top: 5.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      AxonIconForAppBarrWidget(),
+                                      ScreenNameWidget(
+                                        title: '  Events',
+                                      ),
+                                      WhatsappWidget(),
+                                      SettingsWidget(),
+                                    ],
+                                  ),
+                                ),
+                              );
+                    }
+                  },
                 ),
-                WhatsappWidget(),
-                // PaymentWidget(),
-                SettingsWidget(),
-              ],
-            ),
-          ),
+              );
+            }
+          },
         ),
       ),
       body: ChangeNotifierProvider<EventListViewmodel>.value(
@@ -312,8 +392,8 @@ class _EventScreenState extends State<EventScreen> {
                                       shrinkWrap: true,
                                       itemCount: eventListViewmodel
                                           .EventList.data!.data!.length,
-                                      itemBuilder:
-                                          (BuildContext context, int itemIndex) {
+                                      itemBuilder: (BuildContext context,
+                                          int itemIndex) {
                                         return createAppointmentListContainer(
                                             context, itemIndex);
                                       }),
@@ -323,8 +403,8 @@ class _EventScreenState extends State<EventScreen> {
                           ),
                         )
                       : RefreshIndicator(
-                        onRefresh: refresh,
-                        child: Stack(
+                          onRefresh: refresh,
+                          child: Stack(
                             children: [
                               SingleChildScrollView(
                                 physics: BouncingScrollPhysics(),
@@ -333,7 +413,8 @@ class _EventScreenState extends State<EventScreen> {
                                   child: Container(
                                     height: 74.h,
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: [
@@ -379,7 +460,7 @@ class _EventScreenState extends State<EventScreen> {
                               ),
                             ],
                           ),
-                      );
+                        );
               }
             },
           )),

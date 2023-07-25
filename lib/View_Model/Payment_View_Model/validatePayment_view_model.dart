@@ -2,9 +2,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../Repository/Payment_Repository/validatePayment_repository.dart';
 import '../../utils/utils.dart';
+import '../Services/SharePreference/SharePreference.dart';
 
 class ValidatePaymentViewModel with ChangeNotifier {
   final _myRepo = ValidatePaymentRepository();
+  UserPreferences userPreference = UserPreferences();
 
   bool _loading = false;
   bool get loading => _loading;
@@ -22,7 +24,12 @@ class ValidatePaymentViewModel with ChangeNotifier {
 
       if (value['status'] == true) {
         Utils.snackBar('OTP Send Successfully', context);
-
+        userPreference.getUserData().then((value) {
+          data = value!;
+          print('data1');
+          print(data);
+          print('data1');
+        });
         // Timer(
         //     Duration(seconds: 2),
         //     () =>

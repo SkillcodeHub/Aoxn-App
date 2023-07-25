@@ -26,6 +26,9 @@ class _ReportScreenState extends State<ReportScreen> {
   late String mobile;
   bool isLoading = false;
   ReportViewmodel reportViewmodel = ReportViewmodel();
+  late Map<String, dynamic> data;
+  late String data1;
+  late Future<void> fetchDataFuture;
 
   @override
   void initState() {
@@ -40,9 +43,20 @@ class _ReportScreenState extends State<ReportScreen> {
         token = value!;
       });
     });
+    userPreference.getUserData().then((value) {
+      setState(() {
+        data = value!;
+        print('data1');
+        print(data);
+        print('data1');
+      });
+    });
+
     // setState(() {});
     // super.initState();
     super.initState();
+    fetchDataFuture = fetchData(); // Call the API only once
+
     // final bookAppointmentViewModel =
     //     Provider.of<BookAppointmentViewModel>(context, listen: false);
   }
@@ -159,13 +173,28 @@ class _ReportScreenState extends State<ReportScreen> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    print(
-        'rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr');
+  Future<void> fetchData() async {
     Timer(Duration(microseconds: 20), () {
       reportViewmodel.fetchReportsListApi(token, mobile);
+
+      final settingsViewModel =
+          Provider.of<SettingsViewModel>(context, listen: false);
+
+      ;
+
+      settingsViewModel.fetchDoctorDetailsListApi(token);
     });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final settingsViewModel =
+        Provider.of<SettingsViewModel>(context, listen: false);
+    // print(
+    //     'rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr');
+    // Timer(Duration(microseconds: 20), () {
+    //   reportViewmodel.fetchReportsListApi(token, mobile);
+    // });
     Future refresh() async {
       Timer(Duration(microseconds: 20), () {
         reportViewmodel.fetchReportsListApi(token, mobile);
@@ -176,26 +205,84 @@ class _ReportScreenState extends State<ReportScreen> {
       backgroundColor: BackgroundColor,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(7.h),
-        child: AppBar(
-          automaticallyImplyLeading: false,
-          centerTitle: false,
-          backgroundColor: Color(0xffffffff),
-          elevation: 0,
-          title: Padding(
-            padding: const EdgeInsets.only(top: 5.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                AxonIconForAppBarrWidget(),
-                ScreenNameWidget(
-                  title: 'Recent Precription',
+        child: FutureBuilder<void>(
+          future: fetchDataFuture,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (snapshot.hasError) {
+              return Center(
+                child: Text('Error occurred: ${snapshot.error}'),
+              );
+            } else {
+              // Render the UI with the fetched data
+              return ChangeNotifierProvider<SettingsViewModel>.value(
+                value: settingsViewModel,
+                child: Consumer<SettingsViewModel>(
+                  builder: (context, value, _) {
+                    switch (value.doctorDetailsList.status!) {
+                      case Status.LOADING:
+                        return Center(child: Container());
+                      case Status.ERROR:
+                        return Center(
+                            child: Text(
+                                value.doctorDetailsList.message.toString()));
+                      case Status.COMPLETED:
+                        return settingsViewModel.doctorDetailsList.data!
+                                    .data![0].paymentGatewayEnabled
+                                    .toString() ==
+                                'true'
+                            ? AppBar(
+                                automaticallyImplyLeading: false,
+                                centerTitle: false,
+                                backgroundColor: Color(0xffffffff),
+                                elevation: 0,
+                                title: Padding(
+                                  padding: const EdgeInsets.only(top: 5.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      AxonIconForAppBarrWidget(),
+                                      ScreenNameWidget(
+                                        title: '  Recent Precription',
+                                      ),
+                                      WhatsappWidget(),
+                                      PaymentWidget(),
+                                      SettingsWidget(),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            : AppBar(
+                                automaticallyImplyLeading: false,
+                                centerTitle: false,
+                                backgroundColor: Color(0xffffffff),
+                                elevation: 0,
+                                title: Padding(
+                                  padding: const EdgeInsets.only(top: 5.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      AxonIconForAppBarrWidget(),
+                                      ScreenNameWidget(
+                                        title: '  Notice Board',
+                                      ),
+                                      WhatsappWidget(),
+                                      SettingsWidget(),
+                                    ],
+                                  ),
+                                ),
+                              );
+                    }
+                  },
                 ),
-                WhatsappWidget(),
-                // PaymentWidget(),
-                SettingsWidget(),
-              ],
-            ),
-          ),
+              );
+            }
+          },
         ),
       ),
       body: ChangeNotifierProvider<ReportViewmodel>.value(

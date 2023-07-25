@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:axonweb/View_Model/Book_View_Model/Book_view_Model.dart';
 import 'package:axonweb/View_Model/NewsDetails_View_model/newsdetails_view_model.dart';
 import 'package:axonweb/data/response/status.dart';
 import 'package:flutter/material.dart';
@@ -353,6 +354,8 @@ class _NewsScreenState extends State<NewsScreen> {
   Widget build(BuildContext context) {
     print('ParthParthParth');
     final newsViewmodel = Provider.of<NewsViewmodel>(context, listen: false);
+    final settingsViewModel =
+        Provider.of<SettingsViewModel>(context, listen: false);
 
     // Timer(Duration(microseconds: 20), () {
     //   newsViewmodel.fetchNewsListApi(token);
@@ -362,31 +365,93 @@ class _NewsScreenState extends State<NewsScreen> {
     Future refresh() async {
       newsViewmodel.fetchNewsListApi(token, letId.toString());
     }
+// print(object)
+    // final doctorNameProvider =
+    //     Provider.of<DoctorNameProvider>(context, listen: false);
 
+    // doctorNameProvider.resetData();
     return Scaffold(
       backgroundColor: BackgroundColor,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(7.h),
-        child: AppBar(
-          automaticallyImplyLeading: false,
-          centerTitle: false,
-          backgroundColor: Color(0xffffffff),
-          elevation: 0,
-          title: Padding(
-            padding: const EdgeInsets.only(top: 5.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                AxonIconForAppBarrWidget(),
-                ScreenNameWidget(
-                  title: '  Notice Board',
+        child: FutureBuilder<void>(
+          future: fetchDataFuture,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (snapshot.hasError) {
+              return Center(
+                child: Text('Error occurred: ${snapshot.error}'),
+              );
+            } else {
+              // Render the UI with the fetched data
+              return ChangeNotifierProvider<SettingsViewModel>.value(
+                value: settingsViewModel,
+                child: Consumer<SettingsViewModel>(
+                  builder: (context, value, _) {
+                    switch (value.doctorDetailsList.status!) {
+                      case Status.LOADING:
+                        return Center(child: Container());
+                      case Status.ERROR:
+                        return Center(
+                            child: Text(
+                                value.doctorDetailsList.message.toString()));
+                      case Status.COMPLETED:
+                        return settingsViewModel.doctorDetailsList.data!
+                                    .data![0].paymentGatewayEnabled
+                                    .toString() ==
+                                'true'
+                            ? AppBar(
+                                automaticallyImplyLeading: false,
+                                centerTitle: false,
+                                backgroundColor: Color(0xffffffff),
+                                elevation: 0,
+                                title: Padding(
+                                  padding: const EdgeInsets.only(top: 5.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      AxonIconForAppBarrWidget(),
+                                      ScreenNameWidget(
+                                        title: '  Notice Board',
+                                      ),
+                                      WhatsappWidget(),
+                                      PaymentWidget(),
+                                      SettingsWidget(),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            : AppBar(
+                                automaticallyImplyLeading: false,
+                                centerTitle: false,
+                                backgroundColor: Color(0xffffffff),
+                                elevation: 0,
+                                title: Padding(
+                                  padding: const EdgeInsets.only(top: 5.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      AxonIconForAppBarrWidget(),
+                                      ScreenNameWidget(
+                                        title: '  Notice Board',
+                                      ),
+                                      WhatsappWidget(),
+                                      SettingsWidget(),
+                                    ],
+                                  ),
+                                ),
+                              );
+                    }
+                  },
                 ),
-                WhatsappWidget(),
-                PaymentWidget(),
-                SettingsWidget(),
-              ],
-            ),
-          ),
+              );
+            }
+          },
         ),
       ),
       body: FutureBuilder<void>(

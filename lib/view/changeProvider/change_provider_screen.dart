@@ -612,11 +612,16 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                                               .setLoading(
                                                                   false);
 
-                                                          // customerTkenViewmodel
-                                                          //     .fetchCustomerTokenApi(
-                                                          //         context,
-                                                          //         providerList[index]['token']
-                                                          //             .toString());
+                                                          final doctorNameProvider =
+                                                              Provider.of<
+                                                                      DoctorNameProvider>(
+                                                                  context,
+                                                                  listen:
+                                                                      false);
+
+                                                          doctorNameProvider
+                                                              .resetData();
+
                                                           Timer(
                                                               Duration(
                                                                   seconds: 1),
