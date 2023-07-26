@@ -327,7 +327,7 @@ class _EventScreenState extends State<EventScreen> {
                                     children: [
                                       AxonIconForAppBarrWidget(),
                                       ScreenNameWidget(
-                                        title: '  Notice Board',
+                                        title: '  Events',
                                       ),
                                       WhatsappWidget(),
                                       PaymentWidget(),

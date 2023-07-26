@@ -85,14 +85,14 @@ class InitiatePaymentViewModel with ChangeNotifier {
       // Utils.flushBarErrorMessage(
       //     'Otp is Valid'.toString(), Duration(seconds: 5), context);
 
-      if (value['status'] == true) {
+      if (value['status'] == false) {
         // Utils.snackBar('Appointment Book Successfully', context);
         print(value);
 
         var options = {
           'key': 'rzp_test_8aGQyjie2ef5rn',
           // 'key': value['data']['razorpayKey'],
-          'order_id': value['data']['razorpayOrderId'],
+          // 'order_id': value['data']['razorpayOrderId'],
 
           'amount': (int.parse(data['amount']) * 100).toString(), // Rs 200
           'name': data['name'],

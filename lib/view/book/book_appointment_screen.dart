@@ -193,7 +193,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                     children: [
                                       AxonIconForAppBarrWidget(),
                                       ScreenNameWidget(
-                                        title: '  Notice Board',
+                                        title: '  Book Appointment',
                                       ),
                                       WhatsappWidget(),
                                       SettingsWidget(),

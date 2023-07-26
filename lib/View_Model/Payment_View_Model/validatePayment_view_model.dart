@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -25,23 +27,31 @@ class ValidatePaymentViewModel with ChangeNotifier {
     await _myRepo.validatePaymentUserapi(data).then((value) {
       setLoading(false);
 
-      if (value['status'] == true) {
+      if (value['status'] == false) {
         // Utils.snackBar('', context);
         final settingsViewModel =
-            Provider.of<SettingsViewModel>(context, listen: false);
+            Provider.of<SettingsViewModel>(context,listen: false);
+          final bookAppointmentViewModel =
+              Provider.of<BookAppointmentViewModel>(context, listen: false);
+              late Map<String, dynamic> data1;
         if (settingsViewModel
                 .doctorDetailsList.data!.data![0].isAdvanceBookingRequired
                 .toString() ==
             'true') {
           userPreference.getUserData().then((value) {
-            data = value!;
+          //  data1 = value!;
+           data1=value!;
             print('data1');
-            print(data);
+            print(data1);
             print('data1');
           });
-          final bookAppointmentViewModel =
-              Provider.of<BookAppointmentViewModel>(context);
-          bookAppointmentViewModel.bookApointmentApi(data, context);
+                                                              Timer(Duration(microseconds: 20), () {
+                                                                print('qqqq');
+                                                             print(data1['CaseNo'].toString());
+                                                             print('qqqqqqqq');
+          bookAppointmentViewModel.bookApointmentApi(data1, context);
+      });
+
         }
 
         // Timer(

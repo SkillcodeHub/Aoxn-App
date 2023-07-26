@@ -269,7 +269,7 @@ class _ReportScreenState extends State<ReportScreen> {
                                     children: [
                                       AxonIconForAppBarrWidget(),
                                       ScreenNameWidget(
-                                        title: '  Notice Board',
+                                        title: '  Recent Precription',
                                       ),
                                       WhatsappWidget(),
                                       SettingsWidget(),

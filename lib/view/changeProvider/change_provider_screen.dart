@@ -991,6 +991,49 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               onPressed: () {
+                final newsViewmodel = 
+                                                              Provider.of<
+                                                                      NewsViewmodel>(
+                                                                  context,
+                                                                  listen:
+                                                                      false);
+
+                                                          newsViewmodel
+                                                              .setLoading(
+                                                                  false);
+
+                                                          final doctorListViewmodel =
+                                                              Provider.of<
+                                                                      DoctorListViewmodel>(
+                                                                  context,
+                                                                  listen:
+                                                                      false);
+
+                                                          doctorListViewmodel
+                                                              .setLoading(
+                                                                  false);
+
+                                                          final settingsViewModel =
+                                                              Provider.of<
+                                                                      SettingsViewModel>(
+                                                                  context,
+                                                                  listen:
+                                                                      false);
+
+                                                          settingsViewModel
+                                                              .setLoading(
+                                                                  false);
+
+                                                          final doctorNameProvider =
+                                                              Provider.of<
+                                                                      DoctorNameProvider>(
+                                                                  context,
+                                                                  listen:
+                                                                      false);
+
+                                                          doctorNameProvider
+                                                              .resetData();
+
                 customerTokenByQRViewmodel.fetchCustomerTokenByQR(
                   context,
                   appCode.toString(),
