@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 import 'package:flutter_html_to_pdf/flutter_html_to_pdf.dart';
+import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'package:flutter/material.dart';
@@ -17,42 +18,133 @@ class ReportDetailsScreen extends StatefulWidget {
 
 class _ReportDetailsScreenState extends State<ReportDetailsScreen> {
   String? cfData;
-  convert(String cfData, String name) async {
-    var targetPath = await _localPath;
-    if (targetPath == null) {
-      print("Error: Local path is null.");
-      return;
+  int fileIndex = 0; // Add this variable to keep track of the file index
+
+  // convert(String cfData, String name) async {
+  //   var targetPath = await _localPath;
+  //   if (targetPath == null) {
+  //     print("Error: Local path is null.");
+  //     return;
+  //   }
+
+  //   var currentTime = DateTime.now().millisecondsSinceEpoch;
+  //   var random = Random().nextInt(10000);
+  //   var targetFileName = '$name-$currentTime-$random';
+
+  //   var generatedPdfFile = await FlutterHtmlToPdf.convertFromHtmlContent(
+  //       cfData, targetPath, targetFileName);
+
+  //   if (generatedPdfFile == null) {
+  //     print("Error: Failed to generate PDF file.");
+  //     return;
+  //   }
+
+  //   // Check if the target directory exists before writing the file
+  //   final file = File(generatedPdfFile.path);
+  //   if (!file.existsSync()) {
+  //     print("Error: Target directory does not exist.");
+  //     return;
+  //   }
+
+  //   final bytes = await file.readAsBytes();
+
+  //   // Save the PDF file to disk
+  //   final downloadDirectory = await _getDownloadDirectory();
+  //   final pdfFile = File('${downloadDirectory!.path}/$name.pdf');
+  //   await pdfFile.writeAsBytes(bytes);
+
+  //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+  //     content: Text('PDF file downloaded'),
+  //   ));
+  // }
+
+  // Future<String?> get _localPath async {
+  //   Directory? directory;
+  //   try {
+  //     if (Platform.isIOS) {
+  //       directory = await getApplicationSupportDirectory();
+  //     } else {
+  //       // if platform is android
+  //       directory = Directory('/storage/emulated/0/Download');
+  //       if (!await directory.exists()) {
+  //         directory = await getExternalStorageDirectory();
+  //       }
+  //     }
+  //   } catch (err, stack) {
+  //     print("Can-not get download folder path");
+  //   }
+  //   return directory?.path;
+  // }
+
+  // // Future<Directory?> _getDownloadDirectory() async {
+  // //   if (Platform.isAndroid) {
+  // //     return Directory('/storage/emulated/0/Download');
+  // //   } else {
+  // //     return await getDownloadsDirectory();
+  // //   }
+  // // }
+
+void downloadPdf() async {
+  // String cfData = "<html><body><h1>Sample HTML Content</h1></body></html>"; // Replace this with your actual HTML content
+ String name = "RXreport"; // Replace this with the desired base file name
+
+    // Append the file index to the name to make each file unique
+
+    try {
+      String? targetPath = await _localPath;
+      if (targetPath == null) {
+        print("Error: Local path is null.");
+        return;
+      }
+
+      var currentTime = DateTime.now().millisecondsSinceEpoch;
+        DateTime now = DateTime.now();
+
+  String timeFormatted = DateFormat('HH:mm:ss').format(now);
+
+      var random = Random().nextInt(10000);
+    // String fileName = '$name-${fileIndex++}.pdf';
+        String fileName = '$name-${timeFormatted}.pdf';
+
+      var targetFileName = '$fileName-$currentTime-$random';
+
+      var generatedPdfFile = await FlutterHtmlToPdf.convertFromHtmlContent(
+        cfData!,
+        targetPath,
+        targetFileName,
+      );
+
+      if (generatedPdfFile == null) {
+        print("Error: Failed to generate PDF file.");
+        return;
+      }
+
+      final file = File(generatedPdfFile.path);
+      if (!file.existsSync()) {
+        print("Error: Target file does not exist.");
+        return;
+      }
+
+      final bytes = await file.readAsBytes();
+
+      // Save the PDF file to disk
+      final downloadDirectory = await _getDownloadDirectory();
+      if (downloadDirectory != null) {
+        final pdfFile = File('${downloadDirectory.path}/$fileName');
+        if (!pdfFile.parent.existsSync()) {
+          pdfFile.parent.createSync(recursive: true); // Create the parent directory if it doesn't exist
+        }
+        await pdfFile.writeAsBytes(bytes);
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('PDF file downloaded'),
+          ),
+        );
+      }
+    } catch (e) {
+      print("Error while generating or downloading the PDF file: $e");
     }
-
-    var currentTime = DateTime.now().millisecondsSinceEpoch;
-    var random = Random().nextInt(10000);
-    var targetFileName = '$name-$currentTime-$random';
-
-    var generatedPdfFile = await FlutterHtmlToPdf.convertFromHtmlContent(
-        cfData, targetPath, targetFileName);
-
-    if (generatedPdfFile == null) {
-      print("Error: Failed to generate PDF file.");
-      return;
-    }
-
-    // Check if the target directory exists before writing the file
-    final file = File(generatedPdfFile.path);
-    if (!file.existsSync()) {
-      print("Error: Target directory does not exist.");
-      return;
-    }
-
-    final bytes = await file.readAsBytes();
-
-    // Save the PDF file to disk
-    final downloadDirectory = await _getDownloadDirectory();
-    final pdfFile = File('${downloadDirectory!.path}/$name.pdf');
-    await pdfFile.writeAsBytes(bytes);
-
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text('PDF file downloaded'),
-    ));
   }
 
   Future<String?> get _localPath async {
@@ -75,11 +167,15 @@ class _ReportDetailsScreenState extends State<ReportDetailsScreen> {
 
   Future<Directory?> _getDownloadDirectory() async {
     if (Platform.isAndroid) {
-      return Directory('/storage/emulated/0/Download');
+      return await getExternalStorageDirectory();
+    } else if (Platform.isIOS) {
+      return await getApplicationDocumentsDirectory();
     } else {
-      return await getDownloadsDirectory();
+      print("Error: Unsupported platform.");
+      return null;
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -118,9 +214,10 @@ class _ReportDetailsScreenState extends State<ReportDetailsScreen> {
                   ),
                 ),
                 InkWell(
-                  onTap: () async {
+                  onTap: ()  {
                     // onPressed: () async {
-                    await convert(cfData!, "File Name");
+                    // await downloadPdf;
+                    downloadPdf();
                     // },
                     // Navigator.push(context,
                     //     MaterialPageRoute(builder: (context) => html_to_pdf()));
@@ -213,6 +310,7 @@ class _ReportDetailsScreenState extends State<ReportDetailsScreen> {
       ),
     );
   }
+  
 }
 
   // convert(String cfData, String name) async {
