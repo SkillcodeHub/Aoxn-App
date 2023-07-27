@@ -27,7 +27,7 @@ class ValidatePaymentViewModel with ChangeNotifier {
     await _myRepo.validatePaymentUserapi(data).then((value) {
       setLoading(false);
 
-      if (value['status'] == false) {
+      if (value['status'] == true) {
         // Utils.snackBar('', context);
         final settingsViewModel =
             Provider.of<SettingsViewModel>(context,listen: false);
