@@ -1,11 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-
-import '../../View/event/event_screen.dart';
 import '../../View_Model/Book_View_Model/cancelAppointment_view_model.dart';
 import '../../View_Model/Services/SharePreference/SharePreference.dart';
 
@@ -46,7 +43,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
     super.initState();
   }
 
-  showAlertDialog(BuildContext context) {
+  void showAlertDialog(BuildContext context) {
     final cancelAppointmentViewModel =
         Provider.of<CancelAppointmentViewModel>(context, listen: false);
     // set up the buttons
@@ -105,7 +102,11 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return alert;
+        return Container(
+          height: 300,
+          width: 100,
+          child: alert,
+        );
       },
     );
   }

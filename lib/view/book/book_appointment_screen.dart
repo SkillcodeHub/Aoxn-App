@@ -1,6 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:axonweb/View_Model/Book_View_Model/Book_view_Model.dart';
+import 'package:axonweb/View_Model/Book_View_Model/advanceBookAppointment_view_model.dart';
+import 'package:axonweb/View_Model/Payment_View_Model/customerPayHead_view_model.dart';
+import 'package:axonweb/View_Model/Payment_View_Model/initiatePayment_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +21,6 @@ import '../../res/components/appbar/axonimage_appbar-widget.dart';
 import '../../res/components/appbar/screen_name_widget.dart';
 import '../../res/components/appbar/settings_widget.dart';
 import '../../res/components/appbar/whatsapp_widget.dart';
-import '../PaymentHistory/payment_history_screen.dart';
 import '../SelectAppointmentDate/selectappointmentdate_screen.dart';
 import '../SelectPateint/selectpateint_screen.dart';
 
@@ -53,6 +55,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
   String? displayGender;
   String CaseNo = "";
   String PatType = "";
+  bool? isSubscriptionExpired;
 
   bool isFirstLoad = true; // Flag to track the first API call
   late Future<void> fetchDataFuture;
@@ -154,53 +157,55 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                             child: Text(
                                 value.doctorDetailsList.message.toString()));
                       case Status.COMPLETED:
-                        return settingsViewModel.doctorDetailsList.data!
-                                    .data![0].paymentGatewayEnabled
-                                    .toString() ==
-                                'true'
-                            ? AppBar(
-                                automaticallyImplyLeading: false,
-                                centerTitle: false,
-                                backgroundColor: Color(0xffffffff),
-                                elevation: 0,
-                                title: Padding(
-                                  padding: const EdgeInsets.only(top: 5.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      AxonIconForAppBarrWidget(),
-                                      ScreenNameWidget(
-                                        title: '  Book Appointment',
-                                      ),
-                                      WhatsappWidget(),
-                                      PaymentWidget(),
-                                      SettingsWidget(),
-                                    ],
-                                  ),
+                        return
+
+                            // settingsViewModel.doctorDetailsList.data!
+                            //             .data![0].paymentGatewayEnabled
+                            //             .toString() ==
+                            //         'true'
+                            //     ? AppBar(
+                            //         automaticallyImplyLeading: false,
+                            //         centerTitle: false,
+                            //         backgroundColor: Color(0xffffffff),
+                            //         elevation: 0,
+                            //         title: Padding(
+                            //           padding: const EdgeInsets.only(top: 5.0),
+                            //           child: Row(
+                            //             mainAxisAlignment:
+                            //                 MainAxisAlignment.spaceBetween,
+                            //             children: [
+                            //               AxonIconForAppBarrWidget(),
+                            //               ScreenNameWidget(
+                            //                 title: '  Book Appointment',
+                            //               ),
+                            //               WhatsappWidget(),
+                            //               PaymentWidget(),
+                            //               SettingsWidget(),
+                            //             ],
+                            //           ),
+                            //         ),
+                            //       )
+                            //     :
+                            AppBar(
+                          automaticallyImplyLeading: false,
+                          centerTitle: false,
+                          backgroundColor: Color(0xffffffff),
+                          elevation: 0,
+                          title: Padding(
+                            padding: const EdgeInsets.only(top: 5.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                AxonIconForAppBarrWidget(),
+                                ScreenNameWidget(
+                                  title: '  Book Appointment',
                                 ),
-                              )
-                            : AppBar(
-                                automaticallyImplyLeading: false,
-                                centerTitle: false,
-                                backgroundColor: Color(0xffffffff),
-                                elevation: 0,
-                                title: Padding(
-                                  padding: const EdgeInsets.only(top: 5.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      AxonIconForAppBarrWidget(),
-                                      ScreenNameWidget(
-                                        title: '  Book Appointment',
-                                      ),
-                                      WhatsappWidget(),
-                                      SettingsWidget(),
-                                    ],
-                                  ),
-                                ),
-                              );
+                                WhatsappWidget(),
+                                SettingsWidget(),
+                              ],
+                            ),
+                          ),
+                        );
                     }
                   },
                 ),
@@ -278,6 +283,17 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                       .data![0]
                                                       .customerContact
                                                       .toString();
+                                                  isSubscriptionExpired = value
+                                                      .doctorDetailsList
+                                                      .data!
+                                                      .data![0]
+                                                      .isSubscriptionExpired;
+
+                                                  print(
+                                                      'isSubscriptionExpiredisSubscriptionExpiredisSubscriptionExpired');
+                                                  print(isSubscriptionExpired);
+                                                  print(
+                                                      'isSubscriptionExpiredisSubscriptionExpiredisSubscriptionExpired');
                                                   return Stack(
                                                     children: [
                                                       Container(
@@ -486,17 +502,6 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                   DropdownButton<
                                                                       String>(
                                                                 isDense: true,
-                                                                // hint: Text(
-                                                                //   "Select Doctor",
-                                                                //   style: TextStyle(
-                                                                //       fontSize:
-                                                                //           15.sp,
-                                                                //       fontWeight:
-                                                                //           FontWeight
-                                                                //               .w500,
-                                                                //       color: Colors
-                                                                //           .black),
-                                                                // ),
                                                                 value:
                                                                     selectedDocotrId,
                                                                 onChanged: (String?
@@ -863,7 +868,13 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                   height: 5.h,
                                                   child: ElevatedButton(
                                                     onPressed: () {
-                                                      if (displayDate.isEmpty) {
+                                                      if (isSubscriptionExpired ==
+                                                          true) {
+                                                        Utils.snackBar(
+                                                            'Oops Sorry! Operation cannot be performed at this moment. Please contact your doctor to use this feature!',
+                                                            context);
+                                                      } else if (displayDate
+                                                          .isEmpty) {
                                                         Utils.snackBar(
                                                             'Please Select Appointment Date',
                                                             context);
@@ -928,7 +939,9 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                             builder:
                                                                 (BuildContext
                                                                     context) {
-                                                              return PaymentSheet();
+                                                              return PaymentSheet(
+                                                                  arguments:
+                                                                      data);
                                                             },
                                                           );
                                                         } else {
@@ -976,15 +989,135 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                   height: 5.h,
                                                   child: ElevatedButton(
                                                     onPressed: () {
-                                                      setState(() {
-                                                        displayDate = '';
-                                                        displayTimeSlot = '';
-                                                        displaytimingId = '';
-                                                        displayPatientName =
-                                                            'Select Patient';
-                                                        displayBirthDate = '';
-                                                        displayGender = '';
-                                                      });
+                                                      // showDialog(
+                                                      //   context: context,
+                                                      //   builder: (context) {
+                                                      //     return AlertDialog(
+                                                      //       icon: Image.asset(
+                                                      //         'images/congratulations.png',
+                                                      //         height: 15.h,
+                                                      //       ),
+                                                      //       title: Text(
+                                                      //         'Congratulations!',
+                                                      //         style: TextStyle(
+                                                      //             fontSize:
+                                                      //                 15.sp,
+                                                      //             fontWeight:
+                                                      //                 FontWeight
+                                                      //                     .bold),
+                                                      //       ),
+                                                      //       content: Text(
+                                                      //         'Appointment Booked Successfully.',
+                                                      //         style: TextStyle(
+                                                      //             // fontWeight:
+                                                      //             //     FontWeight
+                                                      //             //         .bold,
+                                                      //             fontSize:
+                                                      //                 12.sp),
+                                                      //       ),
+                                                      //       actions: <Widget>[
+                                                      //         SizedBox(
+                                                      //           width: 80.w,
+                                                      //           child:
+                                                      //               ElevatedButton(
+                                                      //             child: Text(
+                                                      //               'CONTINUE',
+                                                      //               style: TextStyle(
+                                                      //                   fontSize: 14
+                                                      //                       .sp,
+                                                      //                   fontWeight:
+                                                      //                       FontWeight.bold),
+                                                      //             ),
+                                                      //             onPressed:
+                                                      //                 () {
+                                                      //               Timer(
+                                                      //                   Duration(
+                                                      //                       seconds:
+                                                      //                           1),
+                                                      //                   () => Navigator.push(
+                                                      //                       context,
+                                                      //                       MaterialPageRoute(
+                                                      //                           builder: (context) => MyNavigationBar(
+                                                      //                                 indexNumber: 2,
+                                                      //                               ))));
+                                                      //             },
+                                                      //           ),
+                                                      //         ),
+                                                      //       ],
+                                                      //     );
+                                                      //   },
+                                                      // );
+
+                                                      // showDialog(
+                                                      //   context: context,
+                                                      //   builder: (context) {
+                                                      //     return AlertDialog(
+                                                      //       title: Text(
+                                                      //         'Alert!',
+                                                      //         style: TextStyle(
+                                                      //             fontSize:
+                                                      //                 15.sp,
+                                                      //             fontWeight:
+                                                      //                 FontWeight
+                                                      //                     .bold),
+                                                      //         textAlign:
+                                                      //             TextAlign
+                                                      //                 .center,
+                                                      //       ),
+                                                      //       content: Text(
+                                                      //         'Appointment booking failed. Please try to contact in Clinic.',
+                                                      //         style: TextStyle(
+                                                      //             fontWeight:
+                                                      //                 FontWeight
+                                                      //                     .bold,
+                                                      //             fontSize:
+                                                      //                 12.sp),
+                                                      //         textAlign:
+                                                      //             TextAlign
+                                                      //                 .center,
+                                                      //       ),
+                                                      //       actions: <Widget>[
+                                                      //         SizedBox(
+                                                      //           width: 80.w,
+                                                      //           child:
+                                                      //               ElevatedButton(
+                                                      //             child: Text(
+                                                      //               'CONTINUE',
+                                                      //               style: TextStyle(
+                                                      //                   fontSize: 14
+                                                      //                       .sp,
+                                                      //                   fontWeight:
+                                                      //                       FontWeight.bold),
+                                                      //             ),
+                                                      //             onPressed:
+                                                      //                 () {
+                                                      //               Timer(
+                                                      //                   Duration(
+                                                      //                       seconds:
+                                                      //                           1),
+                                                      //                   () => Navigator.push(
+                                                      //                       context,
+                                                      //                       MaterialPageRoute(
+                                                      //                           builder: (context) => MyNavigationBar(
+                                                      //                                 indexNumber: 2,
+                                                      //                               ))));
+                                                      //             },
+                                                      //           ),
+                                                      //         ),
+                                                      //       ],
+                                                      //     );
+                                                      //   },
+                                                      // );
+
+                                                      // setState(() {
+                                                      //   displayDate = '';
+                                                      //   displayTimeSlot = '';
+                                                      //   displaytimingId = '';
+                                                      //   displayPatientName =
+                                                      //       'Select Patient';
+                                                      //   displayBirthDate = '';
+                                                      //   displayGender = '';
+                                                      // });
                                                     },
                                                     child: Text(
                                                       'RESET',
@@ -1091,6 +1224,436 @@ class ImageSkelton extends StatelessWidget {
         color: Colors.black.withOpacity(0.04),
         borderRadius: BorderRadius.all(
           Radius.circular(16),
+        ),
+      ),
+    );
+  }
+}
+
+class PaymentSheet extends StatefulWidget {
+  final Map<String, dynamic> arguments;
+
+  const PaymentSheet({Key? key, required this.arguments}) : super(key: key);
+
+  @override
+  State<PaymentSheet> createState() => _PaymentSheetState();
+}
+
+class _PaymentSheetState extends State<PaymentSheet> {
+  String? genderValue;
+  final formKey = GlobalKey<FormState>();
+  bool _enableBtn = false;
+  bool agree = false;
+  final FocusNode _nodeAmount = FocusNode();
+  final FocusNode _nodeEmail = FocusNode();
+  TextEditingController strAmount = TextEditingController();
+  TextEditingController strEmail = TextEditingController();
+  late String token;
+  late String mobile;
+  late String name;
+  late String letId;
+
+  UserPreferences userPreference = UserPreferences();
+  String selectedPayHeadIndex =
+      'Consultation'; // Index of the selected payHead, initially set to -1
+
+  CustomerPayHeadViewmodel customerPayHeadViewmodel =
+      CustomerPayHeadViewmodel();
+
+  InitiatePaymentViewModel initiatePaymentViewModel =
+      InitiatePaymentViewModel();
+  AdvanceBookAppointmentViewModel advanceBookAppointmentViewModel =
+      AdvanceBookAppointmentViewModel();
+  SettingsViewModel settingsViewModel = SettingsViewModel();
+
+  @override
+  void initState() {
+    userPreference.getToken().then((value) {
+      setState(() {
+        token = value!;
+        print(token);
+      });
+    });
+    userPreference.getMobile().then((value) {
+      setState(() {
+        mobile = value!;
+        print(token);
+      });
+    });
+    userPreference.getName().then((value) {
+      setState(() {
+        name = value!;
+        print(token);
+      });
+    });
+    userPreference.getletId().then((value) {
+      setState(() {
+        letId = value!;
+        print(token);
+      });
+    });
+
+    super.initState();
+    Timer(Duration(microseconds: 20), () {
+      print(token);
+      customerPayHeadViewmodel.fetchCustomerPayHeadListApi(token.toString());
+    });
+  }
+
+  void makePayment() async {
+    _nodeAmount.unfocus();
+    _nodeEmail.unfocus();
+    print(
+        'argumentsargumentsargumentsargumentsargumentsargumentsargumentsargumentsargumentsarguments');
+    print(widget.arguments['CaseNo']);
+    print(widget.arguments['Gender']);
+    print(widget.arguments['PatType']);
+    print(widget.arguments['ApptDate']);
+    print(widget.arguments['DeviceId']);
+    print(widget.arguments['DoctorId']);
+    print(widget.arguments['TimingId']);
+    print(name);
+    print(mobile);
+    print(strEmail.text.toString());
+    print(token.toString());
+    print(selectedPayHeadIndex.toString());
+    print(
+        'argumentsargumentsargumentsargumentsargumentsargumentsargumentsargumentsargumentsarguments');
+    Map<String, dynamic> data = {
+      "CaseNo": widget.arguments['CaseNo'],
+      "Name": name.toString(),
+      "Mobile": mobile.toString(),
+      "Email": strEmail.text.toString(),
+      "Gender": widget.arguments['Gender'],
+      "PatType": widget.arguments['PatType'],
+      "ApptDate": widget.arguments['ApptDate'],
+      "CustomerToken": token.toString(),
+      "DelayMinute": widget.arguments[
+          'DelayMinute'], //DelayMinutes from minuteInterval form slot timing selection
+      "DeviceId": widget.arguments['DeviceId'],
+      "DoctorId": widget.arguments['DoctorId'],
+      "TimingId":
+          widget.arguments['TimingId'], //TimingId from slot timing selection
+      "AppointmentPaymentHead": selectedPayHeadIndex.toString(),
+      "Amount": strAmount.text,
+      "LAT": letId.toString(),
+
+      // "customerId": settingsViewModel
+      //     .doctorDetailsList.data!.data![0].customerId
+      //     .toString(),
+
+      // "mobile": mobile.toString(),
+      // "patientId": '1647895',
+      // "caseNo": '20731',
+      // "name": name,
+      // "email": strEmail.text.toString(),
+      // "payHead": selectedPayHeadIndex.toString(),
+      // "amount": '200',
+      // "customerToken": token.toString(),
+      // "lat": letId.toString(),
+    };
+    // initiatePaymentViewModel.initiatePaymentApi(data, context);
+    advanceBookAppointmentViewModel.advancebookappointmentapi(data, context);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    settingsViewModel.fetchDoctorDetailsListApi(token.toString());
+
+    return Scaffold(
+      // persistentFooterAlignment: AlignmentDirectional.centerEnd,
+      backgroundColor: Colors.transparent,
+      body: SizedBox(
+        height: 100.h,
+        // alignment: Alignment.bottomCenter,
+        child: DraggableScrollableSheet(
+          initialChildSize: 0.84,
+          maxChildSize: 0.84,
+          minChildSize: 0.84,
+          builder: (BuildContext context, ScrollController scrollController) {
+            return Container(
+              margin: EdgeInsets.only(left: 4.sp, right: 4.sp, bottom: 4.sp),
+              padding: EdgeInsets.all(8.sp),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.sp),
+                color: Colors.white,
+              ),
+              child: ListView(
+                controller: scrollController,
+                children: [
+                  Form(
+                    key: formKey,
+                    onChanged: () => setState(
+                        () => _enableBtn = formKey.currentState!.validate()),
+                    child: Column(
+                      children: [
+                        Container(
+                          height: MediaQuery.of(context).size.height * 0.57,
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Select Payment Reason',
+                                    style: TextStyle(
+                                      fontSize: 18.sp,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Icon(
+                                      Icons.close,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.02,
+                              ),
+                              ChangeNotifierProvider<CustomerPayHeadViewmodel>(
+                                create: (BuildContext context) =>
+                                    customerPayHeadViewmodel,
+                                child: Consumer<CustomerPayHeadViewmodel>(
+                                  builder: (context, value, _) {
+                                    switch (value.CustomerPayHeadList.status!) {
+                                      case Status.LOADING:
+                                        return Center(
+                                          child: CircularProgressIndicator(),
+                                        );
+                                      case Status.ERROR:
+                                        return Center(
+                                          child: Text(value
+                                              .CustomerPayHeadList.message
+                                              .toString()),
+                                        );
+                                      case Status.COMPLETED:
+                                        return Container(
+                                          // height: 30.h,
+                                          width: 90.w,
+                                          child: SingleChildScrollView(
+                                            physics:
+                                                AlwaysScrollableScrollPhysics(),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: ListView.builder(
+                                                // physics:
+                                                //     NeverScrollableScrollPhysics(), // Disable scrolling
+                                                shrinkWrap: true,
+                                                itemCount:
+                                                    customerPayHeadViewmodel
+                                                        .CustomerPayHeadList
+                                                        .data!
+                                                        .data!
+                                                        .length,
+                                                itemBuilder:
+                                                    (BuildContext context,
+                                                        index) {
+                                                  return Column(
+                                                    children: [
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Text(
+                                                            customerPayHeadViewmodel
+                                                                .CustomerPayHeadList
+                                                                .data!
+                                                                .data![index]
+                                                                .payHead
+                                                                .toString(),
+                                                            style: TextStyle(
+                                                              fontSize: 13.sp,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                            ),
+                                                          ),
+                                                          Radio<String>(
+                                                            value: customerPayHeadViewmodel
+                                                                .CustomerPayHeadList
+                                                                .data!
+                                                                .data![index]
+                                                                .payHead
+                                                                .toString(),
+                                                            groupValue:
+                                                                selectedPayHeadIndex
+                                                                    .toString(),
+                                                            onChanged: (value) {
+                                                              setState(() {
+                                                                selectedPayHeadIndex =
+                                                                    value!;
+                                                                print(
+                                                                    'selectedPayHeadIndex:');
+                                                                strAmount.text = customerPayHeadViewmodel
+                                                                    .CustomerPayHeadList
+                                                                    .data!
+                                                                    .data![
+                                                                        index]
+                                                                    .defaultAmount
+                                                                    .toString();
+                                                                print(
+                                                                  customerPayHeadViewmodel
+                                                                      .CustomerPayHeadList
+                                                                      .data!
+                                                                      .data![
+                                                                          index]
+                                                                      .defaultAmount
+                                                                      .toString(),
+                                                                );
+                                                                print(
+                                                                    selectedPayHeadIndex);
+                                                              });
+                                                            },
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      Container(
+                                                        color: Colors.black,
+                                                        height: 1,
+                                                      )
+                                                    ],
+                                                  );
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                    }
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          child: Column(
+                            children: [
+                              TextFormField(
+                                focusNode: _nodeAmount,
+                                controller: strAmount,
+                                keyboardType: TextInputType.number,
+                                validator: (value) => value!.isEmpty
+                                    ? "Please enter Amount"
+                                    : null,
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                textInputAction: TextInputAction.next,
+                                decoration: InputDecoration(
+                                  hintText: 'Amount',
+                                ),
+                              ),
+                              TextFormField(
+                                focusNode: _nodeEmail,
+                                controller: strEmail,
+                                keyboardType: TextInputType.text,
+                                validator: (value) => value!.isEmpty
+                                    ? "Please enter email"
+                                    : null,
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                textInputAction: TextInputAction.next,
+                                decoration: InputDecoration(
+                                  hintText: 'Email Id',
+                                ),
+                              ),
+                              Row(
+                                children: [
+                                  Checkbox(
+                                    value: agree,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        agree = value ?? false;
+                                      });
+                                    },
+                                  ),
+                                  Text(
+                                    'I accept  ',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 12.sp,
+                                    ),
+                                  ),
+                                  InkWell(
+                                    onTap: () async {
+                                      final url = settingsViewModel
+                                          .doctorDetailsList
+                                          .data!
+                                          .data![0]
+                                          .termsLink
+                                          .toString();
+                                      if (await canLaunch(url)) {
+                                        await launch(url);
+                                      } else {
+                                        throw 'Could not launch $url';
+                                      }
+                                    },
+                                    child: Text(
+                                      'terms and conditions',
+                                      style: TextStyle(
+                                        color: Color(0xFFFD5722),
+                                        fontSize: 12.sp,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Spacer(),
+                                  Container(
+                                    height: 28.sp,
+                                    width: 40.w,
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        if (!agree) {
+                                          Utils.snackBar(
+                                              'Please select terms & conditions',
+                                              context);
+                                        } else if (!_enableBtn) {
+                                          Utils.snackBar(
+                                              'Please select terms & conditions',
+                                              context);
+                                        } else {
+                                          makePayment();
+                                        }
+                                      },
+                                      child: Text(
+                                        'START PAYMENT',
+                                        style: TextStyle(
+                                          fontSize: 11.sp,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      style: ElevatedButton.styleFrom(
+                                        primary: _enableBtn
+                                            ? Color(0xFFFD5722)
+                                            : Colors.grey,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: MediaQuery.of(context).viewInsets.bottom),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

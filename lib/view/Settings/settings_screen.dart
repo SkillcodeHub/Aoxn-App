@@ -1,15 +1,14 @@
+import 'package:axonweb/View/PaymentHistory/payment_history_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:axonweb/Utils/routes/routes_name.dart';
 import 'package:axonweb/View_Model/Settings_View_Model/settings_view_model.dart';
 import 'package:axonweb/data/response/status.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../Res/Components/Appbar/screen_name_widget.dart';
 import '../../Res/Components/loader.dart';
 import '../../Res/colors.dart';
 import '../../View_Model/Services/SharePreference/SharePreference.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -254,6 +253,49 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                           ),
                                         ],
                                       ),
+                                    ),
+                                  ),
+                                  SizedBox(height: 1.h),
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  PaymentHistory()));
+                                    },
+                                    child: Card(
+                                      color: Colors.white,
+                                      child: Padding(
+                                          padding: EdgeInsets.all(12.0),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Container(
+                                                child: Row(
+                                                  children: [
+                                                    Icon(Icons.history),
+                                                    SizedBox(
+                                                      width: 3.w,
+                                                    ),
+                                                    Text(
+                                                      'Show Payment History',
+                                                      style: TextStyle(
+                                                        fontSize: 12.sp,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Icon(
+                                                Icons.arrow_forward_ios,
+                                                size: 2.2.h,
+                                              ),
+                                            ],
+                                          )),
                                     ),
                                   ),
                                   SizedBox(height: 1.h),

@@ -63,4 +63,12 @@ class AppUrl {
 
   //  validate app user Url
   static var validatePaymentUrl = baseUrl + "payment/razorpay/validate-payment";
+
+  //  advance book Appointment Url
+  static var advancebookAppointmentUrl =
+      baseUrl + "BookAppointment/OrderAppointment";
+
+  //  advance book Appointment Url
+  static var confirmPaidAppointmentUrl =
+      baseUrl + "BookAppointment/ConfirmPaidAppointment";
 }

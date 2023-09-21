@@ -65,6 +65,9 @@ dependencies:
   pdf_viewer_plugin: ^2.0.1
   syncfusion_flutter_pdfviewer: ^20.1.58-beta
   firebase_crashlytics: ^3.3.4
+  googleapis: ^5.0.0
+  googleapis_auth: ^1.4.1
+  google_sign_in: ^6.1.4
 
 dev_dependencies:
   flutter_test:

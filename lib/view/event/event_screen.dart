@@ -310,53 +310,54 @@ class _EventScreenState extends State<EventScreen> {
                             child: Text(
                                 value.doctorDetailsList.message.toString()));
                       case Status.COMPLETED:
-                        return settingsViewModel.doctorDetailsList.data!
-                                    .data![0].paymentGatewayEnabled
-                                    .toString() ==
-                                'true'
-                            ? AppBar(
-                                automaticallyImplyLeading: false,
-                                centerTitle: false,
-                                backgroundColor: Color(0xffffffff),
-                                elevation: 0,
-                                title: Padding(
-                                  padding: const EdgeInsets.only(top: 5.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      AxonIconForAppBarrWidget(),
-                                      ScreenNameWidget(
-                                        title: '  Events',
-                                      ),
-                                      WhatsappWidget(),
-                                      PaymentWidget(),
-                                      SettingsWidget(),
-                                    ],
-                                  ),
+                        return
+                            //  settingsViewModel.doctorDetailsList.data!
+                            //             .data![0].paymentGatewayEnabled
+                            //             .toString() ==
+                            //         'true'
+                            //     ? AppBar(
+                            //         automaticallyImplyLeading: false,
+                            //         centerTitle: false,
+                            //         backgroundColor: Color(0xffffffff),
+                            //         elevation: 0,
+                            //         title: Padding(
+                            //           padding: const EdgeInsets.only(top: 5.0),
+                            //           child: Row(
+                            //             mainAxisAlignment:
+                            //                 MainAxisAlignment.spaceBetween,
+                            //             children: [
+                            //               AxonIconForAppBarrWidget(),
+                            //               ScreenNameWidget(
+                            //                 title: '  Events',
+                            //               ),
+                            //               WhatsappWidget(),
+                            //               PaymentWidget(),
+                            //               SettingsWidget(),
+                            //             ],
+                            //           ),
+                            //         ),
+                            //       )
+                            //     :
+                            AppBar(
+                          automaticallyImplyLeading: false,
+                          centerTitle: false,
+                          backgroundColor: Color(0xffffffff),
+                          elevation: 0,
+                          title: Padding(
+                            padding: const EdgeInsets.only(top: 5.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                AxonIconForAppBarrWidget(),
+                                ScreenNameWidget(
+                                  title: '  Events',
                                 ),
-                              )
-                            : AppBar(
-                                automaticallyImplyLeading: false,
-                                centerTitle: false,
-                                backgroundColor: Color(0xffffffff),
-                                elevation: 0,
-                                title: Padding(
-                                  padding: const EdgeInsets.only(top: 5.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      AxonIconForAppBarrWidget(),
-                                      ScreenNameWidget(
-                                        title: '  Events',
-                                      ),
-                                      WhatsappWidget(),
-                                      SettingsWidget(),
-                                    ],
-                                  ),
-                                ),
-                              );
+                                WhatsappWidget(),
+                                SettingsWidget(),
+                              ],
+                            ),
+                          ),
+                        );
                     }
                   },
                 ),

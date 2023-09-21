@@ -1,29 +1,31 @@
-import 'package:axonweb/View_Model/Payment_View_Model/validatePayment_view_model.dart';
+import 'package:axonweb/Repository/Book_Repository/advanceBookAppointment_repository.dart';
+import 'package:axonweb/View_Model/Book_View_Model/confirmPaidAppointment_View_Model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
-import '../../Repository/Payment_Repository/initiatePayment_repository.dart';
-import '../../Utils/utils.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import '../../Utils/utils.dart';
 
-class InitiatePaymentViewModel with ChangeNotifier {
+class AdvanceBookAppointmentViewModel with ChangeNotifier {
   late Razorpay _razorpay;
 
-  final _myRepo = InitiatePaymentRepository();
+  final _myRepo = AdvanceBookAppointmentRepository();
   dynamic userData;
 
-  bool _isLoading = false;
-  bool get isLoading => _isLoading;
+  bool _UpLoading = false;
+  bool get UpLoading => _UpLoading;
 
-  setisLoading(bool value) {
-    _isLoading = value;
+  setLoading(bool value) {
+    _UpLoading = value;
     notifyListeners();
   }
 
-  Future<void> initiatePaymentApi(dynamic data, BuildContext context) async {
-    ValidatePaymentViewModel validatePaymentViewModel =
-        ValidatePaymentViewModel();
+  Future<void> advancebookappointmentapi(
+      dynamic data, BuildContext context) async {
+    ConfirmPaidAppointmentViewModel confirmPaidAppointmentViewModel =
+        ConfirmPaidAppointmentViewModel();
     userData = data;
+
     void _handlePaymentSuccess(PaymentSuccessResponse response) {
       print("++++++============");
       print("paymentId: ${response.paymentId}");
@@ -31,12 +33,12 @@ class InitiatePaymentViewModel with ChangeNotifier {
       print("signature: ${response.signature}");
 
       Map paymentData = {
-        'customerId': '99999999',
-        'razorpayOrderId': response.orderId.toString(),
-        'razorpayPaymentId': response.paymentId.toString(),
-        'razorpaySignature': response.signature.toString(),
-        'customerToken': userData['customerToken'],
-        'lat': userData['lat'],
+        //   'customerId': '99999999',
+        'RazorpayOrderId': response.orderId.toString(),
+        'RazorpayPaymentId': response.paymentId.toString(),
+        'RazorpaySignature': response.signature.toString(),
+        'CustomerToken': userData['CustomerToken'],
+        'LAT': userData['LAT'],
       };
 
       print(response.orderId.toString());
@@ -44,11 +46,12 @@ class InitiatePaymentViewModel with ChangeNotifier {
         response.paymentId.toString(),
       );
       print(response.signature.toString());
-      print(userData['customerToken']);
-      print(userData['lat']);
+      print(userData['CustomerToken']);
+      print(userData['LAT']);
 
-      validatePaymentViewModel.validatePaymentApi(paymentData, context);
-
+      // validatePaymentViewModel.validatePaymentApi(paymentData, context);
+      confirmPaidAppointmentViewModel.confirmPaidAppointmentApi(
+          paymentData, context);
       Fluttertoast.showToast(
           msg: "SUCCESS PAYMENT: ${response.paymentId}", timeInSecForIosWeb: 4);
     }
@@ -64,41 +67,54 @@ class InitiatePaymentViewModel with ChangeNotifier {
           msg: "EXTERNAL_WALLET IS: ${response.walletName}",
           timeInSecForIosWeb: 4);
     }
-    // bool _loading = false;
-    // bool get loading => _loading;
-    // setLoading(bool value) {
-    //   _loading = value;
-    //   notifyListeners();
-    // }
 
     _razorpay = Razorpay();
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+    setLoading(true);
     print('datadatadatadatadatadatadatadatadatadata');
     print(data);
+
     print('datadatadatadatadatadatadatadatadatadatadatadata');
-    setisLoading(true);
-    _myRepo.initiatePaymentApi(data).then((value) {
-      setisLoading(false);
+    Map data1 = {
+      "CaseNo": data['CaseNo'],
+      "Name": data['Name'],
+      "Mobile": data['Mobile'],
+      "Email": data['Email'],
+      "Gender": data['Gender'],
+      "PatType": data['PatType'],
+      "ApptDate": data['ApptDate'],
+      "CustomerToken": data['CustomerToken'],
+      "DelayMinute": data['DelayMinute'],
+      "DeviceId": data['DeviceId'],
+      "DoctorId": data['DoctorId'],
+      "TimingId": data['TimingId'],
+      "AppointmentPaymentHead": data['AppointmentPaymentHead'],
+      "Amount": data['Amount'],
+    };
+    _myRepo.advancebookappointmentapi(data1).then((value) {
       // Utils.flushBarErrorMessage(
       //     'Otp is Valid'.toString(), Duration(seconds: 5), context);
-
+      print('valuevaluevaluevaluevaluevaluevaluevalue');
+      print(value);
+      print(value['data']['razorPayOrder']['razorpayOrderId'].toString());
+      print(data['Name']);
+      print('valuevaluevaluevaluevaluevaluevaluevalue');
       if (value['status'] == true) {
-        // Utils.snackBar('Appointment Book Successfully', context);
-        print(value);
-
+        setLoading(false);
         var options = {
           'key': 'rzp_test_8aGQyjie2ef5rn',
           // 'key': value['data']['razorpayKey'],
-          'order_id': value['data']['razorpayOrderId'],
+          'order_id':
+              value['data']['razorPayOrder']['razorpayOrderId'].toString(),
 
-          'amount': (int.parse(data['amount']) * 100).toString(), // Rs 200
-          'name': data['name'],
+          'amount': (int.parse(data['Amount']) * 100).toString(), // Rs 200
+          'name': data['Name'],
           'description': 'User Payment Request',
           'prefill': {
-            'contact': data['mobile'],
-            'email': data['email'],
+            'contact': data['Mobile'],
+            'email': data['Email'],
           }
         };
 

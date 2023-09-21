@@ -670,13 +670,20 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                                       MainAxisAlignment
                                                           .spaceBetween,
                                                   children: [
-                                                    Text(
-                                                      outputList[index]
-                                                              ['doctorName']
-                                                          .toString(),
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold),
+                                                    Container(
+                                                      width: 80.w,
+                                                      child: Text(
+                                                        outputList[index]
+                                                                ['doctorName']
+                                                            .toString(),
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        maxLines: 1,
+                                                      ),
                                                     ),
                                                     token ==
                                                             outputList[index]
@@ -991,48 +998,25 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               onPressed: () {
-                final newsViewmodel = 
-                                                              Provider.of<
-                                                                      NewsViewmodel>(
-                                                                  context,
-                                                                  listen:
-                                                                      false);
+                final newsViewmodel =
+                    Provider.of<NewsViewmodel>(context, listen: false);
 
-                                                          newsViewmodel
-                                                              .setLoading(
-                                                                  false);
+                newsViewmodel.setLoading(false);
 
-                                                          final doctorListViewmodel =
-                                                              Provider.of<
-                                                                      DoctorListViewmodel>(
-                                                                  context,
-                                                                  listen:
-                                                                      false);
+                final doctorListViewmodel =
+                    Provider.of<DoctorListViewmodel>(context, listen: false);
 
-                                                          doctorListViewmodel
-                                                              .setLoading(
-                                                                  false);
+                doctorListViewmodel.setLoading(false);
 
-                                                          final settingsViewModel =
-                                                              Provider.of<
-                                                                      SettingsViewModel>(
-                                                                  context,
-                                                                  listen:
-                                                                      false);
+                final settingsViewModel =
+                    Provider.of<SettingsViewModel>(context, listen: false);
 
-                                                          settingsViewModel
-                                                              .setLoading(
-                                                                  false);
+                settingsViewModel.setLoading(false);
 
-                                                          final doctorNameProvider =
-                                                              Provider.of<
-                                                                      DoctorNameProvider>(
-                                                                  context,
-                                                                  listen:
-                                                                      false);
+                final doctorNameProvider =
+                    Provider.of<DoctorNameProvider>(context, listen: false);
 
-                                                          doctorNameProvider
-                                                              .resetData();
+                doctorNameProvider.resetData();
 
                 customerTokenByQRViewmodel.fetchCustomerTokenByQR(
                   context,

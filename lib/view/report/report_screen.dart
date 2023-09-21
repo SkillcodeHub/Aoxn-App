@@ -1,10 +1,8 @@
 import 'dart:async';
-
 import 'package:axonweb/View_Model/Report_View_Model/report_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-import '../../Res/Components/Appbar/payment_widget.dart';
 import '../../Res/colors.dart';
 import '../../Utils/routes/routes_name.dart';
 import '../../View_Model/Settings_View_Model/settings_view_model.dart';
@@ -230,53 +228,54 @@ class _ReportScreenState extends State<ReportScreen> {
                             child: Text(
                                 value.doctorDetailsList.message.toString()));
                       case Status.COMPLETED:
-                        return settingsViewModel.doctorDetailsList.data!
-                                    .data![0].paymentGatewayEnabled
-                                    .toString() ==
-                                'true'
-                            ? AppBar(
-                                automaticallyImplyLeading: false,
-                                centerTitle: false,
-                                backgroundColor: Color(0xffffffff),
-                                elevation: 0,
-                                title: Padding(
-                                  padding: const EdgeInsets.only(top: 5.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      AxonIconForAppBarrWidget(),
-                                      ScreenNameWidget(
-                                        title: '  Recent Precription',
-                                      ),
-                                      WhatsappWidget(),
-                                      PaymentWidget(),
-                                      SettingsWidget(),
-                                    ],
-                                  ),
+                        return
+                            //  settingsViewModel.doctorDetailsList.data!
+                            //             .data![0].paymentGatewayEnabled
+                            //             .toString() ==
+                            //         'true'
+                            //     ? AppBar(
+                            //         automaticallyImplyLeading: false,
+                            //         centerTitle: false,
+                            //         backgroundColor: Color(0xffffffff),
+                            //         elevation: 0,
+                            //         title: Padding(
+                            //           padding: const EdgeInsets.only(top: 5.0),
+                            //           child: Row(
+                            //             mainAxisAlignment:
+                            //                 MainAxisAlignment.spaceBetween,
+                            //             children: [
+                            //               AxonIconForAppBarrWidget(),
+                            //               ScreenNameWidget(
+                            //                 title: '  Recent Precription',
+                            //               ),
+                            //               WhatsappWidget(),
+                            //               PaymentWidget(),
+                            //               SettingsWidget(),
+                            //             ],
+                            //           ),
+                            //         ),
+                            //       )
+                            //     :
+                            AppBar(
+                          automaticallyImplyLeading: false,
+                          centerTitle: false,
+                          backgroundColor: Color(0xffffffff),
+                          elevation: 0,
+                          title: Padding(
+                            padding: const EdgeInsets.only(top: 5.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                AxonIconForAppBarrWidget(),
+                                ScreenNameWidget(
+                                  title: '  Recent Precription',
                                 ),
-                              )
-                            : AppBar(
-                                automaticallyImplyLeading: false,
-                                centerTitle: false,
-                                backgroundColor: Color(0xffffffff),
-                                elevation: 0,
-                                title: Padding(
-                                  padding: const EdgeInsets.only(top: 5.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      AxonIconForAppBarrWidget(),
-                                      ScreenNameWidget(
-                                        title: '  Recent Precription',
-                                      ),
-                                      WhatsappWidget(),
-                                      SettingsWidget(),
-                                    ],
-                                  ),
-                                ),
-                              );
+                                WhatsappWidget(),
+                                SettingsWidget(),
+                              ],
+                            ),
+                          ),
+                        );
                     }
                   },
                 ),
@@ -297,8 +296,14 @@ class _ReportScreenState extends State<ReportScreen> {
                     child: Text(value.reportsList.message.toString()));
               case Status.COMPLETED:
                 print('providerNameproviderNameproviderNameproviderName');
-                print(reportViewmodel.reportsList.data!.data![1].providerName
-                    .toString());
+                // print(reportViewmodel.reportsList.data!.data![1].providerName
+                //     .toString());
+
+                print(
+                    '--------------------------------------------------------------------------------------');
+                print(reportViewmodel.reportsList.data!.data!.length);
+                print(
+                    '---------------------------------------------------------------------------------------');
                 return reportViewmodel.reportsList.data!.data!.length != 0
                     ? RefreshIndicator(
                         onRefresh: refresh,

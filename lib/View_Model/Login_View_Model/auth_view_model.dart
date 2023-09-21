@@ -1,15 +1,12 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../../Repository/Login_Repository/auth_repository.dart';
 import '../../utils/utils.dart';
 import '../../view/ChangeProvider/change_provider_screen.dart';
-import '../App_User_View_Model/register_appuser_view_model.dart';
 import '../Services/SharePreference/SharePreference.dart';
 
 class AuthViewModel with ChangeNotifier {
-  
   final _myRepo = AuthRepository();
 
   bool _loading = false;
@@ -87,9 +84,8 @@ class AuthViewModel with ChangeNotifier {
     print(data['birthDate']);
     print('wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww');
     setSignUpLoading(true);
-    _myRepo.otpverifyapi(otpVerifyData).then((value){
+    _myRepo.otpverifyapi(otpVerifyData).then((value) {
       setSignUpLoading(false);
-      
 
       if (value['status'] == true) {
         Utils.snackBar('Otp is Valid', context);

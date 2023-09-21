@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:axonweb/View_Model/Book_View_Model/Book_view_Model.dart';
 import 'package:axonweb/View_Model/NewsDetails_View_model/newsdetails_view_model.dart';
 import 'package:axonweb/data/response/status.dart';
 import 'package:flutter/material.dart';
@@ -399,53 +398,55 @@ class _NewsScreenState extends State<NewsScreen> {
                             child: Text(
                                 value.doctorDetailsList.message.toString()));
                       case Status.COMPLETED:
-                        return settingsViewModel.doctorDetailsList.data!
-                                    .data![0].paymentGatewayEnabled
-                                    .toString() ==
-                                'true'
-                            ? AppBar(
-                                automaticallyImplyLeading: false,
-                                centerTitle: false,
-                                backgroundColor: Color(0xffffffff),
-                                elevation: 0,
-                                title: Padding(
-                                  padding: const EdgeInsets.only(top: 5.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      AxonIconForAppBarrWidget(),
-                                      ScreenNameWidget(
-                                        title: '  Notice Board',
-                                      ),
-                                      WhatsappWidget(),
-                                      PaymentWidget(),
-                                      SettingsWidget(),
-                                    ],
-                                  ),
+                        return
+
+                            // settingsViewModel.doctorDetailsList.data!
+                            //             .data![0].paymentGatewayEnabled
+                            //             .toString() ==
+                            //         'true'
+                            //     ? AppBar(
+                            //         automaticallyImplyLeading: false,
+                            //         centerTitle: false,
+                            //         backgroundColor: Color(0xffffffff),
+                            //         elevation: 0,
+                            //         title: Padding(
+                            //           padding: const EdgeInsets.only(top: 5.0),
+                            //           child: Row(
+                            //             mainAxisAlignment:
+                            //                 MainAxisAlignment.spaceBetween,
+                            //             children: [
+                            //               AxonIconForAppBarrWidget(),
+                            //               ScreenNameWidget(
+                            //                 title: '  Notice Board',
+                            //               ),
+                            //               WhatsappWidget(),
+                            //               PaymentWidget(),
+                            //               SettingsWidget(),
+                            //             ],
+                            //           ),
+                            //         ),
+                            //       )
+                            // :
+                            AppBar(
+                          automaticallyImplyLeading: false,
+                          centerTitle: false,
+                          backgroundColor: Color(0xffffffff),
+                          elevation: 0,
+                          title: Padding(
+                            padding: const EdgeInsets.only(top: 5.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                AxonIconForAppBarrWidget(),
+                                ScreenNameWidget(
+                                  title: '  Notice Board',
                                 ),
-                              )
-                            : AppBar(
-                                automaticallyImplyLeading: false,
-                                centerTitle: false,
-                                backgroundColor: Color(0xffffffff),
-                                elevation: 0,
-                                title: Padding(
-                                  padding: const EdgeInsets.only(top: 5.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      AxonIconForAppBarrWidget(),
-                                      ScreenNameWidget(
-                                        title: '  Notice Board',
-                                      ),
-                                      WhatsappWidget(),
-                                      SettingsWidget(),
-                                    ],
-                                  ),
-                                ),
-                              );
+                                WhatsappWidget(),
+                                SettingsWidget(),
+                              ],
+                            ),
+                          ),
+                        );
                     }
                   },
                 ),
