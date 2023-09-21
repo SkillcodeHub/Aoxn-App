@@ -870,9 +870,58 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                     onPressed: () {
                                                       if (isSubscriptionExpired ==
                                                           true) {
-                                                        Utils.snackBar(
-                                                            'Oops Sorry! Operation cannot be performed at this moment. Please contact your doctor to use this feature!',
-                                                            context);
+                                                        showDialog(
+                                                            context: context,
+                                                            builder: (context) {
+                                                              return AlertDialog(
+                                                                title: Center(
+                                                                  child: Text(
+                                                                    'Alert!',
+                                                                    style: TextStyle(
+                                                                        fontSize: 15
+                                                                            .sp,
+                                                                        fontWeight:
+                                                                            FontWeight.bold),
+                                                                  ),
+                                                                ),
+                                                                content: Text(
+                                                                  " Oops Sorry! Operation cannot be performed at this moment. Please contact your doctor to use this feature!",
+                                                                  style: TextStyle(
+                                                                      // fontWeight:
+                                                                      //     FontWeight
+                                                                      //         .bold,
+                                                                      fontSize: 12.sp),
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .center,
+                                                                ),
+                                                                actions: <
+                                                                    Widget>[
+                                                                  SizedBox(
+                                                                    width: 80.w,
+                                                                    child:
+                                                                        ElevatedButton(
+                                                                      child:
+                                                                          Text(
+                                                                        'OK',
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                                14.sp,
+                                                                            fontWeight: FontWeight.bold),
+                                                                      ),
+                                                                      onPressed:
+                                                                          () {
+                                                                        Navigator.pop(
+                                                                            context);
+                                                                      },
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              );
+                                                            });
+                                                        // Utils.snackBar(
+                                                        //     'Oops Sorry! Operation cannot be performed at this moment. Please contact your doctor to use this feature!',
+                                                        //     context);
                                                       } else if (displayDate
                                                           .isEmpty) {
                                                         Utils.snackBar(
@@ -1109,15 +1158,15 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                       //   },
                                                       // );
 
-                                                      // setState(() {
-                                                      //   displayDate = '';
-                                                      //   displayTimeSlot = '';
-                                                      //   displaytimingId = '';
-                                                      //   displayPatientName =
-                                                      //       'Select Patient';
-                                                      //   displayBirthDate = '';
-                                                      //   displayGender = '';
-                                                      // });
+                                                      setState(() {
+                                                        displayDate = '';
+                                                        displayTimeSlot = '';
+                                                        displaytimingId = '';
+                                                        displayPatientName =
+                                                            'Select Patient';
+                                                        displayBirthDate = '';
+                                                        displayGender = '';
+                                                      });
                                                     },
                                                     child: Text(
                                                       'RESET',

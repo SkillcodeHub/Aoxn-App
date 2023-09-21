@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:convert';
+import 'package:axonweb/View/NevigationBar/my_navigationbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:intl/intl.dart';
@@ -29,7 +31,7 @@ class _EventScreenState extends State<EventScreen> {
   late String deviceId;
   EventListViewmodel eventListViewmodel = EventListViewmodel();
   late Future<void> fetchDataFuture;
-
+  String? messageCode;
   @override
   void initState() {
     userPreference.getToken().then((value) {
@@ -375,8 +377,67 @@ class _EventScreenState extends State<EventScreen> {
                   return Center(
                       child: Center(child: CircularProgressIndicator()));
                 case Status.ERROR:
-                  return Center(
-                      child: Html(data: value.EventList.message.toString()));
+                  print(
+                      'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+                  print(value.EventList.message.runtimeType);
+                  final splitedText = value.EventList.message
+                      .toString()
+                      .split('Invalid request');
+                  messageCode =
+                      json.decode(splitedText[1])['displayMessage'].toString();
+                  print(json.decode(splitedText[1])['displayMessage']);
+                  print(
+                      'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+
+                  return AlertDialog(
+                    title: Center(
+                      child: Text(
+                        'Alert!',
+                        style: TextStyle(
+                            fontSize: 15.sp, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    content: Text(
+                      messageCode.toString(),
+                      style: TextStyle(
+                          // fontWeight:
+                          //     FontWeight
+                          //         .bold,
+                          fontSize: 12.sp),
+                      textAlign: TextAlign.center,
+                    ),
+                    actions: <Widget>[
+                      SizedBox(
+                        width: 80.w,
+                        child: ElevatedButton(
+                          child: Text(
+                            'OK',
+                            style: TextStyle(
+                                fontSize: 14.sp, fontWeight: FontWeight.bold),
+                          ),
+                          onPressed: () {
+                            Timer(
+                                Duration(seconds: 1),
+                                () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => MyNavigationBar(
+                                              indexNumber: 0,
+                                            ))));
+                          },
+                        ),
+                      ),
+                    ],
+                  );
+
+                // Padding(
+                //   padding: const EdgeInsets.all(8.0),
+                //   child: Center(child: Text(messageCode.toString())),
+                // );
+
+                // Center(
+                //     child:
+                //         Html(data: value.EventList.message.toString()));
                 case Status.COMPLETED:
                   return eventListViewmodel.EventList.data!.data!.length != 0
                       ? RefreshIndicator(
