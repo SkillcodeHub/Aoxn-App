@@ -259,7 +259,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                               height: 1.h,
                             ),
                             Text(
-                              'Your Appointment is booked for:',
+                              'Your appointment is booked for:',
                               style: TextStyle(
                                 fontSize: 14.sp,
                               ),
@@ -268,7 +268,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                               height: 2.h,
                             ),
                             Text(
-                              'Provider',
+                              'Doctor',
                               style: TextStyle(
                                 fontSize: 14.sp,
                                 color: Colors.grey,
@@ -382,7 +382,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                               // height: 10,
                             ),
                             Text(
-                              'Your Appointment Status:',
+                              'Your appointment status:',
                               style: TextStyle(
                                 fontSize: 14.sp,
                               ),

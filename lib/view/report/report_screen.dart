@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:axonweb/View_Model/Report_View_Model/report_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import '../../Res/colors.dart';
@@ -27,6 +28,7 @@ class _ReportScreenState extends State<ReportScreen> {
   late Map<String, dynamic> data;
   late String data1;
   late Future<void> fetchDataFuture;
+  String? reportdate;
 
   @override
   void initState() {
@@ -60,6 +62,30 @@ class _ReportScreenState extends State<ReportScreen> {
   }
 
   createNewsListContainer(BuildContext context, int itemIndex) {
+   
+
+    String date =
+       reportViewmodel.reportsList.data!.data![itemIndex].visitDate
+                                .toString();
+       
+
+    DateTime parseDate = new DateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(date);
+    var inputDate = DateTime.parse(parseDate.toString());
+    var outputFormat = DateFormat('E d-MMMM-yyyy');
+    var outputFormat1 = DateFormat('E,yyyy');
+    var outputFormat2 = DateFormat('d MMM');
+    var outputFormat3 = DateFormat('hh:mm a');
+    var outputFormat4 = DateFormat('d-MM-yyyy');
+    var outputFormat5 = DateFormat('d-MMM-yyyy, hh:mm a');
+    // var outputFormat = DateFormat('MM/dd/yyyy hh:mm a');
+    var outputDate = outputFormat.format(inputDate);
+    var outputDate1 = outputFormat1.format(inputDate);
+    var outputDate2 = outputFormat2.format(inputDate);
+    var outputDate3 = outputFormat3.format(inputDate);
+    var outputDate4 = outputFormat4.format(inputDate);
+    var outputDate5 = outputFormat5.format(inputDate);
+    reportdate = outputDate5;
+    // print(outputDate5);
     return Column(
       children: [
         SizedBox(
@@ -74,9 +100,7 @@ class _ReportScreenState extends State<ReportScreen> {
               'patientName': reportViewmodel
                   .reportsList.data!.data![itemIndex].patientName
                   .toString(),
-              'date': reportViewmodel
-                  .reportsList.data!.data![itemIndex].visitDate
-                  .toString(),
+              'date': reportdate.toString(),
               'treatment': reportViewmodel
                   .reportsList.data!.data![itemIndex].treatment
                   .toString(),
@@ -119,9 +143,7 @@ class _ReportScreenState extends State<ReportScreen> {
                     children: [
                       Text(
                         'Updated on: ' +
-                            reportViewmodel
-                                .reportsList.data!.data![itemIndex].visitDate
-                                .toString(),
+                            reportdate.toString(),
                         style: TextStyle(
                             fontSize: 15, fontWeight: FontWeight.w500),
                         maxLines: 1,
@@ -136,9 +158,7 @@ class _ReportScreenState extends State<ReportScreen> {
                             'patientName': reportViewmodel
                                 .reportsList.data!.data![itemIndex].patientName
                                 .toString(),
-                            'date': reportViewmodel
-                                .reportsList.data!.data![itemIndex].visitDate
-                                .toString(),
+                            'date':  reportdate.toString(),
                             'treatment': reportViewmodel
                                 .reportsList.data!.data![itemIndex].treatment
                                 .toString(),

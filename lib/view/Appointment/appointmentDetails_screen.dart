@@ -222,7 +222,7 @@ showAlertDialog(BuildContext context) {
                             height: 1.h,
                           ),
                           Text(
-                            'Your Appointment is booked for:',
+                            'Your appointment is booked for:',
                             style: TextStyle(
                               fontSize: 14.sp,
                             ),
@@ -231,7 +231,7 @@ showAlertDialog(BuildContext context) {
                             height: 2.h,
                           ),
                           Text(
-                            'Provider',
+                            'Doctor',
                             style: TextStyle(
                               fontSize: 14.sp,
                               color: Colors.grey,
@@ -351,7 +351,7 @@ showAlertDialog(BuildContext context) {
                             // height: 10,
                           ),
                           Text(
-                            'Your Appointment Status:',
+                            'Your appointment status:',
                             style: TextStyle(
                               fontSize: 14.sp,
                             ),
