@@ -868,7 +868,18 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                   height: 5.h,
                                                   child: ElevatedButton(
                                                     onPressed: () {
-                                                      if (isSubscriptionExpired ==
+                                                      if (displayDate
+                                                          .isEmpty) {
+                                                        Utils.snackBar(
+                                                            'Please Select Appointment Date',
+                                                            context);
+                                                      } else if (displayPatientName ==
+                                                          'Select Patient') {
+                                                        Utils.snackBar(
+                                                            'Please Select Patient',
+                                                            context);
+                                                      } 
+                                                       else if (isSubscriptionExpired ==
                                                           true) {
                                                         showDialog(
                                                             context: context,
@@ -922,17 +933,8 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                         // Utils.snackBar(
                                                         //     'Oops Sorry! Operation cannot be performed at this moment. Please contact your doctor to use this feature!',
                                                         //     context);
-                                                      } else if (displayDate
-                                                          .isEmpty) {
-                                                        Utils.snackBar(
-                                                            'Please Select Appointment Date',
-                                                            context);
-                                                      } else if (displayPatientName ==
-                                                          'Select Patient') {
-                                                        Utils.snackBar(
-                                                            'Please Select Patient',
-                                                            context);
-                                                      } else {
+                                                      }
+                                                      else {
                                                         Map<String, dynamic>
                                                             data = {
                                                           "CaseNo":
