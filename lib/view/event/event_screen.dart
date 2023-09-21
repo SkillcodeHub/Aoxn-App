@@ -410,20 +410,29 @@ class _EventScreenState extends State<EventScreen> {
                       SizedBox(
                         width: 80.w,
                         child: ElevatedButton(
-                          child: Text(
+                          child:settingsViewModel.loading1 ? Container(
+                                                            child: Container(
+                                                                child:
+                                                                    CircularProgressIndicator(
+                                                            color: Colors.white,
+                                                            strokeWidth: 2.0,
+                                                          )))
+                                                        :  Text(
                             'OK',
                             style: TextStyle(
                                 fontSize: 14.sp, fontWeight: FontWeight.bold),
                           ),
                           onPressed: () {
-                            Timer(
-                                Duration(seconds: 1),
-                                () => Navigator.push(
+                            settingsViewModel.setLoading1(true);
+                           Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => MyNavigationBar(
                                               indexNumber: 0,
-                                            ))));
+                                            )));
+                                            // Timer(Duration(seconds: 5),() =>  settingsViewModel.setLoading1(true)) ;
+                                                                       
+
                           },
                         ),
                       ),

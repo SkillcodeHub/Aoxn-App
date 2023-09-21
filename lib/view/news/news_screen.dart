@@ -364,6 +364,8 @@ class _NewsScreenState extends State<NewsScreen> {
     Future refresh() async {
       newsViewmodel.fetchNewsListApi(token, letId.toString());
     }
+
+    settingsViewModel.setLoading1(false);
 // print(object)
     // final doctorNameProvider =
     //     Provider.of<DoctorNameProvider>(context, listen: false);
