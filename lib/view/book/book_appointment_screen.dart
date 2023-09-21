@@ -1253,6 +1253,9 @@ class _PaymentSheetState extends State<PaymentSheet> {
   late String name;
   late String letId;
 
+  int? amount;
+  double? amountFloat;
+
   UserPreferences userPreference = UserPreferences();
   String selectedPayHeadIndex =
       'Consultation'; // Index of the selected payHead, initially set to -1
@@ -1317,6 +1320,7 @@ class _PaymentSheetState extends State<PaymentSheet> {
     print(strEmail.text.toString());
     print(token.toString());
     print(selectedPayHeadIndex.toString());
+    print(amount.toString());
     print(
         'argumentsargumentsargumentsargumentsargumentsargumentsargumentsargumentsargumentsarguments');
     Map<String, dynamic> data = {
@@ -1335,7 +1339,7 @@ class _PaymentSheetState extends State<PaymentSheet> {
       "TimingId":
           widget.arguments['TimingId'], //TimingId from slot timing selection
       "AppointmentPaymentHead": selectedPayHeadIndex.toString(),
-      "Amount": strAmount.text,
+      "Amount": strAmount.text.toString(),
       "LAT": letId.toString(),
 
       // "customerId": settingsViewModel
@@ -1493,13 +1497,24 @@ class _PaymentSheetState extends State<PaymentSheet> {
                                                                     value!;
                                                                 print(
                                                                     'selectedPayHeadIndex:');
-                                                                strAmount.text = customerPayHeadViewmodel
+
+                                                                String rs = customerPayHeadViewmodel
                                                                     .CustomerPayHeadList
                                                                     .data!
                                                                     .data![
                                                                         index]
                                                                     .defaultAmount
                                                                     .toString();
+                                                                amountFloat =
+                                                                    double.parse(
+                                                                        rs.toString());
+                                                                amount =
+                                                                    amountFloat!
+                                                                        .toInt();
+
+                                                                strAmount.text =
+                                                                    amount
+                                                                        .toString();
                                                                 print(
                                                                   customerPayHeadViewmodel
                                                                       .CustomerPayHeadList
@@ -1509,6 +1524,7 @@ class _PaymentSheetState extends State<PaymentSheet> {
                                                                       .defaultAmount
                                                                       .toString(),
                                                                 );
+
                                                                 print(
                                                                     selectedPayHeadIndex);
                                                               });
