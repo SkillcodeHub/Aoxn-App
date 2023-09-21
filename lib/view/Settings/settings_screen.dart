@@ -256,48 +256,116 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     ),
                                   ),
                                   SizedBox(height: 1.h),
-                                  InkWell(
-                                    onTap: () {
-                                      Navigator.push(
+                                  Card(
+                                    color: Colors.white,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Your Payment Details',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.grey.shade600,
+                                            ),
+                                          ),
+                                          SizedBox(height: 2.h),
+                                          Row(
+                                            children: [
+                                              Container(
+                                                  height: 5.h,
+                                                  child: Icon(Icons.history,size: 4.h,),),
+                                              SizedBox(
+                                                width: 2.w,
+                                              ),
+                                              Container(
+                                                child: Text(' Payment History',style: TextStyle(fontSize: 13.sp,fontWeight: FontWeight.w500),),
+                                              )
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Container(height: 2),
+                                              Container(
+                                                height: 4.h,
+                                                width: 25.w,
+                                                child: ElevatedButton(
+                                                  onPressed: () {
+                                                      Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   PaymentHistory()));
-                                    },
-                                    child: Card(
-                                      color: Colors.white,
-                                      child: Padding(
-                                          padding: EdgeInsets.all(12.0),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Container(
-                                                child: Row(
-                                                  children: [
-                                                    Icon(Icons.history),
-                                                    SizedBox(
-                                                      width: 3.w,
+                                                  },
+                                                  child: Text(
+                                                    'VIEW',
+                                                    style: TextStyle(
+                                                      fontSize: 12.sp,
                                                     ),
-                                                    Text(
-                                                      'Show Payment History',
-                                                      style: TextStyle(
-                                                        fontSize: 12.sp,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                      ),
-                                                    ),
-                                                  ],
+                                                  ),
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                    backgroundColor:
+                                                        Color(0xFFFD5722),
+                                                  ),
                                                 ),
                                               ),
-                                              Icon(
-                                                Icons.arrow_forward_ios,
-                                                size: 2.2.h,
-                                              ),
                                             ],
-                                          )),
+                                          ),
+                                          SizedBox(height: 3),
+                                        ],
+                                      ),
                                     ),
                                   ),
+                                
+                                  // InkWell(
+                                  //   onTap: () {
+                                  //     Navigator.push(
+                                  //         context,
+                                  //         MaterialPageRoute(
+                                  //             builder: (context) =>
+                                  //                 PaymentHistory()));
+                                  //   },
+                                  //   child: Card(
+                                  //     color: Colors.white,
+                                  //     child: Padding(
+                                  //         padding: EdgeInsets.all(12.0),
+                                  //         child: Row(
+                                  //           mainAxisAlignment:
+                                  //               MainAxisAlignment.spaceBetween,
+                                  //           children: [
+                                  //             Container(
+                                  //               child: Row(
+                                  //                 children: [
+                                  //                   Icon(Icons.history),
+                                  //                   SizedBox(
+                                  //                     width: 3.w,
+                                  //                   ),
+                                  //                   Text(
+                                  //                     'Show Payment History',
+                                  //                     style: TextStyle(
+                                  //                       fontSize: 12.sp,
+                                  //                       fontWeight:
+                                  //                           FontWeight.w500,
+                                  //                     ),
+                                  //                   ),
+                                  //                 ],
+                                  //               ),
+                                  //             ),
+                                  //             Icon(
+                                  //               Icons.arrow_forward_ios,
+                                  //               size: 2.2.h,
+                                  //             ),
+                                  //           ],
+                                  //         )),
+                                  //   ),
+                                  // ),
+                                
+                                
                                   SizedBox(height: 1.h),
                                   Card(
                                     color: Colors.white,
