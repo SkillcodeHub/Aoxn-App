@@ -9,7 +9,6 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../Res/Components/Appbar/payment_widget.dart';
 import '../../Res/Components/loader.dart';
 import '../../Res/colors.dart';
 import '../../Utils/utils.dart';
@@ -868,8 +867,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                   height: 5.h,
                                                   child: ElevatedButton(
                                                     onPressed: () {
-                                                      if (displayDate
-                                                          .isEmpty) {
+                                                      if (displayDate.isEmpty) {
                                                         Utils.snackBar(
                                                             'Please Select Appointment Date',
                                                             context);
@@ -878,8 +876,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                         Utils.snackBar(
                                                             'Please Select Patient',
                                                             context);
-                                                      } 
-                                                       else if (isSubscriptionExpired ==
+                                                      } else if (isSubscriptionExpired ==
                                                           true) {
                                                         showDialog(
                                                             context: context,
@@ -933,8 +930,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                         // Utils.snackBar(
                                                         //     'Oops Sorry! Operation cannot be performed at this moment. Please contact your doctor to use this feature!',
                                                         //     context);
-                                                      }
-                                                      else {
+                                                      } else {
                                                         Map<String, dynamic>
                                                             data = {
                                                           "CaseNo":
