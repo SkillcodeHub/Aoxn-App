@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import '../../Data/Response/api_response.dart';
 import '../../Model/CustomerToken_Model/customer_token.dart';
 import '../../Repository/Change_Provider_Repository/change_provider_repository.dart';
-import '../../Repository/News_Repository/repository.dart';
 import '../../View/NevigationBar/my_navigationbar.dart';
 import '../Services/SharePreference/SharePreference.dart';
 
@@ -102,12 +101,13 @@ class CustomerTokenByQRViewmodel with ChangeNotifier {
 
       Timer(
           Duration(seconds: 1),
-          () => Navigator.push(
+          () => Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(
                   builder: (context) => MyNavigationBar(
                         indexNumber: 0,
-                      ))));
+                      )),
+              (route) => false));
     }).onError((error, stackTrace) {
       setCustomerToken(ApiResponse.error(error.toString()));
     });

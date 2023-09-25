@@ -46,18 +46,23 @@ class SplashServices {
       token = value1;
       print('tokentokentokentokentokentokentoken');
       if (mobile == null && token == null) {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => LoginScreen()));
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => LoginScreen()),
+            (route) => false);
       } else if (mobile != null && token == null) {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => ChangeProviderScreen()));
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => ChangeProviderScreen()),
+            (route) => false);
       } else if (mobile != null && token != null) {
-        Navigator.push(
+        Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
                 builder: (context) => MyNavigationBar(
                       indexNumber: 0,
-                    )));
+                    )),
+            (route) => false);
       }
     }).onError((error, stackTrace) {
       if (kDebugMode) {

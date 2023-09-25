@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:axonweb/Provider/backButton_provider.dart';
 import 'package:axonweb/View/NevigationBar/my_navigationbar.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -28,6 +29,8 @@ class _EventScreenState extends State<EventScreen> {
   late String token;
   late String deviceId;
   EventListViewmodel eventListViewmodel = EventListViewmodel();
+  ButtonProvider buttonProvider = ButtonProvider();
+
   late Future<void> fetchDataFuture;
   String? messageCode;
   @override
@@ -44,6 +47,11 @@ class _EventScreenState extends State<EventScreen> {
     });
     // super.initState();
     super.initState();
+    print('ggggggggggggggggggggggggggggggggggggggggggggggg');
+    final buttonProvider = Provider.of<ButtonProvider>(context, listen: false);
+
+    print(buttonProvider.backk);
+    print('ggggggggggggggggggggggggggggggggggggggggggggggggggggggg');
     fetchDataFuture = fetchData(); // Call the API only once
   }
 

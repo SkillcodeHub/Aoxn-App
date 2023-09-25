@@ -35,7 +35,7 @@ class SettingsViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-bool _loading1 = false;
+  bool _loading1 = false;
   bool get loading1 => _loading1;
 
   setLoading1(bool value) {
@@ -43,6 +43,13 @@ bool _loading1 = false;
     notifyListeners();
   }
 
+  bool _backButton1 = false;
+  bool get backButton1 => _backButton1;
+
+  setBackButton1(bool value) {
+    _backButton1 = value;
+    notifyListeners();
+  }
 
   Future<void> fetchDoctorDetailsListApi(String token) async {
     setDoctorDetailsList(ApiResponse.loading());

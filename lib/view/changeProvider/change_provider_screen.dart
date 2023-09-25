@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:axonweb/Provider/backButton_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
@@ -31,7 +32,9 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
   CustomerTkenViewmodel customerTkenViewmodel = CustomerTkenViewmodel();
   CustomerTokenByQRViewmodel customerTokenByQRViewmodel =
       CustomerTokenByQRViewmodel();
-  bool? backButton;
+  SettingsViewModel settingsViewModel = SettingsViewModel();
+
+  // bool? backButton;
   String? token;
   String? deviceId;
   String? name;
@@ -94,9 +97,13 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
       });
     });
     super.initState();
+    print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
+    final buttonProvider = Provider.of<ButtonProvider>(context, listen: false);
+
+    print(buttonProvider.backk);
+    print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
     checkPermission(Permission.notification, context);
 
-    setState(() {});
     // fetchData();
     setState(() {
       print(showAlertDialog);
@@ -145,12 +152,25 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final buttonProvider = Provider.of<ButtonProvider>(context, listen: false);
+
+    print('nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn');
+
+    print(buttonProvider.backk);
+    print('nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn');
+    // setState(() {
+    //   final settingsViewModel =
+    //       Provider.of<SettingsViewModel>(context, listen: false);
+    //   // settingsViewModel.setBackButton1(true);
+    //   print('yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy');
+    //   print(settingsViewModel.backButton1);
+    //   print('yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy');
+    //   print('ParthParthParth');
+    // });
     print('userData');
     print(userData);
     print('userData');
-// print('storedUserData');
-// print(storedUserData);
-// print('storedUserData');
+
     Map data1 = {
       "platform": 'Mobile',
       "deviceId": deviceId.toString(),
@@ -162,18 +182,6 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
       "birthDate": birthDate.toString(),
     };
 
-// Map registerUserData = {
-//   "platform": "Mobile",
-//                                         "deviceId": '134DF283-87B1-498A-B07C-7BE43F9E9D21',
-//                                         "fullName":
-//                                            'parth',
-//                                         "mobile":
-//                                             '9316019087',
-//                                         "fcmToken": 'dwIUvw3_JEmMsTFaFhsG6B:APA91bHeqG_PLSnfojV9vyVF2eyZ9oWeeeqwCnTYkRSeUDDDv63hn3oL6VszRi2D0kMEsNCkAgoNnj0LAUW3QUV-ripWc3ZBlpf_MqzgbJAX3scbvz1jwjeOdQzbzq8EGiQD124texQ8',
-//                                         "gender": 'Male',
-//                                         "userType": '1',
-//                                         "birthDate":
-//                                             '',};
     final registerAppUserViewModel =
         Provider.of<RegisterAppUserViewModel>(context, listen: false);
 
@@ -241,494 +249,90 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
 
           print(outputList);
 
+          print('ParthParthParth');
+          // print('customerTkenViewmodel.backButton');
+          // print(settingsViewModel.backButton1);
+          // print('customerTkenViewmodel.backButton');
           return Scaffold(
-            backgroundColor: BackgroundColor,
-            appBar: PreferredSize(
-              preferredSize: Size.fromHeight(8.h),
-              child: getKeyForCallLetId == 'true'
-                  ? AppBar(
-                      automaticallyImplyLeading: false,
-                      centerTitle: false,
-                      elevation: 0,
-                      backgroundColor: Color(0xffffffff),
-                      leading: Padding(
-                        padding: EdgeInsets.only(top: 20),
-                        child: IconButton(
-                          color: Colors.black,
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          icon: Icon(Icons.arrow_back_rounded),
-                        ),
-                      ),
-                      title: Padding(
-                        padding: EdgeInsets.only(
-                          top: 16.0,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Change Provider",
-                              style: TextStyle(
+              backgroundColor: BackgroundColor,
+              appBar: PreferredSize(
+                preferredSize: Size.fromHeight(8.h),
+                child:
+                    // getKeyForCallLetId == 'true'
+                    buttonProvider.backk == true
+                        ? AppBar(
+                            automaticallyImplyLeading: false,
+                            centerTitle: false,
+                            elevation: 0,
+                            backgroundColor: Color(0xffffffff),
+                            leading: Padding(
+                              padding: EdgeInsets.only(top: 20),
+                              child: IconButton(
                                 color: Colors.black,
-                                fontSize: 17.sp,
+                                onPressed: () {
+                                  settingsViewModel.setBackButton1(false);
+
+                                  Navigator.pop(context);
+                                },
+                                icon: Icon(Icons.arrow_back_rounded),
                               ),
                             ),
-                          ],
-                        ),
-                      ),
-                    )
-                  : AppBar(
-                      automaticallyImplyLeading: false,
-                      centerTitle: false,
-                      elevation: 0,
-                      backgroundColor: Color(0xffffffff),
-                      title: Padding(
-                        padding: EdgeInsets.only(
-                          top: 16.0,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            AxonIconForAppBarrWidget(),
-                            Text(
-                              " Change Provider",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 17.sp,
+                            title: Padding(
+                              padding: EdgeInsets.only(
+                                top: 16.0,
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-            ),
-            body: providerList.length != 0
-                ? Stack(
-                    children: [
-                      SingleChildScrollView(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 1.h,
-                              ),
-                              Card(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(12.0))),
-                                elevation: 3,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(12.0),
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        height: 11.h,
-                                        child: Image(
-                                            image: AssetImage(
-                                                'images/doctor.png')),
-                                      ),
-                                      SizedBox(height: 1.h),
-                                      Container(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          'Select Hospital by: ',
-                                          style: TextStyle(
-                                            fontSize: 15.sp,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(height: 1.h),
-                                      InkWell(
-                                        onTap: () {
-                                          // _qrScanner();
-                                          // _qr();
-                                          _navigateAppcodeAndHospitalName(
-                                              context);
-                                        },
-                                        child: Row(
-                                          children: [
-                                            SizedBox(width: 2.w),
-                                            Container(
-                                              height: 5.h,
-                                              child: Image(
-                                                  image: AssetImage(
-                                                      'images/qr.png')),
-                                            ),
-                                            SizedBox(width: 4.w),
-                                            Container(
-                                              alignment: Alignment.centerLeft,
-                                              child: Text(
-                                                'SCANNING APP CODE',
-                                                style:
-                                                    TextStyle(fontSize: 15.sp),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      // SizedBox(height: 1.h),
-                                      Row(
-                                        children: [
-                                          Container(
-                                            height: 1,
-                                            width: 38.w,
-                                            color: Colors.black,
-                                          ),
-                                          SizedBox(width: 2.w),
-                                          Text('or'),
-                                          SizedBox(width: 2.w),
-                                          Container(
-                                            height: 1,
-                                            width: 38.w,
-                                            color: Colors.black,
-                                          ),
-                                        ],
-                                      ),
-                                      // SizedBox(height: 1.h),
-                                      InkWell(
-                                        onTap: () {
-                                          showDialog(
-                                              context: context,
-                                              builder: (context) {
-                                                return Container(
-                                                  child: AlertDialog(
-                                                    title: Text('Code'),
-                                                    content: TextField(
-                                                      focusNode: _nodeAppcode,
-                                                      controller: strAppcode,
-                                                      cursorColor:
-                                                          Color(0xFFFD5722),
-                                                      onChanged: (value) {},
-                                                      decoration:
-                                                          InputDecoration(
-                                                        hintText:
-                                                            'Write App Code',
-                                                      ),
-                                                      style: TextStyle(
-                                                          fontSize: 13.sp),
-                                                    ),
-                                                    actions: [
-                                                      TextButton(
-                                                          onPressed: () {
-                                                            Navigator.pop(
-                                                                context);
-                                                          },
-                                                          child: Text(
-                                                            'Cancel',
-                                                            style: TextStyle(
-                                                                fontSize: 14.sp,
-                                                                color: Color(
-                                                                    0xFFFD5722)),
-                                                          )),
-                                                      TextButton(
-                                                          onPressed: () {
-                                                            final newsViewmodel =
-                                                                Provider.of<
-                                                                        NewsViewmodel>(
-                                                                    context,
-                                                                    listen:
-                                                                        false);
-
-                                                            newsViewmodel
-                                                                .setLoading(
-                                                                    false);
-
-                                                            final doctorListViewmodel =
-                                                                Provider.of<
-                                                                        DoctorListViewmodel>(
-                                                                    context,
-                                                                    listen:
-                                                                        false);
-
-                                                            doctorListViewmodel
-                                                                .setLoading(
-                                                                    false);
-
-                                                            final settingsViewModel =
-                                                                Provider.of<
-                                                                        SettingsViewModel>(
-                                                                    context,
-                                                                    listen:
-                                                                        false);
-
-                                                            settingsViewModel
-                                                                .setLoading(
-                                                                    false);
-                                                            customerTkenViewmodel
-                                                                .fetchCustomerTokenApi(
-                                                                    context,
-                                                                    strAppcode
-                                                                        .text
-                                                                        .toString());
-                                                          },
-                                                          child: Text(
-                                                            'OK',
-                                                            style: TextStyle(
-                                                                fontSize: 14.sp,
-                                                                color: Color(
-                                                                    0xFFFD5722)),
-                                                          ))
-                                                    ],
-                                                  ),
-                                                );
-                                              });
-                                        },
-                                        child: Row(
-                                          children: [
-                                            SizedBox(width: 2.w),
-                                            Container(
-                                              height: 5.h,
-                                              child: Image(
-                                                  image: AssetImage(
-                                                      'images/keyboard.png')),
-                                            ),
-                                            SizedBox(width: 4.w),
-                                            Container(
-                                              alignment: Alignment.centerLeft,
-                                              child: Text(
-                                                'WRITING CODE MANUALLY',
-                                                style:
-                                                    TextStyle(fontSize: 15.sp),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      // SizedBox(height: 1.h),
-                                    ],
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Change Provider",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 17.sp,
+                                    ),
                                   ),
-                                ),
+                                ],
                               ),
-                              SizedBox(height: 1.h),
-                              outputList.length != 0
-                                  ? Text(
-                                      'OR',
-                                      style: TextStyle(fontSize: 12.sp),
-                                    )
-                                  : Container(),
-                              SizedBox(height: 1.h),
-                              SizedBox(
-                                height: 41.h,
-                                child: outputList.length != 0
-                                    ? ListView.builder(
-                                        shrinkWrap: true,
-                                        itemCount: outputList.length,
-                                        itemBuilder:
-                                            (BuildContext context, int index) {
-                                          return InkWell(
-                                            onTap: () {
-                                              // showBackAlertDialog() {
-                                              showDialog(
-                                                context: context,
-                                                builder: (context) {
-                                                  return AlertDialog(
-                                                    title: Text(
-                                                      'Confirm',
-                                                      style: TextStyle(
-                                                          fontSize: 15.sp,
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    ),
-                                                    content: Text(
-                                                      'Are you sure want to change your current Provider?',
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 13.sp),
-                                                    ),
-                                                    actions: <Widget>[
-                                                      TextButton(
-                                                        child: Text(
-                                                          'CANCEL',
-                                                          style: TextStyle(
-                                                              fontSize: 14.sp,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                        ),
-                                                        onPressed: () {
-                                                          setState(() {
-                                                            Navigator.pop(
-                                                                context);
-                                                          });
-                                                        },
-                                                      ),
-                                                      TextButton(
-                                                        child: Text(
-                                                          'CONFIRM',
-                                                          style: TextStyle(
-                                                              fontSize: 14.sp,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                        ),
-                                                        onPressed: () {
-                                                          final token =
-                                                              outputList[index]
-                                                                      ['token']
-                                                                  .toString();
-
-                                                          print(
-                                                              outputList[index]
-                                                                      ['token']
-                                                                  .toString());
-                                                          userPreference
-                                                              .setToken(token);
-
-                                                          final newsViewmodel =
-                                                              Provider.of<
-                                                                      NewsViewmodel>(
-                                                                  context,
-                                                                  listen:
-                                                                      false);
-
-                                                          newsViewmodel
-                                                              .setLoading(
-                                                                  false);
-
-                                                          final doctorListViewmodel =
-                                                              Provider.of<
-                                                                      DoctorListViewmodel>(
-                                                                  context,
-                                                                  listen:
-                                                                      false);
-
-                                                          doctorListViewmodel
-                                                              .setLoading(
-                                                                  false);
-
-                                                          final settingsViewModel =
-                                                              Provider.of<
-                                                                      SettingsViewModel>(
-                                                                  context,
-                                                                  listen:
-                                                                      false);
-
-                                                          settingsViewModel
-                                                              .setLoading(
-                                                                  false);
-
-                                                          final doctorNameProvider =
-                                                              Provider.of<
-                                                                      DoctorNameProvider>(
-                                                                  context,
-                                                                  listen:
-                                                                      false);
-
-                                                          doctorNameProvider
-                                                              .resetData();
-
-                                                          Timer(
-                                                              Duration(
-                                                                  seconds: 1),
-                                                              () => Navigator.push(
-                                                                  context,
-                                                                  MaterialPageRoute(
-                                                                      builder: (context) => MyNavigationBar(
-                                                                            indexNumber:
-                                                                                0,
-                                                                          ))));
-                                                        },
-                                                      ),
-                                                    ],
-                                                  );
-                                                },
-                                              );
-                                              // }
-
-                                              // final token = outputList[index]
-                                              //         ['token']
-                                              //     .toString();
-
-                                              // print(outputList[index]['token']
-                                              //     .toString());
-                                              // userPreference.setToken(token);
-
-                                              // // customerTkenViewmodel
-                                              // //     .fetchCustomerTokenApi(
-                                              // //         context,
-                                              // //         providerList[index]['token']
-                                              // //             .toString());
-                                              // Timer(
-                                              //     Duration(seconds: 1),
-                                              //     () => Navigator.push(
-                                              //         context,
-                                              //         MaterialPageRoute(
-                                              //             builder: (context) =>
-                                              //                 MyNavigationBar())));
-                                            },
-                                            child: Card(
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(12.0),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Container(
-                                                      width: 80.w,
-                                                      child: Text(
-                                                        outputList[index]
-                                                                ['doctorName']
-                                                            .toString(),
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        maxLines: 1,
-                                                      ),
-                                                    ),
-                                                    token ==
-                                                            outputList[index]
-                                                                    ['token']
-                                                                .toString()
-                                                        ? Image.asset(
-                                                            'images/true.png',
-                                                            height: 2.5.h,
-                                                          )
-                                                        : Container()
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                      )
-                                    : Container(),
+                            ),
+                          )
+                        : AppBar(
+                            automaticallyImplyLeading: false,
+                            centerTitle: false,
+                            elevation: 0,
+                            backgroundColor: Color(0xffffffff),
+                            title: Padding(
+                              padding: EdgeInsets.only(
+                                top: 16.0,
                               ),
-                              Text(
-                                'Contact your provider for App Code',
-                                style: TextStyle(fontSize: 12.sp),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  AxonIconForAppBarrWidget(),
+                                  Text(
+                                    " Change Provider",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 17.sp,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              SizedBox(
-                                height: 1.h,
-                              )
-                            ],
+                            ),
                           ),
-                        ),
-                      ),
-                    ],
-                  )
-                : Stack(
-                    children: [
-                      SingleChildScrollView(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                height: 20.h,
-                              ),
-                              Center(
-                                child: Card(
+              ),
+              body: providerList.length != 0
+                  ? Stack(
+                      children: [
+                        SingleChildScrollView(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  height: 1.h,
+                                ),
+                                Card(
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(12.0))),
@@ -816,9 +420,11 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                                         cursorColor:
                                                             Color(0xFFFD5722),
                                                         onChanged: (value) {},
-                                                        decoration: InputDecoration(
-                                                            hintText:
-                                                                'Write App Code'),
+                                                        decoration:
+                                                            InputDecoration(
+                                                          hintText:
+                                                              'Write App Code',
+                                                        ),
                                                         style: TextStyle(
                                                             fontSize: 13.sp),
                                                       ),
@@ -916,22 +522,445 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                     ),
                                   ),
                                 ),
-                              ),
-                              SizedBox(height: 1.h),
-                              // Text(
-                              //   'Contact your provider for App Code',
-                              //   style: TextStyle(fontSize: 12.sp),
-                              // ),
-                              SizedBox(
-                                height: 1.h,
-                              )
-                            ],
+                                SizedBox(height: 1.h),
+                                outputList.length != 0
+                                    ? Text(
+                                        'OR',
+                                        style: TextStyle(fontSize: 12.sp),
+                                      )
+                                    : Container(),
+                                SizedBox(height: 1.h),
+                                SizedBox(
+                                  height: 41.h,
+                                  child: outputList.length != 0
+                                      ? ListView.builder(
+                                          shrinkWrap: true,
+                                          itemCount: outputList.length,
+                                          itemBuilder: (BuildContext context,
+                                              int index) {
+                                            return InkWell(
+                                              onTap: () {
+                                                // showBackAlertDialog() {
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return AlertDialog(
+                                                      title: Text(
+                                                        'Confirm',
+                                                        style: TextStyle(
+                                                            fontSize: 15.sp,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                      content: Text(
+                                                        'Are you sure want to change your current Provider?',
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 13.sp),
+                                                      ),
+                                                      actions: <Widget>[
+                                                        TextButton(
+                                                          child: Text(
+                                                            'CANCEL',
+                                                            style: TextStyle(
+                                                                fontSize: 14.sp,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                          onPressed: () {
+                                                            setState(() {
+                                                              Navigator.pop(
+                                                                  context);
+                                                            });
+                                                          },
+                                                        ),
+                                                        TextButton(
+                                                          child: Text(
+                                                            'CONFIRM',
+                                                            style: TextStyle(
+                                                                fontSize: 14.sp,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                          onPressed: () {
+                                                            final token =
+                                                                outputList[index]
+                                                                        [
+                                                                        'token']
+                                                                    .toString();
+
+                                                            print(outputList[
+                                                                        index]
+                                                                    ['token']
+                                                                .toString());
+                                                            userPreference
+                                                                .setToken(
+                                                                    token);
+
+                                                            final newsViewmodel =
+                                                                Provider.of<
+                                                                        NewsViewmodel>(
+                                                                    context,
+                                                                    listen:
+                                                                        false);
+
+                                                            newsViewmodel
+                                                                .setLoading(
+                                                                    false);
+
+                                                            final doctorListViewmodel =
+                                                                Provider.of<
+                                                                        DoctorListViewmodel>(
+                                                                    context,
+                                                                    listen:
+                                                                        false);
+
+                                                            doctorListViewmodel
+                                                                .setLoading(
+                                                                    false);
+
+                                                            final settingsViewModel =
+                                                                Provider.of<
+                                                                        SettingsViewModel>(
+                                                                    context,
+                                                                    listen:
+                                                                        false);
+
+                                                            settingsViewModel
+                                                                .setLoading(
+                                                                    false);
+
+                                                            final doctorNameProvider =
+                                                                Provider.of<
+                                                                        DoctorNameProvider>(
+                                                                    context,
+                                                                    listen:
+                                                                        false);
+
+                                                            doctorNameProvider
+                                                                .resetData();
+
+                                                            Timer(
+                                                                Duration(
+                                                                    seconds: 1),
+                                                                () => Navigator
+                                                                    .pushAndRemoveUntil(
+                                                                        context,
+                                                                        MaterialPageRoute(
+                                                                            builder: (context) =>
+                                                                                MyNavigationBar(
+                                                                                  indexNumber: 0,
+                                                                                )),
+                                                                        (route) =>
+                                                                            false));
+                                                          },
+                                                        ),
+                                                      ],
+                                                    );
+                                                  },
+                                                );
+                                                // }
+
+                                                // final token = outputList[index]
+                                                //         ['token']
+                                                //     .toString();
+
+                                                // print(outputList[index]['token']
+                                                //     .toString());
+                                                // userPreference.setToken(token);
+
+                                                // // customerTkenViewmodel
+                                                // //     .fetchCustomerTokenApi(
+                                                // //         context,
+                                                // //         providerList[index]['token']
+                                                // //             .toString());
+                                                // Timer(
+                                                //     Duration(seconds: 1),
+                                                //     () => Navigator.push(
+                                                //         context,
+                                                //         MaterialPageRoute(
+                                                //             builder: (context) =>
+                                                //                 MyNavigationBar())));
+                                              },
+                                              child: Card(
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      12.0),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Container(
+                                                        width: 80.w,
+                                                        child: Text(
+                                                          outputList[index]
+                                                                  ['doctorName']
+                                                              .toString(),
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          maxLines: 1,
+                                                        ),
+                                                      ),
+                                                      token ==
+                                                              outputList[index]
+                                                                      ['token']
+                                                                  .toString()
+                                                          ? Image.asset(
+                                                              'images/true.png',
+                                                              height: 2.5.h,
+                                                            )
+                                                          : Container()
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        )
+                                      : Container(),
+                                ),
+                                Text(
+                                  'Contact your provider for App Code',
+                                  style: TextStyle(fontSize: 12.sp),
+                                ),
+                                SizedBox(
+                                  height: 1.h,
+                                )
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-          );
+                      ],
+                    )
+                  : Stack(
+                      children: [
+                        SingleChildScrollView(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  height: 20.h,
+                                ),
+                                Center(
+                                  child: Card(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(12.0))),
+                                    elevation: 3,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            height: 11.h,
+                                            child: Image(
+                                                image: AssetImage(
+                                                    'images/doctor.png')),
+                                          ),
+                                          SizedBox(height: 1.h),
+                                          Container(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              'Select Hospital by: ',
+                                              style: TextStyle(
+                                                fontSize: 15.sp,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(height: 1.h),
+                                          InkWell(
+                                            onTap: () {
+                                              // _qrScanner();
+                                              // _qr();
+                                              _navigateAppcodeAndHospitalName(
+                                                  context);
+                                            },
+                                            child: Row(
+                                              children: [
+                                                SizedBox(width: 2.w),
+                                                Container(
+                                                  height: 5.h,
+                                                  child: Image(
+                                                      image: AssetImage(
+                                                          'images/qr.png')),
+                                                ),
+                                                SizedBox(width: 4.w),
+                                                Container(
+                                                  alignment:
+                                                      Alignment.centerLeft,
+                                                  child: Text(
+                                                    'SCANNING APP CODE',
+                                                    style: TextStyle(
+                                                        fontSize: 15.sp),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          // SizedBox(height: 1.h),
+                                          Row(
+                                            children: [
+                                              Container(
+                                                height: 1,
+                                                width: 38.w,
+                                                color: Colors.black,
+                                              ),
+                                              SizedBox(width: 2.w),
+                                              Text('or'),
+                                              SizedBox(width: 2.w),
+                                              Container(
+                                                height: 1,
+                                                width: 38.w,
+                                                color: Colors.black,
+                                              ),
+                                            ],
+                                          ),
+                                          // SizedBox(height: 1.h),
+                                          InkWell(
+                                            onTap: () {
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return Container(
+                                                      child: AlertDialog(
+                                                        title: Text('Code'),
+                                                        content: TextField(
+                                                          focusNode:
+                                                              _nodeAppcode,
+                                                          controller:
+                                                              strAppcode,
+                                                          cursorColor:
+                                                              Color(0xFFFD5722),
+                                                          onChanged: (value) {},
+                                                          decoration:
+                                                              InputDecoration(
+                                                                  hintText:
+                                                                      'Write App Code'),
+                                                          style: TextStyle(
+                                                              fontSize: 13.sp),
+                                                        ),
+                                                        actions: [
+                                                          TextButton(
+                                                              onPressed: () {
+                                                                Navigator.pop(
+                                                                    context);
+                                                              },
+                                                              child: Text(
+                                                                'Cancel',
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        14.sp,
+                                                                    color: Color(
+                                                                        0xFFFD5722)),
+                                                              )),
+                                                          TextButton(
+                                                              onPressed: () {
+                                                                final newsViewmodel =
+                                                                    Provider.of<
+                                                                            NewsViewmodel>(
+                                                                        context,
+                                                                        listen:
+                                                                            false);
+
+                                                                newsViewmodel
+                                                                    .setLoading(
+                                                                        false);
+
+                                                                final doctorListViewmodel =
+                                                                    Provider.of<
+                                                                            DoctorListViewmodel>(
+                                                                        context,
+                                                                        listen:
+                                                                            false);
+
+                                                                doctorListViewmodel
+                                                                    .setLoading(
+                                                                        false);
+
+                                                                final settingsViewModel =
+                                                                    Provider.of<
+                                                                            SettingsViewModel>(
+                                                                        context,
+                                                                        listen:
+                                                                            false);
+
+                                                                settingsViewModel
+                                                                    .setLoading(
+                                                                        false);
+                                                                customerTkenViewmodel
+                                                                    .fetchCustomerTokenApi(
+                                                                        context,
+                                                                        strAppcode
+                                                                            .text
+                                                                            .toString());
+                                                              },
+                                                              child: Text(
+                                                                'OK',
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        14.sp,
+                                                                    color: Color(
+                                                                        0xFFFD5722)),
+                                                              ))
+                                                        ],
+                                                      ),
+                                                    );
+                                                  });
+                                            },
+                                            child: Row(
+                                              children: [
+                                                SizedBox(width: 2.w),
+                                                Container(
+                                                  height: 5.h,
+                                                  child: Image(
+                                                      image: AssetImage(
+                                                          'images/keyboard.png')),
+                                                ),
+                                                SizedBox(width: 4.w),
+                                                Container(
+                                                  alignment:
+                                                      Alignment.centerLeft,
+                                                  child: Text(
+                                                    'WRITING CODE MANUALLY',
+                                                    style: TextStyle(
+                                                        fontSize: 15.sp),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          // SizedBox(height: 1.h),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 1.h),
+                                // Text(
+                                //   'Contact your provider for App Code',
+                                //   style: TextStyle(fontSize: 12.sp),
+                                // ),
+                                SizedBox(
+                                  height: 1.h,
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ));
         }
       },
     );

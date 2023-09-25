@@ -96,10 +96,10 @@ class AuthViewModel with ChangeNotifier {
         // await registerAppUserViewModel.registerAppUserApi(registerUserData, context);
         Timer(
             Duration(seconds: 2),
-            () => Navigator.push(
+            () => Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(
-                    builder: (context) => ChangeProviderScreen())));
+                MaterialPageRoute(builder: (context) => ChangeProviderScreen()),
+                (route) => false));
         if (kDebugMode) {
           print(value.toString());
         }

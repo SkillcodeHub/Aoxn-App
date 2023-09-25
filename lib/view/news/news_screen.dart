@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:axonweb/Provider/backButton_provider.dart';
 import 'package:axonweb/View_Model/NewsDetails_View_model/newsdetails_view_model.dart';
 import 'package:axonweb/data/response/status.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +37,7 @@ class _NewsScreenState extends State<NewsScreen> {
   String deviceId = 'Unknown';
   late Future<void> fetchDataFuture;
   String _udid = 'Unknown';
-
+  ButtonProvider buttonProvider = ButtonProvider();
   SettingsViewModel settingsViewModel = SettingsViewModel();
   // NewsViewmodel newsViewmodel = NewsViewmodel();
   NewsDetailsViewmodel newsDetailsViewmodel = NewsDetailsViewmodel();
@@ -70,6 +71,10 @@ class _NewsScreenState extends State<NewsScreen> {
     });
 
     super.initState();
+    print('qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq');
+    print(buttonProvider.backk);
+    print('qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq');
+
     initPlatformState();
 
     fetchDataFuture = fetchData(); // Call the API only once

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:axonweb/Provider/backButton_provider.dart';
 import 'package:axonweb/View_Model/Book_View_Model/Book_view_Model.dart';
 import 'package:axonweb/View_Model/Book_View_Model/advanceBookAppointment_view_model.dart';
 import 'package:axonweb/View_Model/Payment_View_Model/customerPayHead_view_model.dart';
@@ -31,6 +32,7 @@ class BookApointmentScreen extends StatefulWidget {
 }
 
 class _BookApointmentScreenState extends State<BookApointmentScreen> {
+  ButtonProvider buttonProvider = ButtonProvider();
   UserPreferences userPreference = UserPreferences();
   DoctorListViewmodel doctorListViewmodel = DoctorListViewmodel();
   SettingsViewModel settingsViewModel = SettingsViewModel();
@@ -78,7 +80,11 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
       });
     });
     super.initState();
+    print('ffffffffffffffffffffffffffffffffffffffffffffffffffffff');
+    final buttonProvider = Provider.of<ButtonProvider>(context, listen: false);
 
+    print(buttonProvider.backk);
+    print('ffffffffffffffffffffffffffffffffffffffffffffffffffffffff');
     // final doctorListViewmodel =
     //     Provider.of<DoctorListViewmodel>(context, listen: false);
     // final settingsViewModel =
@@ -119,14 +125,14 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print('ParthParthParth');
+    final buttonProvider = Provider.of<ButtonProvider>(context, listen: false);
+
     final bookAppointmentViewModel =
         Provider.of<BookAppointmentViewModel>(context);
     final doctorListViewmodel =
         Provider.of<DoctorListViewmodel>(context, listen: false);
     final settingsViewModel =
         Provider.of<SettingsViewModel>(context, listen: false);
-
     return Scaffold(
       backgroundColor: BackgroundColor,
       appBar: PreferredSize(
@@ -1157,6 +1163,8 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                       // );
 
                                                       setState(() {
+                                                        print(buttonProvider
+                                                            .backk);
                                                         displayDate = '';
                                                         displayTimeSlot = '';
                                                         displaytimingId = '';
@@ -1302,10 +1310,15 @@ class _PaymentSheetState extends State<PaymentSheet> {
 
   int? amount;
   double? amountFloat;
+  final emailRegex = RegExp(
+    r'^[\w-]+(\.[\w-]+)*@([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,7}$',
+  );
 
   UserPreferences userPreference = UserPreferences();
-  String selectedPayHeadIndex =
-      'Consultation'; // Index of the selected payHead, initially set to -1
+  // String selectedPayHeadIndex =
+  //     'Consultation'; // Index of the selected payHead, initially set to -1
+  String?
+      selectedPayHeadIndex; // Index of the selected payHead, initially set to -1
 
   CustomerPayHeadViewmodel customerPayHeadViewmodel =
       CustomerPayHeadViewmodel();
@@ -1604,6 +1617,7 @@ class _PaymentSheetState extends State<PaymentSheet> {
                                 focusNode: _nodeAmount,
                                 controller: strAmount,
                                 keyboardType: TextInputType.number,
+                                readOnly: true,
                                 validator: (value) => value!.isEmpty
                                     ? "Please enter Amount"
                                     : null,
@@ -1677,14 +1691,24 @@ class _PaymentSheetState extends State<PaymentSheet> {
                                     width: 40.w,
                                     child: ElevatedButton(
                                       onPressed: () {
-                                        if (!agree) {
+                                        print(selectedPayHeadIndex);
+                                        if (selectedPayHeadIndex == null ||
+                                            selectedPayHeadIndex == ' ') {
+                                          Utils.snackBar(
+                                              'Please select PayHead', context);
+                                        } else if (!emailRegex
+                                            .hasMatch(strEmail.text)) {
+                                          Utils.snackBar(
+                                              'Please enter a valid Email address*',
+                                              context);
+                                        } else if (!agree) {
                                           Utils.snackBar(
                                               'Please select terms & conditions',
                                               context);
                                         } else if (!_enableBtn) {
-                                          Utils.snackBar(
-                                              'Please select terms & conditions',
-                                              context);
+                                          // Utils.snackBar(
+                                          //     'Please select terms & conditions',
+                                          //     context);
                                         } else {
                                           makePayment();
                                         }

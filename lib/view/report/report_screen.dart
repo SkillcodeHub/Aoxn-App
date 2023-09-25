@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:axonweb/Provider/backButton_provider.dart';
 import 'package:axonweb/View_Model/Report_View_Model/report_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -55,6 +56,7 @@ class _ReportScreenState extends State<ReportScreen> {
     // setState(() {});
     // super.initState();
     super.initState();
+
     fetchDataFuture = fetchData(); // Call the API only once
 
     // final bookAppointmentViewModel =
@@ -62,12 +64,8 @@ class _ReportScreenState extends State<ReportScreen> {
   }
 
   createNewsListContainer(BuildContext context, int itemIndex) {
-   
-
     String date =
-       reportViewmodel.reportsList.data!.data![itemIndex].visitDate
-                                .toString();
-       
+        reportViewmodel.reportsList.data!.data![itemIndex].visitDate.toString();
 
     DateTime parseDate = new DateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(date);
     var inputDate = DateTime.parse(parseDate.toString());
@@ -142,8 +140,7 @@ class _ReportScreenState extends State<ReportScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Updated on: ' +
-                            reportdate.toString(),
+                        'Updated on: ' + reportdate.toString(),
                         style: TextStyle(
                             fontSize: 15, fontWeight: FontWeight.w500),
                         maxLines: 1,
@@ -158,7 +155,7 @@ class _ReportScreenState extends State<ReportScreen> {
                             'patientName': reportViewmodel
                                 .reportsList.data!.data![itemIndex].patientName
                                 .toString(),
-                            'date':  reportdate.toString(),
+                            'date': reportdate.toString(),
                             'treatment': reportViewmodel
                                 .reportsList.data!.data![itemIndex].treatment
                                 .toString(),

@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:axonweb/View_Model/Settings_View_Model/settings_view_model.dart';
+import 'package:axonweb/view/Book/book_appointment_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -43,6 +45,7 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
 
   GetPatientByMobileListViewmodel getPatientByMobileListViewmodel =
       GetPatientByMobileListViewmodel();
+  SettingsViewModel settingsViewModel = SettingsViewModel();
 
   void initState() {
     userPreference.getToken().then((value) {
@@ -173,6 +176,8 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final settingsViewModel =
+        Provider.of<SettingsViewModel>(context, listen: false);
     Timer(
         Duration(microseconds: 20),
         () => [
@@ -181,7 +186,8 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
               print(mobile.toString()),
               print('mobile.toString()'),
               getPatientByMobileListViewmodel.fetchGetPatientByMobileListApi(
-                  token.toString(), mobile.toString())
+                  token.toString(), mobile.toString()),
+              settingsViewModel.fetchDoctorDetailsListApi(token),
             ]);
 
     return DefaultTabController(
@@ -338,187 +344,251 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                 )),
             Stack(
               children: [
-                SingleChildScrollView(
-                  child: Padding(
-                    padding: EdgeInsets.all(15),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          height: 30.h,
-                        ),
-                        Center(
-                          child: Text(
-                            'Plz Register Patient from Hospital!',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 15.sp,
-                              color: Color(0XFF545454),
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                        //     SizedBox(
-                        //       height: 8,
-                        //     ),
-                        //     Center(
-                        //       child: Text(
-                        //         'Add new Patient',
-                        //         textAlign: TextAlign.center,
-                        //         style: TextStyle(
-                        //           fontSize: 15.sp,
-                        //           color: Color(0XFF545454),
-                        //           fontWeight: FontWeight.w600,
-                        //         ),
-                        //       ),
-                        //     ),
-                        //     SizedBox(height: 2.h),
-                        //     Form(
-                        //         key: formKey,
-                        //         onChanged: () => setState(() =>
-                        //             _enableBtn = formKey.currentState!.validate()),
-                        //         child: Column(
-                        //           children: [
-                        //             TextFormField(
+                ChangeNotifierProvider<SettingsViewModel>.value(
+                  value: settingsViewModel,
+                  child: Consumer<SettingsViewModel>(
+                      builder: (context, value, child) {
+                    switch (value.doctorDetailsList.status!) {
+                      case Status.LOADING:
+                        return ImageSkelton(
+                          height: 26.h,
+                          width: 100.w,
+                        );
 
-                        //               focusNode: _nodeName,
-                        //               controller: strName,
-                        //               keyboardType: TextInputType.text,
-                        //               validator: (value) => value!.isEmpty
-                        //                   ? "Please enter full name"
-                        //                   : null,
-                        //               autovalidateMode:
-                        //                   AutovalidateMode.onUserInteraction,
-                        //               textInputAction: TextInputAction.next,
-                        //               decoration: InputDecoration(
-                        //                 hintText: 'Full Name',
-                        //         ),
-                        //                 style: TextStyle(
-                        //           fontSize: 12.sp,
-                        //           color: Color(0XFF545454),
-                        //           fontWeight: FontWeight.w500,
-                        //               ),
-                        //             ),
-                        //             SizedBox(
-                        //               height: 3.h,
-                        //             ),
-                        //             TextFormField(
-                        //               focusNode: _nodeBirth,
-                        //               controller: strBirthDate,
-                        //               keyboardType: TextInputType.text,
-                        //               // // validator: (value) => value.isEmpty
-                        //               //     ? "Please enter BirthDate"
-                        //               //     : null,
-                        //               autovalidateMode:
-                        //                   AutovalidateMode.onUserInteraction,
-                        //               textInputAction: TextInputAction.next,
-                        //               decoration: InputDecoration(
-                        //                 hintText: 'Birthday(optional)',
-                        //               ),
-                        //               style: TextStyle(
-                        //           fontSize: 12.sp,
-                        //           color: Color(0XFF545454),
-                        //           fontWeight: FontWeight.w500,
-                        //               ),
-                        //             ),
-                        //             SizedBox(height: 4.h),
-                        //             Row(
-                        //               children: [
-                        //                 Container(
-                        //                   child: Row(
-                        //                     children: [
-                        //                       Radio(
-                        //                         value: 'Male',
-                        //                         activeColor: Color(0xFFFD5722),
-                        //                         groupValue: genderValue,
-                        //                         onChanged: (value) {
-                        //                           setState(() {
-                        //                             genderValue = value!;
-                        //                           });
-                        //                         },
-                        //                       ),
-                        //                       Container(
-                        //                         child: Text(
-                        //                           "Male",
-                        //                           style:  TextStyle(
-                        //                             fontSize: 15.sp,
-                        //                           ),
-                        //                         ),
-                        //                       ),
-                        //                     ],
-                        //                   ),
-                        //                 ),
-                        //                 SizedBox(
-                        //                   width: 7.w,
-                        //                 ),
-                        //                 Container(
-                        //                   child: Row(
-                        //                     children: [
-                        //                       Radio(
-                        //                         value: 'Female',
-                        //                         activeColor: Color(0xFFFD5722),
-                        //                         groupValue: genderValue,
-                        //                         onChanged: (value) {
-                        //                           setState(() {
-                        //                             genderValue = value!;
-                        //                           });
-                        //                         },
-                        //                       ),
-                        //                       Container(
-                        //                         child: Text(
-                        //                           "Female",
-                        //                           style:  TextStyle(
-                        //                             fontSize: 15.sp,
-                        //                           ),
-                        //                         ),
-                        //                       ),
-                        //                     ],
-                        //                   ),
-                        //                 ),
-                        //               ],
-                        //             ),
-                        //             SizedBox(
-                        //               height: 4.h,
-                        //             ),
-                        //             Center(
-                        //               child: Container(
-                        //                 padding:
-                        //                     const EdgeInsets.fromLTRB(8, 0, 8, 0),
-                        //                 height: 5.h,
-                        //                 width: 55.w,
-                        //                 child: ElevatedButton(
-                        //                   onPressed: _enableBtn
-                        //                       ? () => Navigator.pop(context, [
-                        //                             strName.text,
-                        //                             strBirthDate.text,
-                        //                             genderValue,
-                        //                             CaseNo,
-                        //                             PatType = "New",
-                        //                           ])
-                        //                       : null,
-                        //                   child: Text(
-                        //                     'SAVE',
-                        //                     style: TextStyle(
-                        //                         fontSize: 13.sp,
-                        //                         fontWeight: FontWeight.w600,
-                        //                         color: Colors.white),
-                        //                   ),
-                        //                   style: ElevatedButton.styleFrom(
-                        //                     primary: Color(0xFFFD5722),
-                        //                     // shape: RoundedRectangleBorder(
-                        //                     //   borderRadius: BorderRadius.circular(
-                        //                     //       25), // <-- Radius
-                        //                     // ),
-                        //                   ),
-                        //                 ),
-                        //               ),
-                        //             ),
-                        //           ],
-                        //         ))
-                      ],
-                    ),
-                  ),
+                      // Center(
+                      //     child:
+                      //         CircularProgressIndicator());
+                      case Status.ERROR:
+                        return Center(
+                            child: Text(
+                                value.doctorDetailsList.message.toString()));
+                      case Status.COMPLETED:
+                        return SingleChildScrollView(
+                          child: Padding(
+                            padding: EdgeInsets.all(15),
+                            child: settingsViewModel.doctorDetailsList.data!
+                                        .data![0].paymentGatewayEnabled
+                                        .toString() ==
+                                    'false'
+                                ? Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      // SizedBox(
+                                      //   height: 30.h,
+                                      // ),
+                                      // Center(
+                                      //   child: Text(
+                                      //     'Plz Register Patient from Hospital!',
+                                      //     textAlign: TextAlign.center,
+                                      //     style: TextStyle(
+                                      //       fontSize: 15.sp,
+                                      //       color: Color(0XFF545454),
+                                      //       fontWeight: FontWeight.w600,
+                                      //     ),
+                                      //   ),
+                                      // ),
+                                      SizedBox(
+                                        height: 8,
+                                      ),
+                                      Center(
+                                        child: Text(
+                                          'Add new Patient',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: 15.sp,
+                                            color: Color(0XFF545454),
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(height: 2.h),
+                                      Form(
+                                          key: formKey,
+                                          onChanged: () => setState(() =>
+                                              _enableBtn = formKey.currentState!
+                                                  .validate()),
+                                          child: Column(
+                                            children: [
+                                              TextFormField(
+                                                focusNode: _nodeName,
+                                                controller: strName,
+                                                keyboardType:
+                                                    TextInputType.text,
+                                                validator: (value) => value!
+                                                        .isEmpty
+                                                    ? "Please enter full name"
+                                                    : null,
+                                                autovalidateMode:
+                                                    AutovalidateMode
+                                                        .onUserInteraction,
+                                                textInputAction:
+                                                    TextInputAction.next,
+                                                decoration: InputDecoration(
+                                                  hintText: 'Full Name',
+                                                ),
+                                                style: TextStyle(
+                                                  fontSize: 12.sp,
+                                                  color: Color(0XFF545454),
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 3.h,
+                                              ),
+                                              TextFormField(
+                                                focusNode: _nodeBirth,
+                                                controller: strBirthDate,
+                                                keyboardType:
+                                                    TextInputType.text,
+                                                // // validator: (value) => value.isEmpty
+                                                //     ? "Please enter BirthDate"
+                                                //     : null,
+                                                autovalidateMode:
+                                                    AutovalidateMode
+                                                        .onUserInteraction,
+                                                textInputAction:
+                                                    TextInputAction.next,
+                                                decoration: InputDecoration(
+                                                  hintText:
+                                                      'Birthday(optional)',
+                                                ),
+                                                style: TextStyle(
+                                                  fontSize: 12.sp,
+                                                  color: Color(0XFF545454),
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                              SizedBox(height: 4.h),
+                                              Row(
+                                                children: [
+                                                  Container(
+                                                    child: Row(
+                                                      children: [
+                                                        Radio(
+                                                          value: 'Male',
+                                                          activeColor:
+                                                              Color(0xFFFD5722),
+                                                          groupValue:
+                                                              genderValue,
+                                                          onChanged: (value) {
+                                                            setState(() {
+                                                              genderValue =
+                                                                  value!;
+                                                            });
+                                                          },
+                                                        ),
+                                                        Container(
+                                                          child: Text(
+                                                            "Male",
+                                                            style: TextStyle(
+                                                              fontSize: 15.sp,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 7.w,
+                                                  ),
+                                                  Container(
+                                                    child: Row(
+                                                      children: [
+                                                        Radio(
+                                                          value: 'Female',
+                                                          activeColor:
+                                                              Color(0xFFFD5722),
+                                                          groupValue:
+                                                              genderValue,
+                                                          onChanged: (value) {
+                                                            setState(() {
+                                                              genderValue =
+                                                                  value!;
+                                                            });
+                                                          },
+                                                        ),
+                                                        Container(
+                                                          child: Text(
+                                                            "Female",
+                                                            style: TextStyle(
+                                                              fontSize: 15.sp,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(
+                                                height: 4.h,
+                                              ),
+                                              Center(
+                                                child: Container(
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          8, 0, 8, 0),
+                                                  height: 5.h,
+                                                  width: 55.w,
+                                                  child: ElevatedButton(
+                                                    onPressed: _enableBtn
+                                                        ? () => Navigator.pop(
+                                                                context, [
+                                                              strName.text,
+                                                              strBirthDate.text,
+                                                              genderValue,
+                                                              CaseNo = '0',
+                                                              PatType = "New",
+                                                            ])
+                                                        : null,
+                                                    child: Text(
+                                                      'SAVE',
+                                                      style: TextStyle(
+                                                          fontSize: 13.sp,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          color: Colors.white),
+                                                    ),
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      primary:
+                                                          Color(0xFFFD5722),
+                                                      // shape: RoundedRectangleBorder(
+                                                      //   borderRadius: BorderRadius.circular(
+                                                      //       25), // <-- Radius
+                                                      // ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ))
+                                    ],
+                                  )
+                                : Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 30.h,
+                                      ),
+                                      Center(
+                                        child: Text(
+                                          'Plz Register Patient from Hospital!',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: 15.sp,
+                                            color: Color(0XFF545454),
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                          ),
+                        );
+                    }
+                  }),
                 ),
               ],
             ),

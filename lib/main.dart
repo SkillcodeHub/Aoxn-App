@@ -1,3 +1,4 @@
+import 'package:axonweb/Provider/backButton_provider.dart';
 import 'package:axonweb/Utils/routes/routes_name.dart';
 import 'package:axonweb/View_Model/Book_View_Model/Book_view_Model.dart';
 import 'package:axonweb/res/colors.dart';
@@ -39,8 +40,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        // ChangeNotifierProvider(create: (_) => MyProvider1()),
-        // ChangeNotifierProvider(create: (_) => MyProvider2()),
+        ChangeNotifierProvider(create: (_) => ButtonProvider()),
         ChangeNotifierProvider(create: (_) => DoctorNameProvider()),
 
         ChangeNotifierProvider(create: (_) => AuthViewModel()),

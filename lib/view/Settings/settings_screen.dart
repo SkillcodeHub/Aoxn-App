@@ -1,4 +1,6 @@
+import 'package:axonweb/Provider/backButton_provider.dart';
 import 'package:axonweb/View/PaymentHistory/payment_history_screen.dart';
+import 'package:axonweb/View_Model/ChangeProvider_View_Model/provider_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:axonweb/Utils/routes/routes_name.dart';
@@ -18,6 +20,7 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  CustomerTkenViewmodel customerTkenViewmodel = CustomerTkenViewmodel();
   UserPreferences userPreference = UserPreferences();
   SettingsViewModel settingsViewModel = SettingsViewModel();
   late String mobile;
@@ -57,6 +60,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   //Logout Alert
   void showAlertDialog(BuildContext context) async {
+    final buttonProvider = Provider.of<ButtonProvider>(context, listen: false);
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -74,6 +79,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 foregroundColor: Colors.white,
               ),
               onPressed: () {
+                buttonProvider.setBack(false);
                 userPreference.logoutProcess();
                 Navigator.pushNamedAndRemoveUntil(
                     context, RoutesName.login, (route) => false);
@@ -97,6 +103,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final buttonProvider = Provider.of<ButtonProvider>(context, listen: false);
+
+    print('iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii');
+
+    print(buttonProvider.backk);
+    print('iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii');
     settingsViewModel.fetchDoctorDetailsListApi(token);
     print(age);
     print(name);
@@ -213,6 +225,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                 height: 4.h,
                                                 child: ElevatedButton(
                                                   onPressed: () {
+                                                    buttonProvider
+                                                        .setBack(true);
                                                     Navigator.pushNamed(
                                                         context,
                                                         RoutesName
@@ -275,13 +289,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                           Row(
                                             children: [
                                               Container(
-                                                  height: 5.h,
-                                                  child: Icon(Icons.history,size: 4.h,),),
+                                                height: 5.h,
+                                                child: Icon(
+                                                  Icons.history,
+                                                  size: 4.h,
+                                                ),
+                                              ),
                                               SizedBox(
                                                 width: 2.w,
                                               ),
                                               Container(
-                                                child: Text(' Payment History',style: TextStyle(fontSize: 13.sp,fontWeight: FontWeight.w500),),
+                                                child: Text(
+                                                  ' Payment History',
+                                                  style: TextStyle(
+                                                      fontSize: 13.sp,
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                                ),
                                               )
                                             ],
                                           ),
@@ -295,11 +319,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                 width: 25.w,
                                                 child: ElevatedButton(
                                                   onPressed: () {
-                                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  PaymentHistory()));
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                PaymentHistory()));
                                                   },
                                                   child: Text(
                                                     'VIEW',
@@ -321,7 +345,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       ),
                                     ),
                                   ),
-                                
+
                                   // InkWell(
                                   //   onTap: () {
                                   //     Navigator.push(
@@ -364,8 +388,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   //         )),
                                   //   ),
                                   // ),
-                                
-                                
+
                                   SizedBox(height: 1.h),
                                   Card(
                                     color: Colors.white,
