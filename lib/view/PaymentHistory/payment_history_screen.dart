@@ -1,5 +1,11 @@
+import 'dart:async';
+
 import 'package:axonweb/Res/Components/Appbar/screen_name_widget.dart';
+import 'package:axonweb/View_Model/Payment_View_Model/paymentHistory_view_model.dart';
+import 'package:axonweb/data/response/status.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import '../../View_Model/Settings_View_Model/settings_view_model.dart';
 
@@ -12,6 +18,9 @@ class PaymentHistory extends StatefulWidget {
 
 class _PaymentHistoryState extends State<PaymentHistory> {
   late String token;
+  late String letId;
+  late String mobile;
+  late Future<void> fetchDataFuture;
 
   @override
   void initState() {
@@ -21,10 +30,141 @@ class _PaymentHistoryState extends State<PaymentHistory> {
         token = value1!;
       });
     });
+    userPreference.getletId().then((value) {
+      setState(() {
+        letId = value!;
+        print('letId');
+        print(letId);
+        print('letId');
+      });
+    });
+    userPreference.getMobile().then((value1) {
+      setState(() {
+        mobile = value1!;
+      });
+    });
+    fetchDataFuture = fetchData(); // Call the API only once
+  }
+
+  Future<void> fetchData() async {
+    Timer(Duration(microseconds: 20), () {
+      final paymentHistoryViewmodel =
+          Provider.of<PaymentHistoryViewmodel>(context, listen: false);
+
+      paymentHistoryViewmodel.fetchPaymentHistoryApi(token, letId, mobile);
+    });
+  }
+
+  createAppointmentListContainer(BuildContext context, int itemIndex) {
+    final paymentHistoryViewmodel =
+        Provider.of<PaymentHistoryViewmodel>(context, listen: false);
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(8.0, 2, 8, 2),
+          child: Card(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: EdgeInsets.all(8.sp),
+                  height: 5.h,
+                  color: Color(0xFFFD5722),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      paymentHistoryViewmodel.paymentHistoryList.data!
+                                  .data![itemIndex].payTransID
+                                  .toString() !=
+                              ""
+                          ? Text(
+                              "PayId: " +
+                                  paymentHistoryViewmodel.paymentHistoryList
+                                      .data!.data![itemIndex].payTransID
+                                      .toString(),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 12.sp,
+                              ),
+                            )
+                          : Container(),
+                      Text(
+                        paymentHistoryViewmodel.paymentHistoryList.data!
+                            .data![itemIndex].payStatusText
+                            .toString(),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 13.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  height: 15.h,
+                  padding: EdgeInsets.all(8.sp),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        paymentHistoryViewmodel
+                            .paymentHistoryList.data!.data![itemIndex].name
+                            .toString(),
+                        style: TextStyle(
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      Text(
+                        paymentHistoryViewmodel
+                            .paymentHistoryList.data!.data![itemIndex].payHead
+                            .toString(),
+                        style: TextStyle(
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      Text(
+                        paymentHistoryViewmodel
+                            .paymentHistoryList.data!.data![itemIndex].amount
+                            .toString(),
+                        style: TextStyle(
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      Text(
+                        '11-May-2023 12:33 PM',
+                        style: TextStyle(
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    final paymentHistoryViewmodel =
+        Provider.of<PaymentHistoryViewmodel>(context, listen: false);
+    Future refresh() async {
+      Timer(Duration(microseconds: 20), () {
+        paymentHistoryViewmodel.fetchPaymentHistoryApi(token, letId, mobile);
+      });
+    }
+
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
       appBar: PreferredSize(
@@ -55,87 +195,127 @@ class _PaymentHistoryState extends State<PaymentHistory> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(15.sp),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Card(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.all(8.sp),
-                      height: 5.h,
-                      color: Color(0xFFFD5722),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'PayId: 09876543211234567890',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 12.sp,
-                            ),
-                          ),
-                          Text(
-                            'Pending',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 13.sp,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      height: 15.h,
-                      padding: EdgeInsets.all(8.sp),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'ANIL KHIMJIBHAI',
-                            style: TextStyle(
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          Text(
-                            'Vaccination',
-                            style: TextStyle(
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          Text(
-                            'Rs 500.0',
-                            style: TextStyle(
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          Text(
-                            '11-May-2023 12:33 PM',
-                            style: TextStyle(
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
+      body: FutureBuilder<void>(
+        future: fetchDataFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (snapshot.hasError) {
+            return Center(
+              child: Text('Error occurred: ${snapshot.error}'),
+            );
+          } else {
+            // Render the UI with the fetched data
+            return ChangeNotifierProvider<PaymentHistoryViewmodel>.value(
+                value: paymentHistoryViewmodel,
+                child: Consumer<PaymentHistoryViewmodel>(
+                  builder: (context, value, _) {
+                    switch (value.paymentHistoryList.status!) {
+                      case Status.LOADING:
+                        return Center(
+                            child: Center(child: CircularProgressIndicator()));
+                      case Status.ERROR:
+                        return Center(
+                            child: Html(
+                                data: value.paymentHistoryList.message
+                                    .toString()));
+                      case Status.COMPLETED:
+                        return value.paymentHistoryList.data!.data!.length != 0
+                            ? RefreshIndicator(
+                                onRefresh: refresh,
+                                child: Stack(
+                                  children: [
+                                    Container(
+                                      height: 100.h,
+                                      child: SingleChildScrollView(
+                                        physics:
+                                            AlwaysScrollableScrollPhysics(),
+                                        child: ListView.builder(
+                                            padding:
+                                                EdgeInsets.only(bottom: 10),
+                                            physics: BouncingScrollPhysics(),
+                                            shrinkWrap: true,
+                                            itemCount: value.paymentHistoryList
+                                                .data!.data!.length,
+                                            itemBuilder: (BuildContext context,
+                                                int itemIndex) {
+                                              return createAppointmentListContainer(
+                                                  context, itemIndex);
+                                            }),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            : RefreshIndicator(
+                                onRefresh: refresh,
+                                child: Stack(
+                                  children: [
+                                    SingleChildScrollView(
+                                      physics: BouncingScrollPhysics(),
+                                      child: Padding(
+                                        padding: EdgeInsets.all(15),
+                                        child: Container(
+                                          height: 74.h,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              SizedBox(
+                                                height: 2.h,
+                                              ),
+                                              Text(
+                                                'Swipe down to refresh page',
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  fontSize: 14.sp,
+                                                  color: Color(0XFF545454),
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 20.h,
+                                              ),
+                                              Center(
+                                                child: Image.asset(
+                                                  'images/axon.png',
+                                                  height: 10.h,
+                                                  // width: 90,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 4.h,
+                                              ),
+                                              Center(
+                                                child: Text(
+                                                  'You  don\'t have any payment history',
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      fontSize: 14.sp,
+                                                      color: Color(0XFF545454),
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                    }
+                  },
+                ));
+          }
+        },
       ),
+
       // floatingActionButton: FloatingActionButton(
       //   onPressed: () {
       //     showModalBottomSheet<void>(

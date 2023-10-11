@@ -71,4 +71,8 @@ class AppUrl {
   //  advance book Appointment Url
   static var confirmPaidAppointmentUrl =
       baseUrl + "BookAppointment/ConfirmPaidAppointment";
+
+  //  advance book Appointment Url
+  static var paymentHistoryUrl =
+      baseUrl + "/payment/getcustomerpatientpayhistory";
 }

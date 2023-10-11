@@ -1,6 +1,7 @@
 import 'package:axonweb/Provider/backButton_provider.dart';
 import 'package:axonweb/Utils/routes/routes_name.dart';
 import 'package:axonweb/View_Model/Book_View_Model/Book_view_Model.dart';
+import 'package:axonweb/View_Model/Payment_View_Model/paymentHistory_view_model.dart';
 import 'package:axonweb/res/colors.dart';
 import 'package:axonweb/utils/routes/routes.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -67,6 +68,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<ValidateAppUserViewmodel>.value(
             value: ValidateAppUserViewmodel()),
         ChangeNotifierProvider<ReportViewmodel>.value(value: ReportViewmodel()),
+        ChangeNotifierProvider<PaymentHistoryViewmodel>.value(
+            value: PaymentHistoryViewmodel()),
       ],
       child: Sizer(builder: (context, orientation, DeviceType) {
         return MaterialApp(
