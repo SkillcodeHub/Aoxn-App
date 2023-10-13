@@ -1,5 +1,5 @@
 import 'package:axonweb/Model/Payment_Model/paymentHistory_model.dart';
-import 'package:axonweb/Res/app_url.dart';
+import 'package:axonweb/res/app_url.dart';
 import '../../data/network/BaseApiServices.dart';
 import '../../data/network/NetworkApiService.dart';
 
