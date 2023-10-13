@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:axonweb/Res/Components/Appbar/screen_name_widget.dart';
+import 'package:axonweb/View/NevigationBar/my_navigationbar.dart';
 import 'package:axonweb/View_Model/Payment_View_Model/paymentHistory_view_model.dart';
 import 'package:axonweb/data/response/status.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +23,7 @@ class _PaymentHistoryState extends State<PaymentHistory> {
   late String letId;
   late String mobile;
   late Future<void> fetchDataFuture;
+  String? messageCode;
 
   @override
   void initState() {
@@ -217,10 +220,67 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                         return Center(
                             child: Center(child: CircularProgressIndicator()));
                       case Status.ERROR:
-                        return Center(
-                            child: Html(
-                                data: value.paymentHistoryList.message
-                                    .toString()));
+                        print(
+                            'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+                        print(value.paymentHistoryList.message.runtimeType);
+                        final splitedText = value.paymentHistoryList.message
+                            .toString()
+                            .split('Invalid request');
+                        messageCode = json
+                            .decode(splitedText[1])['displayMessage']
+                            .toString();
+                        print(json.decode(splitedText[1])['displayMessage']);
+                        print(
+                            'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+                        return AlertDialog(
+                          title: Center(
+                            child: Text(
+                              'Alert!',
+                              style: TextStyle(
+                                  fontSize: 15.sp, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          content: Text(
+                            messageCode.toString(),
+                            style: TextStyle(
+                                // fontWeight:
+                                //     FontWeight
+                                //         .bold,
+                                fontSize: 12.sp),
+                            textAlign: TextAlign.center,
+                          ),
+                          actions: <Widget>[
+                            SizedBox(
+                              width: 80.w,
+                              child: ElevatedButton(
+                                child: paymentHistoryViewmodel.loading1
+                                    ? Container(
+                                        child: Container(
+                                            child: CircularProgressIndicator(
+                                        color: Colors.white,
+                                        strokeWidth: 2.0,
+                                      )))
+                                    : Text(
+                                        'OK',
+                                        style: TextStyle(
+                                            fontSize: 14.sp,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                onPressed: () {
+                                  paymentHistoryViewmodel.setLoading1(true);
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => MyNavigationBar(
+                                                indexNumber: 0,
+                                              )));
+                                  // Timer(Duration(seconds: 5),() =>  settingsViewModel.setLoading1(true)) ;
+                                },
+                              ),
+                            ),
+                          ],
+                        );
+
                       case Status.COMPLETED:
                         return value.paymentHistoryList.data!.data!.length != 0
                             ? RefreshIndicator(

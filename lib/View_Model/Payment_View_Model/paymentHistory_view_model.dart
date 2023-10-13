@@ -20,6 +20,14 @@ class PaymentHistoryViewmodel with ChangeNotifier {
     notifyListeners();
   }
 
+  bool _loading1 = false;
+  bool get loading1 => _loading1;
+
+  setLoading1(bool value) {
+    _loading1 = value;
+    notifyListeners();
+  }
+
   Future<void> fetchPaymentHistoryApi(
       String token, String latId, String mobile) async {
     setPaymentHistory(ApiResponse.loading());

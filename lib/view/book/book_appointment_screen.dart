@@ -38,7 +38,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
   SettingsViewModel settingsViewModel = SettingsViewModel();
   BookAppointmentViewModel bookAppointmentViewModel =
       BookAppointmentViewModel();
-  late String number;
+  String? number;
   late String selectedDocotrId = '0';
   late String selectedDoctor = ' ';
   bool isLoading = false;
