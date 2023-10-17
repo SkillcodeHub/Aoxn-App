@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:807773773685:android:576e5a7e3722352a907d3c",
         "android_client_info": {
-          "package_name": "com.axon.axonweb"
+          "package_name": "com.axon.axonweb.patient"
         }
       },
       "oauth_client": [

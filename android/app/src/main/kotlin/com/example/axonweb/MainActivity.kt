@@ -1,4 +1,4 @@
-package com.axon.axonweb
+package com.axon.axonweb.patient
 
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
