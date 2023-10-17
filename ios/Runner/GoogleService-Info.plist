@@ -2,22 +2,18 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CLIENT_ID</key>
-	<string>807773773685-cech9g3fuvroouphq13tbuj86tl4qf6o.apps.googleusercontent.com</string>
-	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.807773773685-cech9g3fuvroouphq13tbuj86tl4qf6o</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDTGpbdbIhEf114ksV2EjjqvONCXpuYjuk</string>
+	<string>AIzaSyDwbmDj91OaVMqL-SDSN_sqRWjQeVJ1i1A</string>
 	<key>GCM_SENDER_ID</key>
-	<string>807773773685</string>
+	<string>785148251646</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.axon.axonweb.patient</string>
 	<key>PROJECT_ID</key>
-	<string>flutter-notifications-8d7de</string>
+	<string>axonweb-patient</string>
 	<key>STORAGE_BUCKET</key>
-	<string>flutter-notifications-8d7de.appspot.com</string>
+	<string>axonweb-patient.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:807773773685:ios:16f66d946826a84f907d3c</string>
+	<string>1:785148251646:ios:17bebd9c12c051ef9404af</string>
 </dict>
 </plist>
