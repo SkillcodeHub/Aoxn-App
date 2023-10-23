@@ -4,7 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import '../../Utils/utils.dart';
+
+import '../../utils/utils.dart';
 
 class AdvanceBookAppointmentViewModel with ChangeNotifier {
   late Razorpay _razorpay;
@@ -103,9 +104,10 @@ class AdvanceBookAppointmentViewModel with ChangeNotifier {
       print('valuevaluevaluevaluevaluevaluevaluevalue');
       if (value['status'] == true) {
         setLoading(false);
+        print(value.toString());
         var options = {
-          'key': 'rzp_test_8aGQyjie2ef5rn',
-          // 'key': value['data']['razorpayKey'],
+          // 'key': 'rzp_test_8aGQyjie2ef5rn',
+          'key':value['data']['razorPayOrder']['razorpayKey'].toString(),
           'order_id':
               value['data']['razorPayOrder']['razorpayOrderId'].toString(),
 
