@@ -126,16 +126,26 @@ class AdvanceBookAppointmentViewModel with ChangeNotifier {
         if (kDebugMode) {
           print(value.toString());
         }
-      } else {
+      } else if (value['status'] == false) {
         Utils.snackBar(value['displayMessage'], context);
+        print(
+            'sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss');
+        print(value['displayMessage']);
+        print(
+            'sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss');
         if (kDebugMode) {
           print(value.toString());
         }
       }
     }).onError((error, stackTrace) {
+      Utils.snackBar1(
+          "Appointment not possible in selected slot. Schedule is not available for booking.",
+          Duration(seconds: 5),
+          context);
+
       if (kDebugMode) {
         Utils.flushBarErrorMessage(
-            error.toString(), Duration(seconds: 3), context);
+            error.toString(), Duration(seconds: 7), context);
         print(error.toString());
       }
     });

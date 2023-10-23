@@ -70,4 +70,33 @@ class Utils {
       ),
     );
   }
+
+  static snackBar1(String message, Duration duration, BuildContext context) {
+    return ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: Colors.grey.shade800,
+        content: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Icon(
+              Icons.error_outline,
+              color: Colors.white,
+              size: 3.3.h,
+            ),
+            SizedBox(
+              width: 3.w,
+            ),
+            Expanded(
+              // Wrap the Text widget with Expanded
+              child: Text(
+                message,
+                overflow: TextOverflow.visible, // Set overflow to visible
+              ),
+            ),
+          ],
+        ),
+        duration: duration,
+      ),
+    );
+  }
 }

@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:axonweb/View/NevigationBar/my_navigationbar.dart';
+import 'package:axonweb/utils/routes/routes_name.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
@@ -168,6 +169,33 @@ class NotificationServices {
               builder: (context) => MyNavigationBar(
                     indexNumber: int.parse(message.data['id']),
                   )));
+    } else if (message.data['type'] == 'newsDetails') {
+      print(
+          '11111111111111111111111111111111111111111111111111111111111111111111111111111');
+      print(message.data['token']);
+      print(message.data['newsId']);
+      print(
+          '11111111111111111111111111111111111111111111111111111111111111111111111');
+      Map data = {
+        'token': "68cb311f-585a-4e86-8e89-06edf1814080",
+        'newsId': "265"
+      };
+      Navigator.pushNamed(context, RoutesName.newsdetails, arguments: data);
+    } else if (message.data['type'] == 'reportDetails') {
+      print('2222222222222222222222222222222222222222222222');
+      print(message.data['providerName']);
+      print(message.data['patientName']);
+      print(message.data['date']);
+      print(message.data['treatment']);
+      print('22222222222222222222222222222222222222222222');
+      Map reportDetails = {
+        'providerName': message.data['providerName'],
+        'patientName': message.data['patientName'],
+        'date': message.data['date'],
+        'treatment': message.data['treatment'],
+      };
+      Navigator.pushNamed(context, RoutesName.reportDetails,
+          arguments: reportDetails);
     }
   }
 
