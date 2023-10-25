@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 import '../../Data/Network/BaseApiServices.dart';
 import '../../Data/Network/NetworkApiService.dart';
 import '../../Model/SelectPatient_Model/selectPatientById_Model.dart';
@@ -14,7 +16,9 @@ class SelectPatientByIdRepository {
               patientById +
               "&customerToken=" +
               token);
-      print(response);
+      if (kDebugMode) {
+        print(response);
+      }
       return response = SelectPatientByIdModel.fromJson(response);
     } catch (e) {
       throw e;

@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 import '../../Data/Network/BaseApiServices.dart';
 import '../../Data/Network/NetworkApiService.dart';
 import '../../Model/EventList_Model/eventList_model.dart';
@@ -13,7 +15,9 @@ class EventListRepository {
               deviceId +
               "&CustomerToken=" +
               token.toString());
-      print(response);
+      if (kDebugMode) {
+        print(response);
+      }
       return response = EventListModel.fromJson(response);
     } catch (e) {
       throw e;

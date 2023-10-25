@@ -6,8 +6,6 @@ class ValidatePaymentRepository {
   BaseApiServices _apiServices = NetworkApiService();
 
   Future<dynamic> validatePaymentUserapi(dynamic data) async {
-    print('wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww');
-    print(data);
     try {
       dynamic response = await _apiServices.getPostApiResponse(
           AppUrl.validatePaymentUrl, data);

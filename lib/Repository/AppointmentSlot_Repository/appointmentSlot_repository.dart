@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 import '../../Data/Network/BaseApiServices.dart';
 import '../../Data/Network/NetworkApiService.dart';
 import '../../Model/AppointmentSlot_Model/appointmentSlot_model.dart';
@@ -16,7 +18,9 @@ class AppointmentSlotListRepository {
               datetime1.toString() +
               "&customerToken=" +
               token.toString());
-      print(response);
+      if (kDebugMode) {
+        print(response);
+      }
       return response = AppointmentSlotListModel.fromJson(response);
     } catch (e) {
       throw e;

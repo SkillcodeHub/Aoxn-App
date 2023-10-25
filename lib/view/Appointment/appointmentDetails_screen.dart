@@ -17,43 +17,39 @@ class AppointmentDetails extends StatefulWidget {
 }
 
 class _AppointmentDetailsState extends State<AppointmentDetails> {
-    UserPreferences userPreference = UserPreferences();
+  UserPreferences userPreference = UserPreferences();
   late String token;
   String? status;
   String cancelStatus = "Appointment cancelled";
 
-@override
+  @override
   void initState() {
-    
-
     userPreference.getToken().then((value) {
       setState(() {
         token = value!;
       });
     });
     setState(() {
-      
       status = widget.appointmentData['data']['statusText'] as String?;
     });
     super.initState();
   }
 
-showAlertDialog(BuildContext context) {
+  showAlertDialog(BuildContext context) {
     final cancelAppointmentViewModel =
         Provider.of<CancelAppointmentViewModel>(context, listen: false);
     // set up the buttons
     Widget cancelButton = TextButton(
-      child: Text(
-        "Cancel",
-        style: TextStyle(
-          fontSize: 14.sp,
-          color: Color(0xFFFD5722),
+        child: Text(
+          "Cancel",
+          style: TextStyle(
+            fontSize: 14.sp,
+            color: Color(0xFFFD5722),
+          ),
         ),
-      ),
-      onPressed: () {
-        Navigator.pop(context);
-      }
-    );
+        onPressed: () {
+          Navigator.pop(context);
+        });
     Widget continueButton = TextButton(
       child: Text(
         "Continue",
@@ -65,7 +61,8 @@ showAlertDialog(BuildContext context) {
       onPressed: () {
         Map data = {
           "customerToken": token.toString(),
-          "appointmentId": widget.appointmentData['data']['appointmentId'].toString(),
+          "appointmentId":
+              widget.appointmentData['data']['appointmentId'].toString(),
         };
         cancelAppointmentViewModel.cancelApointmentApi(data, context);
 
@@ -76,12 +73,18 @@ showAlertDialog(BuildContext context) {
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("Confirm",style: TextStyle(
+      title: Text(
+        "Confirm",
+        style: TextStyle(
           fontSize: 15.sp,
-        ),),
-      content: Text("Are you sure want to cancel Appointment?",style: TextStyle(
+        ),
+      ),
+      content: Text(
+        "Are you sure want to cancel Appointment?",
+        style: TextStyle(
           fontSize: 13.sp,
-        ),),
+        ),
+      ),
       actions: [
         cancelButton,
         continueButton,
@@ -97,70 +100,15 @@ showAlertDialog(BuildContext context) {
     );
   }
 
-  // showAlert(BuildContext context) {
-  //   // set up the button
-  //   Widget okButton = TextButton(
-  //     child: Text(
-  //       "OK",
-  //       style: TextStyle(
-  //         fontSize: 14.sp,
-  //         color: Color(0xFFFD5722),
-  //       ),
-  //     ),
-  //     onPressed: () {
-  //       status = 'Canceled';
-  //       print('cancelStatus');
-  //       print(status);
-  //       print('cancelStatus');
-  //       Navigator.of(context)
-  //         ..pop()
-  //         ..pop();
-
-  //       // status = 'canceled';
-  //     },
-  //   );
-
-    // set up the AlertDialog
-  //   AlertDialog alert = AlertDialog(
-  //     title: Text("Alert"),
-  //     content: Text(cancelStatus),
-  //     actions: [
-  //       okButton,
-  //     ],
-  //   );
-
-  //   // show the dialog
-  //   showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return alert;
-  //     },
-  //   );
-  // }
-
-
-
-
-
-
   @override
   Widget build(BuildContext context) {
-  String date =
-        widget.appointmentData['data']['apptDateLocal'];
+    String date = widget.appointmentData['data']['apptDateLocal'];
     DateTime parseDate = new DateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(date);
     var inputDate = DateTime.parse(parseDate.toString());
     var outputFormat = DateFormat('E d-MMMM-yyyy');
-    var outputFormat1 = DateFormat('E,yyyy');
-    var outputFormat2 = DateFormat('d MMM');
     var outputFormat3 = DateFormat('hh:mm a');
-    // var outputFormat = DateFormat('MM/dd/yyyy hh:mm a');
     var outputDate = outputFormat.format(inputDate);
-    var outputDate1 = outputFormat1.format(inputDate);
-    var outputDate2 = outputFormat2.format(inputDate);
     var outputDate3 = outputFormat3.format(inputDate);
-    print('|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
-    print(outputDate);
-    print('|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
     return Scaffold(
       backgroundColor: BackgroundColor,
       appBar: PreferredSize(
@@ -252,7 +200,8 @@ showAlertDialog(BuildContext context) {
                           ),
                           Text(
                             'Patient',
-                            style: TextStyle(fontSize: 14.sp, color: Colors.grey),
+                            style:
+                                TextStyle(fontSize: 14.sp, color: Colors.grey),
                           ),
                           SizedBox(
                             height: 3,
@@ -306,7 +255,9 @@ showAlertDialog(BuildContext context) {
                           SizedBox(height: 1.h),
                           Row(
                             children: [
-                              Icon(Icons.access_time_rounded,),
+                              Icon(
+                                Icons.access_time_rounded,
+                              ),
                               Text(
                                 outputDate3,
                                 style: TextStyle(
@@ -323,17 +274,16 @@ showAlertDialog(BuildContext context) {
                               ),
                               // TextButton(
                               //     onPressed: () {},
-                                  // child: Text(
-                                  //   "SAVE TO CALENDER",
-                                  //   style: TextStyle(
-                                  //     color: Color(0xFFFD5722),
-                                  //                                       fontSize: 12.sp,
+                              // child: Text(
+                              //   "SAVE TO CALENDER",
+                              //   style: TextStyle(
+                              //     color: Color(0xFFFD5722),
+                              //                                       fontSize: 12.sp,
 
-                                  //   ),
-                                  // )
+                              //   ),
+                              // )
 
-                                  // )
-
+                              // )
                             ],
                           )
                         ],

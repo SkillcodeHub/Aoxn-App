@@ -8,8 +8,6 @@ class PaymentHistoryRepository {
 
   Future<PaymentHistoryModel> fetchPaymentHistory(
       String token, String latId, String mobile) async {
-    print(token);
-
     try {
       dynamic response = await _apiServices.getGetApiResponse(
           AppUrl.paymentHistoryUrl +

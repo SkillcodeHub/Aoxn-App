@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 import '../../Data/Network/BaseApiServices.dart';
 import '../../Data/Network/NetworkApiService.dart';
 import '../../Model/SelectPatient_Model/getPatientByMobile_model.dart';
@@ -14,7 +16,9 @@ class GetPatientByMobileRepository {
               mobile +
               "&CustomerToken=" +
               token);
-      print(response);
+      if (kDebugMode) {
+        print(response);
+      }
       return response = GetPatientByMobileModel.fromJson(response);
     } catch (e) {
       throw e;

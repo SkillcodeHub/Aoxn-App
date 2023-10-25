@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 import '../../Data/Network/BaseApiServices.dart';
 import '../../Data/Network/NetworkApiService.dart';
 import '../../Model/DoctorList_Model/doctorlist_model.dart';
@@ -11,7 +13,9 @@ class DoctorListRepository {
     try {
       dynamic response = await _apiServices.getGetApiResponse(
           AppUrl.getdoctorUrl + '?CustomerToken=' + token.toString());
-      print(response);
+      if (kDebugMode) {
+        print(response);
+      }
       return response = DoctorListModel.fromJson(response);
     } catch (e) {
       throw e;

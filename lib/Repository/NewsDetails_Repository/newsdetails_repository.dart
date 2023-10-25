@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 import '../../Data/Network/BaseApiServices.dart';
 import '../../Data/Network/NetworkApiService.dart';
 import '../../Model/NewsDetails_Model/newsdetails_model.dart';
@@ -15,7 +17,9 @@ class NewsDetailsRepository {
               token.toString() +
               "&newsid=" +
               newsId.toString());
-      print(response);
+      if (kDebugMode) {
+        print(response);
+      }
       return response = NewsDetailsListModel.fromJson(response);
     } catch (e) {
       throw e;

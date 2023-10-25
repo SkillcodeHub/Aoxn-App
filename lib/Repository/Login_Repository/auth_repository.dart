@@ -1,5 +1,6 @@
 import 'package:axonweb/data/network/BaseApiServices.dart';
 import 'package:axonweb/data/network/NetworkApiService.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../res/app_url.dart';
 
@@ -20,7 +21,9 @@ class AuthRepository {
     try {
       dynamic response = await _apiServices.getPostApiResponse(
           AppUrl.otpverifyUrl, otpVerifyData);
-      print(response);
+      if (kDebugMode) {
+        print(response);
+      }
       return response;
     } catch (e) {
       throw e;
