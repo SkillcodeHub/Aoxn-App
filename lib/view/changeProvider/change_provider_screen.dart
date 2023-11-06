@@ -256,7 +256,7 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
           return Scaffold(
               backgroundColor: BackgroundColor,
               appBar: PreferredSize(
-                preferredSize: Size.fromHeight(8.h),
+                preferredSize:  SizerUtil.deviceType == DeviceType.mobile ?  Size.fromHeight(7.h) : Size.fromHeight(5.h),
                 child:
                     // getKeyForCallLetId == 'true'
                     buttonProvider.backk == true
@@ -268,6 +268,8 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                             leading: Padding(
                               padding: EdgeInsets.only(top: 20),
                               child: IconButton(
+                                              iconSize: SizerUtil.deviceType == DeviceType.mobile ? 2.5.h : 3.h,
+
                                 color: Colors.black,
                                 onPressed: () {
                                   settingsViewModel.setBackButton1(false);

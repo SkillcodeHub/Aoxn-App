@@ -222,6 +222,8 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
           leading: Padding(
             padding: EdgeInsets.only(top: 20),
             child: IconButton(
+                            iconSize: SizerUtil.deviceType == DeviceType.mobile ? 2.5.h : 3.h,
+
               color: Colors.black,
               onPressed: () {
                 Navigator.pop(context);
@@ -248,7 +250,7 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                 child: Text(
                   'REGISTERED',
                   style:
-                      TextStyle(fontSize: 10.sp, fontWeight: FontWeight.w600),
+                      TextStyle(fontSize: SizerUtil.deviceType == DeviceType.mobile ?  10.sp : 8.sp, fontWeight: FontWeight.w600),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis, // Set the desired font size
                 ),
@@ -257,7 +259,7 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                 child: Text(
                   'UNREGISTERED',
                   style:
-                      TextStyle(fontSize: 10.sp, fontWeight: FontWeight.w600),
+                      TextStyle(fontSize:  SizerUtil.deviceType == DeviceType.mobile ?  10.sp : 8.sp,fontWeight: FontWeight.w600),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis, // Set the desired font size
                 ),
@@ -266,7 +268,7 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                 child: Text(
                   'PATIENT ID',
                   style:
-                      TextStyle(fontSize: 10.sp, fontWeight: FontWeight.w600),
+                      TextStyle(fontSize: SizerUtil.deviceType == DeviceType.mobile ?  10.sp : 8.sp, fontWeight: FontWeight.w600),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis, // Set the desired font size
                 ),
@@ -1078,7 +1080,7 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                                                 'Plz Register Patient from Hospital!',
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
-                                                  fontSize: 15.sp,
+                                                  fontSize:  SizerUtil.deviceType == DeviceType.mobile ?  15.sp : 13.sp,
                                                   color: Color(0XFF545454),
                                                   fontWeight: FontWeight.w600,
                                                 ),
@@ -1312,7 +1314,7 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                                                                           style:
                                                                               TextStyle(
                                                                             fontSize:
-                                                                                12.sp,
+                                                                              SizerUtil.deviceType == DeviceType.mobile ?  12.sp : 10.sp,
                                                                             fontWeight:
                                                                                 FontWeight.w500,
                                                                           ),
@@ -1339,7 +1341,7 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                                                                         style:
                                                                             TextStyle(
                                                                           fontSize:
-                                                                              12.sp,
+                                                                              SizerUtil.deviceType == DeviceType.mobile ?  12.sp : 10.sp,
                                                                           fontWeight:
                                                                               FontWeight.w500,
                                                                         ),
@@ -1354,7 +1356,7 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                                                                         style:
                                                                             TextStyle(
                                                                           fontSize:
-                                                                              12.sp,
+                                                                              SizerUtil.deviceType == DeviceType.mobile ?  12.sp : 10.sp,
                                                                           fontWeight:
                                                                               FontWeight.w500,
                                                                         ),
@@ -1391,7 +1393,7 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                                                                 'Please enter your Unique Id to search for Patients.',
                                                                 style: TextStyle(
                                                                     fontSize:
-                                                                        14.sp,
+                                                                         SizerUtil.deviceType == DeviceType.mobile ?  14.sp : 12.sp,
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .w500),

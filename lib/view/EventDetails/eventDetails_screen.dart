@@ -201,7 +201,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(10.h),
+        preferredSize:  SizerUtil.deviceType == DeviceType.mobile ?  Size.fromHeight(7.h) : Size.fromHeight(5.h),
         child: AppBar(
           automaticallyImplyLeading: false,
           centerTitle: false,
@@ -210,6 +210,8 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
           leading: Padding(
             padding: EdgeInsets.only(top: 20),
             child: IconButton(
+                            iconSize: SizerUtil.deviceType == DeviceType.mobile ? 2.5.h : 3.h,
+
               color: Colors.black,
               onPressed: () {
                 Navigator.pop(context);

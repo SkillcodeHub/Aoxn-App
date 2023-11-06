@@ -195,7 +195,7 @@ class _NewsScreenState extends State<NewsScreen> {
                 Container(
                   height: 18.h,
                   // width: MediaQuery.of(context).size.width * 0.79,
-                  width: 78.w,
+                  width: SizerUtil.deviceType == DeviceType.mobile ?  78.w : 82.w,
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(0, 5, 0, 8),
                     child: Column(
@@ -209,7 +209,7 @@ class _NewsScreenState extends State<NewsScreen> {
                             newsViewmodel.newsList.data!.data![index].title
                                 .toString(),
                             style: TextStyle(
-                                fontSize: 14.sp, fontWeight: FontWeight.w600),
+                                fontSize: SizerUtil.deviceType == DeviceType.mobile ?  14.sp : 11.sp, fontWeight: FontWeight.w600),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -292,11 +292,11 @@ class _NewsScreenState extends State<NewsScreen> {
                             children: [
                               Container(
                                 padding: EdgeInsets.only(left: 5),
-                                width: 65.w,
+                                width:65.w,
                                 child: Text(
                                   newsdate!,
                                   style: TextStyle(
-                                      fontSize: 11.sp,
+                                      fontSize: SizerUtil.deviceType == DeviceType.mobile ?  11.sp : 9.sp,
                                       fontWeight: FontWeight.w500),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
@@ -313,7 +313,7 @@ class _NewsScreenState extends State<NewsScreen> {
                                 // },
                                 child: Container(
                                   width: 8.w,
-                                  child: Icon(Icons.info_outline),
+                                  child: Icon(Icons.info_outline,size: SizerUtil.deviceType == DeviceType.mobile ?  2.5.h : 3.h,),
                                 ),
                               ),
                             ],
@@ -379,7 +379,8 @@ class _NewsScreenState extends State<NewsScreen> {
     return Scaffold(
       backgroundColor: BackgroundColor,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(7.h),
+        
+        preferredSize:  SizerUtil.deviceType == DeviceType.mobile ?  Size.fromHeight(7.h) : Size.fromHeight(5.h) ,
         child: FutureBuilder<void>(
           future: fetchDataFuture,
           builder: (context, snapshot) {
@@ -405,42 +406,14 @@ class _NewsScreenState extends State<NewsScreen> {
                             child: Text(
                                 value.doctorDetailsList.message.toString()));
                       case Status.COMPLETED:
-                        return
-
-                            // settingsViewModel.doctorDetailsList.data!
-                            //             .data![0].paymentGatewayEnabled
-                            //             .toString() ==
-                            //         'true'
-                            //     ? AppBar(
-                            //         automaticallyImplyLeading: false,
-                            //         centerTitle: false,
-                            //         backgroundColor: Color(0xffffffff),
-                            //         elevation: 0,
-                            //         title: Padding(
-                            //           padding: const EdgeInsets.only(top: 5.0),
-                            //           child: Row(
-                            //             mainAxisAlignment:
-                            //                 MainAxisAlignment.spaceBetween,
-                            //             children: [
-                            //               AxonIconForAppBarrWidget(),
-                            //               ScreenNameWidget(
-                            //                 title: '  Notice Board',
-                            //               ),
-                            //               WhatsappWidget(),
-                            //               PaymentWidget(),
-                            //               SettingsWidget(),
-                            //             ],
-                            //           ),
-                            //         ),
-                            //       )
-                            // :
-                            AppBar(
+                        return AppBar(
+                          
                           automaticallyImplyLeading: false,
-                          centerTitle: false,
+                          // centerTitle: false,
                           backgroundColor: Color(0xffffffff),
                           elevation: 0,
                           title: Padding(
-                            padding: const EdgeInsets.only(top: 5.0),
+                            padding:  EdgeInsets.only(top: 2.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -453,7 +426,8 @@ class _NewsScreenState extends State<NewsScreen> {
                               ],
                             ),
                           ),
-                        );
+                        ) ;
+                  
                     }
                   },
                 ),
@@ -538,7 +512,7 @@ class _NewsScreenState extends State<NewsScreen> {
                                               'Swipe down to refresh page',
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
-                                                fontSize: 14.sp,
+                                                fontSize: SizerUtil.deviceType == DeviceType.mobile ?  14.sp : 12.sp,
                                                 color: Color(0XFF545454),
                                                 fontWeight: FontWeight.w600,
                                               ),
@@ -561,7 +535,7 @@ class _NewsScreenState extends State<NewsScreen> {
                                                 'You  don\'t have any news or upcoming events',
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
-                                                    fontSize: 14.sp,
+                                                    fontSize: SizerUtil.deviceType == DeviceType.mobile ?  14.sp : 12.sp,
                                                     color: Color(0XFF545454),
                                                     fontWeight:
                                                         FontWeight.w600),

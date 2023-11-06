@@ -258,6 +258,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:pdf/widgets.dart' as pw;
+import 'package:sizer/sizer.dart';
 
 class ReportDetailsScreen extends StatefulWidget {
   final dynamic reportDetails;
@@ -369,7 +370,7 @@ class _ReportDetailsScreenState extends State<ReportDetailsScreen> {
     cfData = widget.reportDetails['treatment'].toString();
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(60.0),
+        preferredSize: SizerUtil.deviceType == DeviceType.mobile ?  Size.fromHeight(7.h) : Size.fromHeight(5.h),
         child: AppBar(
           automaticallyImplyLeading: false,
           centerTitle: false,
@@ -378,6 +379,8 @@ class _ReportDetailsScreenState extends State<ReportDetailsScreen> {
           leading: Padding(
             padding: EdgeInsets.only(top: 5.0),
             child: IconButton(
+                            iconSize: SizerUtil.deviceType == DeviceType.mobile ? 2.5.h : 3.h,
+
               color: Colors.black,
               onPressed: () {
                 Navigator.pop(context);

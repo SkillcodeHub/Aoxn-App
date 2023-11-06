@@ -219,7 +219,7 @@ class _ReportScreenState extends State<ReportScreen> {
     return Scaffold(
       backgroundColor: BackgroundColor,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(7.h),
+        preferredSize:  SizerUtil.deviceType == DeviceType.mobile ?  Size.fromHeight(7.h) : Size.fromHeight(5.h),
         child: FutureBuilder<void>(
           future: fetchDataFuture,
           builder: (context, snapshot) {
@@ -368,7 +368,7 @@ class _ReportScreenState extends State<ReportScreen> {
                                         'Swipe down to refresh page',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
-                                          fontSize: 14.sp,
+                                          fontSize:SizerUtil.deviceType == DeviceType.mobile ?  14.sp : 12.sp,
                                           color: Color(0XFF545454),
                                           fontWeight: FontWeight.w600,
                                         ),
@@ -391,7 +391,7 @@ class _ReportScreenState extends State<ReportScreen> {
                                           'You  don\'t have any bookings or upcoming events',
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
-                                              fontSize: 14.sp,
+                                              fontSize: SizerUtil.deviceType == DeviceType.mobile ?  14.sp : 12.sp,
                                               color: Color(0XFF545454),
                                               fontWeight: FontWeight.w600),
                                         ),

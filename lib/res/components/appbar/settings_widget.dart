@@ -15,7 +15,7 @@ class SettingsWidget extends StatelessWidget {
       onTap: () {
         Navigator.pushNamed(context, RoutesName.settings);
         // Navigator.push(context,
-        //     MaterialPageRoute(builder: (context) => BookApointmentScreen()));
+        //     MaterialPageRoute(builder: (context) => Appbarrwidget()));
       },
       child: Container(
         margin: EdgeInsets.fromLTRB(6, 8, 0, 8),

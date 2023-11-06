@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../Book/book_appointment_screen.dart';
 import '../event/event_screen.dart';
 
+import 'package:sizer/sizer.dart';
 class MyNavigationBar extends StatelessWidget {
   final int indexNumber;
 
@@ -32,8 +33,8 @@ class MyNavigationBar extends StatelessWidget {
 
           return Scaffold(
             body: user[selectedIndex],
-            bottomNavigationBar: BottomNavigationBar(
-              items: const <BottomNavigationBarItem>[
+            bottomNavigationBar:  SizerUtil.deviceType == DeviceType.mobile ? BottomNavigationBar(
+              items:  <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
                   icon: Icon(
                     Icons.newspaper,
@@ -63,6 +64,46 @@ class MyNavigationBar extends StatelessWidget {
                   label: 'Reports',
                 ),
               ],
+              currentIndex: selectedIndex,
+              onTap: _onItemTapped,
+              type: BottomNavigationBarType.fixed,
+              elevation: 5,
+              selectedItemColor: const Color(0xFFFD5722),
+              unselectedItemColor: Colors.grey.shade600,
+            ) : BottomNavigationBar(
+              items:  <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                  icon: Icon(
+                    Icons.newspaper,
+                    size: 4.h,
+                  ),
+                  label: 'News',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(
+                    Icons.book_outlined,
+                    size:4.h,
+                  ),
+                  label: 'Book',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(
+                    Icons.event_note_sharp,
+                    size: 4.h,
+                  ),
+                  label: 'Events',
+                  
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(
+                    Icons.image_search_rounded,
+                    size: 4.h,
+                  ),
+                  label: 'Reports',
+                ),
+              ],
+              selectedLabelStyle: TextStyle(fontSize: 20), // Adjust the font size
+  unselectedLabelStyle: TextStyle(fontSize: 20), 
               currentIndex: selectedIndex,
               onTap: _onItemTapped,
               type: BottomNavigationBarType.fixed,

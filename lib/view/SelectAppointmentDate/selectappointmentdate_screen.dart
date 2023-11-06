@@ -195,8 +195,9 @@ class _SelectAppointmentDateScreenState
                         outputDate3 + ' - ' + outputDate13,
                         // appointmentData[itemIndex]["displayTime"],
                         // listOftimeslot[itemIndex],
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500, fontSize: 12.sp),
+                        style:SizerUtil.deviceType == DeviceType.mobile ? TextStyle(
+                            fontWeight: FontWeight.w500, fontSize: 12.sp) : TextStyle(
+                            fontWeight: FontWeight.w500, fontSize: 10.sp),
                       ),
                       SizedBox(height: 2.h),
                       Row(
@@ -206,12 +207,18 @@ class _SelectAppointmentDateScreenState
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(total.toString() + " - Available",style: TextStyle(
-                            fontWeight: FontWeight.w500, fontSize: 12.sp),),
+                                Text(total.toString() + " - Available",style: SizerUtil.deviceType == DeviceType.mobile ? TextStyle(
+                            fontWeight: FontWeight.w500, fontSize: 12.sp) : TextStyle(
+                            fontWeight: FontWeight.w500, fontSize: 8.sp),),
                                 SizedBox(height: 1.h),
+                                 SizerUtil.deviceType == DeviceType.mobile ?
                                 Container(
                                   height: 3,
                                   width: 80.w,
+                                  color: Colors.green,
+                                ) :  Container(
+                                  height: 3,
+                                  width: 87.w,
                                   color: Colors.green,
                                 ),
                               ],
@@ -258,9 +265,12 @@ class _SelectAppointmentDateScreenState
                     SizedBox(height: 2.h),
                     Text(
                       outputDate3 + ' - ' + outputDate13,
-                      style: TextStyle(
+                      style:SizerUtil.deviceType == DeviceType.mobile ?  TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 12.sp,
+                          color: Colors.grey.shade700) : TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 9.sp,
                           color: Colors.grey.shade700),
                     ),
                     SizedBox(height: 5.h),
@@ -303,6 +313,8 @@ class _SelectAppointmentDateScreenState
         leading: Padding(
           padding: EdgeInsets.only(top: 12),
           child: IconButton(
+                          iconSize: SizerUtil.deviceType == DeviceType.mobile ? 2.5.h : 3.h,
+
             color: Colors.black,
             onPressed: () {
               Navigator.pop(context);
@@ -313,13 +325,24 @@ class _SelectAppointmentDateScreenState
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 15),
+                        SizerUtil.deviceType == DeviceType.mobile ?
+ SizedBox(height: 15) :
+            SizedBox(height: 3.74.h),
+
+            SizerUtil.deviceType == DeviceType.mobile ?
             Text(
               'Choose Time',
               style: TextStyle(
                 fontSize: 14.sp,
                 color: Colors.black),
+            ) : Text(
+              'Choose Time',
+              style: TextStyle(
+                fontSize: 3.5.sp,
+                color: Colors.black),
             ),
+                        SizerUtil.deviceType == DeviceType.mobile ?
+
             Consumer<TimeProvider>(builder: (context, value, child) {
               return Text(
                 '${DateFormat("dd-MMM-yyyy").format(DateTime.now())}' +
@@ -327,8 +350,17 @@ class _SelectAppointmentDateScreenState
                     "${value.currentTime.toString()} IST ",
                 style: TextStyle(fontSize: 12.sp, color: Colors.black),
               );
+            }): Consumer<TimeProvider>(builder: (context, value, child) {
+              return Text(
+                '${DateFormat("dd-MMM-yyyy").format(DateTime.now())}' +
+                    ', ' +
+                    "${value.currentTime.toString()} IST ",
+                style: TextStyle(fontSize: 3.sp, color: Colors.black),
+              );
             }),
-            SizedBox(height: 10),
+                        SizerUtil.deviceType == DeviceType.mobile ?
+SizedBox(height: 10):
+            SizedBox(height: 2.5.h),
           ],
         ),
       ),
@@ -387,8 +419,12 @@ class _SelectAppointmentDateScreenState
                                               .month -
                                           1]
                                       .toString(),
-                              style: TextStyle(
-                                  fontSize: 12.sp,
+                              style:  SizerUtil.deviceType == DeviceType.mobile ?
+ TextStyle(fontSize: 12.sp,
+                                  color: currentDateSelectedIndex == index
+                                      ? Colors.white
+                                      : Colors.grey) : TextStyle(
+                                  fontSize: 8.sp,
                                   color: currentDateSelectedIndex == index
                                       ? Colors.white
                                       : Colors.grey),
@@ -401,8 +437,13 @@ class _SelectAppointmentDateScreenState
                                   .add(Duration(days: index))
                                   .day
                                   .toString(),
-                              style: TextStyle(
+                              style:SizerUtil.deviceType == DeviceType.mobile ? TextStyle(
                                   fontSize: 17.sp,
+                                  fontWeight: FontWeight.w700,
+                                  color: currentDateSelectedIndex == index
+                                      ? Colors.white
+                                      : Colors.grey):TextStyle(
+                                  fontSize: 12.sp,
                                   fontWeight: FontWeight.w700,
                                   color: currentDateSelectedIndex == index
                                       ? Colors.white
