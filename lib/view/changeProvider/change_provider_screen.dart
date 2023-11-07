@@ -14,6 +14,7 @@ import '../../View_Model/News_View_Model/news_view_model.dart';
 import '../../View_Model/Services/SharePreference/SharePreference.dart';
 import '../../View_Model/Settings_View_Model/settings_view_model.dart';
 import '../../res/components/appbar/axonimage_appbar-widget.dart';
+import '../../res/components/appbar/screen_name_widget.dart';
 import '../NevigationBar/my_navigationbar.dart';
 import '../QR_Code/qr_code_screen.dart';
 
@@ -266,7 +267,7 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                             elevation: 0,
                             backgroundColor: Color(0xffffffff),
                             leading: Padding(
-                              padding: EdgeInsets.only(top: 20),
+                              padding: EdgeInsets.only(top: 2),
                               child: IconButton(
                                               iconSize: SizerUtil.deviceType == DeviceType.mobile ? 2.5.h : 3.h,
 
@@ -281,19 +282,15 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                             ),
                             title: Padding(
                               padding: EdgeInsets.only(
-                                top: 16.0,
+                                top: 2.0,
                               ),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    "Change Provider",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 17.sp,
-                                    ),
-                                  ),
+                                  ScreenNameWidget(
+                                  title: '  Change Provider',
+                                ),
                                 ],
                               ),
                             ),
@@ -305,19 +302,15 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                             backgroundColor: Color(0xffffffff),
                             title: Padding(
                               padding: EdgeInsets.only(
-                                top: 16.0,
+                                top: 2.0,
                               ),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   AxonIconForAppBarrWidget(),
-                                  Text(
-                                    " Change Provider",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 17.sp,
-                                    ),
-                                  ),
+                                  ScreenNameWidget(
+                                  title: '  Change Provider',
+                                ),
                                 ],
                               ),
                             ),
@@ -355,7 +348,7 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                           child: Text(
                                             'Select Hospital by: ',
                                             style: TextStyle(
-                                              fontSize: 15.sp,
+                                              fontSize:SizerUtil.deviceType == DeviceType.mobile ?  15.sp :12.sp ,
                                               fontWeight: FontWeight.w500,
                                             ),
                                           ),
@@ -383,7 +376,7 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                                 child: Text(
                                                   'SCANNING APP CODE',
                                                   style: TextStyle(
-                                                      fontSize: 15.sp),
+                                                      fontSize:SizerUtil.deviceType == DeviceType.mobile ?  15.sp :12.sp ),
                                                 ),
                                               ),
                                             ],
@@ -428,7 +421,7 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                                               'Write App Code',
                                                         ),
                                                         style: TextStyle(
-                                                            fontSize: 13.sp),
+                                                            fontSize:SizerUtil.deviceType == DeviceType.mobile ?  13.sp :7.sp ),
                                                       ),
                                                       actions: [
                                                         TextButton(
@@ -440,7 +433,7 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                                               'Cancel',
                                                               style: TextStyle(
                                                                   fontSize:
-                                                                      14.sp,
+                                                                     SizerUtil.deviceType == DeviceType.mobile ?  14.sp :8.sp ,
                                                                   color: Color(
                                                                       0xFFFD5722)),
                                                             )),
@@ -489,7 +482,7 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                                               'OK',
                                                               style: TextStyle(
                                                                   fontSize:
-                                                                      14.sp,
+                                                                      SizerUtil.deviceType == DeviceType.mobile ?  14.sp :8.sp,
                                                                   color: Color(
                                                                       0xFFFD5722)),
                                                             ))
@@ -513,7 +506,7 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                                 child: Text(
                                                   'WRITING CODE MANUALLY',
                                                   style: TextStyle(
-                                                      fontSize: 15.sp),
+                                                      fontSize: SizerUtil.deviceType == DeviceType.mobile ?  15.sp :12.sp),
                                                 ),
                                               ),
                                             ],
@@ -528,7 +521,7 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                 outputList.length != 0
                                     ? Text(
                                         'OR',
-                                        style: TextStyle(fontSize: 12.sp),
+                                        style: TextStyle(fontSize: SizerUtil.deviceType == DeviceType.mobile ?  12.sp :8.sp),
                                       )
                                     : Container(),
                                 SizedBox(height: 1.h),
@@ -550,7 +543,7 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                                       title: Text(
                                                         'Confirm',
                                                         style: TextStyle(
-                                                            fontSize: 15.sp,
+                                                            fontSize: SizerUtil.deviceType == DeviceType.mobile ?  15.sp :10.sp,
                                                             fontWeight:
                                                                 FontWeight
                                                                     .bold),
@@ -560,14 +553,14 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                                         style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.bold,
-                                                            fontSize: 13.sp),
+                                                            fontSize: SizerUtil.deviceType == DeviceType.mobile ?  14.sp :10.sp),
                                                       ),
                                                       actions: <Widget>[
                                                         TextButton(
                                                           child: Text(
                                                             'CANCEL',
                                                             style: TextStyle(
-                                                                fontSize: 14.sp,
+                                                                fontSize:SizerUtil.deviceType == DeviceType.mobile ?  14.sp :8.sp,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .bold),
@@ -583,7 +576,7 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                                           child: Text(
                                                             'CONFIRM',
                                                             style: TextStyle(
-                                                                fontSize: 14.sp,
+                                                                fontSize: SizerUtil.deviceType == DeviceType.mobile ?  14.sp :8.sp,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .bold),
@@ -706,7 +699,7 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                                           style: TextStyle(
                                                               fontWeight:
                                                                   FontWeight
-                                                                      .bold),
+                                                                      .bold,fontSize: SizerUtil.deviceType == DeviceType.mobile ?  11.sp :9.sp),
                                                           overflow: TextOverflow
                                                               .ellipsis,
                                                           maxLines: 1,
@@ -732,7 +725,7 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                 ),
                                 Text(
                                   'Contact your provider for App Code',
-                                  style: TextStyle(fontSize: 12.sp),
+                                  style: TextStyle(fontSize:SizerUtil.deviceType == DeviceType.mobile ?  12.sp :9.sp),
                                 ),
                                 SizedBox(
                                   height: 1.h,
@@ -776,7 +769,7 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                             child: Text(
                                               'Select Hospital by: ',
                                               style: TextStyle(
-                                                fontSize: 15.sp,
+                                                fontSize: SizerUtil.deviceType == DeviceType.mobile ?  15.sp :12.sp,
                                                 fontWeight: FontWeight.w500,
                                               ),
                                             ),
@@ -805,7 +798,7 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                                   child: Text(
                                                     'SCANNING APP CODE',
                                                     style: TextStyle(
-                                                        fontSize: 15.sp),
+                                                        fontSize: SizerUtil.deviceType == DeviceType.mobile ?  15.sp :12.sp),
                                                   ),
                                                 ),
                                               ],
@@ -851,7 +844,7 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                                                   hintText:
                                                                       'Write App Code'),
                                                           style: TextStyle(
-                                                              fontSize: 13.sp),
+                                                              fontSize: SizerUtil.deviceType == DeviceType.mobile ?  13.sp :7.sp),
                                                         ),
                                                         actions: [
                                                           TextButton(
@@ -863,7 +856,7 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                                                 'Cancel',
                                                                 style: TextStyle(
                                                                     fontSize:
-                                                                        14.sp,
+                                                                       SizerUtil.deviceType == DeviceType.mobile ?  14.sp :8.sp,
                                                                     color: Color(
                                                                         0xFFFD5722)),
                                                               )),
@@ -912,7 +905,7 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                                                 'OK',
                                                                 style: TextStyle(
                                                                     fontSize:
-                                                                        14.sp,
+                                                                        SizerUtil.deviceType == DeviceType.mobile ?  14.sp :8.sp,
                                                                     color: Color(
                                                                         0xFFFD5722)),
                                                               ))
@@ -937,7 +930,7 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                                   child: Text(
                                                     'WRITING CODE MANUALLY',
                                                     style: TextStyle(
-                                                        fontSize: 15.sp),
+                                                        fontSize: SizerUtil.deviceType == DeviceType.mobile ?  15.sp :12.sp),
                                                   ),
                                                 ),
                                               ],

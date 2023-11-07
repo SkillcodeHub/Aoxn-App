@@ -473,8 +473,8 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                           builder: (context,
                                                               doctorNameProvider,
                                                               _) {
-                                                        return Container( 
-
+                                                        return 
+                                                        Container( 
                                                           padding:
                                                               EdgeInsets.all(0),
                                                           alignment: Alignment
@@ -572,6 +572,8 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                             ),
                                                           ),
                                                         );
+                                                      
+                                                      
                                                       })
                                                     ],
                                                   ),
@@ -1394,7 +1396,7 @@ class _PaymentSheetState extends State<PaymentSheet> {
                                   Text(
                                     'Select Payment Reason',
                                     style: TextStyle(
-                                      fontSize: 18.sp,
+                                      fontSize:SizerUtil.deviceType == DeviceType.mobile ?  18.sp : 12.sp,
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
@@ -1465,7 +1467,7 @@ class _PaymentSheetState extends State<PaymentSheet> {
                                                                 .payHead
                                                                 .toString(),
                                                             style: TextStyle(
-                                                              fontSize: 13.sp,
+                                                              fontSize:SizerUtil.deviceType == DeviceType.mobile ?  13.sp : 9.sp,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w500,
@@ -1586,7 +1588,7 @@ class _PaymentSheetState extends State<PaymentSheet> {
                                     'I accept  ',
                                     style: TextStyle(
                                       color: Colors.black,
-                                      fontSize: 12.sp,
+                                      fontSize: SizerUtil.deviceType == DeviceType.mobile ?  12.sp : 8.sp,
                                     ),
                                   ),
                                   InkWell(
@@ -1607,7 +1609,7 @@ class _PaymentSheetState extends State<PaymentSheet> {
                                       'terms and conditions',
                                       style: TextStyle(
                                         color: Color(0xFFFD5722),
-                                        fontSize: 12.sp,
+                                        fontSize:SizerUtil.deviceType == DeviceType.mobile ?  12.sp : 8.sp,
                                       ),
                                     ),
                                   ),
@@ -1617,7 +1619,7 @@ class _PaymentSheetState extends State<PaymentSheet> {
                                 children: [
                                   Spacer(),
                                   Container(
-                                    height: 28.sp,
+                                    height: 5.h,
                                     width: 40.w,
                                     child: ElevatedButton(
                                       onPressed: () {
@@ -1646,7 +1648,7 @@ class _PaymentSheetState extends State<PaymentSheet> {
                                       child: Text(
                                         'START PAYMENT',
                                         style: TextStyle(
-                                          fontSize: 11.sp,
+                                          fontSize: SizerUtil.deviceType == DeviceType.mobile ?  12.sp : 8.sp,
                                           fontWeight: FontWeight.w600,
                                           color: Colors.white,
                                         ),

@@ -41,15 +41,17 @@ class ConfirmPaidAppointmentViewModel with ChangeNotifier {
               ),
               title: Text(
                 'Congratulations!',
-                style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: SizerUtil.deviceType == DeviceType.mobile ?  15.sp : 12.sp, fontWeight: FontWeight.bold),
               ),
-              content: Text(
-                'Appointment Booked Successfully.',
-                style: TextStyle(
-                    // fontWeight:
-                    //     FontWeight
-                    //         .bold,
-                    fontSize: 12.sp),
+              content: Center(
+                child: Text(
+                  'Appointment Booked Successfully.',
+                  style: TextStyle(
+                      // fontWeight:
+                      //     FontWeight
+                      //         .bold,
+                      fontSize:SizerUtil.deviceType == DeviceType.mobile ?  12.sp : 8.sp),
+                ),
               ),
               actions: <Widget>[
                 SizedBox(
@@ -58,7 +60,7 @@ class ConfirmPaidAppointmentViewModel with ChangeNotifier {
                     child: Text(
                       'CONTINUE',
                       style: TextStyle(
-                          fontSize: 14.sp, fontWeight: FontWeight.bold),
+                          fontSize: SizerUtil.deviceType == DeviceType.mobile ?  14.sp : 8.sp, fontWeight: FontWeight.bold),
                     ),
                     onPressed: () {
                       Timer(

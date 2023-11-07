@@ -119,7 +119,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
           backgroundColor: Color(0xffffffff),
           elevation: 0,
           leading: Padding(
-            padding: EdgeInsets.only(top: 5.0),
+            padding: EdgeInsets.only(top: 2),
             child: IconButton(
                             iconSize: SizerUtil.deviceType == DeviceType.mobile ? 2.5.h : 3.h,
 
@@ -131,7 +131,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
             ),
           ),
           title: Padding(
-            padding: const EdgeInsets.only(top: 5.0),
+            padding: const EdgeInsets.only(top:2),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -154,7 +154,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                   Text(
                     'Booking Successful',
                     style: TextStyle(
-                      fontSize: 22.sp,
+                      fontSize: SizerUtil.deviceType == DeviceType.mobile ?  22.sp : 18.sp,
                       fontWeight: FontWeight.bold,
                       color: Color(0xFFFD5722),
                     ),

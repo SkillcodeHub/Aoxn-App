@@ -189,7 +189,7 @@ class LoginScreenState extends State {
                         Text(
                           'Login with your details',
                           style: TextStyle(
-                              fontSize: 15.sp, fontWeight: FontWeight.w600),
+                              fontSize:SizerUtil.deviceType == DeviceType.mobile ?  15.sp :10.sp, fontWeight: FontWeight.w600),
                         ),
                         SizedBox(
                           height: 1.h,

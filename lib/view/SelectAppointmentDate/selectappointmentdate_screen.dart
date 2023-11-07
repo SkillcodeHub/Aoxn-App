@@ -311,7 +311,7 @@ class _SelectAppointmentDateScreenState
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
         leading: Padding(
-          padding: EdgeInsets.only(top: 12),
+          padding:  SizerUtil.deviceType == DeviceType.mobile ? EdgeInsets.only(top: 12):EdgeInsets.all(0),
           child: IconButton(
                           iconSize: SizerUtil.deviceType == DeviceType.mobile ? 2.5.h : 3.h,
 
@@ -322,7 +322,7 @@ class _SelectAppointmentDateScreenState
             icon: Icon(Icons.arrow_back_rounded),
           ),
         ),
-        title: Column(
+        title: SizerUtil.deviceType == DeviceType.mobile ? Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
                         SizerUtil.deviceType == DeviceType.mobile ?
@@ -362,7 +362,32 @@ class _SelectAppointmentDateScreenState
 SizedBox(height: 10):
             SizedBox(height: 2.5.h),
           ],
+        ) : Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+                        SizerUtil.deviceType == DeviceType.mobile ?
+ SizedBox(height: 15) :
+            SizedBox(height: 3.74.h),
+
+             Text(
+              'Choose Time',
+              style: TextStyle(
+                fontSize: 8.sp,
+                color: Colors.black),
+            ),
+                 SizedBox(width: 2.w,),    
+Consumer<TimeProvider>(builder: (context, value, child) {
+              return Text(
+                '${DateFormat("dd-MMM-yyyy").format(DateTime.now())}' +
+                    ', ' +
+                    "${value.currentTime.toString()} IST ",
+                style: TextStyle(fontSize: 8.sp, color: Colors.black),
+              );
+            }),
+                        
+          ],
         ),
+     
       ),
       body: SingleChildScrollView(
         child: Column(

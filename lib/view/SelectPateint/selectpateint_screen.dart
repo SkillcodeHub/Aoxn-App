@@ -133,7 +133,13 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                             .data!
                             .data![itemIndex]
                             .caseNo
-                            .toString()),
+                            .toString(),style:
+                                                                              TextStyle(
+                                                                            fontSize:
+                                                                              SizerUtil.deviceType == DeviceType.mobile ?  12.sp : 10.sp,
+                                                                            fontWeight:
+                                                                                FontWeight.w500,
+                                                                          )),
                         Container(
                           child: Icon(Icons.person),
                         ),
@@ -149,20 +155,38 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                             .data!
                             .data![itemIndex]
                             .patientName
-                            .toString()),
+                            .toString(),style:
+                                                                              TextStyle(
+                                                                            fontSize:
+                                                                              SizerUtil.deviceType == DeviceType.mobile ?  12.sp : 10.sp,
+                                                                            fontWeight:
+                                                                                FontWeight.w500,
+                                                                          )),
                         SizedBox(
-                          height: 10,
+                          height: 2.h,
                         ),
                         Text(getPatientByMobileListViewmodel
                             .GetPatientByMobileList
                             .data!
                             .data![itemIndex]
                             .patientMobile
-                            .toString()),
+                            .toString(),style:
+                                                                              TextStyle(
+                                                                            fontSize:
+                                                                              SizerUtil.deviceType == DeviceType.mobile ?  12.sp : 10.sp,
+                                                                            fontWeight:
+                                                                                FontWeight.w500,
+                                                                          )),
                         SizedBox(
                           height: 2.h,
                         ),
-                        Text(registeredpatientBirth!),
+                        Text(registeredpatientBirth!,style:
+                                                                              TextStyle(
+                                                                            fontSize:
+                                                                              SizerUtil.deviceType == DeviceType.mobile ?  12.sp : 10.sp,
+                                                                            fontWeight:
+                                                                                FontWeight.w500,
+                                                                          )),
                       ],
                     ),
                   ),
@@ -220,7 +244,7 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
           backgroundColor: Color(0xffffffff),
           elevation: 0,
           leading: Padding(
-            padding: EdgeInsets.only(top: 20),
+            padding: EdgeInsets.only(top: 2),
             child: IconButton(
                             iconSize: SizerUtil.deviceType == DeviceType.mobile ? 2.5.h : 3.h,
 
@@ -232,7 +256,7 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
             ),
           ),
           title: Padding(
-            padding: const EdgeInsets.only(top: 16.0),
+            padding: const EdgeInsets.only(top: 2.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -250,7 +274,7 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                 child: Text(
                   'REGISTERED',
                   style:
-                      TextStyle(fontSize: SizerUtil.deviceType == DeviceType.mobile ?  10.sp : 8.sp, fontWeight: FontWeight.w600),
+                      TextStyle(fontSize: SizerUtil.deviceType == DeviceType.mobile ?  10.sp : 7.sp, fontWeight: FontWeight.w600),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis, // Set the desired font size
                 ),
@@ -259,7 +283,7 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                 child: Text(
                   'UNREGISTERED',
                   style:
-                      TextStyle(fontSize:  SizerUtil.deviceType == DeviceType.mobile ?  10.sp : 8.sp,fontWeight: FontWeight.w600),
+                      TextStyle(fontSize:  SizerUtil.deviceType == DeviceType.mobile ?  10.sp : 7.sp,fontWeight: FontWeight.w600),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis, // Set the desired font size
                 ),
@@ -268,7 +292,7 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                 child: Text(
                   'PATIENT ID',
                   style:
-                      TextStyle(fontSize: SizerUtil.deviceType == DeviceType.mobile ?  10.sp : 8.sp, fontWeight: FontWeight.w600),
+                      TextStyle(fontSize: SizerUtil.deviceType == DeviceType.mobile ?  10.sp : 7.sp, fontWeight: FontWeight.w600),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis, // Set the desired font size
                 ),
@@ -309,74 +333,77 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                                   .GetPatientByMobileList.data!.data!.length);
                               print('aaaaaaaaaaaaaaaaaaaaaaaaaa');
                               return Container(
-                                child: Column(
-                                  children: [
-                                    getPatientByMobileListViewmodel
-                                                .GetPatientByMobileList
-                                                .data!
-                                                .data!
-                                                .length !=
-                                            0
-                                        ? ListView.builder(
-                                            padding:
-                                                EdgeInsets.only(bottom: 10),
-                                            physics:
-                                                const AlwaysScrollableScrollPhysics(),
-                                            shrinkWrap: true,
-                                            itemCount:
-                                                getPatientByMobileListViewmodel
-                                                    .GetPatientByMobileList
-                                                    .data!
-                                                    .data!
-                                                    .length,
-                                            itemBuilder: (BuildContext context,
-                                                int itemIndex) {
-                                              return createPatientListContainer(
-                                                  context, itemIndex);
-                                            })
-                                        : Container(
-                                            height: 60.h,
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                SizedBox(
-                                                  height: 2.h,
-                                                ),
-                                                Text(
-                                                  'Swipe down to refresh page',
-                                                  style: TextStyle(
-                                                      fontSize: 12.sp,
-                                                      fontWeight:
-                                                          FontWeight.w500),
-                                                  textAlign: TextAlign.center,
-                                                ),
-                                                SizedBox(
-                                                  height: 20.h,
-                                                ),
-                                                Container(
-                                                  height: 20.h,
-                                                  child: Image.asset(
-                                                      'images/loading.png'),
-                                                ),
-                                                SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Container(
-                                                  width: 80.w,
-                                                  child: Text(
-                                                    "Oops. You haven't registered any patient yet.",
+                                child: Padding(
+                                  padding:  EdgeInsets.all(15.0),
+                                  child: Column(
+                                    children: [
+                                      getPatientByMobileListViewmodel
+                                                  .GetPatientByMobileList
+                                                  .data!
+                                                  .data!
+                                                  .length !=
+                                              0
+                                          ? ListView.builder(
+                                              padding:
+                                                  EdgeInsets.only(bottom: 10),
+                                              physics:
+                                                  const AlwaysScrollableScrollPhysics(),
+                                              shrinkWrap: true,
+                                              itemCount:
+                                                  getPatientByMobileListViewmodel
+                                                      .GetPatientByMobileList
+                                                      .data!
+                                                      .data!
+                                                      .length,
+                                              itemBuilder: (BuildContext context,
+                                                  int itemIndex) {
+                                                return createPatientListContainer(
+                                                    context, itemIndex);
+                                              })
+                                          : Container(
+                                              height: 60.h,
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  SizedBox(
+                                                    height: 2.h,
+                                                  ),
+                                                  Text(
+                                                    'Swipe down to refresh page',
                                                     style: TextStyle(
-                                                        fontSize: 14.sp,
+                                                        fontSize: 12.sp,
                                                         fontWeight:
                                                             FontWeight.w500),
                                                     textAlign: TextAlign.center,
                                                   ),
-                                                ),
-                                              ],
+                                                  SizedBox(
+                                                    height: 20.h,
+                                                  ),
+                                                  Container(
+                                                    height: 20.h,
+                                                    child: Image.asset(
+                                                        'images/loading.png'),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  Container(
+                                                    width: 80.w,
+                                                    child: Text(
+                                                      "Oops. You haven't registered any patient yet.",
+                                                      style: TextStyle(
+                                                          fontSize: 14.sp,
+                                                          fontWeight:
+                                                              FontWeight.w500),
+                                                      textAlign: TextAlign.center,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               );
                           }
@@ -1143,7 +1170,7 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                                       )),
                                 ),
                                 style: TextStyle(
-                                  fontSize: 12.sp,
+                                  fontSize: SizerUtil.deviceType == DeviceType.mobile ?  12.sp : 10.sp,
                                   color: Color(0XFF545454),
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -1429,7 +1456,7 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                                               child: Text(
                                                 'Please enter your Unique Id to search for Patients.',
                                                 style: TextStyle(
-                                                    fontSize: 14.sp,
+                                                    fontSize: SizerUtil.deviceType == DeviceType.mobile ?  14.sp : 12.sp,
                                                     fontWeight:
                                                         FontWeight.w500),
                                                 textAlign: TextAlign.center,

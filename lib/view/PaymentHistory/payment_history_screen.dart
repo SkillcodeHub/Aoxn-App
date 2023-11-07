@@ -178,7 +178,7 @@ class _PaymentHistoryState extends State<PaymentHistory> {
           elevation: 0,
           backgroundColor: Color(0xffffffff),
           leading: Padding(
-            padding: EdgeInsets.only(top: 5.0),
+            padding: EdgeInsets.only(top: 2.0),
             child: IconButton(
               color: Colors.black,
               iconSize: SizerUtil.deviceType == DeviceType.mobile ? 2.5.h : 3.h,
@@ -238,7 +238,7 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                             child: Text(
                               'Alert!',
                               style: TextStyle(
-                                  fontSize: 15.sp, fontWeight: FontWeight.bold),
+                                  fontSize:SizerUtil.deviceType == DeviceType.mobile ?  15.sp : 12.sp, fontWeight: FontWeight.bold),
                             ),
                           ),
                           content: Text(
@@ -247,11 +247,12 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                                 // fontWeight:
                                 //     FontWeight
                                 //         .bold,
-                                fontSize: 12.sp),
+                                fontSize: SizerUtil.deviceType == DeviceType.mobile ?  12.sp : 9.sp),
                             textAlign: TextAlign.center,
                           ),
                           actions: <Widget>[
                             SizedBox(
+                              height: 5.h,
                               width: 80.w,
                               child: ElevatedButton(
                                 child: paymentHistoryViewmodel.loading1
@@ -264,7 +265,7 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                                     : Text(
                                         'OK',
                                         style: TextStyle(
-                                            fontSize: 14.sp,
+                                            fontSize:SizerUtil.deviceType == DeviceType.mobile ?  14.sp : 10.sp,
                                             fontWeight: FontWeight.bold),
                                       ),
                                 onPressed: () {
