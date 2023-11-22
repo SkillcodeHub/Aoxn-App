@@ -596,7 +596,7 @@ class _NewsScreenState extends State<NewsScreen> {
                                             ),
                                             Center(
                                               child: Text(
-                                                'You  don\'t have any news or upcoming events',
+                                                'You don\'t have any news or upcoming events',
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                     fontSize: SizerUtil

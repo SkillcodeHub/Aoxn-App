@@ -72,8 +72,10 @@ class _PaymentHistoryState extends State<PaymentHistory> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  padding: SizerUtil.deviceType == DeviceType.mobile ? EdgeInsets.all(8.sp):EdgeInsets.all(2.sp),
-                  height:SizerUtil.deviceType == DeviceType.mobile ? 5.h : 5.h,
+                  padding: SizerUtil.deviceType == DeviceType.mobile
+                      ? EdgeInsets.all(8.sp)
+                      : EdgeInsets.all(2.sp),
+                  height: SizerUtil.deviceType == DeviceType.mobile ? 5.h : 5.h,
                   color: Color(0xFFFD5722),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -89,7 +91,10 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                                       .toString(),
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: SizerUtil.deviceType == DeviceType.mobile ? 12.sp : 9.sp,
+                                fontSize:
+                                    SizerUtil.deviceType == DeviceType.mobile
+                                        ? 12.sp
+                                        : 9.sp,
                               ),
                             )
                           : Container(),
@@ -99,7 +104,9 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                             .toString(),
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: SizerUtil.deviceType == DeviceType.mobile ? 13.sp : 10.sp,
+                          fontSize: SizerUtil.deviceType == DeviceType.mobile
+                              ? 13.sp
+                              : 10.sp,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -107,7 +114,8 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                   ),
                 ),
                 Container(
-                  height: SizerUtil.deviceType == DeviceType.mobile ? 15.h :20.h,
+                  height:
+                      SizerUtil.deviceType == DeviceType.mobile ? 15.h : 20.h,
                   padding: EdgeInsets.all(8.sp),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -118,7 +126,9 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                             .paymentHistoryList.data!.data![itemIndex].name
                             .toString(),
                         style: TextStyle(
-                          fontSize:SizerUtil.deviceType == DeviceType.mobile ? 12.sp : 10.sp,
+                          fontSize: SizerUtil.deviceType == DeviceType.mobile
+                              ? 12.sp
+                              : 10.sp,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -127,7 +137,9 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                             .paymentHistoryList.data!.data![itemIndex].payHead
                             .toString(),
                         style: TextStyle(
-                          fontSize:SizerUtil.deviceType == DeviceType.mobile ? 12.sp : 10.sp,
+                          fontSize: SizerUtil.deviceType == DeviceType.mobile
+                              ? 12.sp
+                              : 10.sp,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -136,14 +148,18 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                             .paymentHistoryList.data!.data![itemIndex].amount
                             .toString(),
                         style: TextStyle(
-                          fontSize: SizerUtil.deviceType == DeviceType.mobile ? 12.sp : 10.sp,
+                          fontSize: SizerUtil.deviceType == DeviceType.mobile
+                              ? 12.sp
+                              : 10.sp,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
                       Text(
                         '11-May-2023 12:33 PM',
                         style: TextStyle(
-                          fontSize:SizerUtil.deviceType == DeviceType.mobile ? 12.sp : 10.sp,
+                          fontSize: SizerUtil.deviceType == DeviceType.mobile
+                              ? 12.sp
+                              : 10.sp,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -171,7 +187,9 @@ class _PaymentHistoryState extends State<PaymentHistory> {
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
       appBar: PreferredSize(
-        preferredSize: SizerUtil.deviceType == DeviceType.mobile ?  Size.fromHeight(7.h) : Size.fromHeight(5.h),
+        preferredSize: SizerUtil.deviceType == DeviceType.mobile
+            ? Size.fromHeight(7.h)
+            : Size.fromHeight(5.h),
         child: AppBar(
           automaticallyImplyLeading: false,
           centerTitle: false,
@@ -238,7 +256,11 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                             child: Text(
                               'Alert!',
                               style: TextStyle(
-                                  fontSize:SizerUtil.deviceType == DeviceType.mobile ?  15.sp : 12.sp, fontWeight: FontWeight.bold),
+                                  fontSize:
+                                      SizerUtil.deviceType == DeviceType.mobile
+                                          ? 15.sp
+                                          : 12.sp,
+                                  fontWeight: FontWeight.bold),
                             ),
                           ),
                           content: Text(
@@ -247,7 +269,10 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                                 // fontWeight:
                                 //     FontWeight
                                 //         .bold,
-                                fontSize: SizerUtil.deviceType == DeviceType.mobile ?  12.sp : 9.sp),
+                                fontSize:
+                                    SizerUtil.deviceType == DeviceType.mobile
+                                        ? 12.sp
+                                        : 9.sp),
                             textAlign: TextAlign.center,
                           ),
                           actions: <Widget>[
@@ -265,7 +290,10 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                                     : Text(
                                         'OK',
                                         style: TextStyle(
-                                            fontSize:SizerUtil.deviceType == DeviceType.mobile ?  14.sp : 10.sp,
+                                            fontSize: SizerUtil.deviceType ==
+                                                    DeviceType.mobile
+                                                ? 14.sp
+                                                : 10.sp,
                                             fontWeight: FontWeight.bold),
                                       ),
                                 onPressed: () {
@@ -334,7 +362,11 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                                                 'Swipe down to refresh page',
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
-                                              fontSize: SizerUtil.deviceType == DeviceType.mobile ? 14.sp : 12.sp,
+                                                  fontSize:
+                                                      SizerUtil.deviceType ==
+                                                              DeviceType.mobile
+                                                          ? 14.sp
+                                                          : 12.sp,
                                                   color: Color(0XFF545454),
                                                   fontWeight: FontWeight.w600,
                                                 ),
@@ -354,10 +386,14 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                                               ),
                                               Center(
                                                 child: Text(
-                                                  'You  don\'t have any payment history',
+                                                  'You don\'t have any payment history',
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
-                                                      fontSize: SizerUtil.deviceType == DeviceType.mobile ? 14.sp : 12.sp,
+                                                      fontSize: SizerUtil
+                                                                  .deviceType ==
+                                                              DeviceType.mobile
+                                                          ? 14.sp
+                                                          : 12.sp,
                                                       color: Color(0XFF545454),
                                                       fontWeight:
                                                           FontWeight.w600),

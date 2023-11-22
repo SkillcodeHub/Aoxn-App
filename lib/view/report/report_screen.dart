@@ -517,7 +517,7 @@ class _ReportScreenState extends State<ReportScreen> {
                                       ),
                                       Center(
                                         child: Text(
-                                          'You  don\'t have any recent prescriptions.',
+                                          'You don\'t have any recent prescriptions.',
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               fontSize: SizerUtil.deviceType ==

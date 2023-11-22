@@ -639,7 +639,7 @@ class _EventScreenState extends State<EventScreen> {
                                               ),
                                               Center(
                                                 child: Text(
-                                                  'You  don\'t have any bookings or upcoming events',
+                                                  'You don\'t have any bookings or upcoming events',
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
                                                       fontSize: SizerUtil
