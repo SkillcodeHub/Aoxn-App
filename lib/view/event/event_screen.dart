@@ -485,18 +485,18 @@ class _EventScreenState extends State<EventScreen> {
                                     children: [
                                       Image.asset(
                                         'images/loading.png',
-                                        height: 15.h,
+                                        height: 20.h,
                                         // width: 90,
                                       ),
                                       SizedBox(height: 2.h),
                                       Text(
                                         value.EventList.message.toString(),
                                         style: TextStyle(
-                                          fontSize: SizerUtil.deviceType ==
-                                                  DeviceType.mobile
-                                              ? 14.sp
-                                              : 12.sp,
-                                        ),
+                                            fontSize: SizerUtil.deviceType ==
+                                                    DeviceType.mobile
+                                                ? 14.sp
+                                                : 12.sp,
+                                            fontWeight: FontWeight.w500),
                                       ),
                                     ],
                                   ),
