@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:axonweb/Provider/backButton_provider.dart';
 import 'package:axonweb/View_Model/Report_View_Model/report_view_model.dart';
+import 'package:axonweb/view/nevigationBar/my_navigationbar.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -25,11 +27,12 @@ class _ReportScreenState extends State<ReportScreen> {
   late String token;
   late String mobile;
   bool isLoading = false;
-  ReportViewmodel reportViewmodel = ReportViewmodel();
+  // ReportViewmodel reportViewmodel = ReportViewmodel();
   late Map<String, dynamic> data;
   late String data1;
   late Future<void> fetchDataFuture;
   String? reportdate;
+  String? messageCode;
 
   @override
   void initState() {
@@ -64,6 +67,8 @@ class _ReportScreenState extends State<ReportScreen> {
   }
 
   createNewsListContainer(BuildContext context, int itemIndex) {
+    final reportViewmodel =
+        Provider.of<ReportViewmodel>(context, listen: false);
     String date =
         reportViewmodel.reportsList.data!.data![itemIndex].visitDate.toString();
 
@@ -82,7 +87,11 @@ class _ReportScreenState extends State<ReportScreen> {
     var outputDate3 = outputFormat3.format(inputDate);
     var outputDate4 = outputFormat4.format(inputDate);
     var outputDate5 = outputFormat5.format(inputDate);
-    reportdate = outputDate5;
+    reportdate = outputDate4;
+
+    String displayDate = reportdate.toString() +
+        ', ' +
+        reportViewmodel.reportsList.data!.data![itemIndex].visitTime.toString();
     // print(outputDate5);
     return Column(
       children: [
@@ -98,7 +107,7 @@ class _ReportScreenState extends State<ReportScreen> {
               'patientName': reportViewmodel
                   .reportsList.data!.data![itemIndex].patientName
                   .toString(),
-              'date': reportdate.toString(),
+              'date': displayDate.toString(),
               'treatment': reportViewmodel
                   .reportsList.data!.data![itemIndex].treatment
                   .toString(),
@@ -140,7 +149,7 @@ class _ReportScreenState extends State<ReportScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Updated on: ' + reportdate.toString(),
+                        'Updated on: ' + displayDate,
                         style: TextStyle(
                             fontSize: 15, fontWeight: FontWeight.w500),
                         maxLines: 1,
@@ -155,7 +164,7 @@ class _ReportScreenState extends State<ReportScreen> {
                             'patientName': reportViewmodel
                                 .reportsList.data!.data![itemIndex].patientName
                                 .toString(),
-                            'date': reportdate.toString(),
+                            'date': displayDate.toString(),
                             'treatment': reportViewmodel
                                 .reportsList.data!.data![itemIndex].treatment
                                 .toString(),
@@ -190,6 +199,9 @@ class _ReportScreenState extends State<ReportScreen> {
 
   Future<void> fetchData() async {
     Timer(Duration(microseconds: 20), () {
+      final reportViewmodel =
+          Provider.of<ReportViewmodel>(context, listen: false);
+
       reportViewmodel.fetchReportsListApi(token, mobile);
 
       final settingsViewModel =
@@ -203,6 +215,8 @@ class _ReportScreenState extends State<ReportScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final reportViewmodel =
+        Provider.of<ReportViewmodel>(context, listen: false);
     final settingsViewModel =
         Provider.of<SettingsViewModel>(context, listen: false);
     // print(
@@ -212,6 +226,12 @@ class _ReportScreenState extends State<ReportScreen> {
     // });
     Future refresh() async {
       Timer(Duration(microseconds: 20), () {
+        print(
+            'tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt');
+        print(token.toString());
+        print(mobile.toString());
+        print(
+            'tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt');
         reportViewmodel.fetchReportsListApi(token, mobile);
       });
     }
@@ -219,7 +239,9 @@ class _ReportScreenState extends State<ReportScreen> {
     return Scaffold(
       backgroundColor: BackgroundColor,
       appBar: PreferredSize(
-        preferredSize:  SizerUtil.deviceType == DeviceType.mobile ?  Size.fromHeight(7.h) : Size.fromHeight(5.h),
+        preferredSize: SizerUtil.deviceType == DeviceType.mobile
+            ? Size.fromHeight(7.h)
+            : Size.fromHeight(5.h),
         child: FutureBuilder<void>(
           future: fetchDataFuture,
           builder: (context, snapshot) {
@@ -241,9 +263,26 @@ class _ReportScreenState extends State<ReportScreen> {
                       case Status.LOADING:
                         return Center(child: Container());
                       case Status.ERROR:
-                        return Center(
-                            child: Text(
-                                value.doctorDetailsList.message.toString()));
+                        return AppBar(
+                          automaticallyImplyLeading: false,
+                          centerTitle: false,
+                          backgroundColor: Color(0xffffffff),
+                          elevation: 0,
+                          title: Padding(
+                            padding: const EdgeInsets.only(top: 5.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                AxonIconForAppBarrWidget(),
+                                ScreenNameWidget(
+                                  title: '  Recent Precription',
+                                ),
+                                WhatsappWidget(),
+                                SettingsWidget(),
+                              ],
+                            ),
+                          ),
+                        );
                       case Status.COMPLETED:
                         return
                             //  settingsViewModel.doctorDetailsList.data!
@@ -309,8 +348,95 @@ class _ReportScreenState extends State<ReportScreen> {
               case Status.LOADING:
                 return Center(child: CircularProgressIndicator());
               case Status.ERROR:
-                return Center(
-                    child: Text(value.reportsList.message.toString()));
+                if (value.reportsList.message != " No Internet Connection") {
+                  print(
+                      'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+                  print(value.reportsList.message.runtimeType);
+                  final splitedText = value.reportsList.message
+                      .toString()
+                      .split('Invalid request');
+                  messageCode =
+                      json.decode(splitedText[1])['displayMessage'].toString();
+                  print(json.decode(splitedText[1])['displayMessage']);
+                  print(
+                      'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+                  print(value.reportsList.message.toString());
+                }
+
+                return value.reportsList.message == " No Internet Connection"
+                    ? Center(
+                        child: Container(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                'images/loading.png',
+                                height: 15.h,
+                                // width: 90,
+                              ),
+                              SizedBox(height: 2.h),
+                              Text(
+                                value.reportsList.message.toString(),
+                                style: TextStyle(
+                                  fontSize:
+                                      SizerUtil.deviceType == DeviceType.mobile
+                                          ? 14.sp
+                                          : 12.sp,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                    : AlertDialog(
+                        title: Center(
+                          child: Text(
+                            'Alert!',
+                            style: TextStyle(
+                                fontSize: 15.sp, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        content: Text(
+                          messageCode.toString(),
+                          style: TextStyle(
+                              // fontWeight:
+                              //     FontWeight
+                              //         .bold,
+                              fontSize: 12.sp),
+                          textAlign: TextAlign.center,
+                        ),
+                        actions: <Widget>[
+                          SizedBox(
+                            width: 80.w,
+                            child: ElevatedButton(
+                              child: settingsViewModel.loading1
+                                  ? Container(
+                                      child: Container(
+                                          child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                      strokeWidth: 2.0,
+                                    )))
+                                  : Text(
+                                      'OK',
+                                      style: TextStyle(
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                              onPressed: () {
+                                settingsViewModel.setLoading1(true);
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => MyNavigationBar(
+                                              indexNumber: 0,
+                                            )));
+                                // Timer(Duration(seconds: 5),() =>  settingsViewModel.setLoading1(true)) ;
+                              },
+                            ),
+                          ),
+                        ],
+                      );
               case Status.COMPLETED:
                 print('providerNameproviderNameproviderNameproviderName');
                 // print(reportViewmodel.reportsList.data!.data![1].providerName
@@ -368,7 +494,10 @@ class _ReportScreenState extends State<ReportScreen> {
                                         'Swipe down to refresh page',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
-                                          fontSize:SizerUtil.deviceType == DeviceType.mobile ?  14.sp : 12.sp,
+                                          fontSize: SizerUtil.deviceType ==
+                                                  DeviceType.mobile
+                                              ? 14.sp
+                                              : 12.sp,
                                           color: Color(0XFF545454),
                                           fontWeight: FontWeight.w600,
                                         ),
@@ -388,10 +517,13 @@ class _ReportScreenState extends State<ReportScreen> {
                                       ),
                                       Center(
                                         child: Text(
-                                          'You  don\'t have any bookings or upcoming events',
+                                          'You  don\'t have any recent prescriptions.',
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
-                                              fontSize: SizerUtil.deviceType == DeviceType.mobile ?  14.sp : 12.sp,
+                                              fontSize: SizerUtil.deviceType ==
+                                                      DeviceType.mobile
+                                                  ? 14.sp
+                                                  : 12.sp,
                                               color: Color(0XFF545454),
                                               fontWeight: FontWeight.w600),
                                         ),

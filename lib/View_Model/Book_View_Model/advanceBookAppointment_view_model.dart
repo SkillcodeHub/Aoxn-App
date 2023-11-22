@@ -21,6 +21,13 @@ class AdvanceBookAppointmentViewModel with ChangeNotifier {
     notifyListeners();
   }
 
+  bool _Ploading = false;
+  bool get Ploading => _Ploading;
+  setPLoading(bool value) {
+    _Ploading = value;
+    notifyListeners();
+  }
+
   Future<void> advancebookappointmentapi(
       dynamic data, BuildContext context) async {
     ConfirmPaidAppointmentViewModel confirmPaidAppointmentViewModel =
@@ -53,17 +60,20 @@ class AdvanceBookAppointmentViewModel with ChangeNotifier {
       // validatePaymentViewModel.validatePaymentApi(paymentData, context);
       confirmPaidAppointmentViewModel.confirmPaidAppointmentApi(
           paymentData, context);
+      setPLoading(false);
       Fluttertoast.showToast(
           msg: "SUCCESS PAYMENT: ${response.paymentId}", timeInSecForIosWeb: 4);
     }
 
     void _handlePaymentError(PaymentFailureResponse response) {
+      setPLoading(false);
       Fluttertoast.showToast(
           msg: "ERROR HERE: ${response.code} - ${response.message}",
           timeInSecForIosWeb: 4);
     }
 
     void _handleExternalWallet(ExternalWalletResponse response) {
+      setPLoading(false);
       Fluttertoast.showToast(
           msg: "EXTERNAL_WALLET IS: ${response.walletName}",
           timeInSecForIosWeb: 4);
@@ -95,14 +105,14 @@ class AdvanceBookAppointmentViewModel with ChangeNotifier {
       "Amount": data['Amount'],
     };
     _myRepo.advancebookappointmentapi(data1).then((value) {
-      // Utils.flushBarErrorMessage(
-      //     'Otp is Valid'.toString(), Duration(seconds: 5), context);
       print('valuevaluevaluevaluevaluevaluevaluevalue');
       print(value);
       print(value['data']['razorPayOrder']['razorpayOrderId'].toString());
       print(data['Name']);
       print('valuevaluevaluevaluevaluevaluevaluevalue');
       if (value['status'] == true) {
+        setPLoading(false);
+
         setLoading(false);
         print(value.toString());
         print(
@@ -127,6 +137,7 @@ class AdvanceBookAppointmentViewModel with ChangeNotifier {
         };
 
         try {
+          setPLoading(false);
           _razorpay.open(options);
         } catch (e) {
           debugPrint(e.toString());
@@ -135,6 +146,8 @@ class AdvanceBookAppointmentViewModel with ChangeNotifier {
           print(value.toString());
         }
       } else if (value['status'] == false) {
+        setPLoading(false);
+
         Utils.snackBar(value['displayMessage'], context);
         print(
             'sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss');

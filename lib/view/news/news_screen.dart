@@ -195,7 +195,8 @@ class _NewsScreenState extends State<NewsScreen> {
                 Container(
                   height: 18.h,
                   // width: MediaQuery.of(context).size.width * 0.79,
-                  width: SizerUtil.deviceType == DeviceType.mobile ?  78.w : 82.w,
+                  width:
+                      SizerUtil.deviceType == DeviceType.mobile ? 78.w : 82.w,
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(0, 5, 0, 8),
                     child: Column(
@@ -209,7 +210,11 @@ class _NewsScreenState extends State<NewsScreen> {
                             newsViewmodel.newsList.data!.data![index].title
                                 .toString(),
                             style: TextStyle(
-                                fontSize: SizerUtil.deviceType == DeviceType.mobile ?  14.sp : 11.sp, fontWeight: FontWeight.w600),
+                                fontSize:
+                                    SizerUtil.deviceType == DeviceType.mobile
+                                        ? 14.sp
+                                        : 11.sp,
+                                fontWeight: FontWeight.w600),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -292,11 +297,14 @@ class _NewsScreenState extends State<NewsScreen> {
                             children: [
                               Container(
                                 padding: EdgeInsets.only(left: 5),
-                                width:65.w,
+                                width: 65.w,
                                 child: Text(
                                   newsdate!,
                                   style: TextStyle(
-                                      fontSize: SizerUtil.deviceType == DeviceType.mobile ?  11.sp : 9.sp,
+                                      fontSize: SizerUtil.deviceType ==
+                                              DeviceType.mobile
+                                          ? 11.sp
+                                          : 9.sp,
                                       fontWeight: FontWeight.w500),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
@@ -313,7 +321,13 @@ class _NewsScreenState extends State<NewsScreen> {
                                 // },
                                 child: Container(
                                   width: 8.w,
-                                  child: Icon(Icons.info_outline,size: SizerUtil.deviceType == DeviceType.mobile ?  2.5.h : 3.h,),
+                                  child: Icon(
+                                    Icons.info_outline,
+                                    size: SizerUtil.deviceType ==
+                                            DeviceType.mobile
+                                        ? 2.5.h
+                                        : 3.h,
+                                  ),
                                 ),
                               ),
                             ],
@@ -379,8 +393,9 @@ class _NewsScreenState extends State<NewsScreen> {
     return Scaffold(
       backgroundColor: BackgroundColor,
       appBar: PreferredSize(
-        
-        preferredSize:  SizerUtil.deviceType == DeviceType.mobile ?  Size.fromHeight(7.h) : Size.fromHeight(5.h) ,
+        preferredSize: SizerUtil.deviceType == DeviceType.mobile
+            ? Size.fromHeight(7.h)
+            : Size.fromHeight(5.h),
         child: FutureBuilder<void>(
           future: fetchDataFuture,
           builder: (context, snapshot) {
@@ -402,18 +417,13 @@ class _NewsScreenState extends State<NewsScreen> {
                       case Status.LOADING:
                         return Center(child: Container());
                       case Status.ERROR:
-                        return Center(
-                            child: Text(
-                                value.doctorDetailsList.message.toString()));
-                      case Status.COMPLETED:
                         return AppBar(
-                          
                           automaticallyImplyLeading: false,
                           // centerTitle: false,
                           backgroundColor: Color(0xffffffff),
                           elevation: 0,
                           title: Padding(
-                            padding:  EdgeInsets.only(top: 2.0),
+                            padding: EdgeInsets.only(top: 2.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -426,8 +436,35 @@ class _NewsScreenState extends State<NewsScreen> {
                               ],
                             ),
                           ),
-                        ) ;
-                  
+                        );
+
+                      // Center(
+                      //     child: Column(
+                      //   children: [
+                      //     Text(value.doctorDetailsList.message.toString()),
+                      //   ],
+                      // ));
+                      case Status.COMPLETED:
+                        return AppBar(
+                          automaticallyImplyLeading: false,
+                          // centerTitle: false,
+                          backgroundColor: Color(0xffffffff),
+                          elevation: 0,
+                          title: Padding(
+                            padding: EdgeInsets.only(top: 2.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                AxonIconForAppBarrWidget(),
+                                ScreenNameWidget(
+                                  title: '  Notice Board',
+                                ),
+                                WhatsappWidget(),
+                                SettingsWidget(),
+                              ],
+                            ),
+                          ),
+                        );
                     }
                   },
                 ),
@@ -458,7 +495,30 @@ class _NewsScreenState extends State<NewsScreen> {
                       return Center(child: CircularProgressIndicator());
                     case Status.ERROR:
                       return Center(
-                          child: Text(value.newsList.message.toString()));
+                        child: Container(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                'images/loading.png',
+                                height: 15.h,
+                                // width: 90,
+                              ),
+                              SizedBox(height: 2.h),
+                              Text(
+                                value.newsList.message.toString(),
+                                style: TextStyle(
+                                  fontSize:
+                                      SizerUtil.deviceType == DeviceType.mobile
+                                          ? 14.sp
+                                          : 12.sp,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
                     case Status.COMPLETED:
                       return newsViewmodel.newsList.data!.data!.length != 0
                           ? RefreshIndicator(
@@ -512,7 +572,11 @@ class _NewsScreenState extends State<NewsScreen> {
                                               'Swipe down to refresh page',
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
-                                                fontSize: SizerUtil.deviceType == DeviceType.mobile ?  14.sp : 12.sp,
+                                                fontSize:
+                                                    SizerUtil.deviceType ==
+                                                            DeviceType.mobile
+                                                        ? 14.sp
+                                                        : 12.sp,
                                                 color: Color(0XFF545454),
                                                 fontWeight: FontWeight.w600,
                                               ),
@@ -535,7 +599,11 @@ class _NewsScreenState extends State<NewsScreen> {
                                                 'You  don\'t have any news or upcoming events',
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
-                                                    fontSize: SizerUtil.deviceType == DeviceType.mobile ?  14.sp : 12.sp,
+                                                    fontSize: SizerUtil
+                                                                .deviceType ==
+                                                            DeviceType.mobile
+                                                        ? 14.sp
+                                                        : 12.sp,
                                                     color: Color(0XFF545454),
                                                     fontWeight:
                                                         FontWeight.w600),

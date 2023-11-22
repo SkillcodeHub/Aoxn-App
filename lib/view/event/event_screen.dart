@@ -126,46 +126,53 @@ class _EventScreenState extends State<EventScreen> {
                           Text(
                             // historyData[itemIndex]['apptDate'],
                             outputDate1,
-                            style: SizerUtil.deviceType == DeviceType.mobile ?  TextStyle(
-                              fontSize: 12.sp,
-                              color: Colors.white,
-                            ) : TextStyle(
-                              fontSize: 11.sp,
-                              color: Colors.white,
-                            ),
+                            style: SizerUtil.deviceType == DeviceType.mobile
+                                ? TextStyle(
+                                    fontSize: 12.sp,
+                                    color: Colors.white,
+                                  )
+                                : TextStyle(
+                                    fontSize: 11.sp,
+                                    color: Colors.white,
+                                  ),
                           ),
                           SizedBox(height: 1.h),
                           Text(
                             outputDate2,
-                            style: SizerUtil.deviceType == DeviceType.mobile ?  TextStyle(
-                              fontSize: 12.sp,
-                              color: Colors.white,
-                            ) : TextStyle(
-                              fontSize: 11.sp,
-                              color: Colors.white,
-                            ),
+                            style: SizerUtil.deviceType == DeviceType.mobile
+                                ? TextStyle(
+                                    fontSize: 12.sp,
+                                    color: Colors.white,
+                                  )
+                                : TextStyle(
+                                    fontSize: 11.sp,
+                                    color: Colors.white,
+                                  ),
                           ),
                           SizedBox(
                             height: 5.h,
                           ),
                           Text(
                             outputDate3,
-                            style: SizerUtil.deviceType == DeviceType.mobile ?  TextStyle(
-                              fontSize: 12.sp,
-                              color: Colors.white,
-                            ) : TextStyle(
-                              fontSize: 11.sp,
-                              color: Colors.white,
-                            ),
+                            style: SizerUtil.deviceType == DeviceType.mobile
+                                ? TextStyle(
+                                    fontSize: 12.sp,
+                                    color: Colors.white,
+                                  )
+                                : TextStyle(
+                                    fontSize: 11.sp,
+                                    color: Colors.white,
+                                  ),
                           ),
                         ],
                       ),
                     )),
                 Container(
                   height: 18.h,
-                  width:  SizerUtil.deviceType == DeviceType.mobile ? 63.w : 70.w,
+                  width:
+                      SizerUtil.deviceType == DeviceType.mobile ? 63.w : 70.w,
                   child: Padding(
-                    padding:  EdgeInsets.all(8.0),
+                    padding: EdgeInsets.all(8.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -176,13 +183,15 @@ class _EventScreenState extends State<EventScreen> {
                                     .EventList.data!.data![itemIndex].doctorName
                                     .toString(),
                             // 'Why 100% PCR Testing Required?',
-                            style:SizerUtil.deviceType == DeviceType.mobile ?  TextStyle(
-                              fontSize: 11.sp,
-                              fontWeight: FontWeight.w500,
-                            ) : TextStyle(
-                              fontSize: 10.sp,
-                              fontWeight: FontWeight.w500,
-                            ),
+                            style: SizerUtil.deviceType == DeviceType.mobile
+                                ? TextStyle(
+                                    fontSize: 11.sp,
+                                    fontWeight: FontWeight.w500,
+                                  )
+                                : TextStyle(
+                                    fontSize: 10.sp,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -196,13 +205,15 @@ class _EventScreenState extends State<EventScreen> {
                                 eventListViewmodel
                                     .EventList.data!.data![itemIndex].name
                                     .toString(),
-                            style: SizerUtil.deviceType == DeviceType.mobile ?  TextStyle(
-                              fontSize: 11.sp,
-                              fontWeight: FontWeight.w500,
-                            ) : TextStyle(
-                              fontSize: 10.sp,
-                              fontWeight: FontWeight.w500,
-                            ),
+                            style: SizerUtil.deviceType == DeviceType.mobile
+                                ? TextStyle(
+                                    fontSize: 11.sp,
+                                    fontWeight: FontWeight.w500,
+                                  )
+                                : TextStyle(
+                                    fontSize: 10.sp,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -216,13 +227,15 @@ class _EventScreenState extends State<EventScreen> {
                                 eventListViewmodel
                                     .EventList.data!.data![itemIndex].mobile
                                     .toString(),
-                            style: SizerUtil.deviceType == DeviceType.mobile ?  TextStyle(
-                              fontSize: 11.sp,
-                              fontWeight: FontWeight.w500,
-                            ) : TextStyle(
-                              fontSize: 10.sp,
-                              fontWeight: FontWeight.w500,
-                            ),
+                            style: SizerUtil.deviceType == DeviceType.mobile
+                                ? TextStyle(
+                                    fontSize: 11.sp,
+                                    fontWeight: FontWeight.w500,
+                                  )
+                                : TextStyle(
+                                    fontSize: 10.sp,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -236,13 +249,15 @@ class _EventScreenState extends State<EventScreen> {
                             children: [
                               Text(
                                 'Ref No  -',
-                                style: SizerUtil.deviceType == DeviceType.mobile ?  TextStyle(
-                              fontSize: 11.sp,
-                              fontWeight: FontWeight.w500,
-                                                        ) : TextStyle(
-                              fontSize: 10.sp,
-                              fontWeight: FontWeight.w500,
-                                                        ),
+                                style: SizerUtil.deviceType == DeviceType.mobile
+                                    ? TextStyle(
+                                        fontSize: 11.sp,
+                                        fontWeight: FontWeight.w500,
+                                      )
+                                    : TextStyle(
+                                        fontSize: 10.sp,
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -315,7 +330,9 @@ class _EventScreenState extends State<EventScreen> {
     return Scaffold(
       backgroundColor: BackgroundColor,
       appBar: PreferredSize(
-          preferredSize:  SizerUtil.deviceType == DeviceType.mobile ?  Size.fromHeight(7.h) : Size.fromHeight(5.h),
+          preferredSize: SizerUtil.deviceType == DeviceType.mobile
+              ? Size.fromHeight(7.h)
+              : Size.fromHeight(5.h),
           child: AppBar(
             automaticallyImplyLeading: false,
             centerTitle: false,
@@ -440,67 +457,102 @@ class _EventScreenState extends State<EventScreen> {
                         return Center(
                             child: Center(child: CircularProgressIndicator()));
                       case Status.ERROR:
-                        print(
-                            'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
-                        print(value.EventList.message.runtimeType);
-                        final splitedText = value.EventList.message
-                            .toString()
-                            .split('Invalid request');
-                        messageCode = json
-                            .decode(splitedText[1])['displayMessage']
-                            .toString();
-                        print(json.decode(splitedText[1])['displayMessage']);
-                        print(
-                            'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+                        if (value.EventList.message !=
+                            " No Internet Connection") {
+                          print(
+                              'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+                          print(value.EventList.message.runtimeType);
+                          final splitedText = value.EventList.message
+                              .toString()
+                              .split('Invalid request');
+                          messageCode = json
+                              .decode(splitedText[1])['displayMessage']
+                              .toString();
+                          print(json.decode(splitedText[1])['displayMessage']);
+                          print(
+                              'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+                          print(value.EventList.message.toString());
+                        }
 
-                        return AlertDialog(
-                          title: Center(
-                            child: Text(
-                              'Alert!',
-                              style: TextStyle(
-                                  fontSize: 15.sp, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          content: Text(
-                            messageCode.toString(),
-                            style: TextStyle(
-                                // fontWeight:
-                                //     FontWeight
-                                //         .bold,
-                                fontSize: 12.sp),
-                            textAlign: TextAlign.center,
-                          ),
-                          actions: <Widget>[
-                            SizedBox(
-                              width: 80.w,
-                              child: ElevatedButton(
-                                child: settingsViewModel.loading1
-                                    ? Container(
-                                        child: Container(
-                                            child: CircularProgressIndicator(
-                                        color: Colors.white,
-                                        strokeWidth: 2.0,
-                                      )))
-                                    : Text(
-                                        'OK',
-                                        style: TextStyle(
-                                            fontSize: 14.sp,
-                                            fontWeight: FontWeight.bold),
+                        return value.EventList.message ==
+                                " No Internet Connection"
+                            ? Center(
+                                child: Container(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        'images/loading.png',
+                                        height: 15.h,
+                                        // width: 90,
                                       ),
-                                onPressed: () {
-                                  settingsViewModel.setLoading1(true);
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => MyNavigationBar(
-                                                indexNumber: 0,
-                                              )));
-                                  // Timer(Duration(seconds: 5),() =>  settingsViewModel.setLoading1(true)) ;
-                                },
-                              ),
-                            ),
-                          ],
-                        );
+                                      SizedBox(height: 2.h),
+                                      Text(
+                                        value.EventList.message.toString(),
+                                        style: TextStyle(
+                                          fontSize: SizerUtil.deviceType ==
+                                                  DeviceType.mobile
+                                              ? 14.sp
+                                              : 12.sp,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            : AlertDialog(
+                                title: Center(
+                                  child: Text(
+                                    'Alert!',
+                                    style: TextStyle(
+                                        fontSize: 15.sp,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                content: Text(
+                                  messageCode.toString(),
+                                  style: TextStyle(
+                                      // fontWeight:
+                                      //     FontWeight
+                                      //         .bold,
+                                      fontSize: 12.sp),
+                                  textAlign: TextAlign.center,
+                                ),
+                                actions: <Widget>[
+                                  SizedBox(
+                                    width: 80.w,
+                                    child: ElevatedButton(
+                                      child: settingsViewModel.loading1
+                                          ? Container(
+                                              child: Container(
+                                                  child:
+                                                      CircularProgressIndicator(
+                                              color: Colors.white,
+                                              strokeWidth: 2.0,
+                                            )))
+                                          : Text(
+                                              'OK',
+                                              style: TextStyle(
+                                                  fontSize: 14.sp,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                      onPressed: () {
+                                        settingsViewModel.setLoading1(true);
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    MyNavigationBar(
+                                                      indexNumber: 0,
+                                                    )));
+                                        // Timer(Duration(seconds: 5),() =>  settingsViewModel.setLoading1(true)) ;
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              );
 
                       // Padding(
                       //   padding: const EdgeInsets.all(8.0),
@@ -563,7 +615,11 @@ class _EventScreenState extends State<EventScreen> {
                                                 'Swipe down to refresh page',
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
-                                                  fontSize: SizerUtil.deviceType == DeviceType.mobile ?  14.sp : 12.sp,
+                                                  fontSize:
+                                                      SizerUtil.deviceType ==
+                                                              DeviceType.mobile
+                                                          ? 14.sp
+                                                          : 12.sp,
                                                   color: Color(0XFF545454),
                                                   fontWeight: FontWeight.w600,
                                                 ),
@@ -586,7 +642,11 @@ class _EventScreenState extends State<EventScreen> {
                                                   'You  don\'t have any bookings or upcoming events',
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
-                                                      fontSize:SizerUtil.deviceType == DeviceType.mobile ?  14.sp : 12.sp,
+                                                      fontSize: SizerUtil
+                                                                  .deviceType ==
+                                                              DeviceType.mobile
+                                                          ? 14.sp
+                                                          : 12.sp,
                                                       color: Color(0XFF545454),
                                                       fontWeight:
                                                           FontWeight.w600),

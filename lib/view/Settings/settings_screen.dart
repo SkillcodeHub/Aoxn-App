@@ -69,9 +69,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           title: Text(
             "Logout",
             textAlign: TextAlign.center,
-            style: TextStyle(
-              
-              fontWeight: FontWeight.bold),
+            style: TextStyle(fontWeight: FontWeight.bold),
           ),
           content: Text("Are you sure you want to logout?"),
           actions: [
@@ -117,7 +115,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return Scaffold(
       backgroundColor: BackgroundColor,
       appBar: PreferredSize(
-        preferredSize: SizerUtil.deviceType == DeviceType.mobile ?  Size.fromHeight(7.h) : Size.fromHeight(5.h),
+        preferredSize: SizerUtil.deviceType == DeviceType.mobile
+            ? Size.fromHeight(7.h)
+            : Size.fromHeight(5.h),
         child: AppBar(
           automaticallyImplyLeading: false,
           centerTitle: false,
@@ -127,8 +127,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             padding: EdgeInsets.only(top: 5.0),
             child: IconButton(
               color: Colors.black,
-                            iconSize: SizerUtil.deviceType == DeviceType.mobile ? 2.5.h : 3.h,
-
+              iconSize: SizerUtil.deviceType == DeviceType.mobile ? 2.5.h : 3.h,
               onPressed: () {
                 Navigator.pop(context);
               },
@@ -157,7 +156,29 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 return Center(child: CircularProgressIndicator());
               case Status.ERROR:
                 return Center(
-                    child: Text(value.doctorDetailsList.message.toString()));
+                  child: Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'images/loading.png',
+                          height: 15.h,
+                          // width: 90,
+                        ),
+                        SizedBox(height: 2.h),
+                        Text(
+                          value.doctorDetailsList.message.toString(),
+                          style: TextStyle(
+                            fontSize: SizerUtil.deviceType == DeviceType.mobile
+                                ? 14.sp
+                                : 12.sp,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
               case Status.COMPLETED:
                 return Stack(
                   children: [
@@ -179,7 +200,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                           Text(
                                             'Provider',
                                             style: TextStyle(
-                                              fontSize: SizerUtil.deviceType == DeviceType.mobile ? 10.sp : 8.sp,
+                                              fontSize: SizerUtil.deviceType ==
+                                                      DeviceType.mobile
+                                                  ? 10.sp
+                                                  : 8.sp,
                                               fontWeight: FontWeight.w500,
                                               color: Colors.grey.shade600,
                                             ),
@@ -214,7 +238,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                             .customerName
                                                             .toString(),
                                                         style: TextStyle(
-                                                          fontSize:SizerUtil.deviceType == DeviceType.mobile ?  12.sp : 10.sp,
+                                                          fontSize: SizerUtil
+                                                                      .deviceType ==
+                                                                  DeviceType
+                                                                      .mobile
+                                                              ? 12.sp
+                                                              : 10.sp,
                                                           fontWeight:
                                                               FontWeight.w500,
                                                         ),
@@ -237,16 +266,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                         RoutesName
                                                             .changeProvider);
                                                   },
-                                                  child: Text(
-                                                    'CHANGE',
-                                                    style: SizerUtil.deviceType == DeviceType.mobile ?  TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          fontSize: 12.sp) : TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          fontSize: 8.sp)
-                                                  ),
+                                                  child: Text('CHANGE',
+                                                      style: SizerUtil
+                                                                  .deviceType ==
+                                                              DeviceType.mobile
+                                                          ? TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              fontSize: 12.sp)
+                                                          : TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              fontSize: 8.sp)),
                                                   style:
                                                       ElevatedButton.styleFrom(
                                                     backgroundColor:
@@ -267,7 +300,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                   .customerAddress
                                                   .toString(),
                                               style: TextStyle(
-                                                fontSize:SizerUtil.deviceType == DeviceType.mobile ?  12.sp:10.sp,
+                                                fontSize:
+                                                    SizerUtil.deviceType ==
+                                                            DeviceType.mobile
+                                                        ? 12.sp
+                                                        : 10.sp,
                                                 fontWeight: FontWeight.w500,
                                               ),
                                               maxLines: 1,
@@ -290,7 +327,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                           Text(
                                             'Your Payment Details',
                                             style: TextStyle(
-                                              fontSize: SizerUtil.deviceType == DeviceType.mobile ? 10.sp : 8.sp,
+                                              fontSize: SizerUtil.deviceType ==
+                                                      DeviceType.mobile
+                                                  ? 10.sp
+                                                  : 8.sp,
                                               fontWeight: FontWeight.w500,
                                               color: Colors.grey.shade600,
                                             ),
@@ -312,7 +352,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                 child: Text(
                                                   ' Payment History',
                                                   style: TextStyle(
-                                                      fontSize:SizerUtil.deviceType == DeviceType.mobile ?  13.sp : 11.sp,
+                                                      fontSize: SizerUtil
+                                                                  .deviceType ==
+                                                              DeviceType.mobile
+                                                          ? 13.sp
+                                                          : 11.sp,
                                                       fontWeight:
                                                           FontWeight.w500),
                                                 ),
@@ -326,7 +370,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                               Container(height: 2),
                                               Container(
                                                 height: 4.h,
-                                                width:SizerUtil.deviceType == DeviceType.mobile ?  25.w : 14.w,
+                                                width: SizerUtil.deviceType ==
+                                                        DeviceType.mobile
+                                                    ? 25.w
+                                                    : 14.w,
                                                 child: ElevatedButton(
                                                   onPressed: () {
                                                     Navigator.push(
@@ -335,16 +382,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                             builder: (context) =>
                                                                 PaymentHistory()));
                                                   },
-                                                  child: Text(
-                                                    'VIEW',
-                                                    style: SizerUtil.deviceType == DeviceType.mobile ?  TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          fontSize: 12.sp) : TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          fontSize: 8.sp)
-                                                  ),
+                                                  child: Text('VIEW',
+                                                      style: SizerUtil
+                                                                  .deviceType ==
+                                                              DeviceType.mobile
+                                                          ? TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              fontSize: 12.sp)
+                                                          : TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              fontSize: 8.sp)),
                                                   style:
                                                       ElevatedButton.styleFrom(
                                                     backgroundColor:
@@ -415,8 +466,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                           Text(
                                             'Your login as',
                                             style: TextStyle(
-                                                                                            fontSize: SizerUtil.deviceType == DeviceType.mobile ? 10.sp : 8.sp,
-
+                                              fontSize: SizerUtil.deviceType ==
+                                                      DeviceType.mobile
+                                                  ? 10.sp
+                                                  : 8.sp,
                                               fontWeight: FontWeight.w500,
                                               color: Colors.grey.shade600,
                                             ),
@@ -465,16 +518,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                   onPressed: () {
                                                     showAlertDialog(context);
                                                   },
-                                                  child: Text(
-                                                    'LOGOUT',
-                                                    style: SizerUtil.deviceType == DeviceType.mobile ?  TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          fontSize: 12.sp) : TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          fontSize: 8.sp)
-                                                  ),
+                                                  child: Text('LOGOUT',
+                                                      style: SizerUtil
+                                                                  .deviceType ==
+                                                              DeviceType.mobile
+                                                          ? TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              fontSize: 12.sp)
+                                                          : TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              fontSize: 8.sp)),
                                                   style:
                                                       ElevatedButton.styleFrom(
                                                     backgroundColor:

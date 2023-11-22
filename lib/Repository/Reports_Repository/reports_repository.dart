@@ -11,9 +11,9 @@ class ReportsRepository {
       dynamic response = await _apiServices.getGetApiResponse(
           AppUrl.getrxvisithistoryUrl +
               '?CustomerToken=' +
-              '9549a931-ad43-11e9-8427-02a80849fdb4' +
+              token.toString() +
               "&Mobile=" +
-              "8140629967");
+              mobile.toString());
       return response = ReportsListModel.fromJson(response);
     } catch (e) {
       throw e;

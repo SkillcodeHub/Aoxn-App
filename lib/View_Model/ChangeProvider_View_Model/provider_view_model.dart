@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:axonweb/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 import '../../Data/Response/api_response.dart';
 import '../../Model/CustomerToken_Model/customer_token.dart';
@@ -32,6 +34,48 @@ class CustomerTkenViewmodel with ChangeNotifier {
     setCustomerToken(ApiResponse.loading());
     _myRepo.fetchCustomerToken(appCode).then((value) {
       setCustomerToken(ApiResponse.completed(value));
+      if (value.status == false) {
+        // Utils.snackBar('OTP Send Successfully', context);
+        Navigator.pop(context);
+        showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: Center(
+                  child: Text(
+                    'Alert!',
+                    style:
+                        TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                content: Text(
+                  value.messageCode.toString(),
+                  style: TextStyle(
+                      // fontWeight:
+                      //     FontWeight
+                      //         .bold,
+                      fontSize: 12.sp),
+                  textAlign: TextAlign.center,
+                ),
+                actions: <Widget>[
+                  SizedBox(
+                    width: 80.w,
+                    child: ElevatedButton(
+                      child: Text(
+                        'OK',
+                        style: TextStyle(
+                            fontSize: 14.sp, fontWeight: FontWeight.bold),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                        // Timer(Duration(seconds: 5),() =>  settingsViewModel.setLoading1(true)) ;
+                      },
+                    ),
+                  ),
+                ],
+              );
+            });
+      }
 
       final token = customertoken.data!.data!.token.toString();
       print(token);
@@ -49,15 +93,71 @@ class CustomerTkenViewmodel with ChangeNotifier {
       }
 
       main();
+      if (value.status == true) {
+        // Timer(
+        //     Duration(seconds: 2),
+        //     () =>
+        //         Navigator.pushNamed(context, RoutesName.otp, arguments: data));
 
-      Timer(
-          Duration(seconds: 1),
-          () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => MyNavigationBar(
-                        indexNumber: 0,
-                      ))));
+        Timer(
+            Duration(seconds: 1),
+            () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => MyNavigationBar(
+                          indexNumber: 0,
+                        ))));
+      } else if (value.status == false) {
+        Utils.snackBar('OTP Send Successfully', context);
+
+        // Navigator.pop(context);
+        // AlertDialog(
+        //   title: Center(
+        //     child: Text(
+        //       'Alert!',
+        //       style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold),
+        //     ),
+        //   ),
+        //   content: Text(
+        //     customertoken.data!.messageCode.toString(),
+        //     style: TextStyle(
+        //         // fontWeight:
+        //         //     FontWeight
+        //         //         .bold,
+        //         fontSize: 12.sp),
+        //     textAlign: TextAlign.center,
+        //   ),
+        //   actions: <Widget>[
+        //     // SizedBox(
+        //     //   width: 80.w,
+        //     //   child: ElevatedButton(
+        //     //     child: settingsViewModel.loading1
+        //     //         ? Container(
+        //     //             child: Container(
+        //     //                 child: CircularProgressIndicator(
+        //     //             color: Colors.white,
+        //     //             strokeWidth: 2.0,
+        //     //           )))
+        //     //         : Text(
+        //     //             'OK',
+        //     //             style: TextStyle(
+        //     //                 fontSize: 14.sp, fontWeight: FontWeight.bold),
+        //     //           ),
+        //     //     onPressed: () {
+        //     //       settingsViewModel.setLoading1(true);
+        //     //       Navigator.push(
+        //     //           context,
+        //     //           MaterialPageRoute(
+        //     //               builder: (context) => MyNavigationBar(
+        //     //                     indexNumber: 0,
+        //     //                   )));
+        //     //       // Timer(Duration(seconds: 5),() =>  settingsViewModel.setLoading1(true)) ;
+        //     //     },
+        //     //   ),
+        //     // ),
+        //   ],
+        // );
+      }
     }).onError((error, stackTrace) {
       setCustomerToken(ApiResponse.error(error.toString()));
     });

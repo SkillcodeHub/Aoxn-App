@@ -13,8 +13,6 @@ import '../Settings_View_Model/settings_view_model.dart';
 class BookAppointmentViewModel with ChangeNotifier {
   final _myRepo = BookAppointmentRepository();
 
-  
-
   bool _signUpLoading = false;
   bool get signUpLoading => _signUpLoading;
 
@@ -22,8 +20,6 @@ class BookAppointmentViewModel with ChangeNotifier {
     _signUpLoading = value;
     notifyListeners();
   }
-
-
 
   Future<void> bookApointmentApi(dynamic data, BuildContext context) async {
     setSignUpLoading(true);
@@ -35,7 +31,7 @@ class BookAppointmentViewModel with ChangeNotifier {
       //     'Otp is Valid'.toString(), Duration(seconds: 5), context);
 
       if (value['status'] == true) {
-      setSignUpLoading(false);
+        setSignUpLoading(false);
         Utils.snackBar('Appointment Book Successfully', context);
         print(value);
         Timer(
@@ -47,87 +43,87 @@ class BookAppointmentViewModel with ChangeNotifier {
           print(value.toString());
         }
       } else {
-              setSignUpLoading(false);
-              final settingsViewModel =
-            Provider.of<SettingsViewModel>(context,listen: false);
+        setSignUpLoading(false);
+        final settingsViewModel =
+            Provider.of<SettingsViewModel>(context, listen: false);
 
-            if( settingsViewModel
+        if (settingsViewModel
                 .doctorDetailsList.data!.data![0].isAdvanceBookingRequired
                 .toString() ==
-            'true'){
-        //       Widget okButton = TextButton(
-        //   child: Text(
-        //     "OK",
-        //     style: TextStyle(
-        //       fontSize: 15,
-        //       color: Color(0xFFFD5722),
-        //     ),
-        //   ),
-        //   onPressed: () {
-        //     Navigator.of(context)
-        //       ..pop()
-        //       ..pop();
-           
-        //   },
-        // );
+            'true') {
+          //       Widget okButton = TextButton(
+          //   child: Text(
+          //     "OK",
+          //     style: TextStyle(
+          //       fontSize: 15,
+          //       color: Color(0xFFFD5722),
+          //     ),
+          //   ),
+          //   onPressed: () {
+          //     Navigator.of(context)
+          //       ..pop()
+          //       ..pop();
 
-        // // set up the AlertDialog
-        // AlertDialog alert = AlertDialog(
-        //   title: Text("Alert"),
-        //   content: Text(value['displayMessage']),
-        //   actions: [
-        //     okButton,
-        //   ],
-        // );
+          //   },
+          // );
 
-        // // show the dialog
-        // showDialog(
-        //   context: context,
-        //   builder: (BuildContext context) {
-        //     return alert;
-        //   },
-        // );
-        Widget okButton = CupertinoDialogAction(
-  child: Text(
-    "OK",
-    style: TextStyle(
-      fontSize: 15,
-      color: Color(0xFFFD5722),
-    ),
-  ),
-  onPressed: () {
-    Navigator.of(context)
-      ..pop()
-      ..pop();
-  },
-);
+          // // set up the AlertDialog
+          // AlertDialog alert = AlertDialog(
+          //   title: Text("Alert"),
+          //   content: Text(value['displayMessage']),
+          //   actions: [
+          //     okButton,
+          //   ],
+          // );
+
+          // // show the dialog
+          // showDialog(
+          //   context: context,
+          //   builder: (BuildContext context) {
+          //     return alert;
+          //   },
+          // );
+          Widget okButton = CupertinoDialogAction(
+            child: Text(
+              "OK",
+              style: TextStyle(
+                fontSize: 15,
+                color: Color(0xFFFD5722),
+              ),
+            ),
+            onPressed: () {
+              Navigator.of(context)
+                ..pop()
+                ..pop();
+            },
+          );
 
 // set up the CupertinoAlertDialog
-CupertinoAlertDialog alert = CupertinoAlertDialog(
-  title: Text("Alert"),
-  content: Text(value['displayMessage']),
-  actions: [
-    okButton,
-  ],
-);
+          CupertinoAlertDialog alert = CupertinoAlertDialog(
+            title: Text("Alert"),
+            content: Text(value['displayMessage']),
+            actions: [
+              okButton,
+            ],
+          );
 
 // show the dialog
-showDialog(
-  context: context,
-  builder: (BuildContext context) {
-    return alert;
-  },
-);
-            }else{
-                      Utils.snackBar(value['displayMessage'], context);
-            }
-       
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return alert;
+            },
+          );
+        } else {
+          Utils.snackBar(value['displayMessage'], context);
+        }
+
         if (kDebugMode) {
           print(value.toString());
         }
       }
     }).onError((error, stackTrace) {
-                    setSignUpLoading(false);
+      setSignUpLoading(false);
 
       if (kDebugMode) {
         Utils.flushBarErrorMessage(
