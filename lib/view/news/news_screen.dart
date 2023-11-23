@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:axonweb/Provider/backButton_provider.dart';
+import 'package:axonweb/Res/Components/customWidgets/errorScreenWidget.dart';
 import 'package:axonweb/View_Model/NewsDetails_View_model/newsdetails_view_model.dart';
 import 'package:axonweb/data/response/status.dart';
 import 'package:flutter/material.dart';
@@ -490,7 +491,6 @@ class _NewsScreenState extends State<NewsScreen> {
             return RefreshIndicator(
               onRefresh: refresh,
               child: ChangeNotifierProvider<NewsViewmodel>.value(
-                
                 value: newsViewmodel,
                 child: Consumer<NewsViewmodel>(
                   builder: (context, value, _) {
@@ -498,65 +498,63 @@ class _NewsScreenState extends State<NewsScreen> {
                       case Status.LOADING:
                         return Center(child: CircularProgressIndicator());
                       case Status.ERROR:
-                        return 
-MyCustomRefreshWidget(
-  onRefresh: refresh(),
-  message: value.newsList.message.toString(),
-);
+                        return RefreshIndicator(
+                          onRefresh: refresh,
+                          child: Stack(
+                            children: [
+                              ErrorScreenWidget(
+                                onRefresh: refresh,
+                                message: value.newsList.message.toString(),
+                              ),
+                              // SingleChildScrollView(
+                              //   physics: BouncingScrollPhysics(),
+                              //   child: Padding(
+                              //     padding: EdgeInsets.all(15),
+                              //     child: Container(
+                              //       height: 74.h,
+                              //       child: Column(
+                              //         mainAxisAlignment:
+                              //             MainAxisAlignment.start,
+                              //         crossAxisAlignment:
+                              //             CrossAxisAlignment.center,
+                              //         children: [
+                              //           SizedBox(
+                              //             height: 2.h,
+                              //           ),
+                              //           SizedBox(
+                              //             height: 20.h,
+                              //           ),
+                              //           Center(
+                              //             child: Image.asset(
+                              //               'images/loading.png',
+                              //               height: 20.h,
+                              //               // width: 90,
+                              //             ),
+                              //           ),
+                              //           SizedBox(
+                              //             height: 4.h,
+                              //           ),
+                              //           Center(
+                              //             child: Text(
+                              //               value.newsList.message.toString(),
+                              //               style: TextStyle(
+                              //                   fontSize:
+                              //                       SizerUtil.deviceType ==
+                              //                               DeviceType.mobile
+                              //                           ? 14.sp
+                              //                           : 12.sp,
+                              //                   fontWeight: FontWeight.w500),
+                              //             ),
+                              //           ),
+                              //         ],
+                              //       ),
+                              //     ),
+                              //   ),
+                              // ),
+                            ],
+                          ),
+                        );
 
-                        // RefreshIndicator(
-                        //         onRefresh: refresh,
-                        //         child: Stack(
-                        //           children: [
-                        //             SingleChildScrollView(
-                        //               physics: BouncingScrollPhysics(),
-                        //               child: Padding(
-                        //                 padding: EdgeInsets.all(15),
-                        //                 child: Container(
-                        //                   height: 74.h,
-                        //                   child: Column(
-                        //                     mainAxisAlignment:
-                        //                         MainAxisAlignment.start,
-                        //                     crossAxisAlignment:
-                        //                         CrossAxisAlignment.center,
-                        //                     children: [
-                        //                       SizedBox(
-                        //                         height: 2.h,
-                        //                       ),
-                                              
-                        //                       SizedBox(
-                        //                         height: 20.h,
-                        //                       ),
-                        //                       Center(
-                        //                         child: Image.asset(
-                        //               'images/loading.png',
-                        //               height: 20.h,
-                        //               // width: 90,
-                        //             ),
-                        //                       ),
-                        //                       SizedBox(
-                        //                         height: 4.h,
-                        //                       ),
-                        //                       Center(
-                        //                         child: Text(
-                        //               value.newsList.message.toString(),
-                        //               style: TextStyle(
-                        //                   fontSize: SizerUtil.deviceType ==
-                        //                           DeviceType.mobile
-                        //                       ? 14.sp
-                        //                       : 12.sp,
-                        //                   fontWeight: FontWeight.w500),
-                        //             ),
-                        //                       ),
-                        //                     ],
-                        //                   ),
-                        //                 ),
-                        //               ),
-                        //             ),
-                        //           ],
-                        //         ),
-                        //       );  
-                      
                       case Status.COMPLETED:
                         return newsViewmodel.newsList.data!.data!.length != 0
                             ? RefreshIndicator(
