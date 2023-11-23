@@ -364,31 +364,59 @@ class _ReportScreenState extends State<ReportScreen> {
                 }
 
                 return value.reportsList.message == " No Internet Connection"
-                    ? Center(
-                        child: Container(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                'images/loading.png',
-                                height: 20.h,
-                                // width: 90,
+                    ? RefreshIndicator(
+                        onRefresh: refresh,
+                        child: Stack(
+                          children: [
+                            SingleChildScrollView(
+                              physics: BouncingScrollPhysics(),
+                              child: Padding(
+                                padding: EdgeInsets.all(15),
+                                child: Container(
+                                  height: 74.h,
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      SizedBox(
+                                        height: 2.h,
+                                      ),
+                                      SizedBox(
+                                        height: 20.h,
+                                      ),
+                                      Center(
+                                        child: Image.asset(
+                                          'images/loading.png',
+                                          height: 20.h,
+                                          // width: 90,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 4.h,
+                                      ),
+                                      Center(
+                                        child: Text(
+                                          value.reportsList.message.toString(),
+                                          style: TextStyle(
+                                              fontSize:
+                                                  SizerUtil.deviceType ==
+                                                          DeviceType.mobile
+                                                      ? 14.sp
+                                                      : 12.sp,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ),
-                              SizedBox(height: 2.h),
-                              Text(
-                                value.reportsList.message.toString(),
-                                style: TextStyle(
-                                    fontSize: SizerUtil.deviceType ==
-                                            DeviceType.mobile
-                                        ? 14.sp
-                                        : 12.sp,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       )
+
                     : AlertDialog(
                         title: Center(
                           child: Text(

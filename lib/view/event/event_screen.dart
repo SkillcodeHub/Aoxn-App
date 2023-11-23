@@ -476,33 +476,59 @@ class _EventScreenState extends State<EventScreen> {
 
                         return value.EventList.message ==
                                 " No Internet Connection"
-                            ? Center(
+                            ? RefreshIndicator(
+                        onRefresh: refresh,
+                        child: Stack(
+                          children: [
+                            SingleChildScrollView(
+                              physics: BouncingScrollPhysics(),
+                              child: Padding(
+                                padding: EdgeInsets.all(15),
                                 child: Container(
+                                  height: 74.h,
                                   child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.start,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Image.asset(
-                                        'images/loading.png',
-                                        height: 20.h,
-                                        // width: 90,
+                                      SizedBox(
+                                        height: 2.h,
                                       ),
-                                      SizedBox(height: 2.h),
-                                      Text(
-                                        value.EventList.message.toString(),
-                                        style: TextStyle(
-                                            fontSize: SizerUtil.deviceType ==
-                                                    DeviceType.mobile
-                                                ? 14.sp
-                                                : 12.sp,
-                                            fontWeight: FontWeight.w500),
+                                      SizedBox(
+                                        height: 20.h,
+                                      ),
+                                      Center(
+                                        child: Image.asset(
+                                          'images/loading.png',
+                                          height: 20.h,
+                                          // width: 90,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 4.h,
+                                      ),
+                                      Center(
+                                        child: Text(
+                                          value.EventList.message.toString(),
+                                          style: TextStyle(
+                                              fontSize:
+                                                  SizerUtil.deviceType ==
+                                                          DeviceType.mobile
+                                                      ? 14.sp
+                                                      : 12.sp,
+                                              fontWeight: FontWeight.w500),
+                                        ),
                                       ),
                                     ],
                                   ),
                                 ),
-                              )
-                            : AlertDialog(
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+ : AlertDialog(
                                 title: Center(
                                   child: Text(
                                     'Alert!',
