@@ -20,6 +20,7 @@ import '../../res/components/appbar/axonimage_appbar-widget.dart';
 import '../../res/components/appbar/screen_name_widget.dart';
 import '../../res/components/appbar/settings_widget.dart';
 import '../../res/components/appbar/whatsapp_widget.dart';
+import '';
 
 class NewsScreen extends StatefulWidget {
   const NewsScreen({super.key});
@@ -486,139 +487,177 @@ class _NewsScreenState extends State<NewsScreen> {
             );
           } else {
             // Render the UI with the fetched data
-            return ChangeNotifierProvider<NewsViewmodel>.value(
-              value: newsViewmodel,
-              child: Consumer<NewsViewmodel>(
-                builder: (context, value, _) {
-                  switch (value.newsList.status!) {
-                    case Status.LOADING:
-                      return Center(child: CircularProgressIndicator());
-                    case Status.ERROR:
-                      return Center(
-                        child: Container(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                'images/loading.png',
-                                height: 20.h,
-                                // width: 90,
-                              ),
-                              SizedBox(height: 2.h),
-                              Text(
-                                value.newsList.message.toString(),
-                                style: TextStyle(
-                                    fontSize: SizerUtil.deviceType ==
-                                            DeviceType.mobile
-                                        ? 14.sp
-                                        : 12.sp,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    case Status.COMPLETED:
-                      return newsViewmodel.newsList.data!.data!.length != 0
-                          ? RefreshIndicator(
-                              onRefresh: refresh,
-                              child: Container(
-                                height: 100.h,
-                                child: SingleChildScrollView(
-                                  // Wrap with SingleChildScrollView
-                                  physics:
-                                      AlwaysScrollableScrollPhysics(), // Enable scrolling
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 6, left: 4, right: 6),
-                                    child: ListView.builder(
-                                      padding: EdgeInsets.only(bottom: 10),
-                                      physics:
-                                          NeverScrollableScrollPhysics(), // Disable scrolling
-                                      shrinkWrap: true,
-                                      itemCount:
-                                          value.newsList.data!.data!.length,
-                                      itemBuilder: (BuildContext context,
-                                          int itemIndex) {
-                                        return createNewsListContainer(
-                                            context, itemIndex);
-                                      },
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            )
-                          : RefreshIndicator(
-                              onRefresh: refresh,
-                              child: Stack(
-                                children: [
-                                  SingleChildScrollView(
-                                    physics: BouncingScrollPhysics(),
+            return RefreshIndicator(
+              onRefresh: refresh,
+              child: ChangeNotifierProvider<NewsViewmodel>.value(
+                
+                value: newsViewmodel,
+                child: Consumer<NewsViewmodel>(
+                  builder: (context, value, _) {
+                    switch (value.newsList.status!) {
+                      case Status.LOADING:
+                        return Center(child: CircularProgressIndicator());
+                      case Status.ERROR:
+                        return 
+MyCustomRefreshWidget(
+  onRefresh: refresh(),
+  message: value.newsList.message.toString(),
+);
+
+                        // RefreshIndicator(
+                        //         onRefresh: refresh,
+                        //         child: Stack(
+                        //           children: [
+                        //             SingleChildScrollView(
+                        //               physics: BouncingScrollPhysics(),
+                        //               child: Padding(
+                        //                 padding: EdgeInsets.all(15),
+                        //                 child: Container(
+                        //                   height: 74.h,
+                        //                   child: Column(
+                        //                     mainAxisAlignment:
+                        //                         MainAxisAlignment.start,
+                        //                     crossAxisAlignment:
+                        //                         CrossAxisAlignment.center,
+                        //                     children: [
+                        //                       SizedBox(
+                        //                         height: 2.h,
+                        //                       ),
+                                              
+                        //                       SizedBox(
+                        //                         height: 20.h,
+                        //                       ),
+                        //                       Center(
+                        //                         child: Image.asset(
+                        //               'images/loading.png',
+                        //               height: 20.h,
+                        //               // width: 90,
+                        //             ),
+                        //                       ),
+                        //                       SizedBox(
+                        //                         height: 4.h,
+                        //                       ),
+                        //                       Center(
+                        //                         child: Text(
+                        //               value.newsList.message.toString(),
+                        //               style: TextStyle(
+                        //                   fontSize: SizerUtil.deviceType ==
+                        //                           DeviceType.mobile
+                        //                       ? 14.sp
+                        //                       : 12.sp,
+                        //                   fontWeight: FontWeight.w500),
+                        //             ),
+                        //                       ),
+                        //                     ],
+                        //                   ),
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //           ],
+                        //         ),
+                        //       );  
+                      
+                      case Status.COMPLETED:
+                        return newsViewmodel.newsList.data!.data!.length != 0
+                            ? RefreshIndicator(
+                                onRefresh: refresh,
+                                child: Container(
+                                  height: 100.h,
+                                  child: SingleChildScrollView(
+                                    // Wrap with SingleChildScrollView
+                                    physics:
+                                        AlwaysScrollableScrollPhysics(), // Enable scrolling
                                     child: Padding(
-                                      padding: EdgeInsets.all(15),
-                                      child: Container(
-                                        height: 74.h,
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            SizedBox(
-                                              height: 2.h,
-                                            ),
-                                            Text(
-                                              'Swipe down to refresh page',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                fontSize:
-                                                    SizerUtil.deviceType ==
-                                                            DeviceType.mobile
-                                                        ? 14.sp
-                                                        : 12.sp,
-                                                color: Color(0XFF545454),
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: 20.h,
-                                            ),
-                                            Center(
-                                              child: Image.asset(
-                                                'images/axon.png',
-                                                height: 10.h,
-                                                // width: 90,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: 4.h,
-                                            ),
-                                            Center(
-                                              child: Text(
-                                                'You don\'t have any news or upcoming events',
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                    fontSize: SizerUtil
-                                                                .deviceType ==
-                                                            DeviceType.mobile
-                                                        ? 14.sp
-                                                        : 12.sp,
-                                                    color: Color(0XFF545454),
-                                                    fontWeight:
-                                                        FontWeight.w600),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                      padding: const EdgeInsets.only(
+                                          top: 6, left: 4, right: 6),
+                                      child: ListView.builder(
+                                        padding: EdgeInsets.only(bottom: 10),
+                                        physics:
+                                            NeverScrollableScrollPhysics(), // Disable scrolling
+                                        shrinkWrap: true,
+                                        itemCount:
+                                            value.newsList.data!.data!.length,
+                                        itemBuilder: (BuildContext context,
+                                            int itemIndex) {
+                                          return createNewsListContainer(
+                                              context, itemIndex);
+                                        },
                                       ),
                                     ),
                                   ),
-                                ],
-                              ),
-                            );
-                  }
-                },
+                                ),
+                              )
+                            : RefreshIndicator(
+                                onRefresh: refresh,
+                                child: Stack(
+                                  children: [
+                                    SingleChildScrollView(
+                                      physics: BouncingScrollPhysics(),
+                                      child: Padding(
+                                        padding: EdgeInsets.all(15),
+                                        child: Container(
+                                          height: 74.h,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              SizedBox(
+                                                height: 2.h,
+                                              ),
+                                              Text(
+                                                'Swipe down to refresh page',
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  fontSize:
+                                                      SizerUtil.deviceType ==
+                                                              DeviceType.mobile
+                                                          ? 14.sp
+                                                          : 12.sp,
+                                                  color: Color(0XFF545454),
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 20.h,
+                                              ),
+                                              Center(
+                                                child: Image.asset(
+                                                  'images/axon.png',
+                                                  height: 10.h,
+                                                  // width: 90,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 4.h,
+                                              ),
+                                              Center(
+                                                child: Text(
+                                                  'You don\'t have any news or upcoming events',
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      fontSize: SizerUtil
+                                                                  .deviceType ==
+                                                              DeviceType.mobile
+                                                          ? 14.sp
+                                                          : 12.sp,
+                                                      color: Color(0XFF545454),
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                    }
+                  },
+                ),
               ),
             );
           }
