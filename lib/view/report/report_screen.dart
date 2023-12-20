@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:axonweb/Provider/backButton_provider.dart';
+import 'package:axonweb/View_Model/News_View_Model/notification_services.dart';
 import 'package:axonweb/View_Model/Report_View_Model/report_view_model.dart';
 import 'package:axonweb/view/nevigationBar/my_navigationbar.dart';
 import 'package:flutter/material.dart';
@@ -28,11 +29,12 @@ class _ReportScreenState extends State<ReportScreen> {
   late String mobile;
   bool isLoading = false;
   // ReportViewmodel reportViewmodel = ReportViewmodel();
-  late Map<String, dynamic> data;
+  late Map<String, dynamic> data3;
   late String data1;
   late Future<void> fetchDataFuture;
   String? reportdate;
   String? messageCode;
+  NotificationServices notificationServices = NotificationServices();
 
   @override
   void initState() {
@@ -49,17 +51,21 @@ class _ReportScreenState extends State<ReportScreen> {
     });
     userPreference.getUserData().then((value) {
       setState(() {
-        data = value!;
-        print('data1');
-        print(data);
-        print('data1');
+        data3 = value!;
+        print(
+            'data3data3data3data3data3data3data3data3data3data3data3data3data3data3data3data3data3data3data3data3data3');
+        print(data3);
+        print(
+            'data3data3data3data3data3data3data3data3data3data3data3data3data3data3data3data3data3data3');
       });
     });
 
     // setState(() {});
     // super.initState();
     super.initState();
-
+    notificationServices.forgroundMessage();
+    notificationServices.firebaseInit(context);
+    notificationServices.setupInteractMessage(context);
     fetchDataFuture = fetchData(); // Call the API only once
 
     // final bookAppointmentViewModel =
@@ -375,8 +381,7 @@ class _ReportScreenState extends State<ReportScreen> {
                                 child: Container(
                                   height: 74.h,
                                   child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: [
@@ -400,11 +405,10 @@ class _ReportScreenState extends State<ReportScreen> {
                                         child: Text(
                                           value.reportsList.message.toString(),
                                           style: TextStyle(
-                                              fontSize:
-                                                  SizerUtil.deviceType ==
-                                                          DeviceType.mobile
-                                                      ? 14.sp
-                                                      : 12.sp,
+                                              fontSize: SizerUtil.deviceType ==
+                                                      DeviceType.mobile
+                                                  ? 14.sp
+                                                  : 12.sp,
                                               fontWeight: FontWeight.w500),
                                         ),
                                       ),
@@ -416,7 +420,6 @@ class _ReportScreenState extends State<ReportScreen> {
                           ],
                         ),
                       )
-
                     : AlertDialog(
                         title: Center(
                           child: Text(

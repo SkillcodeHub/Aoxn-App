@@ -4,6 +4,7 @@ import 'package:axonweb/Provider/backButton_provider.dart';
 import 'package:axonweb/View_Model/Book_View_Model/Book_view_Model.dart';
 import 'package:axonweb/View_Model/Book_View_Model/advanceBookAppointment_view_model.dart';
 import 'package:axonweb/View_Model/Book_View_Model/bookAppointment_view_model.dart';
+import 'package:axonweb/View_Model/News_View_Model/notification_services.dart';
 import 'package:axonweb/View_Model/Payment_View_Model/customerPayHead_view_model.dart';
 import 'package:axonweb/View_Model/Payment_View_Model/initiatePayment_view_model.dart';
 import 'package:flutter/foundation.dart';
@@ -58,6 +59,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
   String CaseNo = "";
   String PatType = "";
   bool? isSubscriptionExpired;
+  NotificationServices notificationServices = NotificationServices();
 
   bool isFirstLoad = true; // Flag to track the first API call
   late Future<void> fetchDataFuture;
@@ -81,6 +83,12 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
       });
     });
     super.initState();
+    notificationServices.requestNotificationPermission();
+    notificationServices.forgroundMessage();
+    notificationServices.firebaseInit(context);
+    notificationServices.setupInteractMessage(context);
+    notificationServices.isTokenRefresh();
+
     final buttonProvider = Provider.of<ButtonProvider>(context, listen: false);
     fetchDataFuture = fetchData(); // Call the API only once
   }
@@ -121,11 +129,11 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
     final settingsViewModel =
         Provider.of<SettingsViewModel>(context, listen: false);
 
-         Future refresh() async {
-        doctorListViewmodel.fetchDoctorListApi(token);
-        settingsViewModel.fetchDoctorDetailsListApi(token);
+    Future refresh() async {
+      doctorListViewmodel.fetchDoctorListApi(token);
+      settingsViewModel.fetchDoctorDetailsListApi(token);
     }
-    
+
     return Scaffold(
       backgroundColor: BackgroundColor,
       appBar: PreferredSize(
@@ -253,57 +261,57 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                         return Center(child: CircularProgressIndicator());
                       case Status.ERROR:
                         return RefreshIndicator(
-                        onRefresh: refresh,
-                        child: Stack(
-                          children: [
-                            SingleChildScrollView(
-                              physics: BouncingScrollPhysics(),
-                              child: Padding(
-                                padding: EdgeInsets.all(15),
-                                child: Container(
-                                  height: 74.h,
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      SizedBox(
-                                        height: 2.h,
-                                      ),
-                                      SizedBox(
-                                        height: 20.h,
-                                      ),
-                                      Center(
-                                        child: Image.asset(
-                                          'images/loading.png',
+                          onRefresh: refresh,
+                          child: Stack(
+                            children: [
+                              SingleChildScrollView(
+                                physics: BouncingScrollPhysics(),
+                                child: Padding(
+                                  padding: EdgeInsets.all(15),
+                                  child: Container(
+                                    height: 74.h,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        SizedBox(
+                                          height: 2.h,
+                                        ),
+                                        SizedBox(
                                           height: 20.h,
-                                          // width: 90,
                                         ),
-                                      ),
-                                      SizedBox(
-                                        height: 4.h,
-                                      ),
-                                      Center(
-                                        child: Text(
-                                          value.doctorList.message.toString(),
-                                          style: TextStyle(
-                                              fontSize:
-                                                  SizerUtil.deviceType ==
-                                                          DeviceType.mobile
-                                                      ? 14.sp
-                                                      : 12.sp,
-                                              fontWeight: FontWeight.w500),
+                                        Center(
+                                          child: Image.asset(
+                                            'images/loading.png',
+                                            height: 20.h,
+                                            // width: 90,
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                        SizedBox(
+                                          height: 4.h,
+                                        ),
+                                        Center(
+                                          child: Text(
+                                            value.doctorList.message.toString(),
+                                            style: TextStyle(
+                                                fontSize:
+                                                    SizerUtil.deviceType ==
+                                                            DeviceType.mobile
+                                                        ? 14.sp
+                                                        : 12.sp,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                      );
+                            ],
+                          ),
+                        );
 
                       case Status.COMPLETED:
                         selectedDocotrId =

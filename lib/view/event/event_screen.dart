@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:axonweb/Provider/backButton_provider.dart';
 import 'package:axonweb/View/NevigationBar/my_navigationbar.dart';
+import 'package:axonweb/View_Model/News_View_Model/notification_services.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -30,6 +31,7 @@ class _EventScreenState extends State<EventScreen> {
   late String deviceId;
   EventListViewmodel eventListViewmodel = EventListViewmodel();
   ButtonProvider buttonProvider = ButtonProvider();
+  NotificationServices notificationServices = NotificationServices();
 
   late Future<void> fetchDataFuture;
   String? messageCode;
@@ -47,6 +49,10 @@ class _EventScreenState extends State<EventScreen> {
     });
     // super.initState();
     super.initState();
+    // notificationServices.requestNotificationPermission();
+    notificationServices.forgroundMessage();
+    notificationServices.firebaseInit(context);
+    notificationServices.setupInteractMessage(context);
     print('ggggggggggggggggggggggggggggggggggggggggggggggg');
     final buttonProvider = Provider.of<ButtonProvider>(context, listen: false);
 
@@ -477,58 +483,60 @@ class _EventScreenState extends State<EventScreen> {
                         return value.EventList.message ==
                                 " No Internet Connection"
                             ? RefreshIndicator(
-                        onRefresh: refresh,
-                        child: Stack(
-                          children: [
-                            SingleChildScrollView(
-                              physics: BouncingScrollPhysics(),
-                              child: Padding(
-                                padding: EdgeInsets.all(15),
-                                child: Container(
-                                  height: 74.h,
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      SizedBox(
-                                        height: 2.h,
-                                      ),
-                                      SizedBox(
-                                        height: 20.h,
-                                      ),
-                                      Center(
-                                        child: Image.asset(
-                                          'images/loading.png',
-                                          height: 20.h,
-                                          // width: 90,
+                                onRefresh: refresh,
+                                child: Stack(
+                                  children: [
+                                    SingleChildScrollView(
+                                      physics: BouncingScrollPhysics(),
+                                      child: Padding(
+                                        padding: EdgeInsets.all(15),
+                                        child: Container(
+                                          height: 74.h,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              SizedBox(
+                                                height: 2.h,
+                                              ),
+                                              SizedBox(
+                                                height: 20.h,
+                                              ),
+                                              Center(
+                                                child: Image.asset(
+                                                  'images/loading.png',
+                                                  height: 20.h,
+                                                  // width: 90,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 4.h,
+                                              ),
+                                              Center(
+                                                child: Text(
+                                                  value.EventList.message
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                      fontSize: SizerUtil
+                                                                  .deviceType ==
+                                                              DeviceType.mobile
+                                                          ? 14.sp
+                                                          : 12.sp,
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                      SizedBox(
-                                        height: 4.h,
-                                      ),
-                                      Center(
-                                        child: Text(
-                                          value.EventList.message.toString(),
-                                          style: TextStyle(
-                                              fontSize:
-                                                  SizerUtil.deviceType ==
-                                                          DeviceType.mobile
-                                                      ? 14.sp
-                                                      : 12.sp,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
- : AlertDialog(
+                              )
+                            : AlertDialog(
                                 title: Center(
                                   child: Text(
                                     'Alert!',

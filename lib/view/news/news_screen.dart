@@ -507,8 +507,7 @@ class _NewsScreenState extends State<NewsScreen> {
                                 child: Container(
                                   height: 74.h,
                                   child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: [
@@ -532,11 +531,10 @@ class _NewsScreenState extends State<NewsScreen> {
                                         child: Text(
                                           value.newsList.message.toString(),
                                           style: TextStyle(
-                                              fontSize:
-                                                  SizerUtil.deviceType ==
-                                                          DeviceType.mobile
-                                                      ? 14.sp
-                                                      : 12.sp,
+                                              fontSize: SizerUtil.deviceType ==
+                                                      DeviceType.mobile
+                                                  ? 14.sp
+                                                  : 12.sp,
                                               fontWeight: FontWeight.w500),
                                         ),
                                       ),

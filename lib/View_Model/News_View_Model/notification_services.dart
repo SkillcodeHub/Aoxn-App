@@ -19,8 +19,8 @@ class NotificationServices {
   void initLocalNotifications(
       BuildContext context, RemoteMessage message) async {
     var androidInitializationSettings =
-        const AndroidInitializationSettings('@mipmap/ic_launcher');
-    var iosInitializationSettings = const DarwinInitializationSettings();
+        AndroidInitializationSettings('@mipmap/ic_launcher');
+    var iosInitializationSettings = DarwinInitializationSettings();
 
     var initializationSetting = InitializationSettings(
         android: androidInitializationSettings, iOS: iosInitializationSettings);
@@ -111,7 +111,7 @@ class NotificationServices {
             //  icon: largeIconPath
             );
 
-    const DarwinNotificationDetails darwinNotificationDetails =
+    DarwinNotificationDetails darwinNotificationDetails =
         DarwinNotificationDetails(
             presentAlert: true, presentBadge: true, presentSound: true);
 
@@ -172,14 +172,26 @@ class NotificationServices {
     } else if (message.data['type'] == 'newsDetails') {
       print(
           '11111111111111111111111111111111111111111111111111111111111111111111111111111');
-      print(message.data['token']);
-      print(message.data['newsId']);
+      // print(message.data['token']);
+      // print(message.data['newsId']);
       print(
           '11111111111111111111111111111111111111111111111111111111111111111111111');
       Map data = {
-        'token': "68cb311f-585a-4e86-8e89-06edf1814080",
-        'newsId': "265"
+        'token': message.data['token'],
+        'newsId': message.data['newsId'],
       };
+      // Map data = {
+      //   'token': "68cb311f-585a-4e86-8e89-06edf1814080",
+      //   'newsId': "265"
+      // };
+      // Navigator.pushAndRemoveUntil(
+      //     context,
+      //     MaterialPageRoute(
+      //         builder: (context) => MyNavigationBar(
+      //               indexNumber: 3,
+      //             )),
+      //     (route) => false);
+
       Navigator.pushNamed(context, RoutesName.newsdetails, arguments: data);
     } else if (message.data['type'] == 'reportDetails') {
       print('2222222222222222222222222222222222222222222222');
@@ -194,6 +206,7 @@ class NotificationServices {
         'date': message.data['date'],
         'treatment': message.data['treatment'],
       };
+
       Navigator.pushNamed(context, RoutesName.reportDetails,
           arguments: reportDetails);
     }

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:axonweb/Res/Components/Appbar/screen_name_widget.dart';
+import 'package:axonweb/View_Model/News_View_Model/notification_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:axonweb/data/response/status.dart';
@@ -42,7 +43,9 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
     // print(outputDate5);
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize:  SizerUtil.deviceType == DeviceType.mobile ?  Size.fromHeight(7.h) : Size.fromHeight(5.h),
+        preferredSize: SizerUtil.deviceType == DeviceType.mobile
+            ? Size.fromHeight(7.h)
+            : Size.fromHeight(5.h),
         child: AppBar(
           automaticallyImplyLeading: false,
           centerTitle: false,
@@ -51,8 +54,7 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
           leading: Padding(
             padding: EdgeInsets.only(top: 5.0),
             child: IconButton(
-                            iconSize: SizerUtil.deviceType == DeviceType.mobile ? 2.5.h : 3.h,
-
+              iconSize: SizerUtil.deviceType == DeviceType.mobile ? 2.5.h : 3.h,
               color: Colors.black,
               onPressed: () {
                 Navigator.pop(context);
@@ -67,9 +69,9 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                 ScreenNameWidget(
-                                  title: '  Notice Board',
-                                ),
+                ScreenNameWidget(
+                  title: '  Notice Board',
+                ),
                 // Text(
                 //   "News Details",
                 //   style: TextStyle(
@@ -130,7 +132,11 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
                                                 .toString(),
                                             // title,
                                             style: TextStyle(
-                                                fontSize: SizerUtil.deviceType == DeviceType.mobile ?  14.sp : 11.sp,
+                                                fontSize:
+                                                    SizerUtil.deviceType ==
+                                                            DeviceType.mobile
+                                                        ? 14.sp
+                                                        : 11.sp,
                                                 fontWeight: FontWeight.w500),
                                           ),
                                         ),
@@ -145,7 +151,11 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
                                           child: Text(displayDate.toString(),
                                               style: TextStyle(
                                                   color: Colors.grey,
-                                                  fontSize: SizerUtil.deviceType == DeviceType.mobile ?  11.sp : 8.sp,
+                                                  fontSize:
+                                                      SizerUtil.deviceType ==
+                                                              DeviceType.mobile
+                                                          ? 11.sp
+                                                          : 8.sp,
                                                   fontWeight: FontWeight.w500)),
                                         ),
                                         SizedBox(height: 20),

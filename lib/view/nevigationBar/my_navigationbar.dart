@@ -6,6 +6,7 @@ import '../Book/book_appointment_screen.dart';
 import '../event/event_screen.dart';
 
 import 'package:sizer/sizer.dart';
+
 class MyNavigationBar extends StatelessWidget {
   final int indexNumber;
 
@@ -14,6 +15,8 @@ class MyNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(
+        '999999999999999999999999999999999999999999999999999999999999999999999');
     return ChangeNotifierProvider<ValueNotifier<int>>(
       create: (_) => ValueNotifier<int>(indexNumber),
       child: Consumer<ValueNotifier<int>>(
@@ -28,89 +31,94 @@ class MyNavigationBar extends StatelessWidget {
           ];
 
           void _onItemTapped(int index) {
+            print(
+                '999999999999999999999999999999999999999999999999999999999999999999999');
+
             selectedIndexProvider.value = index;
           }
 
           return Scaffold(
             body: user[selectedIndex],
-            bottomNavigationBar:  SizerUtil.deviceType == DeviceType.mobile ? BottomNavigationBar(
-              items:  <BottomNavigationBarItem>[
-                BottomNavigationBarItem(
-                  icon: Icon(
-                    Icons.newspaper,
-                    size: 30,
+            bottomNavigationBar: SizerUtil.deviceType == DeviceType.mobile
+                ? BottomNavigationBar(
+                    items: <BottomNavigationBarItem>[
+                      BottomNavigationBarItem(
+                        icon: Icon(
+                          Icons.newspaper,
+                          size: 30,
+                        ),
+                        label: 'News',
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(
+                          Icons.book_outlined,
+                          size: 30,
+                        ),
+                        label: 'Book',
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(
+                          Icons.event_note_sharp,
+                          size: 30,
+                        ),
+                        label: 'Events',
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(
+                          Icons.image_search_rounded,
+                          size: 30,
+                        ),
+                        label: 'Reports',
+                      ),
+                    ],
+                    currentIndex: selectedIndex,
+                    onTap: _onItemTapped,
+                    type: BottomNavigationBarType.fixed,
+                    elevation: 5,
+                    selectedItemColor: const Color(0xFFFD5722),
+                    unselectedItemColor: Colors.grey.shade600,
+                  )
+                : BottomNavigationBar(
+                    items: <BottomNavigationBarItem>[
+                      BottomNavigationBarItem(
+                        icon: Icon(
+                          Icons.newspaper,
+                          size: 4.h,
+                        ),
+                        label: 'News',
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(
+                          Icons.book_outlined,
+                          size: 4.h,
+                        ),
+                        label: 'Book',
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(
+                          Icons.event_note_sharp,
+                          size: 4.h,
+                        ),
+                        label: 'Events',
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(
+                          Icons.image_search_rounded,
+                          size: 4.h,
+                        ),
+                        label: 'Reports',
+                      ),
+                    ],
+                    selectedLabelStyle:
+                        TextStyle(fontSize: 20), // Adjust the font size
+                    unselectedLabelStyle: TextStyle(fontSize: 20),
+                    currentIndex: selectedIndex,
+                    onTap: _onItemTapped,
+                    type: BottomNavigationBarType.fixed,
+                    elevation: 5,
+                    selectedItemColor: const Color(0xFFFD5722),
+                    unselectedItemColor: Colors.grey.shade600,
                   ),
-                  label: 'News',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(
-                    Icons.book_outlined,
-                    size: 30,
-                  ),
-                  label: 'Book',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(
-                    Icons.event_note_sharp,
-                    size: 30,
-                  ),
-                  label: 'Events',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(
-                    Icons.image_search_rounded,
-                    size: 30,
-                  ),
-                  label: 'Reports',
-                ),
-              ],
-              currentIndex: selectedIndex,
-              onTap: _onItemTapped,
-              type: BottomNavigationBarType.fixed,
-              elevation: 5,
-              selectedItemColor: const Color(0xFFFD5722),
-              unselectedItemColor: Colors.grey.shade600,
-            ) : BottomNavigationBar(
-              items:  <BottomNavigationBarItem>[
-                BottomNavigationBarItem(
-                  icon: Icon(
-                    Icons.newspaper,
-                    size: 4.h,
-                  ),
-                  label: 'News',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(
-                    Icons.book_outlined,
-                    size:4.h,
-                  ),
-                  label: 'Book',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(
-                    Icons.event_note_sharp,
-                    size: 4.h,
-                  ),
-                  label: 'Events',
-                  
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(
-                    Icons.image_search_rounded,
-                    size: 4.h,
-                  ),
-                  label: 'Reports',
-                ),
-              ],
-              selectedLabelStyle: TextStyle(fontSize: 20), // Adjust the font size
-  unselectedLabelStyle: TextStyle(fontSize: 20), 
-              currentIndex: selectedIndex,
-              onTap: _onItemTapped,
-              type: BottomNavigationBarType.fixed,
-              elevation: 5,
-              selectedItemColor: const Color(0xFFFD5722),
-              unselectedItemColor: Colors.grey.shade600,
-            ),
           );
         },
       ),

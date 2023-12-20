@@ -1,6 +1,7 @@
 import 'package:axonweb/Provider/backButton_provider.dart';
 import 'package:axonweb/Utils/routes/routes_name.dart';
 import 'package:axonweb/View_Model/Book_View_Model/Book_view_Model.dart';
+import 'package:axonweb/View_Model/News_View_Model/notification_services.dart';
 import 'package:axonweb/View_Model/Payment_View_Model/paymentHistory_view_model.dart';
 import 'package:axonweb/res/colors.dart';
 import 'package:axonweb/utils/routes/routes.dart';
@@ -30,11 +31,11 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((value) => runApp(MyApp()))
-  ;
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((value) => runApp(MyApp()));
 }
 
 class MyApp extends StatelessWidget {

@@ -1,3 +1,4 @@
+import 'package:axonweb/View_Model/News_View_Model/notification_services.dart';
 import 'package:axonweb/view_model/services/Splash_services/splash_services.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +14,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+
     splasheSrvices.checkAuthentication(context);
   }
 
