@@ -68,6 +68,7 @@ dependencies:
   googleapis: ^5.0.0
   googleapis_auth: ^1.4.1
   google_sign_in: ^6.1.4
+  youtube_player_flutter: ^8.1.2
 
 dev_dependencies:
   flutter_test:

@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:axonweb/Res/Components/Appbar/screen_name_widget.dart';
-import 'package:axonweb/View_Model/News_View_Model/notification_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:axonweb/data/response/status.dart';
@@ -9,6 +8,8 @@ import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import '../../Res/Components/loader.dart';
 import '../../View_Model/NewsDetails_View_model/newsdetails_view_model.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class NewsDetailsScreen extends StatefulWidget {
   final dynamic data;
@@ -159,9 +160,26 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
                                                   fontWeight: FontWeight.w500)),
                                         ),
                                         SizedBox(height: 20),
+                                        // Card(
+                                        //   child: Padding(
+                                        //     padding: EdgeInsets.all(12.0),
+                                        //     child: Html(
+                                        //         data: newsDetailsViewmodel
+                                        //             .newsDetailsList
+                                        //             .data!
+                                        //             .data!
+                                        //             .description
+                                        //             .toString(),
+                                        //         tagsList: Html.tags
+                                        //           ..addAll(["bird", "flutter"]),
+                                        //         onLinkTap: (url, _, __, ___) {
+                                        //           launch(url!);
+                                        //         }),
+                                        //   ),
+                                        // ),
                                         Card(
                                           child: Padding(
-                                            padding: const EdgeInsets.all(12.0),
+                                            padding: EdgeInsets.all(12.0),
                                             child: Html(
                                               data: newsDetailsViewmodel
                                                   .newsDetailsList
@@ -171,6 +189,26 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
                                                   .toString(),
                                               tagsList: Html.tags
                                                 ..addAll(["bird", "flutter"]),
+                                              onLinkTap: (url, _, __, ___) {
+                                                // Check if the tapped link is associated with a YouTube video
+                                                if (url != null &&
+                                                    url.contains(
+                                                        'youtube.com')) {
+                                                  // Extract the video ID from the YouTube link
+                                                  String videoId = YoutubePlayer
+                                                          .convertUrlToId(
+                                                              url) ??
+                                                      '';
+                                                  // Build the YouTube video URL
+                                                  String youtubeVideoUrl =
+                                                      'https://www.youtube.com/watch?v=$videoId';
+                                                  // Open the YouTube video URL in the default browser
+                                                  launch(youtubeVideoUrl);
+                                                } else {
+                                                  // If it's not a YouTube link, open the link in the default browser
+                                                  launch(url!);
+                                                }
+                                              },
                                             ),
                                           ),
                                         ),
