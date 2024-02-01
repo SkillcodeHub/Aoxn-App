@@ -1,9 +1,11 @@
 import 'dart:async';
+
 import 'package:axonweb/Provider/current_time_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+
 import '../../Res/colors.dart';
 import '../../View_Model/SelectAppointDate_View_Model.dart/selectAppointmentDate_view_model.dart';
 import '../../View_Model/Services/SharePreference/SharePreference.dart';
@@ -195,9 +197,11 @@ class _SelectAppointmentDateScreenState
                         outputDate3 + ' - ' + outputDate13,
                         // appointmentData[itemIndex]["displayTime"],
                         // listOftimeslot[itemIndex],
-                        style:SizerUtil.deviceType == DeviceType.mobile ? TextStyle(
-                            fontWeight: FontWeight.w500, fontSize: 12.sp) : TextStyle(
-                            fontWeight: FontWeight.w500, fontSize: 10.sp),
+                        style: SizerUtil.deviceType == DeviceType.mobile
+                            ? TextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 12.sp)
+                            : TextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 10.sp),
                       ),
                       SizedBox(height: 2.h),
                       Row(
@@ -207,20 +211,30 @@ class _SelectAppointmentDateScreenState
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(total.toString() + " - Available",style: SizerUtil.deviceType == DeviceType.mobile ? TextStyle(
-                            fontWeight: FontWeight.w500, fontSize: 12.sp) : TextStyle(
-                            fontWeight: FontWeight.w500, fontSize: 8.sp),),
+                                Text(
+                                  total.toString() + " - Available",
+                                  style:
+                                      SizerUtil.deviceType == DeviceType.mobile
+                                          ? TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 12.sp)
+                                          : TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 8.sp),
+                                ),
                                 SizedBox(height: 1.h),
-                                 SizerUtil.deviceType == DeviceType.mobile ?
+                                //  SizerUtil.deviceType == DeviceType.mobile ?
+
                                 Container(
                                   height: 3,
                                   width: 80.w,
                                   color: Colors.green,
-                                ) :  Container(
-                                  height: 3,
-                                  width: 87.w,
-                                  color: Colors.green,
                                 ),
+                                //  :  Container(
+                                //   height: 3,
+                                //   width: 87.w,
+                                //   color: Colors.green,
+                                // ),
                               ],
                             ),
                           ),
@@ -265,13 +279,15 @@ class _SelectAppointmentDateScreenState
                     SizedBox(height: 2.h),
                     Text(
                       outputDate3 + ' - ' + outputDate13,
-                      style:SizerUtil.deviceType == DeviceType.mobile ?  TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 12.sp,
-                          color: Colors.grey.shade700) : TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 9.sp,
-                          color: Colors.grey.shade700),
+                      style: SizerUtil.deviceType == DeviceType.mobile
+                          ? TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 12.sp,
+                              color: Colors.grey.shade700)
+                          : TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 9.sp,
+                              color: Colors.grey.shade700),
                     ),
                     SizedBox(height: 5.h),
                     // SizedBox(height: 5),
@@ -311,10 +327,11 @@ class _SelectAppointmentDateScreenState
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
         leading: Padding(
-          padding:  SizerUtil.deviceType == DeviceType.mobile ? EdgeInsets.only(top: 12):EdgeInsets.all(0),
+          padding: SizerUtil.deviceType == DeviceType.mobile
+              ? EdgeInsets.only(top: 12)
+              : EdgeInsets.all(0),
           child: IconButton(
-                          iconSize: SizerUtil.deviceType == DeviceType.mobile ? 2.5.h : 3.h,
-
+            iconSize: SizerUtil.deviceType == DeviceType.mobile ? 2.5.h : 3.h,
             color: Colors.black,
             onPressed: () {
               Navigator.pop(context);
@@ -322,72 +339,73 @@ class _SelectAppointmentDateScreenState
             icon: Icon(Icons.arrow_back_rounded),
           ),
         ),
-        title: SizerUtil.deviceType == DeviceType.mobile ? Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-                        SizerUtil.deviceType == DeviceType.mobile ?
- SizedBox(height: 15) :
-            SizedBox(height: 3.74.h),
-
-            SizerUtil.deviceType == DeviceType.mobile ?
-            Text(
-              'Choose Time',
-              style: TextStyle(
-                fontSize: 14.sp,
-                color: Colors.black),
-            ) : Text(
-              'Choose Time',
-              style: TextStyle(
-                fontSize: 3.5.sp,
-                color: Colors.black),
-            ),
-                        SizerUtil.deviceType == DeviceType.mobile ?
-
-            Consumer<TimeProvider>(builder: (context, value, child) {
-              return Text(
-                '${DateFormat("dd-MMM-yyyy").format(DateTime.now())}' +
-                    ', ' +
-                    "${value.currentTime.toString()} IST ",
-                style: TextStyle(fontSize: 12.sp, color: Colors.black),
-              );
-            }): Consumer<TimeProvider>(builder: (context, value, child) {
-              return Text(
-                '${DateFormat("dd-MMM-yyyy").format(DateTime.now())}' +
-                    ', ' +
-                    "${value.currentTime.toString()} IST ",
-                style: TextStyle(fontSize: 3.sp, color: Colors.black),
-              );
-            }),
-                        SizerUtil.deviceType == DeviceType.mobile ?
-SizedBox(height: 10):
-            SizedBox(height: 2.5.h),
-          ],
-        ) : Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-                        SizerUtil.deviceType == DeviceType.mobile ?
- SizedBox(height: 15) :
-            SizedBox(height: 3.74.h),
-
-             Text(
-              'Choose Time',
-              style: TextStyle(
-                fontSize: 8.sp,
-                color: Colors.black),
-            ),
-                 SizedBox(width: 2.w,),    
-Consumer<TimeProvider>(builder: (context, value, child) {
-              return Text(
-                '${DateFormat("dd-MMM-yyyy").format(DateTime.now())}' +
-                    ', ' +
-                    "${value.currentTime.toString()} IST ",
-                style: TextStyle(fontSize: 8.sp, color: Colors.black),
-              );
-            }),
-                        
-          ],
-        ),
-     
+        title: SizerUtil.deviceType == DeviceType.mobile
+            ? Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizerUtil.deviceType == DeviceType.mobile
+                      ? SizedBox(height: 15)
+                      : SizedBox(height: 3.74.h),
+                  SizerUtil.deviceType == DeviceType.mobile
+                      ? Text(
+                          'Choose Time',
+                          style:
+                              TextStyle(fontSize: 14.sp, color: Colors.black),
+                        )
+                      : Text(
+                          'Choose Time',
+                          style:
+                              TextStyle(fontSize: 3.5.sp, color: Colors.black),
+                        ),
+                  SizerUtil.deviceType == DeviceType.mobile
+                      ? Consumer<TimeProvider>(
+                          builder: (context, value, child) {
+                          return Text(
+                            '${DateFormat("dd-MMM-yyyy").format(DateTime.now())}' +
+                                ', ' +
+                                "${value.currentTime.toString()} IST ",
+                            style:
+                                TextStyle(fontSize: 12.sp, color: Colors.black),
+                          );
+                        })
+                      : Consumer<TimeProvider>(
+                          builder: (context, value, child) {
+                          return Text(
+                            '${DateFormat("dd-MMM-yyyy").format(DateTime.now())}' +
+                                ', ' +
+                                "${value.currentTime.toString()} IST ",
+                            style:
+                                TextStyle(fontSize: 3.sp, color: Colors.black),
+                          );
+                        }),
+                  SizerUtil.deviceType == DeviceType.mobile
+                      ? SizedBox(height: 10)
+                      : SizedBox(height: 2.5.h),
+                ],
+              )
+            : Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizerUtil.deviceType == DeviceType.mobile
+                      ? SizedBox(height: 15)
+                      : SizedBox(height: 3.74.h),
+                  Text(
+                    'Choose Time',
+                    style: TextStyle(fontSize: 8.sp, color: Colors.black),
+                  ),
+                  SizedBox(
+                    width: 2.w,
+                  ),
+                  Consumer<TimeProvider>(builder: (context, value, child) {
+                    return Text(
+                      '${DateFormat("dd-MMM-yyyy").format(DateTime.now())}' +
+                          ', ' +
+                          "${value.currentTime.toString()} IST ",
+                      style: TextStyle(fontSize: 8.sp, color: Colors.black),
+                    );
+                  }),
+                ],
+              ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -444,15 +462,17 @@ Consumer<TimeProvider>(builder: (context, value, child) {
                                               .month -
                                           1]
                                       .toString(),
-                              style:  SizerUtil.deviceType == DeviceType.mobile ?
- TextStyle(fontSize: 12.sp,
-                                  color: currentDateSelectedIndex == index
-                                      ? Colors.white
-                                      : Colors.grey) : TextStyle(
-                                  fontSize: 8.sp,
-                                  color: currentDateSelectedIndex == index
-                                      ? Colors.white
-                                      : Colors.grey),
+                              style: SizerUtil.deviceType == DeviceType.mobile
+                                  ? TextStyle(
+                                      fontSize: 12.sp,
+                                      color: currentDateSelectedIndex == index
+                                          ? Colors.white
+                                          : Colors.grey)
+                                  : TextStyle(
+                                      fontSize: 8.sp,
+                                      color: currentDateSelectedIndex == index
+                                          ? Colors.white
+                                          : Colors.grey),
                             ),
                             SizedBox(
                               height: 2.h,
@@ -462,17 +482,19 @@ Consumer<TimeProvider>(builder: (context, value, child) {
                                   .add(Duration(days: index))
                                   .day
                                   .toString(),
-                              style:SizerUtil.deviceType == DeviceType.mobile ? TextStyle(
-                                  fontSize: 17.sp,
-                                  fontWeight: FontWeight.w700,
-                                  color: currentDateSelectedIndex == index
-                                      ? Colors.white
-                                      : Colors.grey):TextStyle(
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w700,
-                                  color: currentDateSelectedIndex == index
-                                      ? Colors.white
-                                      : Colors.grey),
+                              style: SizerUtil.deviceType == DeviceType.mobile
+                                  ? TextStyle(
+                                      fontSize: 17.sp,
+                                      fontWeight: FontWeight.w700,
+                                      color: currentDateSelectedIndex == index
+                                          ? Colors.white
+                                          : Colors.grey)
+                                  : TextStyle(
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w700,
+                                      color: currentDateSelectedIndex == index
+                                          ? Colors.white
+                                          : Colors.grey),
                             ),
                             SizedBox(
                               height: 1.h,

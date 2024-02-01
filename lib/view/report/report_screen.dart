@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:axonweb/Provider/backButton_provider.dart';
+
 import 'package:axonweb/View_Model/News_View_Model/notification_services.dart';
 import 'package:axonweb/View_Model/Report_View_Model/report_view_model.dart';
 import 'package:axonweb/view/nevigationBar/my_navigationbar.dart';
@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+
 import '../../Res/colors.dart';
 import '../../Utils/routes/routes_name.dart';
 import '../../View_Model/Settings_View_Model/settings_view_model.dart';
@@ -525,10 +526,13 @@ class _ReportScreenState extends State<ReportScreen> {
                                         'Swipe down to refresh page',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
-                                          fontSize: SizerUtil.deviceType ==
-                                                  DeviceType.mobile
-                                              ? 14.sp
-                                              : 12.sp,
+                                          fontSize:
+                                              //  SizerUtil.deviceType ==
+                                              //         DeviceType.mobile
+                                              //     ?
+                                              14.sp
+                                          // : 12.sp
+                                          ,
                                           color: Color(0XFF545454),
                                           fontWeight: FontWeight.w600,
                                         ),
@@ -551,10 +555,13 @@ class _ReportScreenState extends State<ReportScreen> {
                                           'You don\'t have any recent prescriptions.',
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
-                                              fontSize: SizerUtil.deviceType ==
-                                                      DeviceType.mobile
-                                                  ? 14.sp
-                                                  : 12.sp,
+                                              fontSize:
+                                                  //  SizerUtil.deviceType ==
+                                                  //         DeviceType.mobile
+                                                  //     ?
+                                                  14.sp
+                                              // : 12.sp
+                                              ,
                                               color: Color(0XFF545454),
                                               fontWeight: FontWeight.w600),
                                         ),

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+
 import 'package:axonweb/Provider/backButton_provider.dart';
 import 'package:axonweb/View/NevigationBar/my_navigationbar.dart';
 import 'package:axonweb/View_Model/News_View_Model/notification_services.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+
 import '../../Res/colors.dart';
 import '../../Utils/routes/routes_name.dart';
 import '../../View_Model/Event_View_Model/event_view_model.dart';
@@ -132,43 +134,52 @@ class _EventScreenState extends State<EventScreen> {
                           Text(
                             // historyData[itemIndex]['apptDate'],
                             outputDate1,
-                            style: SizerUtil.deviceType == DeviceType.mobile
-                                ? TextStyle(
-                                    fontSize: 12.sp,
-                                    color: Colors.white,
-                                  )
-                                : TextStyle(
-                                    fontSize: 11.sp,
-                                    color: Colors.white,
-                                  ),
+                            style:
+                                // SizerUtil.deviceType == DeviceType.mobile
+                                //     ?
+                                TextStyle(
+                              fontSize: 12.sp,
+                              color: Colors.white,
+                            )
+                            // : TextStyle(
+                            //     fontSize: 11.sp,
+                            //     color: Colors.white,
+                            //   )
+                            ,
                           ),
                           SizedBox(height: 1.h),
                           Text(
                             outputDate2,
-                            style: SizerUtil.deviceType == DeviceType.mobile
-                                ? TextStyle(
-                                    fontSize: 12.sp,
-                                    color: Colors.white,
-                                  )
-                                : TextStyle(
-                                    fontSize: 11.sp,
-                                    color: Colors.white,
-                                  ),
+                            style:
+                                //  SizerUtil.deviceType == DeviceType.mobile
+                                //     ?
+                                TextStyle(
+                              fontSize: 12.sp,
+                              color: Colors.white,
+                            )
+                            // : TextStyle(
+                            //     fontSize: 11.sp,
+                            //     color: Colors.white,
+                            //   )
+                            ,
                           ),
                           SizedBox(
                             height: 5.h,
                           ),
                           Text(
                             outputDate3,
-                            style: SizerUtil.deviceType == DeviceType.mobile
-                                ? TextStyle(
-                                    fontSize: 12.sp,
-                                    color: Colors.white,
-                                  )
-                                : TextStyle(
-                                    fontSize: 11.sp,
-                                    color: Colors.white,
-                                  ),
+                            style:
+                                //  SizerUtil.deviceType == DeviceType.mobile
+                                // ?
+                                TextStyle(
+                              fontSize: 12.sp,
+                              color: Colors.white,
+                            )
+                            // : TextStyle(
+                            //     fontSize: 11.sp,
+                            //     color: Colors.white,
+                            //   )
+                            ,
                           ),
                         ],
                       ),
@@ -176,7 +187,11 @@ class _EventScreenState extends State<EventScreen> {
                 Container(
                   height: 18.h,
                   width:
-                      SizerUtil.deviceType == DeviceType.mobile ? 63.w : 70.w,
+                      // SizerUtil.deviceType == DeviceType.mobile ?
+                      63.w
+                  // :
+                  //  70.w
+                  ,
                   child: Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Column(
@@ -189,15 +204,18 @@ class _EventScreenState extends State<EventScreen> {
                                     .EventList.data!.data![itemIndex].doctorName
                                     .toString(),
                             // 'Why 100% PCR Testing Required?',
-                            style: SizerUtil.deviceType == DeviceType.mobile
-                                ? TextStyle(
-                                    fontSize: 11.sp,
-                                    fontWeight: FontWeight.w500,
-                                  )
-                                : TextStyle(
-                                    fontSize: 10.sp,
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                            style:
+                                //  SizerUtil.deviceType == DeviceType.mobile
+                                //     ?
+                                TextStyle(
+                              fontSize: 11.sp,
+                              fontWeight: FontWeight.w500,
+                            )
+                            // : TextStyle(
+                            //     fontSize: 10.sp,
+                            //     fontWeight: FontWeight.w500,
+                            //   )
+                            ,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -211,15 +229,18 @@ class _EventScreenState extends State<EventScreen> {
                                 eventListViewmodel
                                     .EventList.data!.data![itemIndex].name
                                     .toString(),
-                            style: SizerUtil.deviceType == DeviceType.mobile
-                                ? TextStyle(
-                                    fontSize: 11.sp,
-                                    fontWeight: FontWeight.w500,
-                                  )
-                                : TextStyle(
-                                    fontSize: 10.sp,
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                            style:
+                                //  SizerUtil.deviceType == DeviceType.mobile
+                                //     ?
+                                TextStyle(
+                              fontSize: 11.sp,
+                              fontWeight: FontWeight.w500,
+                            )
+                            // : TextStyle(
+                            //     fontSize: 10.sp,
+                            //     fontWeight: FontWeight.w500,
+                            //   )
+                            ,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -233,15 +254,18 @@ class _EventScreenState extends State<EventScreen> {
                                 eventListViewmodel
                                     .EventList.data!.data![itemIndex].mobile
                                     .toString(),
-                            style: SizerUtil.deviceType == DeviceType.mobile
-                                ? TextStyle(
-                                    fontSize: 11.sp,
-                                    fontWeight: FontWeight.w500,
-                                  )
-                                : TextStyle(
-                                    fontSize: 10.sp,
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                            style:
+                                // SizerUtil.deviceType == DeviceType.mobile
+                                //     ?
+                                TextStyle(
+                              fontSize: 11.sp,
+                              fontWeight: FontWeight.w500,
+                            )
+                            // : TextStyle(
+                            //     fontSize: 10.sp,
+                            //     fontWeight: FontWeight.w500,
+                            //   )
+                            ,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -255,15 +279,18 @@ class _EventScreenState extends State<EventScreen> {
                             children: [
                               Text(
                                 'Ref No  -',
-                                style: SizerUtil.deviceType == DeviceType.mobile
-                                    ? TextStyle(
-                                        fontSize: 11.sp,
-                                        fontWeight: FontWeight.w500,
-                                      )
-                                    : TextStyle(
-                                        fontSize: 10.sp,
-                                        fontWeight: FontWeight.w500,
-                                      ),
+                                style:
+                                    // SizerUtil.deviceType == DeviceType.mobile
+                                    //     ?
+                                    TextStyle(
+                                  fontSize: 11.sp,
+                                  fontWeight: FontWeight.w500,
+                                )
+                                // : TextStyle(
+                                //     fontSize: 10.sp,
+                                //     fontWeight: FontWeight.w500,
+                                //   )
+                                ,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -519,11 +546,14 @@ class _EventScreenState extends State<EventScreen> {
                                                   value.EventList.message
                                                       .toString(),
                                                   style: TextStyle(
-                                                      fontSize: SizerUtil
-                                                                  .deviceType ==
-                                                              DeviceType.mobile
-                                                          ? 14.sp
-                                                          : 12.sp,
+                                                      fontSize:
+                                                          // SizerUtil
+                                                          //             .deviceType ==
+                                                          //         DeviceType.mobile
+                                                          //     ?
+                                                          14.sp
+                                                      // : 12.sp
+                                                      ,
                                                       fontWeight:
                                                           FontWeight.w500),
                                                 ),
@@ -650,10 +680,12 @@ class _EventScreenState extends State<EventScreen> {
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                   fontSize:
-                                                      SizerUtil.deviceType ==
-                                                              DeviceType.mobile
-                                                          ? 14.sp
-                                                          : 12.sp,
+
+                                                      // SizerUtil.deviceType ==
+                                                      //         DeviceType.mobile
+                                                      //     ?
+                                                      14.sp,
+                                                  // : 12.sp,
                                                   color: Color(0XFF545454),
                                                   fontWeight: FontWeight.w600,
                                                 ),
@@ -676,11 +708,14 @@ class _EventScreenState extends State<EventScreen> {
                                                   'You don\'t have any bookings or upcoming events',
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
-                                                      fontSize: SizerUtil
-                                                                  .deviceType ==
-                                                              DeviceType.mobile
-                                                          ? 14.sp
-                                                          : 12.sp,
+                                                      fontSize:
+
+                                                          //  SizerUtil
+                                                          //             .deviceType ==
+                                                          //         DeviceType.mobile
+                                                          //     ?
+                                                          14.sp,
+                                                      // : 12.sp,
                                                       color: Color(0XFF545454),
                                                       fontWeight:
                                                           FontWeight.w600),

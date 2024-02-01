@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
+
 import 'package:axonweb/Provider/backButton_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
+
 import '../../Res/colors.dart';
 import '../../View_Model/App_User_View_Model/register_appuser_view_model.dart';
 import '../../View_Model/Book_View_Model/Book_view_Model.dart';
@@ -397,18 +399,31 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                         Row(
                                           children: [
                                             Container(
-                                              height: 1,
-                                              width: 38.w,
+                                              height: 1.5,
+                                              width: SizerUtil.deviceType ==
+                                                      DeviceType.mobile
+                                                  ? 38.w
+                                                  : 42.w,
                                               color: Colors.black,
                                             ),
                                             SizedBox(width: 2.w),
-                                            Text('or'),
+                                            Text(
+                                              'or',
+                                              style: TextStyle(fontSize: 12.sp),
+                                            ),
                                             SizedBox(width: 2.w),
                                             Container(
-                                              height: 1,
-                                              width: 38.w,
+                                              height: 1.5,
+                                              width: SizerUtil.deviceType ==
+                                                      DeviceType.mobile
+                                                  ? 38.w
+                                                  : 42.w,
                                               color: Colors.black,
                                             ),
+                                            // Divider(
+                                            //   thickness: 0.1.h,
+                                            //   color: Colors.black,
+                                            // ),
                                           ],
                                         ),
                                         // SizedBox(height: 1.h),
@@ -880,16 +895,26 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                           Row(
                                             children: [
                                               Container(
-                                                height: 1,
-                                                width: 38.w,
+                                                height: 1.5,
+                                                width: SizerUtil.deviceType ==
+                                                        DeviceType.mobile
+                                                    ? 38.w
+                                                    : 42.w,
                                                 color: Colors.black,
                                               ),
                                               SizedBox(width: 2.w),
-                                              Text('or'),
+                                              Text(
+                                                'or',
+                                                style:
+                                                    TextStyle(fontSize: 12.sp),
+                                              ),
                                               SizedBox(width: 2.w),
                                               Container(
-                                                height: 1,
-                                                width: 38.w,
+                                                height: 1.5,
+                                                width: SizerUtil.deviceType ==
+                                                        DeviceType.mobile
+                                                    ? 38.w
+                                                    : 42.w,
                                                 color: Colors.black,
                                               ),
                                             ],

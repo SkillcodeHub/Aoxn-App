@@ -1,15 +1,17 @@
 import 'dart:async';
+
 import 'package:axonweb/Res/Components/Appbar/screen_name_widget.dart';
+import 'package:axonweb/data/response/status.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:axonweb/data/response/status.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-import '../../Res/Components/loader.dart';
-import '../../View_Model/NewsDetails_View_model/newsdetails_view_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+
+import '../../Res/Components/loader.dart';
+import '../../View_Model/NewsDetails_View_model/newsdetails_view_model.dart';
 
 class NewsDetailsScreen extends StatefulWidget {
   final dynamic data;
@@ -134,10 +136,13 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
                                             // title,
                                             style: TextStyle(
                                                 fontSize:
-                                                    SizerUtil.deviceType ==
-                                                            DeviceType.mobile
-                                                        ? 14.sp
-                                                        : 11.sp,
+
+                                                    // SizerUtil.deviceType ==
+                                                    //         DeviceType.mobile
+                                                    //     ?
+                                                    14.sp
+                                                // : 11.sp
+                                                ,
                                                 fontWeight: FontWeight.w500),
                                           ),
                                         ),
@@ -153,10 +158,13 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
                                               style: TextStyle(
                                                   color: Colors.grey,
                                                   fontSize:
-                                                      SizerUtil.deviceType ==
-                                                              DeviceType.mobile
-                                                          ? 11.sp
-                                                          : 8.sp,
+
+                                                      // SizerUtil.deviceType ==
+                                                      //         DeviceType.mobile
+                                                      //     ?
+                                                      11.sp
+                                                  // : 8.sp
+                                                  ,
                                                   fontWeight: FontWeight.w500)),
                                         ),
                                         SizedBox(height: 20),
@@ -224,9 +232,7 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
           )),
     );
   }
-} 
-
-
+}
 
 //      class _MyHomePageState extends State<MyHomePage> {
 //   @override

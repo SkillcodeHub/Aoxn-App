@@ -112,7 +112,9 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
     return Scaffold(
       backgroundColor: BackgroundColor,
       appBar: PreferredSize(
-        preferredSize:  SizerUtil.deviceType == DeviceType.mobile ?  Size.fromHeight(7.h) : Size.fromHeight(5.h),
+        preferredSize: SizerUtil.deviceType == DeviceType.mobile
+            ? Size.fromHeight(7.h)
+            : Size.fromHeight(5.h),
         child: AppBar(
           automaticallyImplyLeading: false,
           centerTitle: false,
@@ -121,8 +123,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
           leading: Padding(
             padding: EdgeInsets.only(top: 2),
             child: IconButton(
-                            iconSize: SizerUtil.deviceType == DeviceType.mobile ? 2.5.h : 3.h,
-
+              iconSize: SizerUtil.deviceType == DeviceType.mobile ? 2.5.h : 3.h,
               color: Colors.black,
               onPressed: () {
                 Navigator.pop(context);
@@ -131,7 +132,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
             ),
           ),
           title: Padding(
-            padding: const EdgeInsets.only(top:2),
+            padding: const EdgeInsets.only(top: 2),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -154,7 +155,11 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                   Text(
                     'Booking Successful',
                     style: TextStyle(
-                      fontSize: SizerUtil.deviceType == DeviceType.mobile ?  22.sp : 18.sp,
+                      fontSize:
+                          // SizerUtil.deviceType == DeviceType.mobile ?
+                          22.sp
+                      // : 18.sp
+                      ,
                       fontWeight: FontWeight.bold,
                       color: Color(0xFFFD5722),
                     ),
@@ -174,7 +179,13 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                           Text(
                             'Your appointment is booked for:',
                             style: TextStyle(
-                              fontSize: SizerUtil.deviceType == DeviceType.mobile ?  14.sp : 12.sp,
+                              fontSize:
+
+                                  // SizerUtil.deviceType == DeviceType.mobile
+                                  //     ?
+                                  14.sp
+                              // : 12.sp
+                              ,
                             ),
                           ),
                           SizedBox(
@@ -183,7 +194,12 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                           Text(
                             'Doctor',
                             style: TextStyle(
-                              fontSize: SizerUtil.deviceType == DeviceType.mobile ?  14.sp : 12.sp,
+                              fontSize:
+                                  // SizerUtil.deviceType == DeviceType.mobile
+                                  //     ?
+                                  14.sp
+                              // : 12.sp
+                              ,
                               color: Colors.grey,
                             ),
                           ),
@@ -194,7 +210,12 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                             widget.appointmentData['data']['doctorName'],
                             // appointmentData['doctorName'],
                             style: TextStyle(
-                              fontSize:SizerUtil.deviceType == DeviceType.mobile ?  15.sp : 13.sp,
+                              fontSize:
+                                  // SizerUtil.deviceType == DeviceType.mobile
+                                  //     ?
+                                  15.sp
+                              // : 13.sp
+                              ,
                             ),
                           ),
                           SizedBox(
@@ -202,8 +223,14 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                           ),
                           Text(
                             'Patient',
-                            style:
-                                TextStyle(fontSize:SizerUtil.deviceType == DeviceType.mobile ?  14.sp : 12.sp, color: Colors.grey),
+                            style: TextStyle(
+                                fontSize:
+                                    // SizerUtil.deviceType == DeviceType.mobile
+                                    //     ?
+                                    14.sp
+                                // : 12.sp
+                                ,
+                                color: Colors.grey),
                           ),
                           SizedBox(
                             height: 3,
@@ -212,7 +239,13 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                             // 'aaa',
                             widget.appointmentData['data']['name'],
                             style: TextStyle(
-                              fontSize:SizerUtil.deviceType == DeviceType.mobile ?  15.sp : 13.sp,
+                              fontSize:
+
+                                  // SizerUtil.deviceType == DeviceType.mobile
+                                  //     ?
+                                  15.sp
+                              // : 13.sp
+                              ,
                             ),
                           ),
                           SizedBox(
@@ -239,7 +272,13 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                                 widget.appointmentData['data']['doctorName'],
                             // + historyData['doctorName'],
                             style: TextStyle(
-                              fontSize:SizerUtil.deviceType == DeviceType.mobile ?  12.sp : 10.sp,
+                              fontSize:
+
+                                  // SizerUtil.deviceType == DeviceType.mobile
+                                  //     ?
+                                  12.sp
+                              // : 10.sp
+                              ,
                             ),
                           ),
                           SizedBox(height: 2.h),
@@ -249,7 +288,13 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                               Text(
                                 outputDate,
                                 style: TextStyle(
-                                  fontSize: SizerUtil.deviceType == DeviceType.mobile ?  15.sp : 13.sp,
+                                  fontSize:
+
+                                      // SizerUtil.deviceType == DeviceType.mobile
+                                      //     ?
+                                      15.sp
+                                  // : 13.sp
+                                  ,
                                 ),
                               ),
                             ],
@@ -263,7 +308,12 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                               Text(
                                 outputDate3,
                                 style: TextStyle(
-                                  fontSize:SizerUtil.deviceType == DeviceType.mobile ?  15.sp : 13.sp,
+                                  fontSize:
+                                      // SizerUtil.deviceType == DeviceType.mobile
+                                      //     ?
+                                      15.sp
+                                  // : 13.sp
+                                  ,
                                 ),
                               ),
                             ],
@@ -305,7 +355,13 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                           Text(
                             'Your appointment status:',
                             style: TextStyle(
-                              fontSize: SizerUtil.deviceType == DeviceType.mobile ?  14.sp : 12.sp,
+                              fontSize:
+
+                                  // SizerUtil.deviceType == DeviceType.mobile
+                                  //     ?
+                                  14.sp
+                              // : 12.sp
+                              ,
                             ),
                           ),
                           SizedBox(
@@ -320,7 +376,13 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                                   widget.appointmentData['data']['statusText'],
                                   //'aaaa',
                                   style: TextStyle(
-                                    fontSize: SizerUtil.deviceType == DeviceType.mobile ?  15.sp : 13.sp,
+                                    fontSize:
+                                        // SizerUtil.deviceType ==
+                                        //         DeviceType.mobile
+                                        //     ?
+                                        15.sp
+                                    // : 13.sp
+                                    ,
                                     // color: Color(0xFFFD5722),
                                   ),
                                 ),

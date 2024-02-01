@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+
 import 'package:axonweb/Provider/backButton_provider.dart';
 import 'package:axonweb/View_Model/Book_View_Model/Book_view_Model.dart';
 import 'package:axonweb/View_Model/Book_View_Model/advanceBookAppointment_view_model.dart';
@@ -13,6 +14,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
+
 import '../../Res/Components/loader.dart';
 import '../../Res/colors.dart';
 import '../../Utils/utils.dart';
@@ -297,10 +299,13 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                             value.doctorList.message.toString(),
                                             style: TextStyle(
                                                 fontSize:
-                                                    SizerUtil.deviceType ==
-                                                            DeviceType.mobile
-                                                        ? 14.sp
-                                                        : 12.sp,
+
+                                                    // SizerUtil.deviceType ==
+                                                    //         DeviceType.mobile
+                                                    //     ?
+                                                    14.sp
+                                                // : 12.sp
+                                                ,
                                                 fontWeight: FontWeight.w500),
                                           ),
                                         ),
@@ -538,11 +543,13 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                     children: [
                                                       Text(
                                                         '     Provider',
-                                                        style: SizerUtil
-                                                                    .deviceType ==
-                                                                DeviceType
-                                                                    .mobile
-                                                            ? TextStyle(
+                                                        style:
+                                                            //  SizerUtil
+                                                            //             .deviceType ==
+                                                            //         DeviceType
+                                                            //             .mobile
+                                                            //     ?
+                                                            TextStyle(
                                                                 fontSize: 12.sp,
                                                                 fontWeight:
                                                                     FontWeight
@@ -550,14 +557,15 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                 color: Colors
                                                                     .grey
                                                                     .shade700)
-                                                            : TextStyle(
-                                                                fontSize: 8.sp,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
-                                                                color: Colors
-                                                                    .grey
-                                                                    .shade700),
+                                                        // : TextStyle(
+                                                        //     fontSize: 8.sp,
+                                                        //     fontWeight:
+                                                        //         FontWeight
+                                                        //             .w400,
+                                                        //     color: Colors
+                                                        //         .grey
+                                                        //         .shade700)
+                                                        ,
                                                       ),
                                                       SizedBox(height: 2.h),
                                                       Consumer<
@@ -630,20 +638,28 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                               .start,
                                                                       children: <
                                                                           Widget>[
-                                                                        SizerUtil.deviceType ==
-                                                                                DeviceType.mobile
-                                                                            ? Container(
-                                                                                child: Text(
-                                                                                map.doctorName.toString(),
-                                                                                style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w500),
-                                                                                textAlign: TextAlign.start,
-                                                                              ))
-                                                                            : Container(
-                                                                                child: Text(
-                                                                                map.doctorName.toString(),
-                                                                                style: TextStyle(fontSize: 10.sp, fontWeight: FontWeight.w500),
-                                                                                textAlign: TextAlign.start,
-                                                                              )),
+                                                                        // SizerUtil.deviceType ==
+                                                                        //         DeviceType.mobile
+                                                                        //     ?
+                                                                        Container(
+                                                                            child:
+                                                                                Text(
+                                                                          map.doctorName
+                                                                              .toString(),
+                                                                          style: TextStyle(
+                                                                              fontSize: 14.sp,
+                                                                              fontWeight: FontWeight.w500),
+                                                                          textAlign:
+                                                                              TextAlign.start,
+                                                                        ))
+
+                                                                        // : Container(
+                                                                        //     child: Text(
+                                                                        //     map.doctorName.toString(),
+                                                                        //     style: TextStyle(fontSize: 10.sp, fontWeight: FontWeight.w500),
+                                                                        //     textAlign: TextAlign.start,
+                                                                        //   ))
+                                                                        ,
                                                                       ],
                                                                     ),
                                                                   );
@@ -733,24 +749,29 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                               10,
                                                                           top:
                                                                               10),
-                                                                  child: SizerUtil
-                                                                              .deviceType ==
-                                                                          DeviceType
-                                                                              .mobile
-                                                                      ? Text(
-                                                                          displaySelectAppointmentDate,
-                                                                          // displayDate,
-                                                                          style: TextStyle(
-                                                                              fontSize: 14.sp,
-                                                                              fontWeight: FontWeight.w500),
-                                                                        )
-                                                                      : Text(
-                                                                          displaySelectAppointmentDate,
-                                                                          // displayDate,
-                                                                          style: TextStyle(
-                                                                              fontSize: 10.sp,
-                                                                              fontWeight: FontWeight.w500),
-                                                                        ),
+                                                                  child:
+                                                                      // SizerUtil
+                                                                      //             .deviceType ==
+                                                                      //         DeviceType
+                                                                      //             .mobile
+                                                                      //     ?
+                                                                      Text(
+                                                                    displaySelectAppointmentDate,
+                                                                    // displayDate,
+                                                                    style: TextStyle(
+                                                                        fontSize: 14
+                                                                            .sp,
+                                                                        fontWeight:
+                                                                            FontWeight.w500),
+                                                                  )
+                                                                  // : Text(
+                                                                  //     displaySelectAppointmentDate,
+                                                                  //     // displayDate,
+                                                                  //     style: TextStyle(
+                                                                  //         fontSize: 10.sp,
+                                                                  //         fontWeight: FontWeight.w500),
+                                                                  //   )
+                                                                  ,
                                                                 ),
                                                                 SizedBox(
                                                                     height:
@@ -762,76 +783,92 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                   CrossAxisAlignment
                                                                       .start,
                                                               children: [
-                                                                SizerUtil.deviceType ==
-                                                                        DeviceType
-                                                                            .mobile
-                                                                    ? Container(
-                                                                        child:
-                                                                            Text(
-                                                                          '   Appointment',
-                                                                          style: TextStyle(
-                                                                              fontSize: 12.sp,
-                                                                              fontWeight: FontWeight.w400,
-                                                                              color: Colors.grey.shade700),
-                                                                        ),
-                                                                      )
-                                                                    : Container(
-                                                                        child:
-                                                                            Text(
-                                                                          '   Appointment',
-                                                                          style: TextStyle(
-                                                                              fontSize: 8.sp,
-                                                                              fontWeight: FontWeight.w400,
-                                                                              color: Colors.grey.shade700),
-                                                                        ),
-                                                                      ),
+                                                                // SizerUtil.deviceType ==
+                                                                //         DeviceType
+                                                                //             .mobile
+                                                                //     ?
+                                                                Container(
+                                                                  child: Text(
+                                                                    '   Appointment',
+                                                                    style: TextStyle(
+                                                                        fontSize: 12
+                                                                            .sp,
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .w400,
+                                                                        color: Colors
+                                                                            .grey
+                                                                            .shade700),
+                                                                  ),
+                                                                )
+                                                                // : Container(
+                                                                //     child:
+                                                                //         Text(
+                                                                //       '   Appointment',
+                                                                //       style: TextStyle(
+                                                                //           fontSize: 8.sp,
+                                                                //           fontWeight: FontWeight.w400,
+                                                                //           color: Colors.grey.shade700),
+                                                                //     )
+                                                                //     ,
+                                                                //   )
+                                                                ,
                                                                 // SizedBox(
                                                                 //     height: 1),
-                                                                SizerUtil.deviceType ==
-                                                                        DeviceType
-                                                                            .mobile
-                                                                    ? Container(
-                                                                        padding: EdgeInsets.only(
-                                                                            left:
-                                                                                10,
-                                                                            top:
-                                                                                5),
-                                                                        child:
-                                                                            Row(
-                                                                          children: [
-                                                                            Text(
-                                                                              'Date   ',
-                                                                              style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w400, color: Colors.grey.shade700),
-                                                                            ),
-                                                                            Text(
-                                                                              appointmentDate,
-                                                                              // displayDate,
-                                                                              style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w500),
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                      )
-                                                                    : Container(
-                                                                        padding: EdgeInsets.only(
-                                                                            left:
-                                                                                10,
-                                                                            top:
-                                                                                5),
-                                                                        child:
-                                                                            Row(
-                                                                          children: [
-                                                                            Text(
-                                                                              'Date   ',
-                                                                              style: TextStyle(fontSize: 8.sp, fontWeight: FontWeight.w400, color: Colors.grey.shade700),
-                                                                            ),
-                                                                            Text(
-                                                                              appointmentDate,
-                                                                              // displayDate,
-                                                                              style: TextStyle(fontSize: 8.sp, fontWeight: FontWeight.w500),
-                                                                            ),
-                                                                          ],
-                                                                        ),
+                                                                // SizerUtil.deviceType ==
+                                                                //         DeviceType
+                                                                //             .mobile
+                                                                //     ?
+                                                                Container(
+                                                                  padding: EdgeInsets
+                                                                      .only(
+                                                                          left:
+                                                                              10,
+                                                                          top:
+                                                                              5),
+                                                                  child: Row(
+                                                                    children: [
+                                                                      Text(
+                                                                        'Date   ',
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                                12.sp,
+                                                                            fontWeight: FontWeight.w400,
+                                                                            color: Colors.grey.shade700),
                                                                       ),
+                                                                      Text(
+                                                                        appointmentDate,
+                                                                        // displayDate,
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                                12.sp,
+                                                                            fontWeight: FontWeight.w500),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                )
+                                                                // : Container(
+                                                                //     padding: EdgeInsets.only(
+                                                                //         left:
+                                                                //             10,
+                                                                //         top:
+                                                                //             5),
+                                                                //     child:
+                                                                //         Row(
+                                                                //       children: [
+                                                                //         Text(
+                                                                //           'Date   ',
+                                                                //           style: TextStyle(fontSize: 8.sp, fontWeight: FontWeight.w400, color: Colors.grey.shade700),
+                                                                //         ),
+                                                                //         Text(
+                                                                //           appointmentDate,
+                                                                //           // displayDate,
+                                                                //           style: TextStyle(fontSize: 8.sp, fontWeight: FontWeight.w500),
+                                                                //         ),
+                                                                //       ],
+                                                                //     ),
+                                                                //   )
+                                                                ,
                                                                 SizedBox(
                                                                     height:
                                                                         0.3.h),
@@ -933,22 +970,25 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                               overflow:
                                                                   TextOverflow
                                                                       .ellipsis,
-                                                              style: SizerUtil
-                                                                          .deviceType ==
-                                                                      DeviceType
-                                                                          .mobile
-                                                                  ? TextStyle(
+                                                              style:
+                                                                  // SizerUtil
+                                                                  //             .deviceType ==
+                                                                  //         DeviceType
+                                                                  //             .mobile
+                                                                  //     ?
+                                                                  TextStyle(
                                                                       fontSize:
                                                                           14.sp,
                                                                       fontWeight:
                                                                           FontWeight
                                                                               .w500)
-                                                                  : TextStyle(
-                                                                      fontSize:
-                                                                          10.sp,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500),
+                                                              // : TextStyle(
+                                                              //     fontSize:
+                                                              //         10.sp,
+                                                              //     fontWeight:
+                                                              //         FontWeight
+                                                              //             .w500)
+                                                              ,
                                                             ),
                                                           ),
                                                           //
@@ -1135,22 +1175,25 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                           )))
                                                         : Text(
                                                             'BOOK APPOINTMENT',
-                                                            style: SizerUtil
-                                                                        .deviceType ==
-                                                                    DeviceType
-                                                                        .mobile
-                                                                ? TextStyle(
+                                                            style:
+                                                                // SizerUtil
+                                                                //             .deviceType ==
+                                                                //         DeviceType
+                                                                //             .mobile
+                                                                //     ?
+                                                                TextStyle(
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .w500,
                                                                     fontSize:
                                                                         12.sp)
-                                                                : TextStyle(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                    fontSize:
-                                                                        8.sp),
+                                                            // : TextStyle(
+                                                            //     fontWeight:
+                                                            //         FontWeight
+                                                            //             .w500,
+                                                            //     fontSize:
+                                                            //         8.sp)
+                                                            ,
                                                           ),
                                                     style: ElevatedButton
                                                         .styleFrom(
@@ -1183,19 +1226,22 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                     },
                                                     child: Text(
                                                       'RESET',
-                                                      style: SizerUtil
-                                                                  .deviceType ==
-                                                              DeviceType.mobile
-                                                          ? TextStyle(
+                                                      style:
+                                                          //  SizerUtil
+                                                          //             .deviceType ==
+                                                          //         DeviceType.mobile
+                                                          //     ?
+                                                          TextStyle(
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w500,
                                                               fontSize: 12.sp)
-                                                          : TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              fontSize: 8.sp),
+                                                      // : TextStyle(
+                                                      //     fontWeight:
+                                                      //         FontWeight
+                                                      //             .w500,
+                                                      //     fontSize: 8.sp)
+                                                      ,
                                                     ),
                                                     style: ElevatedButton
                                                         .styleFrom(
@@ -1480,10 +1526,13 @@ class _PaymentSheetState extends State<PaymentSheet> {
                                   Text(
                                     'Select Payment Reason',
                                     style: TextStyle(
-                                      fontSize: SizerUtil.deviceType ==
-                                              DeviceType.mobile
-                                          ? 18.sp
-                                          : 12.sp,
+                                      fontSize:
+                                          //  SizerUtil.deviceType ==
+                                          //         DeviceType.mobile
+                                          //     ?
+                                          18.sp
+                                      // : 12.sp
+                                      ,
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
@@ -1554,12 +1603,15 @@ class _PaymentSheetState extends State<PaymentSheet> {
                                                                 .payHead
                                                                 .toString(),
                                                             style: TextStyle(
-                                                              fontSize: SizerUtil
-                                                                          .deviceType ==
-                                                                      DeviceType
-                                                                          .mobile
-                                                                  ? 13.sp
-                                                                  : 9.sp,
+                                                              fontSize:
+                                                                  //  SizerUtil
+                                                                  //             .deviceType ==
+                                                                  //         DeviceType
+                                                                  //             .mobile
+                                                                  //     ?
+                                                                  13.sp
+                                                              // : 9.sp
+                                                              ,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w500,
@@ -1680,10 +1732,13 @@ class _PaymentSheetState extends State<PaymentSheet> {
                                     'I accept  ',
                                     style: TextStyle(
                                       color: Colors.black,
-                                      fontSize: SizerUtil.deviceType ==
-                                              DeviceType.mobile
-                                          ? 12.sp
-                                          : 8.sp,
+                                      fontSize:
+                                          // SizerUtil.deviceType ==
+                                          //         DeviceType.mobile
+                                          //     ?
+                                          12.sp
+                                      // : 8.sp
+                                      ,
                                     ),
                                   ),
                                   InkWell(
@@ -1704,10 +1759,13 @@ class _PaymentSheetState extends State<PaymentSheet> {
                                       'terms and conditions',
                                       style: TextStyle(
                                         color: Color(0xFFFD5722),
-                                        fontSize: SizerUtil.deviceType ==
-                                                DeviceType.mobile
-                                            ? 12.sp
-                                            : 8.sp,
+                                        fontSize:
+                                            // SizerUtil.deviceType ==
+                                            //         DeviceType.mobile
+                                            //     ?
+                                            12.sp
+                                        // : 8.sp
+                                        ,
                                       ),
                                     ),
                                   ),
@@ -1760,10 +1818,13 @@ class _PaymentSheetState extends State<PaymentSheet> {
                                           Text(
                                         'START PAYMENT',
                                         style: TextStyle(
-                                          fontSize: SizerUtil.deviceType ==
-                                                  DeviceType.mobile
-                                              ? 12.sp
-                                              : 8.sp,
+                                          fontSize:
+                                              //  SizerUtil.deviceType ==
+                                              //         DeviceType.mobile
+                                              //     ?
+                                              12.sp
+                                          // : 8.sp
+                                          ,
                                           fontWeight: FontWeight.w600,
                                           color: Colors.white,
                                         ),

@@ -4,6 +4,7 @@ import 'package:axonweb/res/components/appbar/screen_name_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+
 import '../../View_Model/Book_View_Model/cancelAppointment_view_model.dart';
 import '../../View_Model/Services/SharePreference/SharePreference.dart';
 
@@ -202,7 +203,9 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
       appBar: PreferredSize(
-        preferredSize:  SizerUtil.deviceType == DeviceType.mobile ?  Size.fromHeight(7.h) : Size.fromHeight(5.h),
+        preferredSize: SizerUtil.deviceType == DeviceType.mobile
+            ? Size.fromHeight(7.h)
+            : Size.fromHeight(5.h),
         child: AppBar(
           automaticallyImplyLeading: false,
           centerTitle: false,
@@ -211,8 +214,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
           leading: Padding(
             padding: EdgeInsets.only(top: 2),
             child: IconButton(
-                            iconSize: SizerUtil.deviceType == DeviceType.mobile ? 2.5.h : 3.h,
-
+              iconSize: SizerUtil.deviceType == DeviceType.mobile ? 2.5.h : 3.h,
               color: Colors.black,
               onPressed: () {
                 Navigator.pop(context);
@@ -227,10 +229,9 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                  ScreenNameWidget(
-                                  title: 'Appointment',
-                                ),
-                
+                ScreenNameWidget(
+                  title: 'Appointment',
+                ),
               ],
             ),
           ),
@@ -261,7 +262,10 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                             Text(
                               'Your appointment is booked for:',
                               style: TextStyle(
-                                fontSize: SizerUtil.deviceType == DeviceType.mobile ?  14.sp : 11.sp,
+                                fontSize:
+                                    SizerUtil.deviceType == DeviceType.mobile
+                                        ? 14.sp
+                                        : 11.sp,
                               ),
                             ),
                             SizedBox(
@@ -270,7 +274,10 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                             Text(
                               'Doctor',
                               style: TextStyle(
-                                fontSize: SizerUtil.deviceType == DeviceType.mobile ?  14.sp : 11.sp,
+                                fontSize:
+                                    SizerUtil.deviceType == DeviceType.mobile
+                                        ? 14.sp
+                                        : 11.sp,
                                 color: Colors.grey,
                               ),
                             ),
@@ -281,7 +288,10 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                               doctorName.toString(),
                               // appointmentData['doctorName'],
                               style: TextStyle(
-                                fontSize:SizerUtil.deviceType == DeviceType.mobile ?  15.sp : 11.sp,
+                                fontSize:
+                                    SizerUtil.deviceType == DeviceType.mobile
+                                        ? 15.sp
+                                        : 11.sp,
                               ),
                             ),
                             SizedBox(
@@ -290,7 +300,11 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                             Text(
                               'Patient',
                               style: TextStyle(
-                                  fontSize:SizerUtil.deviceType == DeviceType.mobile ?  14.sp : 11.sp, color: Colors.grey),
+                                  fontSize:
+                                      SizerUtil.deviceType == DeviceType.mobile
+                                          ? 14.sp
+                                          : 11.sp,
+                                  color: Colors.grey),
                             ),
                             SizedBox(
                               height: 3,
@@ -299,7 +313,10 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                               patientName.toString(),
                               // appointmentData['name'],
                               style: TextStyle(
-                                fontSize: SizerUtil.deviceType == DeviceType.mobile ?  15.sp : 11.sp,
+                                fontSize:
+                                    SizerUtil.deviceType == DeviceType.mobile
+                                        ? 15.sp
+                                        : 11.sp,
                               ),
                             ),
                             SizedBox(
@@ -323,17 +340,26 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                               // 'aaa',
                               'Remember to visit' + ' ' + doctorName.toString(),
                               style: TextStyle(
-                                fontSize: SizerUtil.deviceType == DeviceType.mobile ?  12.sp : 9.sp,
+                                fontSize:
+                                    SizerUtil.deviceType == DeviceType.mobile
+                                        ? 12.sp
+                                        : 9.sp,
                               ),
                             ),
                             SizedBox(height: 2.h),
                             Row(
                               children: [
-                                Icon(Icons.perm_contact_calendar,size: 3.h,),
-                                Text(" "+
-                                  outputDate.toString(),
+                                Icon(
+                                  Icons.perm_contact_calendar,
+                                  size: 3.h,
+                                ),
+                                Text(
+                                  " " + outputDate.toString(),
                                   style: TextStyle(
-                                    fontSize:SizerUtil.deviceType == DeviceType.mobile ?  15.sp : 11.sp,
+                                    fontSize: SizerUtil.deviceType ==
+                                            DeviceType.mobile
+                                        ? 15.sp
+                                        : 11.sp,
                                   ),
                                 ),
                               ],
@@ -341,11 +367,17 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                             SizedBox(height: 1.h),
                             Row(
                               children: [
-                                Icon(Icons.access_time_rounded,size: 3.h,),
-                                Text(" "+
-                                  outputDate3.toString(),
+                                Icon(
+                                  Icons.access_time_rounded,
+                                  size: 3.h,
+                                ),
+                                Text(
+                                  " " + outputDate3.toString(),
                                   style: TextStyle(
-                                    fontSize: SizerUtil.deviceType == DeviceType.mobile ?  15.sp : 11.sp,
+                                    fontSize: SizerUtil.deviceType ==
+                                            DeviceType.mobile
+                                        ? 15.sp
+                                        : 11.sp,
                                   ),
                                 ),
                               ],
@@ -384,7 +416,10 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                             Text(
                               'Your appointment status:',
                               style: TextStyle(
-                                fontSize: SizerUtil.deviceType == DeviceType.mobile ?  14.sp : 11.sp,
+                                fontSize:
+                                    SizerUtil.deviceType == DeviceType.mobile
+                                        ? 14.sp
+                                        : 11.sp,
                               ),
                             ),
                             SizedBox(
@@ -398,7 +433,10 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                                   child: Text(
                                     status.toString(),
                                     style: TextStyle(
-                                      fontSize:SizerUtil.deviceType == DeviceType.mobile ?  15.sp : 12.sp,
+                                      fontSize: SizerUtil.deviceType ==
+                                              DeviceType.mobile
+                                          ? 15.sp
+                                          : 12.sp,
                                     ),
                                   ),
                                 ),
@@ -413,7 +451,10 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                                       ? Text(
                                           'CANCEL',
                                           style: TextStyle(
-                                            fontSize: SizerUtil.deviceType == DeviceType.mobile ?  12.sp : 9.sp,
+                                            fontSize: SizerUtil.deviceType ==
+                                                    DeviceType.mobile
+                                                ? 12.sp
+                                                : 9.sp,
                                             color: Color(0xFFFD5722),
                                           ),
                                         )
