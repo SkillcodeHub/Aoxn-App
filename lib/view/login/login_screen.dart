@@ -1,14 +1,18 @@
 import 'dart:async';
 import 'dart:io';
+
 import 'package:axonweb/Res/colors.dart';
 import 'package:axonweb/View_Model/Settings_View_Model/settings_view_model.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_udid/flutter_udid.dart';
+import 'package:mobile_number/mobile_number.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:sms_autofill/sms_autofill.dart';
-import 'package:mobile_number/mobile_number.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 import '../../View_Model/Login_View_Model/auth_view_model.dart';
 import '../../View_Model/News_View_Model/notification_services.dart';
 import '../../utils/utils.dart';
@@ -189,7 +193,11 @@ class LoginScreenState extends State {
                         Text(
                           'Login with your details',
                           style: TextStyle(
-                              fontSize:SizerUtil.deviceType == DeviceType.mobile ?  15.sp :10.sp, fontWeight: FontWeight.w600),
+                              fontSize:
+                                  SizerUtil.deviceType == DeviceType.mobile
+                                      ? 15.sp
+                                      : 10.sp,
+                              fontWeight: FontWeight.w600),
                         ),
                         SizedBox(
                           height: 1.h,
@@ -513,6 +521,40 @@ class LoginScreenState extends State {
                         ],
                       ),
                     ),
+                  ),
+                ),
+
+                RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text:
+                            'By Clicking On Request OTP, you agree to our Terms and\n',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      TextSpan(
+                        text: ' Learn how we process your data in our ',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      TextSpan(
+                        text: 'Privacy Policy',
+                        style: TextStyle(
+                          color: Color(0xFFFD5722),
+                          decoration: TextDecoration.underline,
+                        ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () async {
+                            final url =
+                                'https://app.axonsoftwares.net/privacy_policy.html';
+                            if (await canLaunch(url)) {
+                              await launch(url);
+                            } else {
+                              throw 'Could not launch $url';
+                            }
+                          },
+                      ),
+                    ],
                   ),
                 ),
               ],

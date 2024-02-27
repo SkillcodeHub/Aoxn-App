@@ -1,12 +1,15 @@
 import 'package:axonweb/Provider/backButton_provider.dart';
+import 'package:axonweb/Utils/routes/routes_name.dart';
 import 'package:axonweb/View/PaymentHistory/payment_history_screen.dart';
 import 'package:axonweb/View_Model/ChangeProvider_View_Model/provider_view_model.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:axonweb/Utils/routes/routes_name.dart';
 import 'package:axonweb/View_Model/Settings_View_Model/settings_view_model.dart';
 import 'package:axonweb/data/response/status.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 import '../../Res/Components/Appbar/screen_name_widget.dart';
 import '../../Res/Components/loader.dart';
 import '../../Res/colors.dart';
@@ -111,9 +114,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
     print('iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii');
     settingsViewModel.fetchDoctorDetailsListApi(token);
 
-     Future refresh() async {
-    settingsViewModel.fetchDoctorDetailsListApi(token);
+    Future refresh() async {
+      settingsViewModel.fetchDoctorDetailsListApi(token);
     }
+
     print(age);
     print(name);
     return Scaffold(
@@ -160,59 +164,55 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 return Center(child: CircularProgressIndicator());
               case Status.ERROR:
                 return RefreshIndicator(
-                        onRefresh: refresh,
-                        child: Stack(
-                          children: [
-                            SingleChildScrollView(
-                              physics: BouncingScrollPhysics(),
-                              child: Padding(
-                                padding: EdgeInsets.all(15),
-                                child: Container(
-                                  height: 74.h,
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      SizedBox(
-                                        height: 2.h,
-                                      ),
-                                      SizedBox(
-                                        height: 20.h,
-                                      ),
-                                      Center(
-                                        child: Image.asset(
-                                          'images/loading.png',
-                                          height: 20.h,
-                                          // width: 90,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 4.h,
-                                      ),
-                                      Center(
-                                        child: Text(
-                                          value.doctorDetailsList.message.toString(),
-                                          style: TextStyle(
-                                              fontSize:
-                                                  SizerUtil.deviceType ==
-                                                          DeviceType.mobile
-                                                      ? 14.sp
-                                                      : 12.sp,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                      ),
-                                    ],
+                  onRefresh: refresh,
+                  child: Stack(
+                    children: [
+                      SingleChildScrollView(
+                        physics: BouncingScrollPhysics(),
+                        child: Padding(
+                          padding: EdgeInsets.all(15),
+                          child: Container(
+                            height: 74.h,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  height: 2.h,
+                                ),
+                                SizedBox(
+                                  height: 20.h,
+                                ),
+                                Center(
+                                  child: Image.asset(
+                                    'images/loading.png',
+                                    height: 20.h,
+                                    // width: 90,
                                   ),
                                 ),
-                              ),
+                                SizedBox(
+                                  height: 4.h,
+                                ),
+                                Center(
+                                  child: Text(
+                                    value.doctorDetailsList.message.toString(),
+                                    style: TextStyle(
+                                        fontSize: SizerUtil.deviceType ==
+                                                DeviceType.mobile
+                                            ? 14.sp
+                                            : 12.sp,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
-                      );
+                      ),
+                    ],
+                  ),
+                );
 
-              
               case Status.COMPLETED:
                 return Stack(
                   children: [
@@ -576,6 +576,41 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                             ],
                                           ),
                                           SizedBox(height: 3),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+
+                                  SizedBox(height: 30.h),
+                                  Center(
+                                    child: RichText(
+                                      textAlign: TextAlign.center,
+                                      text: TextSpan(
+                                        children: [
+                                          TextSpan(
+                                            text:
+                                                'Learn how we process your data in our ',
+                                            style:
+                                                TextStyle(color: Colors.black),
+                                          ),
+                                          TextSpan(
+                                            text: 'Privacy Policy',
+                                            style: TextStyle(
+                                              color: Color(0xFFFD5722),
+                                              decoration:
+                                                  TextDecoration.underline,
+                                            ),
+                                            recognizer: TapGestureRecognizer()
+                                              ..onTap = () async {
+                                                final url =
+                                                    'https://app.axonsoftwares.net/privacy_policy.html';
+                                                if (await canLaunch(url)) {
+                                                  await launch(url);
+                                                } else {
+                                                  throw 'Could not launch $url';
+                                                }
+                                              },
+                                          ),
                                         ],
                                       ),
                                     ),
