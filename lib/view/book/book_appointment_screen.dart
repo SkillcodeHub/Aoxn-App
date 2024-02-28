@@ -357,6 +357,16 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                           .message
                                                           .toString()));
                                                 case Status.COMPLETED:
+                                                  print(
+                                                      'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+                                                  print(value
+                                                      .doctorDetailsList
+                                                      .data!
+                                                      .data![0]
+                                                      .logoImageURL
+                                                      .toString());
+                                                  print(
+                                                      'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
                                                   number = value
                                                       .doctorDetailsList
                                                       .data!
@@ -370,27 +380,51 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                       .isSubscriptionExpired;
                                                   return Stack(
                                                     children: [
-                                                      Container(
-                                                        height: 26.h,
-                                                        width: 100.w,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          image:
-                                                              DecorationImage(
-                                                            image: MemoryImage(
-                                                              base64Decode(
-                                                                value
-                                                                    .doctorDetailsList
-                                                                    .data!
-                                                                    .data![0]
-                                                                    .logoImageURL
-                                                                    .toString(),
+                                                      value
+                                                                  .doctorDetailsList
+                                                                  .data!
+                                                                  .data![0]
+                                                                  .logoImageURL
+                                                                  .toString() !=
+                                                              "null"
+                                                          ? Container(
+                                                              height: 26.h,
+                                                              width: 100.w,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                image:
+                                                                    DecorationImage(
+                                                                  image:
+                                                                      MemoryImage(
+                                                                    base64Decode(
+                                                                      value
+                                                                          .doctorDetailsList
+                                                                          .data!
+                                                                          .data![
+                                                                              0]
+                                                                          .logoImageURL
+                                                                          .toString(),
+                                                                    ),
+                                                                  ),
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                ),
+                                                              ),
+                                                            )
+                                                          : Container(
+                                                              height: 26.h,
+                                                              width: 100.w,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                image:
+                                                                    DecorationImage(
+                                                                  image: NetworkImage(
+                                                                      'https://www.axonweb.in/MyResource/CustomerLogo/no-image.png'),
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                ),
                                                               ),
                                                             ),
-                                                            fit: BoxFit.cover,
-                                                          ),
-                                                        ),
-                                                      ),
                                                       Positioned(
                                                         bottom: 3,
                                                         left: 0,
@@ -399,7 +433,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                             Transform.translate(
                                                           offset: Offset(0, 4),
                                                           child: Container(
-                                                            height: 10.h,
+                                                            // height: 10.h,
                                                             decoration:
                                                                 BoxDecoration(
                                                               gradient: LinearGradient(
@@ -429,6 +463,8 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                         .spaceBetween,
                                                                 children: [
                                                                   Container(
+                                                                    // color: Colors
+                                                                    //     .amber,
                                                                     width: 70.w,
                                                                     child:
                                                                         Column(
@@ -455,8 +491,8 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                             fontWeight:
                                                                                 FontWeight.bold,
                                                                           ),
-                                                                          maxLines:
-                                                                              1,
+                                                                          // maxLines:
+                                                                          //     1,
                                                                           overflow:
                                                                               TextOverflow.ellipsis,
                                                                         ),
@@ -476,10 +512,10 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                             fontStyle:
                                                                                 FontStyle.italic,
                                                                           ),
-                                                                          maxLines:
-                                                                              1,
-                                                                          overflow:
-                                                                              TextOverflow.ellipsis,
+                                                                          // maxLines:
+                                                                          //     1,
+                                                                          // overflow:
+                                                                          //     TextOverflow.ellipsis,
                                                                         ),
                                                                       ],
                                                                     ),

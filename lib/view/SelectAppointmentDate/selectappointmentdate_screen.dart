@@ -25,7 +25,8 @@ class SelectAppointmentDateScreen extends StatefulWidget {
 class _SelectAppointmentDateScreenState
     extends State<SelectAppointmentDateScreen> {
   // DateTime selectedDate = DateTime.now(); // TO tracking date
-  DateTime selectedDate = DateTime.now(); // TO tracking date
+  DateTime selectedDate =
+      DateTime.now().add(Duration(days: 5)); // TO tracking date
   String? datetime1;
   bool isLoading = false;
   bool TimeSlotes = false;
@@ -36,7 +37,7 @@ class _SelectAppointmentDateScreenState
   UserPreferences userPreference = UserPreferences();
   late String token;
 
-  int currentDateSelectedIndex = 0; //For Horizontal Date
+  int currentDateSelectedIndex = 5; //For Horizontal Date
   int? currentDateSelectedIndex1; //For Horizontal Date
   ScrollController scrollController =
       ScrollController(); //Scroll Controller for ListView
@@ -59,6 +60,12 @@ class _SelectAppointmentDateScreenState
     Timer.periodic(Duration(seconds: 1), (timer) {
       currrentTimeProvider.updateTime();
     });
+
+    print(
+        'selectedDateselectedDateselectedDateselectedDateselectedDateselectedDateselectedDateselectedDateselectedDateselectedDate');
+    print(selectedDate);
+    print(
+        'selectedDateselectedDateselectedDateselectedDateselectedDateselectedDateselectedDateselectedDateselectedDateselectedDates');
     get();
   }
 
@@ -137,8 +144,9 @@ class _SelectAppointmentDateScreenState
     return Column(
       children: [
         TimeSlotes ==
-                appointmentSlotListViewmodel
-                    .AppointmentSlotList.data!.data![itemIndex].isBlocked
+                    appointmentSlotListViewmodel
+                        .AppointmentSlotList.data!.data![itemIndex].isBlocked &&
+                total.toInt() > 0
             ? InkWell(
                 onTap: () {
                   setState(() {
@@ -255,7 +263,7 @@ class _SelectAppointmentDateScreenState
                 ),
               )
             : Container(
-                height: 10.h,
+                height: 12.h,
                 width: 95.w,
                 margin: EdgeInsets.only(left: 10, right: 10),
                 padding: EdgeInsets.only(left: 10, right: 10),
@@ -268,7 +276,7 @@ class _SelectAppointmentDateScreenState
                       // blurRadius: 5,
                     )
                   ],
-                  color: Colors.grey.shade400,
+                  color: Colors.grey.shade300,
                   // color: currentDateSelectedIndex1 == itemIndex
                   //     ? Colors.orange.shade100
                   //     : Colors.white,
@@ -289,7 +297,44 @@ class _SelectAppointmentDateScreenState
                               fontSize: 9.sp,
                               color: Colors.grey.shade700),
                     ),
-                    SizedBox(height: 5.h),
+                    SizedBox(height: 2.h),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "0 - Not available",
+                                style: SizerUtil.deviceType == DeviceType.mobile
+                                    ? TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 12.sp)
+                                    : TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 8.sp),
+                              ),
+                              SizedBox(height: 1.h),
+                              //  SizerUtil.deviceType == DeviceType.mobile ?
+
+                              Container(
+                                height: 3,
+                                width: 80.w,
+                                color: Colors.grey.shade500,
+                              ),
+                              //  :  Container(
+                              //   height: 3,
+                              //   width: 87.w,
+                              //   color: Colors.green,
+                              // ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    // SizedBox(height: 5.h),
                     // SizedBox(height: 5),
                   ],
                 ),
@@ -418,33 +463,52 @@ class _SelectAppointmentDateScreenState
                   separatorBuilder: (BuildContext context, int index) {
                     return SizedBox(width: 0);
                   },
-                  itemCount: 13,
+                  itemCount: 25,
                   controller: scrollController,
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (BuildContext context, int index) {
+                    print(
+                        'currentDateSelectedIndexcurrentDateSelectedIndexcurrentDateSelectedIndexcurrentDateSelectedIndexcurrentDateSelectedIndexcurrentDateSelectedIndexcurrentDateSelectedIndexcurrentDateSelectedIndexcurrentDateSelectedIndexcurrentDateSelectedIndex');
+                    print(currentDateSelectedIndex);
+                    print(index);
+                    print(
+                        'indexindexindexindexindexindexindexindexindexindexindexindexindexindexindexindex');
                     return InkWell(
                       onTap: () {
                         setState(() {
-                          currentDateSelectedIndex = index;
+                          currentDateSelectedIndex = index + 5;
                           selectedDate =
-                              DateTime.now().add(Duration(days: index));
+                              DateTime.now().add(Duration(days: index + 5));
                           datetime1 =
                               DateFormat("yyyy-MM-dd").format(selectedDate);
                           print('pppppppppppppppppppppppp');
-                          print(datetime1);
+                          print(selectedDate);
                           print('pppppppppppppppppppppppppppp');
                           get();
                           // _getCategory1();
                         });
                         print(selectedDate);
+                        //   currentDateSelectedIndex = index;
+                        //   selectedDate = DateTime.now()
+                        //       .subtract(Duration(days: 5))
+                        //       .add(Duration(days: index));
+                        //   datetime1 =
+                        //       DateFormat("yyyy-MM-dd").format(selectedDate);
+                        //   print('pppppppppppppppppppppppp');
+                        //   print(datetime1);
+                        //   print('pppppppppppppppppppppppppppp');
+                        //   get();
+                        //   // _getCategory1();
+                        // });
+                        // print(selectedDate);
                       },
                       child: Container(
                         height: 10.h,
                         width: 20.3.w,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                            color: currentDateSelectedIndex == index
+                            color: currentDateSelectedIndex == index + 5
                                 ? Color(0xFFFD5722)
                                 : Colors.white),
                         child: Column(
@@ -452,49 +516,53 @@ class _SelectAppointmentDateScreenState
                           children: [
                             Text(
                               listOfDays[DateTime.now()
-                                              .add(Duration(days: index))
+                                              .add(Duration(days: index + 5))
                                               .weekday -
                                           1]
                                       .toString() +
                                   " - " +
                                   listOfMonths[DateTime.now()
-                                              .add(Duration(days: index))
+                                              .add(Duration(days: index + 5))
                                               .month -
                                           1]
                                       .toString(),
                               style: SizerUtil.deviceType == DeviceType.mobile
                                   ? TextStyle(
                                       fontSize: 12.sp,
-                                      color: currentDateSelectedIndex == index
-                                          ? Colors.white
-                                          : Colors.grey)
+                                      color:
+                                          currentDateSelectedIndex == index + 5
+                                              ? Colors.white
+                                              : Colors.grey)
                                   : TextStyle(
                                       fontSize: 8.sp,
-                                      color: currentDateSelectedIndex == index
-                                          ? Colors.white
-                                          : Colors.grey),
+                                      color:
+                                          currentDateSelectedIndex == index + 5
+                                              ? Colors.white
+                                              : Colors.grey),
                             ),
                             SizedBox(
                               height: 2.h,
                             ),
                             Text(
                               DateTime.now()
-                                  .add(Duration(days: index))
+                                  .add(Duration(days: index + 5))
                                   .day
                                   .toString(),
                               style: SizerUtil.deviceType == DeviceType.mobile
                                   ? TextStyle(
                                       fontSize: 17.sp,
                                       fontWeight: FontWeight.w700,
-                                      color: currentDateSelectedIndex == index
-                                          ? Colors.white
-                                          : Colors.grey)
+                                      color:
+                                          currentDateSelectedIndex == index + 5
+                                              ? Colors.white
+                                              : Colors.grey)
                                   : TextStyle(
                                       fontSize: 12.sp,
                                       fontWeight: FontWeight.w700,
-                                      color: currentDateSelectedIndex == index
-                                          ? Colors.white
-                                          : Colors.grey),
+                                      color:
+                                          currentDateSelectedIndex == index + 5
+                                              ? Colors.white
+                                              : Colors.grey),
                             ),
                             SizedBox(
                               height: 1.h,
