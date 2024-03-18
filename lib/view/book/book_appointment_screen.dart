@@ -177,7 +177,12 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                 ScreenNameWidget(
                                   title: '  Book Appointment',
                                 ),
-                                WhatsappWidget(),
+                                value.doctorDetailsList.data!.data![0]
+                                            .whatsapplink
+                                            .toString() ==
+                                        "null"
+                                    ? Container()
+                                    : WhatsappWidget(),
                                 SettingsWidget(),
                               ],
                             ),
@@ -227,7 +232,12 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                 ScreenNameWidget(
                                   title: '  Book Appointment',
                                 ),
-                                WhatsappWidget(),
+                                value.doctorDetailsList.data!.data![0]
+                                            .whatsapplink
+                                            .toString() ==
+                                        "null"
+                                    ? Container()
+                                    : WhatsappWidget(),
                                 SettingsWidget(),
                               ],
                             ),

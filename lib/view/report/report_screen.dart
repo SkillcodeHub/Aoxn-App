@@ -284,7 +284,12 @@ class _ReportScreenState extends State<ReportScreen> {
                                 ScreenNameWidget(
                                   title: '  Recent Precription',
                                 ),
-                                WhatsappWidget(),
+                                value.doctorDetailsList.data!.data![0]
+                                            .whatsapplink
+                                            .toString() ==
+                                        "null"
+                                    ? Container()
+                                    : WhatsappWidget(),
                                 SettingsWidget(),
                               ],
                             ),
@@ -333,7 +338,12 @@ class _ReportScreenState extends State<ReportScreen> {
                                 ScreenNameWidget(
                                   title: '  Recent Precription',
                                 ),
-                                WhatsappWidget(),
+                                value.doctorDetailsList.data!.data![0]
+                                            .whatsapplink
+                                            .toString() ==
+                                        "null"
+                                    ? Container()
+                                    : WhatsappWidget(),
                                 SettingsWidget(),
                               ],
                             ),

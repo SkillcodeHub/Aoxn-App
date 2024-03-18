@@ -170,394 +170,415 @@ class LoginScreenState extends State {
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: <Widget>[
-                // SizedBox(
-                //   height: 10.h,
-                // ),
-                Container(
-                  height: 11.h,
-                  child: Image.asset(
-                    'images/axon.png',
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Login with your details',
-                          style: TextStyle(
-                              fontSize:
-                                  SizerUtil.deviceType == DeviceType.mobile
-                                      ? 15.sp
-                                      : 10.sp,
-                              fontWeight: FontWeight.w600),
+            child: Container(
+              height: 93.h,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Column(
+                    children: [
+                      Container(
+                        height: 11.h,
+                        child: Image.asset(
+                          'images/axon.png',
                         ),
-                        SizedBox(
-                          height: 1.h,
-                        ),
-                        TextFormField(
-                          controller: _nameController,
-                          keyboardType: TextInputType.text,
-                          focusNode: nameFocusNode,
-                          decoration: InputDecoration(
-                            // hintText: 'Mobile Number(10 digit)',
-                            labelText: 'Full Name',
-                          ),
-                        ),
-                        TextFormField(
-                          controller: _birthController,
-                          keyboardType: TextInputType.text,
-                          focusNode: birthFocusNode,
-                          decoration: InputDecoration(
-                            // hintText: 'Mobile Number(10 digit)',
-                            labelText: 'Birthday(Optional)',
-                          ),
-                        ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              child: Row(
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Login with your details',
+                                style: TextStyle(
+                                    fontSize: SizerUtil.deviceType ==
+                                            DeviceType.mobile
+                                        ? 15.sp
+                                        : 10.sp,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              SizedBox(
+                                height: 1.h,
+                              ),
+                              TextFormField(
+                                controller: _nameController,
+                                keyboardType: TextInputType.text,
+                                focusNode: nameFocusNode,
+                                decoration: InputDecoration(
+                                  // hintText: 'Mobile Number(10 digit)',
+                                  labelText: 'Full Name',
+                                ),
+                              ),
+                              TextFormField(
+                                controller: _birthController,
+                                keyboardType: TextInputType.text,
+                                focusNode: birthFocusNode,
+                                decoration: InputDecoration(
+                                  // hintText: 'Mobile Number(10 digit)',
+                                  labelText: 'Birthday(Optional)',
+                                ),
+                              ),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Container(
                                     child: Row(
                                       children: [
-                                        Radio(
-                                          value: 'Male',
-                                          activeColor: Color(0xFFFD5722),
-                                          groupValue: genderValue,
-                                          onChanged: (value) {
-                                            setState(() {
-                                              genderValue = value!;
-                                            });
-                                          },
+                                        Container(
+                                          child: Row(
+                                            children: [
+                                              Radio(
+                                                value: 'Male',
+                                                activeColor: Color(0xFFFD5722),
+                                                groupValue: genderValue,
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    genderValue = value!;
+                                                  });
+                                                },
+                                              ),
+                                              Container(
+                                                child: Text(
+                                                  "Male",
+                                                  style: const TextStyle(
+                                                    fontSize: 15,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                         Container(
-                                          child: Text(
-                                            "Male",
-                                            style: const TextStyle(
-                                              fontSize: 15,
-                                            ),
+                                          child: Row(
+                                            children: [
+                                              Radio(
+                                                value: 'Female',
+                                                activeColor: Color(0xFFFD5722),
+                                                groupValue: genderValue,
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    genderValue = value!;
+                                                  });
+                                                },
+                                              ),
+                                              Container(
+                                                child: Text(
+                                                  "Female",
+                                                  style: const TextStyle(
+                                                    fontSize: 15,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ],
                                     ),
                                   ),
-                                  Container(
-                                    child: Row(
-                                      children: [
-                                        Radio(
-                                          value: 'Female',
-                                          activeColor: Color(0xFFFD5722),
-                                          groupValue: genderValue,
-                                          onChanged: (value) {
-                                            setState(() {
-                                              genderValue = value!;
-                                            });
-                                          },
-                                        ),
-                                        Container(
-                                          child: Text(
-                                            "Female",
-                                            style: const TextStyle(
-                                              fontSize: 15,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
+                                  SizedBox(
+                                      //   width: 60.w,
+                                      ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              TextFormField(
+                                controller: _mobileController,
+                                keyboardType: TextInputType.number,
+                                focusNode: mobileFocusNode,
+                                decoration: InputDecoration(
+                                  hintText: 'Mobile Number(10 digit)',
+                                  labelText: 'Mobile',
+                                  // prefixIcon: Icon(Icons.alternate_email),
+                                ),
+
+                                onTap: () {
+                                  if (Platform.isAndroid) {
+                                    _showSimCardNumbersDialog();
+                                  }
+                                },
+                                // onFieldSubmitted: (value) {
+                                //   Utils.fieldFocusChange(
+                                //       context, emailFocusNode, passwordFocusNode);
+                                // },
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  SizedBox(
+                                      //   width: 60.w,
+                                      ),
+                                  TextButton(
+                                    child: Text(
+                                      'Request OTP',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
                                     ),
+                                    onPressed: () {
+                                      setState(() {
+                                        if (_nameController.text.isEmpty) {
+                                          Utils.snackBar(
+                                              'Please enter your name',
+                                              context);
+                                          viewVisible = false;
+                                        } else if (_mobileController
+                                            .text.isEmpty) {
+                                          Utils.snackBar(
+                                              'Please enter MobileNo*',
+                                              context);
+                                          viewVisible = false;
+                                        } else if (_mobileController
+                                                .text.length <
+                                            10) {
+                                          Utils.snackBar(
+                                              'Please enter 10 Digit MobileNo*',
+                                              context);
+                                          viewVisible = false;
+                                        } else if (_mobileController.text
+                                                .toString() ==
+                                            '9999999999') {
+                                          mobileFocusNode.unfocus();
+                                          userPreference.setName(
+                                              _nameController.text.toString());
+                                          userPreference
+                                              .setAge(genderValue.toString());
+                                          viewVisible = true;
+                                        } else {
+                                          mobileFocusNode.unfocus();
+                                          userPreference.setName(
+                                              _nameController.text.toString());
+                                          userPreference
+                                              .setAge(genderValue.toString());
+                                          userPreference.setBirth(
+                                              _birthController.text.toString());
+
+                                          Map data = {
+                                            'Mobile': _mobileController.text
+                                                .toString()
+                                          };
+
+                                          if (_mobileController.text
+                                                  .toString() ==
+                                              '9999999999') {
+                                            viewVisible = true;
+                                          } else {
+                                            authViewModel.loginApi(
+                                                data, context);
+                                            viewVisible = true;
+                                          }
+
+                                          // Timer(Duration(seconds: 5), () {
+                                          //   _mobileController.clear();
+                                          // });
+
+                                          // Close the keyboard
+                                        }
+                                      });
+                                    },
+                                    style: TextButton.styleFrom(
+                                        elevation: 0,
+                                        primary: Color(0xFFFD5722)),
                                   ),
                                 ],
                               ),
-                            ),
-                            SizedBox(
-                                //   width: 60.w,
-                                ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        TextFormField(
-                          controller: _mobileController,
-                          keyboardType: TextInputType.number,
-                          focusNode: mobileFocusNode,
-                          decoration: InputDecoration(
-                            hintText: 'Mobile Number(10 digit)',
-                            labelText: 'Mobile',
-                            // prefixIcon: Icon(Icons.alternate_email),
-                          ),
-
-                          onTap: () {
-                            if (Platform.isAndroid) {
-                              _showSimCardNumbersDialog();
-                            }
-                          },
-                          // onFieldSubmitted: (value) {
-                          //   Utils.fieldFocusChange(
-                          //       context, emailFocusNode, passwordFocusNode);
-                          // },
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SizedBox(
-                                //   width: 60.w,
-                                ),
-                            TextButton(
-                              child: Text(
-                                'Request OTP',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  if (_nameController.text.isEmpty) {
-                                    Utils.snackBar(
-                                        'Please enter your name', context);
-                                    viewVisible = false;
-                                  } else if (_mobileController.text.isEmpty) {
-                                    Utils.snackBar(
-                                        'Please enter MobileNo*', context);
-                                    viewVisible = false;
-                                  } else if (_mobileController.text.length <
-                                      10) {
-                                    Utils.snackBar(
-                                        'Please enter 10 Digit MobileNo*',
-                                        context);
-                                    viewVisible = false;
-                                  } else if (_mobileController.text
-                                          .toString() ==
-                                      '9999999999') {
-                                    mobileFocusNode.unfocus();
-                                    userPreference.setName(
-                                        _nameController.text.toString());
-                                    userPreference
-                                        .setAge(genderValue.toString());
-                                    viewVisible = true;
-                                  } else {
-                                    mobileFocusNode.unfocus();
-                                    userPreference.setName(
-                                        _nameController.text.toString());
-                                    userPreference
-                                        .setAge(genderValue.toString());
-                                    userPreference.setBirth(
-                                        _birthController.text.toString());
-
-                                    Map data = {
-                                      'Mobile':
-                                          _mobileController.text.toString()
-                                    };
-
-                                    if (_mobileController.text.toString() ==
-                                        '9999999999') {
-                                      viewVisible = true;
-                                    } else {
-                                      authViewModel.loginApi(data, context);
-                                      viewVisible = true;
-                                    }
-
-                                    // Timer(Duration(seconds: 5), () {
-                                    //   _mobileController.clear();
-                                    // });
-
-                                    // Close the keyboard
-                                  }
-                                });
-                              },
-                              style: TextButton.styleFrom(
-                                  elevation: 0, primary: Color(0xFFFD5722)),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 8.h,
-                ),
-                Visibility(
-                  maintainSize: true,
-                  maintainAnimation: true,
-                  maintainState: true,
-                  visible: viewVisible,
-                  child: Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          Center(
-                            child: PinFieldAutoFill(
-                              focusNode: otpFocusNode,
-                              keyboardType: TextInputType.numberWithOptions(
-                                  signed: true, decimal: true),
-                              currentCode: codeValue,
-                              codeLength: 4,
-                              onCodeChanged: (code) {
-                                print("onCodeChanged $code");
-                                setState(() {
-                                  codeValue = code.toString();
-                                });
-                              },
-                              onCodeSubmitted: (val) {
-                                print("onCodeSubmitted $val");
-                              },
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              TextButton(
-                                onPressed: () {
-                                  Map data = {
-                                    'Mobile': _mobileController.text.toString()
-                                  };
-                                  authViewModel.loginApi(data, context);
-                                  // Timer(Duration(seconds: 5), () {
-                                  //   _mobileController.clear();
-                                  // });
-                                  viewVisible = true;
-                                },
-                                child: const Text(
-                                  "Resend",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                              TextButton(
-                                  onPressed: () async {
-                                    print("codeValue");
-                                    print(codeValue);
-                                    print("codeValue");
-                                    // _verifyOTP();
-                                    if (codeValue.isEmpty) {
-                                      Utils.snackBar(
-                                          'Please enter OTP*', context);
-                                    } else {
-                                      mobileFocusNode.unfocus();
-                                      otpFocusNode.unfocus();
-                                      Map data = {
-                                        "Mobile":
-                                            _mobileController.text.toString(),
-                                        'OTP': codeValue.toString(),
-                                        // "platform": "Mobile",
-                                        // "deviceId": _udid.toString(),
-                                        // "fullName":
-                                        //     _nameController.text.toString(),
-                                        // "mobile":
-                                        //     _mobileController.text.toString(),
-                                        // "fcmToken": fcmToken,
-                                        // "gender": genderValue,
-                                        // "userType": 1,
-                                        // "birthDate":
-                                        //     _birthController.text.toString(),
-                                      };
-
-                                      //                                   Map<String, dynamic> registerUserData = {
-                                      //                                     "platform": "Mobile",
-                                      //                                     "deviceId": _udid.toString(),
-                                      //                                     "fullName":
-                                      //                                         _nameController.text.toString(),
-                                      //                                     "mobile":
-                                      //                                         _mobileController.text.toString(),
-                                      //                                     "fcmToken": fcmToken.toString(),
-                                      //                                     "gender": genderValue.toString(),
-                                      //                                     "userType": 1,
-                                      //                                     "birthDate":
-                                      //                                         _birthController.text.toString(),
-                                      // };
-                                      if (codeValue.toString() == '1234') {
-                                        userPreference.setMobile('9999999999');
-                                        userPreference.setToken(
-                                            '68cb311f-585a-4e86-8e89-06edf1814080');
-
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    MyNavigationBar(
-                                                      indexNumber: 0,
-                                                    )));
-                                      } else {
-                                        authViewModel.otpVerifyApi(
-                                            data, context);
-                                        // userPreference.saveUserData(registerUserData);
-                                        // authViewModel.otpVerifyApi(data, context);
-                                      }
-                                      ;
-                                    }
-                                  },
-                                  child: const Text(
-                                    "Verify OTP",
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  )),
                             ],
                           ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-
-                RichText(
-                  textAlign: TextAlign.center,
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text:
-                            'By Clicking On Request OTP, you agree to our Terms and\n',
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      TextSpan(
-                        text: ' Learn how we process your data in our ',
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      TextSpan(
-                        text: 'Privacy Policy',
-                        style: TextStyle(
-                          color: Color(0xFFFD5722),
-                          decoration: TextDecoration.underline,
                         ),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () async {
-                            final url =
-                                'https://app.axonsoftwares.net/privacy_policy.html';
-                            if (await canLaunch(url)) {
-                              await launch(url);
-                            } else {
-                              throw 'Could not launch $url';
-                            }
-                          },
+                      ),
+                      SizedBox(
+                        height: 8.h,
+                      ),
+                      Visibility(
+                        maintainSize: true,
+                        maintainAnimation: true,
+                        maintainState: true,
+                        visible: viewVisible,
+                        child: Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                Center(
+                                  child: PinFieldAutoFill(
+                                    focusNode: otpFocusNode,
+                                    keyboardType:
+                                        TextInputType.numberWithOptions(
+                                            signed: true, decimal: true),
+                                    currentCode: codeValue,
+                                    codeLength: 4,
+                                    onCodeChanged: (code) {
+                                      print("onCodeChanged $code");
+                                      setState(() {
+                                        codeValue = code.toString();
+                                      });
+                                    },
+                                    onCodeSubmitted: (val) {
+                                      print("onCodeSubmitted $val");
+                                    },
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Map data = {
+                                          'Mobile':
+                                              _mobileController.text.toString()
+                                        };
+                                        authViewModel.loginApi(data, context);
+                                        // Timer(Duration(seconds: 5), () {
+                                        //   _mobileController.clear();
+                                        // });
+                                        viewVisible = true;
+                                      },
+                                      child: const Text(
+                                        "Resend",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                    TextButton(
+                                        onPressed: () async {
+                                          print("codeValue");
+                                          print(codeValue);
+                                          print("codeValue");
+                                          // _verifyOTP();
+                                          if (codeValue.isEmpty) {
+                                            Utils.snackBar(
+                                                'Please enter OTP*', context);
+                                          } else {
+                                            mobileFocusNode.unfocus();
+                                            otpFocusNode.unfocus();
+                                            Map data = {
+                                              "Mobile": _mobileController.text
+                                                  .toString(),
+                                              'OTP': codeValue.toString(),
+                                              // "platform": "Mobile",
+                                              // "deviceId": _udid.toString(),
+                                              // "fullName":
+                                              //     _nameController.text.toString(),
+                                              // "mobile":
+                                              //     _mobileController.text.toString(),
+                                              // "fcmToken": fcmToken,
+                                              // "gender": genderValue,
+                                              // "userType": 1,
+                                              // "birthDate":
+                                              //     _birthController.text.toString(),
+                                            };
+
+                                            //                                   Map<String, dynamic> registerUserData = {
+                                            //                                     "platform": "Mobile",
+                                            //                                     "deviceId": _udid.toString(),
+                                            //                                     "fullName":
+                                            //                                         _nameController.text.toString(),
+                                            //                                     "mobile":
+                                            //                                         _mobileController.text.toString(),
+                                            //                                     "fcmToken": fcmToken.toString(),
+                                            //                                     "gender": genderValue.toString(),
+                                            //                                     "userType": 1,
+                                            //                                     "birthDate":
+                                            //                                         _birthController.text.toString(),
+                                            // };
+                                            if (codeValue.toString() ==
+                                                '1234') {
+                                              userPreference
+                                                  .setMobile('9999999999');
+                                              userPreference.setToken(
+                                                  '68cb311f-585a-4e86-8e89-06edf1814080');
+
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          MyNavigationBar(
+                                                            indexNumber: 0,
+                                                          )));
+                                            } else {
+                                              authViewModel.otpVerifyApi(
+                                                  data, context);
+                                              // userPreference.saveUserData(registerUserData);
+                                              // authViewModel.otpVerifyApi(data, context);
+                                            }
+                                            ;
+                                          }
+                                        },
+                                        child: const Text(
+                                          "Verify OTP",
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        )),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
                     ],
                   ),
-                ),
-              ],
+                  // SizedBox(
+                  //   height: 10.h,
+                  // ),
+                  RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text:
+                              'By Clicking On Request OTP, you agree to our Terms and\n',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        TextSpan(
+                          text: ' Learn how we process your data in our ',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        TextSpan(
+                          text: 'Privacy Policy',
+                          style: TextStyle(
+                            color: Color(0xFFFD5722),
+                            decoration: TextDecoration.underline,
+                          ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () async {
+                              final url =
+                                  'https://app.axonsoftwares.net/privacy_policy.html';
+                              if (await canLaunch(url)) {
+                                await launch(url);
+                              } else {
+                                throw 'Could not launch $url';
+                              }
+                            },
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

@@ -445,7 +445,12 @@ class _NewsScreenState extends State<NewsScreen> {
                                 ScreenNameWidget(
                                   title: '  Notice Board',
                                 ),
-                                WhatsappWidget(),
+                                value.doctorDetailsList.data!.data![0]
+                                            .whatsapplink
+                                            .toString() ==
+                                        "null"
+                                    ? Container()
+                                    : WhatsappWidget(),
                                 SettingsWidget(),
                               ],
                             ),
@@ -459,6 +464,14 @@ class _NewsScreenState extends State<NewsScreen> {
                       //   ],
                       // ));
                       case Status.COMPLETED:
+                        print(
+                            "++++++++++++++++++++++++++++++++++++++++++++++++++++");
+                        print(value
+                            .doctorDetailsList.data!.data![0].whatsapplink
+                            .toString());
+                        print(
+                            "++++++++++++++++++++++++++++++++++++++++++++++++++++");
+
                         return AppBar(
                           automaticallyImplyLeading: false,
                           // centerTitle: false,
@@ -473,7 +486,12 @@ class _NewsScreenState extends State<NewsScreen> {
                                 ScreenNameWidget(
                                   title: '  Notice Board',
                                 ),
-                                WhatsappWidget(),
+                                value.doctorDetailsList.data!.data![0]
+                                            .whatsapplink
+                                            .toString() ==
+                                        "null"
+                                    ? Container()
+                                    : WhatsappWidget(),
                                 SettingsWidget(),
                               ],
                             ),

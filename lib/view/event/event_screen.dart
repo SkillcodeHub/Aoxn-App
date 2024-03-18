@@ -363,111 +363,96 @@ class _EventScreenState extends State<EventScreen> {
     return Scaffold(
       backgroundColor: BackgroundColor,
       appBar: PreferredSize(
-          preferredSize: SizerUtil.deviceType == DeviceType.mobile
-              ? Size.fromHeight(7.h)
-              : Size.fromHeight(5.h),
-          child: AppBar(
-            automaticallyImplyLeading: false,
-            centerTitle: false,
-            backgroundColor: Color(0xffffffff),
-            elevation: 0,
-            title: Padding(
-              padding: const EdgeInsets.only(top: 5.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  AxonIconForAppBarrWidget(),
-                  ScreenNameWidget(
-                    title: '  Events',
-                  ),
-                  WhatsappWidget(),
-                  SettingsWidget(),
-                ],
-              ),
-            ),
-          )
+        preferredSize: SizerUtil.deviceType == DeviceType.mobile
+            ? Size.fromHeight(7.h)
+            : Size.fromHeight(5.h),
+        child: FutureBuilder<void>(
+          future: fetchDataFuture,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (snapshot.hasError) {
+              return Center(
+                child: Text('Error occurred: ${snapshot.error}'),
+              );
+            } else {
+              // Render the UI with the fetched data
+              return ChangeNotifierProvider<SettingsViewModel>.value(
+                value: settingsViewModel,
+                child: Consumer<SettingsViewModel>(
+                  builder: (context, value, _) {
+                    switch (value.doctorDetailsList.status!) {
+                      case Status.LOADING:
+                        return Center(child: Container());
+                      case Status.ERROR:
+                        return AppBar(
+                          automaticallyImplyLeading: false,
+                          // centerTitle: false,
+                          backgroundColor: Color(0xffffffff),
+                          elevation: 0,
+                          title: Padding(
+                            padding: EdgeInsets.only(top: 2.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                AxonIconForAppBarrWidget(),
+                                ScreenNameWidget(
+                                  title: '  Events',
+                                ),
+                                value.doctorDetailsList.data!.data![0]
+                                            .whatsapplink
+                                            .toString() ==
+                                        "null"
+                                    ? Container()
+                                    : WhatsappWidget(),
+                                SettingsWidget(),
+                              ],
+                            ),
+                          ),
+                        );
 
-          // FutureBuilder<void>(
-          //   future: fetchDataFuture,
-          //   builder: (context, snapshot) {
-          //     if (snapshot.connectionState == ConnectionState.waiting) {
-          //       return Center(
-          //         child: CircularProgressIndicator(),
-          //       );
-          //     } else if (snapshot.hasError) {
-          //       return Center(
-          //         child: Text('Error occurred: ${snapshot.error}'),
-          //       );
-          //     } else {
-          //       // Render the UI with the fetched data
-          //       return ChangeNotifierProvider<SettingsViewModel>.value(
-          //         value: settingsViewModel,
-          //         child: Consumer<SettingsViewModel>(
-          //           builder: (context, value, _) {
-          //             switch (value.doctorDetailsList.status!) {
-          //               case Status.LOADING:
-          //                 return Center(child: Container());
-          //               case Status.ERROR:
-          //                 return Center(
-          //                     child: Text(
-          //                         value.doctorDetailsList.message.toString()));
-          //               case Status.COMPLETED:
-          //                 //  settingsViewModel.doctorDetailsList.data!
-          //                 //             .data![0].paymentGatewayEnabled
-          //                 //             .toString() ==
-          //                 //         'true'
-          //                 //     ? AppBar(
-          //                 //         automaticallyImplyLeading: false,
-          //                 //         centerTitle: false,
-          //                 //         backgroundColor: Color(0xffffffff),
-          //                 //         elevation: 0,
-          //                 //         title: Padding(
-          //                 //           padding: const EdgeInsets.only(top: 5.0),
-          //                 //           child: Row(
-          //                 //             mainAxisAlignment:
-          //                 //                 MainAxisAlignment.spaceBetween,
-          //                 //             children: [
-          //                 //               AxonIconForAppBarrWidget(),
-          //                 //               ScreenNameWidget(
-          //                 //                 title: '  Events',
-          //                 //               ),
-          //                 //               WhatsappWidget(),
-          //                 //               PaymentWidget(),
-          //                 //               SettingsWidget(),
-          //                 //             ],
-          //                 //           ),
-          //                 //         ),
-          //                 //       )
-          //                 //     :
-          //                 return AppBar(
-          //                   automaticallyImplyLeading: false,
-          //                   centerTitle: false,
-          //                   backgroundColor: Color(0xffffffff),
-          //                   elevation: 0,
-          //                   title: Padding(
-          //                     padding: const EdgeInsets.only(top: 5.0),
-          //                     child: Row(
-          //                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //                       children: [
-          //                         AxonIconForAppBarrWidget(),
-          //                         ScreenNameWidget(
-          //                           title: '  Events',
-          //                         ),
-          //                         WhatsappWidget(),
-          //                         SettingsWidget(),
-          //                       ],
-          //                     ),
-          //                   ),
-          //                 );
-          //             }
-          //           },
-          //         ),
-          //       );
-          //     }
-          //   },
-          // ),
-
-          ),
+                      // Center(
+                      //     child: Column(
+                      //   children: [
+                      //     Text(value.doctorDetailsList.message.toString()),
+                      //   ],
+                      // ));
+                      case Status.COMPLETED:
+                        return AppBar(
+                          automaticallyImplyLeading: false,
+                          // centerTitle: false,
+                          backgroundColor: Color(0xffffffff),
+                          elevation: 0,
+                          title: Padding(
+                            padding: EdgeInsets.only(top: 2.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                AxonIconForAppBarrWidget(),
+                                ScreenNameWidget(
+                                  title: ' Events',
+                                ),
+                                value.doctorDetailsList.data!.data![0]
+                                            .whatsapplink
+                                            .toString() ==
+                                        "null"
+                                    ? Container()
+                                    : WhatsappWidget(),
+                                SettingsWidget(),
+                              ],
+                            ),
+                          ),
+                        );
+                    }
+                  },
+                ),
+              );
+            }
+          },
+        ),
+      ),
       body: FutureBuilder<void>(
         future: fetchDataFuture,
         builder: (context, snapshot) {

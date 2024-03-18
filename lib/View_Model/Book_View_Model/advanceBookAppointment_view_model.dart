@@ -2,8 +2,8 @@ import 'package:axonweb/Repository/Book_Repository/advanceBookAppointment_reposi
 import 'package:axonweb/View_Model/Book_View_Model/confirmPaidAppointment_View_Model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 import '../../Utils/utils.dart';
 
@@ -160,7 +160,7 @@ class AdvanceBookAppointmentViewModel with ChangeNotifier {
       }
     }).onError((error, stackTrace) {
       Utils.snackBar1(
-          "Appointment not possible in selected slot. Schedule is not available for booking.",
+          "Cannot book appointment. Online slot is full! please contact provider directly to take appointment.",
           Duration(seconds: 5),
           context);
 

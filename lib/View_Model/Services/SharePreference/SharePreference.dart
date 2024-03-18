@@ -33,7 +33,7 @@ class UserPreferences {
     prefs.setString("access_deviceId", args);
   }
 
-Future<String?> getFcmToken() async {
+  Future<String?> getFcmToken() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString("access_fcmToken");
   }
@@ -43,8 +43,7 @@ Future<String?> getFcmToken() async {
     prefs.setString("access_fcmToken", args);
   }
 
-
-Future<String?> getBirth() async {
+  Future<String?> getBirth() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString("access_birth");
   }
@@ -134,29 +133,42 @@ Future<String?> getBirth() async {
     return []; // Return null if no data is found in SharedPreferences
   }
 
-
-void saveUserData(Map<String, dynamic> userData) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  await prefs.setString('userData', jsonEncode(userData));
-}
-
-Future<Map<String, dynamic>?> getUserData() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  String? userDataString = prefs.getString('userData');
-  if (userDataString != null) {
-    Map<String, dynamic> userData = jsonDecode(userDataString);
-    return userData;
-  } else {
-    return null;
+  void saveUserData(Map<String, dynamic> userData) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('userData', jsonEncode(userData));
   }
-}
 
+  Future<Map<String, dynamic>?> getUserData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? userDataString = prefs.getString('userData');
+    if (userDataString != null) {
+      Map<String, dynamic> userData = jsonDecode(userDataString);
+      return userData;
+    } else {
+      return null;
+    }
+  }
 
+  void saveUserDetails(Map<String, dynamic> userData) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('userDetails', jsonEncode(userData));
+  }
 
-void logoutProcess() async {
+  Future<Map<String, dynamic>?> getUserDetails() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? userDataString = prefs.getString('userDetails');
+    if (userDataString != null) {
+      Map<String, dynamic> userData = jsonDecode(userDataString);
+      return userData;
+    } else {
+      return null;
+    }
+  }
+
+  void logoutProcess() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove("access_mobile");
-    
+
     prefs.remove("access_fcmToken");
     prefs.remove("access_birth");
     prefs.remove("access_token");
@@ -165,13 +177,10 @@ void logoutProcess() async {
     prefs.remove("access_name");
     prefs.remove("access_age");
     prefs.remove("access_letId");
-
-
-       
+    prefs.remove("userDetails");
 
     // prefs.remove("access_doctor");
   }
-
 
 // Future<void> saveUserDataToSharedPreferences(Map<String, dynamic> userData) async {
 //   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -208,6 +217,4 @@ void logoutProcess() async {
 //     "birthDate": birthDate,
 //   };
 // }
-
-
 }
