@@ -614,107 +614,215 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                         ,
                                                       ),
                                                       SizedBox(height: 2.h),
+                                                      // Consumer<
+                                                      //         DoctorNameProvider>(
+                                                      //     builder: (context,
+                                                      //         doctorNameProvider,
+                                                      //         _) {
+                                                      //   return Container(
+                                                      //     width: 70.w,
+                                                      //     color: Colors.amber,
+                                                      //     padding:
+                                                      //         EdgeInsets.all(0),
+                                                      //     alignment: Alignment
+                                                      //         .centerLeft,
+                                                      //     child:
+                                                      //         DropdownButtonHideUnderline(
+                                                      //       child: ButtonTheme(
+                                                      //         alignedDropdown:
+                                                      //             true,
+                                                      //         child:
+                                                      //             DropdownButton<
+                                                      //                 String>(
+                                                      //           isDense: true,
+                                                      //           value:
+                                                      //               selectedDocotrId,
+                                                      //           onChanged: (String?
+                                                      //               newValue) {
+                                                      //             selectedDocotrId =
+                                                      //                 newValue!;
+                                                      //             selectedDoctor = value
+                                                      //                 .doctorList
+                                                      //                 .data!
+                                                      //                 .data!
+                                                      //                 .firstWhere(
+                                                      //                   (doctor) =>
+                                                      //                       doctor.doctorId.toString() ==
+                                                      //                       newValue,
+                                                      //                 )
+                                                      //                 .doctorName
+                                                      //                 .toString();
+
+                                                      //             doctorNameProvider
+                                                      //                 .resetData();
+
+                                                      //             doctorNameProvider
+                                                      //                 .updateTextValues(
+                                                      //               '${selectedDoctor}',
+                                                      //               '${selectedDocotrId}',
+                                                      //             );
+                                                      //             if (kDebugMode) {
+                                                      //               print(
+                                                      //                   'updateTextValues');
+                                                      //               print(
+                                                      //                   'selectedDoctor ${selectedDoctor}');
+                                                      //               print(
+                                                      //                   'selectedDoctor ${selectedDocotrId}');
+                                                      //             }
+                                                      //           },
+                                                      //           items: value
+                                                      //               .doctorList
+                                                      //               .data!
+                                                      //               .data!
+                                                      //               .map((map) {
+                                                      //             return new DropdownMenuItem<
+                                                      //                 String>(
+                                                      //               value: map
+                                                      //                   .doctorId
+                                                      //                   .toString(),
+                                                      //               child: Row(
+                                                      //                 mainAxisAlignment:
+                                                      //                     MainAxisAlignment
+                                                      //                         .start,
+                                                      //                 children: <
+                                                      //                     Widget>[
+                                                      //                   // SizerUtil.deviceType ==
+                                                      //                   //         DeviceType.mobile
+                                                      //                   //     ?
+                                                      //                   Container(
+                                                      //                       child:
+                                                      //                           Text(
+                                                      //                     map.doctorName
+                                                      //                         .toString(),
+                                                      //                     overflow:
+                                                      //                         TextOverflow.visible,
+                                                      //                     maxLines:
+                                                      //                         1,
+                                                      //                     style: TextStyle(
+                                                      //                         fontSize: 14.sp,
+                                                      //                         fontWeight: FontWeight.w500),
+                                                      //                     textAlign:
+                                                      //                         TextAlign.start,
+                                                      //                   ))
+
+                                                      //                   // : Container(
+                                                      //                   //     child: Text(
+                                                      //                   //     map.doctorName.toString(),
+                                                      //                   //     style: TextStyle(fontSize: 10.sp, fontWeight: FontWeight.w500),
+                                                      //                   //     textAlign: TextAlign.start,
+                                                      //                   //   ))
+                                                      //                   ,
+                                                      //                 ],
+                                                      //               ),
+                                                      //             );
+                                                      //           }).toList(),
+                                                      //         ),
+                                                      //       ),
+                                                      //     ),
+                                                      //   );
+                                                      // })
+
                                                       Consumer<
-                                                              DoctorNameProvider>(
-                                                          builder: (context,
-                                                              doctorNameProvider,
-                                                              _) {
-                                                        return Container(
-                                                          padding:
-                                                              EdgeInsets.all(0),
-                                                          alignment: Alignment
-                                                              .centerLeft,
-                                                          child:
-                                                              DropdownButtonHideUnderline(
-                                                            child: ButtonTheme(
-                                                              alignedDropdown:
-                                                                  true,
+                                                          DoctorNameProvider>(
+                                                        builder: (context,
+                                                            doctorNameProvider,
+                                                            _) {
+                                                          return Container(
+                                                            // width: 70.w,
+                                                            padding: EdgeInsets
+                                                                .symmetric(
+                                                                    horizontal:
+                                                                        8.0), // Adjust padding here
+                                                            alignment: Alignment
+                                                                .centerLeft,
+                                                            child:
+                                                                DropdownButtonHideUnderline(
                                                               child:
-                                                                  DropdownButton<
-                                                                      String>(
-                                                                isDense: true,
-                                                                value:
-                                                                    selectedDocotrId,
-                                                                onChanged: (String?
-                                                                    newValue) {
-                                                                  selectedDocotrId =
-                                                                      newValue!;
-                                                                  selectedDoctor = value
+                                                                  ButtonTheme(
+                                                                alignedDropdown:
+                                                                    true,
+                                                                child:
+                                                                    DropdownButton<
+                                                                        String>(
+                                                                  isDense: true,
+                                                                  value:
+                                                                      selectedDocotrId,
+                                                                  onChanged:
+                                                                      (String?
+                                                                          newValue) {
+                                                                    selectedDocotrId =
+                                                                        newValue!;
+                                                                    selectedDoctor = value
+                                                                        .doctorList
+                                                                        .data!
+                                                                        .data!
+                                                                        .firstWhere(
+                                                                          (doctor) =>
+                                                                              doctor.doctorId.toString() ==
+                                                                              newValue,
+                                                                        )
+                                                                        .doctorName
+                                                                        .toString();
+
+                                                                    doctorNameProvider
+                                                                        .resetData();
+
+                                                                    doctorNameProvider
+                                                                        .updateTextValues(
+                                                                      '${selectedDoctor}',
+                                                                      '${selectedDocotrId}',
+                                                                    );
+                                                                    if (kDebugMode) {
+                                                                      print(
+                                                                          'updateTextValues');
+                                                                      print(
+                                                                          'selectedDoctor ${selectedDoctor}');
+                                                                      print(
+                                                                          'selectedDoctor ${selectedDocotrId}');
+                                                                    }
+                                                                  },
+                                                                  items: value
                                                                       .doctorList
                                                                       .data!
                                                                       .data!
-                                                                      .firstWhere(
-                                                                        (doctor) =>
-                                                                            doctor.doctorId.toString() ==
-                                                                            newValue,
-                                                                      )
-                                                                      .doctorName
-                                                                      .toString();
-
-                                                                  doctorNameProvider
-                                                                      .resetData();
-
-                                                                  doctorNameProvider
-                                                                      .updateTextValues(
-                                                                    '${selectedDoctor}',
-                                                                    '${selectedDocotrId}',
-                                                                  );
-                                                                  if (kDebugMode) {
-                                                                    print(
-                                                                        'updateTextValues');
-                                                                    print(
-                                                                        'selectedDoctor ${selectedDoctor}');
-                                                                    print(
-                                                                        'selectedDoctor ${selectedDocotrId}');
-                                                                  }
-                                                                },
-                                                                items: value
-                                                                    .doctorList
-                                                                    .data!
-                                                                    .data!
-                                                                    .map((map) {
-                                                                  return new DropdownMenuItem<
-                                                                      String>(
-                                                                    value: map
-                                                                        .doctorId
-                                                                        .toString(),
-                                                                    child: Row(
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .start,
-                                                                      children: <
-                                                                          Widget>[
-                                                                        // SizerUtil.deviceType ==
-                                                                        //         DeviceType.mobile
-                                                                        //     ?
-                                                                        Container(
+                                                                      .map(
+                                                                          (map) {
+                                                                    return DropdownMenuItem<
+                                                                        String>(
+                                                                      value: map
+                                                                          .doctorId
+                                                                          .toString(),
+                                                                      child:
+                                                                          Row(
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.start,
+                                                                        children: <
+                                                                            Widget>[
+                                                                          Container(
+                                                                            width:
+                                                                                50.w,
                                                                             child:
                                                                                 Text(
-                                                                          map.doctorName
-                                                                              .toString(),
-                                                                          style: TextStyle(
-                                                                              fontSize: 14.sp,
-                                                                              fontWeight: FontWeight.w500),
-                                                                          textAlign:
-                                                                              TextAlign.start,
-                                                                        ))
-
-                                                                        // : Container(
-                                                                        //     child: Text(
-                                                                        //     map.doctorName.toString(),
-                                                                        //     style: TextStyle(fontSize: 10.sp, fontWeight: FontWeight.w500),
-                                                                        //     textAlign: TextAlign.start,
-                                                                        //   ))
-                                                                        ,
-                                                                      ],
-                                                                    ),
-                                                                  );
-                                                                }).toList(),
+                                                                              map.doctorName.toString(),
+                                                                              overflow: TextOverflow.ellipsis, // Handle overflow
+                                                                              maxLines: 1,
+                                                                              style: TextStyle(
+                                                                                fontSize: 14.sp,
+                                                                                fontWeight: FontWeight.w500,
+                                                                              ),
+                                                                              textAlign: TextAlign.start,
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    );
+                                                                  }).toList(),
+                                                                ),
                                                               ),
                                                             ),
-                                                          ),
-                                                        );
-                                                      })
+                                                          );
+                                                        },
+                                                      )
                                                     ],
                                                   ),
                                                 ),

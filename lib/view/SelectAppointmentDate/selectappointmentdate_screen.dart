@@ -1243,35 +1243,32 @@ class _SelectAppointmentDateScreenState
                         ),
                       )
                     : Container(
-                        color: Colors.amber,
                         height: 10.h,
                         child: Container(
                           child: ListView.separated(
                             separatorBuilder:
                                 (BuildContext context, int index) {
-                              print(
-                                  'indexindexindexindexindexindexindexindexindexindexindexindexindexindexindexindex');
-                              print(currentDateSelectedIndex);
-                              print(advanceBookingFrom);
                               return SizedBox(width: 0);
                             },
-                            itemCount: int.parse(advanceBookingTo),
+                            itemCount: int.parse(advanceBookingTo) +
+                                1 -
+                                int.parse(advanceBookingFrom) +
+                                4,
                             controller: scrollController,
                             shrinkWrap: true,
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (BuildContext context, int index) {
-                              print(
-                                  'indexindexindexindexindexindexindexindexindexindexindexindexindexindexindexindex');
-                              print(currentDateSelectedIndex);
-                              print(advanceBookingFrom);
-
                               // Calculate the actual index considering the offset
                               int actualIndex =
                                   index + int.parse(advanceBookingFrom) - 2;
 
-                              // Check if it's within the range of the first two and last two elements
+                              // Determine if it's within the range of the first two and last two elements
                               bool isDisabled = index < 2 ||
-                                  index >= int.parse(advanceBookingTo) - 2;
+                                  index >=
+                                      int.parse(advanceBookingTo) +
+                                          1 -
+                                          int.parse(advanceBookingFrom) +
+                                          2;
 
                               // Determine the text color based on container state
                               Color textColor;
@@ -1365,6 +1362,131 @@ class _SelectAppointmentDateScreenState
                           ),
                         ),
                       ),
+
+                // Container(
+                //     color: Colors.amber,
+                //     height: 10.h,
+                //     child: Container(
+                //       child: ListView.separated(
+                //         separatorBuilder:
+                //             (BuildContext context, int index) {
+                //           print(
+                //               'indexindexindexindexindexindexindexindexindexindexindexindexindexindexindexindex');
+                //           print(currentDateSelectedIndex);
+                //           print(advanceBookingFrom);
+                //           return SizedBox(width: 0);
+                //         },
+                //         itemCount: int.parse(advanceBookingTo),
+                //         controller: scrollController,
+                //         shrinkWrap: true,
+                //         scrollDirection: Axis.horizontal,
+                //         itemBuilder: (BuildContext context, int index) {
+                //           print(
+                //               'indexindexindexindexindexindexindexindexindexindexindexindexindexindexindexindex');
+                //           print(currentDateSelectedIndex);
+                //           print(advanceBookingFrom);
+
+                //           // Calculate the actual index considering the offset
+                //           int actualIndex =
+                //               index + int.parse(advanceBookingFrom) - 2;
+
+                //           // Check if it's within the range of the first two and last two elements
+                //           bool isDisabled = index < 2 ||
+                //               index >= int.parse(advanceBookingTo) - 2;
+
+                //           // Determine the text color based on container state
+                //           Color textColor;
+                //           if (isDisabled) {
+                //             textColor = Colors.grey;
+                //           } else if (currentDateSelectedIndex ==
+                //               actualIndex) {
+                //             textColor = Colors.white;
+                //           } else {
+                //             textColor = Colors.black;
+                //           }
+
+                //           return InkWell(
+                //             onTap: isDisabled
+                //                 ? null // Disable onTap for first two and last two containers
+                //                 : () {
+                //                     setState(() {
+                //                       // Set the selected index only if it's not disabled
+                //                       currentDateSelectedIndex =
+                //                           actualIndex;
+                //                       selectedDate = DateTime.now()
+                //                           .add(Duration(days: actualIndex));
+                //                       datetime1 = DateFormat("yyyy-MM-dd")
+                //                           .format(selectedDate);
+                //                       get();
+                //                     });
+                //                   },
+                //             child: Container(
+                //               height: 10.h,
+                //               width: 20.3.w,
+                //               alignment: Alignment.center,
+                //               decoration: BoxDecoration(
+                //                 color: isDisabled
+                //                     ? Colors
+                //                         .white // Change color for disabled containers
+                //                     : currentDateSelectedIndex ==
+                //                             actualIndex
+                //                         ? Color(0xFFFD5722)
+                //                         : Colors.white,
+                //               ),
+                //               child: Column(
+                //                 mainAxisAlignment: MainAxisAlignment.center,
+                //                 children: [
+                //                   Text(
+                //                     listOfDays[DateTime.now()
+                //                                     .add(Duration(
+                //                                         days: actualIndex))
+                //                                     .weekday -
+                //                                 1]
+                //                             .toString() +
+                //                         " - " +
+                //                         listOfMonths[DateTime.now()
+                //                                     .add(Duration(
+                //                                         days: actualIndex))
+                //                                     .month -
+                //                                 1]
+                //                             .toString(),
+                //                     style: TextStyle(
+                //                       fontSize: SizerUtil.deviceType ==
+                //                               DeviceType.mobile
+                //                           ? 12.sp
+                //                           : 8.sp,
+                //                       color: textColor,
+                //                     ),
+                //                   ),
+                //                   SizedBox(
+                //                     height: 2.h,
+                //                   ),
+                //                   Text(
+                //                     DateTime.now()
+                //                         .add(Duration(days: actualIndex))
+                //                         .day
+                //                         .toString(),
+                //                     style: TextStyle(
+                //                       fontSize: SizerUtil.deviceType ==
+                //                               DeviceType.mobile
+                //                           ? 17.sp
+                //                           : 12.sp,
+                //                       fontWeight: FontWeight.w700,
+                //                       color: textColor,
+                //                     ),
+                //                   ),
+                //                   SizedBox(
+                //                     height: 1.h,
+                //                   ),
+                //                 ],
+                //               ),
+                //             ),
+                //           );
+                //         },
+                //       ),
+                //     ),
+                //   ),
+
                 SizedBox(height: 10),
                 SingleChildScrollView(
                   child: ChangeNotifierProvider<AppointmentSlotListViewmodel>(
