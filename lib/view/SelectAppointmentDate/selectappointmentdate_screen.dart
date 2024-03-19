@@ -1104,150 +1104,267 @@ class _SelectAppointmentDateScreenState
           ? Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Container(
-                    color: Colors.amber,
-                    height: 10.h,
-                    child: Container(
-                        child: ListView.separated(
-                      separatorBuilder: (BuildContext context, int index) {
-                        print(
-                            'indexindexindexindexindexindexindexindexindexindexindexindexindexindexindexindex');
-                        print(currentDateSelectedIndex);
-                        print(advanceBookingFrom);
-                        return SizedBox(width: 0);
-                      },
-                      itemCount: int.parse(advanceBookingTo),
-                      controller: scrollController,
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (BuildContext context, int index) {
-                        // print(
-                        //     'currentDateSelectedIndexcurrentDateSelectedIndexcurrentDateSelectedIndexcurrentDateSelectedIndexcurrentDateSelectedIndexcurrentDateSelectedIndexcurrentDateSelectedIndexcurrentDateSelectedIndexcurrentDateSelectedIndexcurrentDateSelectedIndex');
-                        // print(currentDateSelectedIndex);
-                        // print(index);
-                        print(
-                            'indexindexindexindexindexindexindexindexindexindexindexindexindexindexindexindex');
-                        print(currentDateSelectedIndex);
-                        print(advanceBookingFrom);
-                        return InkWell(
-                          onTap: () {
-                            setState(() {
-                              currentDateSelectedIndex =
-                                  index + int.parse(advanceBookingFrom);
-                              selectedDate = DateTime.now().add(Duration(
-                                  days: index + int.parse(advanceBookingFrom)));
-                              datetime1 =
-                                  DateFormat("yyyy-MM-dd").format(selectedDate);
-                              // print('pppppppppppppppppppppppp');
-                              // print(selectedDate);
-                              // print('pppppppppppppppppppppppppppp');
-                              get();
-                              // _getCategory1();
-                            });
-                            // print(selectedDate);
-                            //   currentDateSelectedIndex = index;
-                            //   selectedDate = DateTime.now()
-                            //       .subtract(Duration(days: 5))
-                            //       .add(Duration(days: index));
-                            //   datetime1 =
-                            //       DateFormat("yyyy-MM-dd").format(selectedDate);
-                            //   print('pppppppppppppppppppppppp');
-                            //   print(datetime1);
-                            //   print('pppppppppppppppppppppppppppp');
-                            //   get();
-                            //   // _getCategory1();
-                            // });
-                            // print(selectedDate);
-                          },
-                          child: Container(
-                            height: 10.h,
-                            width: 20.3.w,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                color: currentDateSelectedIndex ==
-                                        index + int.parse(advanceBookingFrom)
-                                    ? Color(0xFFFD5722)
-                                    : Colors.white),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  listOfDays[DateTime.now()
-                                                  .add(Duration(
-                                                      days: index +
-                                                          int.parse(
-                                                              advanceBookingFrom)))
-                                                  .weekday -
-                                              1]
-                                          .toString() +
-                                      " - " +
-                                      listOfMonths[DateTime.now()
-                                                  .add(Duration(
-                                                      days: index +
-                                                          int.parse(
-                                                              advanceBookingFrom)))
-                                                  .month -
-                                              1]
-                                          .toString(),
-                                  style: SizerUtil.deviceType ==
-                                          DeviceType.mobile
-                                      ? TextStyle(
-                                          fontSize: 12.sp,
-                                          color: currentDateSelectedIndex ==
-                                                  index +
-                                                      int.parse(
-                                                          advanceBookingFrom)
-                                              ? Colors.white
-                                              : Colors.grey)
-                                      : TextStyle(
-                                          fontSize: 8.sp,
-                                          color: currentDateSelectedIndex ==
-                                                  index +
-                                                      int.parse(
-                                                          advanceBookingFrom)
-                                              ? Colors.white
-                                              : Colors.grey),
-                                ),
-                                SizedBox(
-                                  height: 2.h,
-                                ),
-                                Text(
-                                  DateTime.now()
-                                      .add(Duration(
-                                          days: index +
-                                              int.parse(advanceBookingFrom)))
-                                      .day
-                                      .toString(),
-                                  style: SizerUtil.deviceType ==
-                                          DeviceType.mobile
-                                      ? TextStyle(
-                                          fontSize: 17.sp,
+                advanceBookingFrom == '0' && advanceBookingTo == '0'
+                    ? Container(
+                        // color: Colors.amber,
+                        height: 10.h,
+                        child: Container(
+                          child: ListView.separated(
+                            separatorBuilder:
+                                (BuildContext context, int index) {
+                              print(
+                                  'indexindexindexindexindexindexindexindexindexindexindexindexindexindexindexindex');
+                              print(currentDateSelectedIndex);
+                              print(advanceBookingFrom);
+                              return SizedBox(width: 0);
+                            },
+                            itemCount:
+                                5, // Fixed itemCount to show 5 containers
+                            controller: scrollController,
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (BuildContext context, int index) {
+                              print(
+                                  'indexindexindexindexindexindexindexindexindexindexindexindexindexindexindexindex');
+                              print(currentDateSelectedIndex);
+                              print(advanceBookingFrom);
+
+                              // Calculate the actual index considering the offset
+                              int actualIndex = index + DateTime.now().day - 2;
+
+                              // Determine if the current container represents today's date
+                              bool isToday = index == 2;
+
+                              // Determine if the current container represents the previous or upcoming dates
+                              bool isDisabled = index < 2 || index > 2;
+
+                              // Set the selected date to today's date
+                              if (isToday) {
+                                currentDateSelectedIndex = actualIndex;
+                                selectedDate = DateTime.now();
+                                datetime1 = DateFormat("yyyy-MM-dd")
+                                    .format(selectedDate);
+                              }
+
+                              return InkWell(
+                                onTap: isDisabled
+                                    ? null // Disable onTap for previous and upcoming dates
+                                    : () {
+                                        setState(() {
+                                          // Set the selected index only if it's today's date
+                                          if (isToday) {
+                                            currentDateSelectedIndex =
+                                                actualIndex;
+                                            selectedDate = DateTime.now();
+                                            datetime1 = DateFormat("yyyy-MM-dd")
+                                                .format(selectedDate);
+                                            get();
+                                          }
+                                        });
+                                      },
+                                child: Container(
+                                  height: 10.h,
+                                  width: 20.3.w,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    color: isDisabled
+                                        ? Colors
+                                            .white // Change color for previous and upcoming dates
+                                        : isToday
+                                            ? Color(
+                                                0xFFFD5722) // Change color for today's date
+                                            : Colors.white,
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        isToday
+                                            ? "Today"
+                                            : listOfDays[DateTime.now()
+                                                            .add(Duration(
+                                                                days:
+                                                                    index - 2))
+                                                            .weekday -
+                                                        1]
+                                                    .toString() +
+                                                " - " +
+                                                listOfMonths[DateTime.now()
+                                                            .add(Duration(
+                                                                days:
+                                                                    index - 2))
+                                                            .month -
+                                                        1]
+                                                    .toString(),
+                                        style: TextStyle(
+                                          fontSize: SizerUtil.deviceType ==
+                                                  DeviceType.mobile
+                                              ? 12.sp
+                                              : 8.sp,
+                                          color: isDisabled
+                                              ? Colors.grey
+                                              : isToday
+                                                  ? Colors.white
+                                                  : Colors.black,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 2.h,
+                                      ),
+                                      Text(
+                                        isToday
+                                            ? DateTime.now().day.toString()
+                                            : DateTime.now()
+                                                .add(Duration(days: index - 2))
+                                                .day
+                                                .toString(),
+                                        style: TextStyle(
+                                          fontSize: SizerUtil.deviceType ==
+                                                  DeviceType.mobile
+                                              ? 17.sp
+                                              : 12.sp,
                                           fontWeight: FontWeight.w700,
-                                          color: currentDateSelectedIndex ==
-                                                  index +
-                                                      int.parse(
-                                                          advanceBookingFrom)
-                                              ? Colors.white
-                                              : Colors.grey)
-                                      : TextStyle(
-                                          fontSize: 12.sp,
-                                          fontWeight: FontWeight.w700,
-                                          color: currentDateSelectedIndex ==
-                                                  index +
-                                                      int.parse(
-                                                          advanceBookingFrom)
-                                              ? Colors.white
-                                              : Colors.grey),
+                                          color: isDisabled
+                                              ? Colors.grey
+                                              : isToday
+                                                  ? Colors.white
+                                                  : Colors.black,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 1.h,
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                                SizedBox(
-                                  height: 1.h,
-                                ),
-                              ],
-                            ),
+                              );
+                            },
                           ),
-                        );
-                      },
-                    ))),
+                        ),
+                      )
+                    : Container(
+                        color: Colors.amber,
+                        height: 10.h,
+                        child: Container(
+                          child: ListView.separated(
+                            separatorBuilder:
+                                (BuildContext context, int index) {
+                              print(
+                                  'indexindexindexindexindexindexindexindexindexindexindexindexindexindexindexindex');
+                              print(currentDateSelectedIndex);
+                              print(advanceBookingFrom);
+                              return SizedBox(width: 0);
+                            },
+                            itemCount: int.parse(advanceBookingTo),
+                            controller: scrollController,
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (BuildContext context, int index) {
+                              print(
+                                  'indexindexindexindexindexindexindexindexindexindexindexindexindexindexindexindex');
+                              print(currentDateSelectedIndex);
+                              print(advanceBookingFrom);
+
+                              // Calculate the actual index considering the offset
+                              int actualIndex =
+                                  index + int.parse(advanceBookingFrom) - 2;
+
+                              // Check if it's within the range of the first two and last two elements
+                              bool isDisabled = index < 2 ||
+                                  index >= int.parse(advanceBookingTo) - 2;
+
+                              // Determine the text color based on container state
+                              Color textColor;
+                              if (isDisabled) {
+                                textColor = Colors.grey;
+                              } else if (currentDateSelectedIndex ==
+                                  actualIndex) {
+                                textColor = Colors.white;
+                              } else {
+                                textColor = Colors.black;
+                              }
+
+                              return InkWell(
+                                onTap: isDisabled
+                                    ? null // Disable onTap for first two and last two containers
+                                    : () {
+                                        setState(() {
+                                          // Set the selected index only if it's not disabled
+                                          currentDateSelectedIndex =
+                                              actualIndex;
+                                          selectedDate = DateTime.now()
+                                              .add(Duration(days: actualIndex));
+                                          datetime1 = DateFormat("yyyy-MM-dd")
+                                              .format(selectedDate);
+                                          get();
+                                        });
+                                      },
+                                child: Container(
+                                  height: 10.h,
+                                  width: 20.3.w,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    color: isDisabled
+                                        ? Colors
+                                            .white // Change color for disabled containers
+                                        : currentDateSelectedIndex ==
+                                                actualIndex
+                                            ? Color(0xFFFD5722)
+                                            : Colors.white,
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        listOfDays[DateTime.now()
+                                                        .add(Duration(
+                                                            days: actualIndex))
+                                                        .weekday -
+                                                    1]
+                                                .toString() +
+                                            " - " +
+                                            listOfMonths[DateTime.now()
+                                                        .add(Duration(
+                                                            days: actualIndex))
+                                                        .month -
+                                                    1]
+                                                .toString(),
+                                        style: TextStyle(
+                                          fontSize: SizerUtil.deviceType ==
+                                                  DeviceType.mobile
+                                              ? 12.sp
+                                              : 8.sp,
+                                          color: textColor,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 2.h,
+                                      ),
+                                      Text(
+                                        DateTime.now()
+                                            .add(Duration(days: actualIndex))
+                                            .day
+                                            .toString(),
+                                        style: TextStyle(
+                                          fontSize: SizerUtil.deviceType ==
+                                                  DeviceType.mobile
+                                              ? 17.sp
+                                              : 12.sp,
+                                          fontWeight: FontWeight.w700,
+                                          color: textColor,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 1.h,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
                 SizedBox(height: 10),
                 SingleChildScrollView(
                   child: ChangeNotifierProvider<AppointmentSlotListViewmodel>(
