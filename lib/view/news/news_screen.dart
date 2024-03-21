@@ -170,9 +170,11 @@ class _NewsScreenState extends State<NewsScreen> {
             //     context, token, newsId);
             // print(token);
             // print(newsId);
-            Map data = {'token': token.toString(), 'newsId': newsId};
-            Navigator.pushNamed(context, RoutesName.newsdetails,
-                arguments: data);
+            if (int.parse(newsId) >= 0) {
+              Map data = {'token': token.toString(), 'newsId': newsId};
+              Navigator.pushNamed(context, RoutesName.newsdetails,
+                  arguments: data);
+            }
           },
           child: Card(
             margin: EdgeInsets.fromLTRB(5, 5, 5, 0),
