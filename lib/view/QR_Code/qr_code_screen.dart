@@ -34,7 +34,9 @@ class _QRScannerWidgetState extends State<QRScannerWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize:  SizerUtil.deviceType == DeviceType.mobile ?  Size.fromHeight(7.h) : Size.fromHeight(5.h),
+        preferredSize: SizerUtil.deviceType == DeviceType.mobile
+            ? Size.fromHeight(7.h)
+            : Size.fromHeight(5.h),
         child: AppBar(
           automaticallyImplyLeading: false,
           centerTitle: false,
@@ -124,7 +126,8 @@ class _QRScannerWidgetState extends State<QRScannerWidget> {
 
         // Process the result
         Codec<String, String> stringToBase64 = utf8.fuse(base64);
-        String decoded = stringToBase64.decode(result!.code.toString());
+        String decoded = stringToBase64
+            .decode(result!.code.toString().trim().replaceAll('"', ''));
         print(decoded);
         Map<String, dynamic> jsonMap = jsonDecode(decoded.toString());
         String customerName = jsonMap['CustomerName'];
