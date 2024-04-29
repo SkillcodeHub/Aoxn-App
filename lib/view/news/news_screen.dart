@@ -431,7 +431,31 @@ class _NewsScreenState extends State<NewsScreen> {
                   builder: (context, value, _) {
                     switch (value.doctorDetailsList.status!) {
                       case Status.LOADING:
-                        return Center(child: Container());
+                        return AppBar(
+                          automaticallyImplyLeading: false,
+                          // centerTitle: false,
+                          backgroundColor: Color(0xffffffff),
+                          elevation: 0,
+                          title: Padding(
+                            padding: EdgeInsets.only(top: 2.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                AxonIconForAppBarrWidget(),
+                                ScreenNameWidget(
+                                  title: '  Notice Board',
+                                ),
+                                Container(
+                                  margin: EdgeInsets.all(6),
+                                  height: 4.h,
+                                  width: 5.h,
+                                  // child: Image.asset('images/whatsapp.png'),
+                                ),
+                                SettingsWidget(),
+                              ],
+                            ),
+                          ),
+                        );
                       case Status.ERROR:
                         return AppBar(
                           automaticallyImplyLeading: false,
@@ -447,12 +471,12 @@ class _NewsScreenState extends State<NewsScreen> {
                                 ScreenNameWidget(
                                   title: '  Notice Board',
                                 ),
-                                value.doctorDetailsList.data!.data![0]
-                                            .whatsapplink
-                                            .toString() ==
-                                        "null"
-                                    ? Container()
-                                    : WhatsappWidget(),
+                                Container(
+                                  margin: EdgeInsets.all(6),
+                                  height: 4.h,
+                                  width: 5.h,
+                                  // child: Image.asset('images/whatsapp.png'),
+                                ),
                                 SettingsWidget(),
                               ],
                             ),

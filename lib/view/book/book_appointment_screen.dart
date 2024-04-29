@@ -161,7 +161,30 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                   builder: (context, value, _) {
                     switch (value.doctorDetailsList.status!) {
                       case Status.LOADING:
-                        return Center(child: Container());
+                        return AppBar(
+                          automaticallyImplyLeading: false,
+                          centerTitle: false,
+                          backgroundColor: Color(0xffffffff),
+                          elevation: 0,
+                          title: Padding(
+                            padding: const EdgeInsets.only(top: 5.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                AxonIconForAppBarrWidget(),
+                                ScreenNameWidget(
+                                  title: '  Book Appointment',
+                                ),
+                                Container(
+                                  margin: EdgeInsets.all(6),
+                                  height: 4.h,
+                                  width: 5.h,
+                                ),
+                                SettingsWidget(),
+                              ],
+                            ),
+                          ),
+                        );
                       case Status.ERROR:
                         return AppBar(
                           automaticallyImplyLeading: false,
@@ -177,12 +200,12 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                 ScreenNameWidget(
                                   title: '  Book Appointment',
                                 ),
-                                value.doctorDetailsList.data!.data![0]
-                                            .whatsapplink
-                                            .toString() ==
-                                        "null"
-                                    ? Container()
-                                    : WhatsappWidget(),
+                                Container(
+                                  margin: EdgeInsets.all(6),
+                                  height: 4.h,
+                                  width: 5.h,
+                                  // child: Image.asset('images/whatsapp.png'),
+                                ),
                                 SettingsWidget(),
                               ],
                             ),
