@@ -12,14 +12,11 @@ class AxonIconForAppBarrWidget extends StatelessWidget {
         ? Container(
             margin: EdgeInsets.only(top: 5),
             height: 6.h,
-            // width: MediaQuery.of(context).size.width * 0.10,
             width: 10.w,
             child: Image.asset('images/axon-icon.png'),
           )
         : Container(
-            // margin: EdgeInsets.only(top: 5),
             height: 3.5.h,
-            // width: MediaQuery.of(context).size.width * 0.10,
             width: 10.w,
             child: Image.asset(
               'images/axon-icon.png',

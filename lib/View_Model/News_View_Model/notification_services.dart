@@ -1,8 +1,8 @@
 import 'dart:io';
+
 import 'package:axonweb/View/NevigationBar/my_navigationbar.dart';
 import 'package:axonweb/utils/routes/routes_name.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -170,27 +170,10 @@ class NotificationServices {
                     indexNumber: int.parse(message.data['id']),
                   )));
     } else if (message.data['type'] == 'newsDetails') {
-      print(
-          '11111111111111111111111111111111111111111111111111111111111111111111111111111');
-      // print(message.data['token']);
-      // print(message.data['newsId']);
-      print(
-          '11111111111111111111111111111111111111111111111111111111111111111111111');
       Map data = {
         'token': message.data['token'],
         'newsId': message.data['newsId'],
       };
-      // Map data = {
-      //   'token': "68cb311f-585a-4e86-8e89-06edf1814080",
-      //   'newsId': "265"
-      // };
-      // Navigator.pushAndRemoveUntil(
-      //     context,
-      //     MaterialPageRoute(
-      //         builder: (context) => MyNavigationBar(
-      //               indexNumber: 3,
-      //             )),
-      //     (route) => false);
 
       Navigator.pushNamed(context, RoutesName.newsdetails, arguments: data);
     } else if (message.data['type'] == 'reportDetails') {

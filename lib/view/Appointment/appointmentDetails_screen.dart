@@ -1,3 +1,4 @@
+import 'package:axonweb/Utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -38,12 +39,11 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
   showAlertDialog(BuildContext context) {
     final cancelAppointmentViewModel =
         Provider.of<CancelAppointmentViewModel>(context, listen: false);
-    // set up the buttons
     Widget cancelButton = TextButton(
         child: Text(
           "Cancel",
           style: TextStyle(
-            fontSize: 14.sp,
+            fontSize: titleFontSize,
             color: Color(0xFFFD5722),
           ),
         ),
@@ -54,7 +54,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
       child: Text(
         "Continue",
         style: TextStyle(
-          fontSize: 14.sp,
+          fontSize: titleFontSize,
           color: Color(0xFFFD5722),
         ),
       ),
@@ -65,9 +65,6 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
               widget.appointmentData['data']['appointmentId'].toString(),
         };
         cancelAppointmentViewModel.cancelApointmentApi(data, context);
-
-        // showAlert(context);
-        // _cancelAppointmentDetails();
       },
     );
 
@@ -76,13 +73,13 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
       title: Text(
         "Confirm",
         style: TextStyle(
-          fontSize: 15.sp,
+          fontSize: titleFontSize,
         ),
       ),
       content: Text(
         "Are you sure want to cancel Appointment?",
         style: TextStyle(
-          fontSize: 13.sp,
+          fontSize: titleFontSize,
         ),
       ),
       actions: [
@@ -132,7 +129,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
             ),
           ),
           title: Padding(
-            padding: const EdgeInsets.only(top: 2),
+            padding: EdgeInsets.only(top: 2),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -147,7 +144,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
       body: Stack(
         children: [
           SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
+            physics: AlwaysScrollableScrollPhysics(),
             child: Padding(
               padding: EdgeInsets.only(top: 20, left: 8, right: 8),
               child: Column(
@@ -155,20 +152,15 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                   Text(
                     'Booking Successful',
                     style: TextStyle(
-                      fontSize:
-                          // SizerUtil.deviceType == DeviceType.mobile ?
-                          22.sp
-                      // : 18.sp
-                      ,
+                      fontSize: 22.sp,
                       fontWeight: FontWeight.bold,
                       color: Color(0xFFFD5722),
                     ),
                   ),
                   SizedBox(height: 1.h),
                   Card(
-                    // margin: EdgeInsets.all(3),
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(8.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -179,28 +171,18 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                           Text(
                             'Your appointment is booked for:',
                             style: TextStyle(
-                              fontSize:
-
-                                  // SizerUtil.deviceType == DeviceType.mobile
-                                  //     ?
-                                  14.sp
-                              // : 12.sp
-                              ,
-                            ),
+                                fontSize: subTitleFontSize,
+                                fontWeight: FontWeight.w500),
                           ),
                           SizedBox(
-                            height: 2.h,
+                            height: 1.5.h,
                           ),
                           Text(
                             'Doctor',
                             style: TextStyle(
-                              fontSize:
-                                  // SizerUtil.deviceType == DeviceType.mobile
-                                  //     ?
-                                  14.sp
-                              // : 12.sp
-                              ,
-                              color: Colors.grey,
+                              fontWeight: FontWeight.w500,
+                              fontSize: subTitleFontSize,
+                              color: Colors.grey.shade500,
                             ),
                           ),
                           SizedBox(
@@ -208,44 +190,29 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                           ),
                           Text(
                             widget.appointmentData['data']['doctorName'],
-                            // appointmentData['doctorName'],
                             style: TextStyle(
-                              fontSize:
-                                  // SizerUtil.deviceType == DeviceType.mobile
-                                  //     ?
-                                  15.sp
-                              // : 13.sp
-                              ,
+                              fontSize: subTitleFontSize,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
                           SizedBox(
-                            height: 2.h,
+                            height: 1.h,
                           ),
                           Text(
                             'Patient',
                             style: TextStyle(
-                                fontSize:
-                                    // SizerUtil.deviceType == DeviceType.mobile
-                                    //     ?
-                                    14.sp
-                                // : 12.sp
-                                ,
-                                color: Colors.grey),
+                                fontWeight: FontWeight.w500,
+                                fontSize: subTitleFontSize,
+                                color: Colors.grey.shade500),
                           ),
                           SizedBox(
                             height: 3,
                           ),
                           Text(
-                            // 'aaa',
                             widget.appointmentData['data']['name'],
                             style: TextStyle(
-                              fontSize:
-
-                                  // SizerUtil.deviceType == DeviceType.mobile
-                                  //     ?
-                                  15.sp
-                              // : 13.sp
-                              ,
+                              fontWeight: FontWeight.w500,
+                              fontSize: subTitleFontSize,
                             ),
                           ),
                           SizedBox(
@@ -266,36 +233,24 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                             height: 1.h,
                           ),
                           Text(
-                            // 'aaa',
                             'Remember to visit' +
                                 ' ' +
                                 widget.appointmentData['data']['doctorName'],
-                            // + historyData['doctorName'],
                             style: TextStyle(
-                              fontSize:
-
-                                  // SizerUtil.deviceType == DeviceType.mobile
-                                  //     ?
-                                  12.sp
-                              // : 10.sp
-                              ,
+                              fontSize: subTitleFontSize,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
-                          SizedBox(height: 2.h),
+                          SizedBox(height: 1.5.h),
                           Row(
                             children: [
                               Icon(Icons.perm_contact_calendar),
+                              SizedBox(width: 1.w),
                               Text(
                                 outputDate,
                                 style: TextStyle(
-                                  fontSize:
-
-                                      // SizerUtil.deviceType == DeviceType.mobile
-                                      //     ?
-                                      15.sp
-                                  // : 13.sp
-                                  ,
-                                ),
+                                    fontSize: titleFontSize,
+                                    fontWeight: FontWeight.bold),
                               ),
                             ],
                           ),
@@ -305,15 +260,12 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                               Icon(
                                 Icons.access_time_rounded,
                               ),
+                              SizedBox(width: 1.w),
                               Text(
                                 outputDate3,
                                 style: TextStyle(
-                                  fontSize:
-                                      // SizerUtil.deviceType == DeviceType.mobile
-                                      //     ?
-                                      15.sp
-                                  // : 13.sp
-                                  ,
+                                  fontSize: titleFontSize,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ],
@@ -324,20 +276,12 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                               SizedBox(
                                 width: 2.w,
                               ),
-                              // TextButton(
-                              //     onPressed: () {},
-                              // child: Text(
-                              //   "SAVE TO CALENDER",
-                              //   style: TextStyle(
-                              //     color: Color(0xFFFD5722),
-                              //                                       fontSize: 12.sp,
-
-                              //   ),
-                              // )
-
-                              // )
                             ],
-                          )
+                          ),
+                          SizedBox(
+                            width: 100.w,
+                            height: 1.h,
+                          ),
                         ],
                       ),
                     ),
@@ -355,13 +299,8 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                           Text(
                             'Your appointment status:',
                             style: TextStyle(
-                              fontSize:
-
-                                  // SizerUtil.deviceType == DeviceType.mobile
-                                  //     ?
-                                  14.sp
-                              // : 12.sp
-                              ,
+                              fontSize: subTitleFontSize,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
                           SizedBox(
@@ -371,41 +310,14 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Container(
-                                // width: MediaQuery.of(context).size.width * 0.71,
                                 child: Text(
                                   widget.appointmentData['data']['statusText'],
-                                  //'aaaa',
                                   style: TextStyle(
-                                    fontSize:
-                                        // SizerUtil.deviceType ==
-                                        //         DeviceType.mobile
-                                        //     ?
-                                        15.sp
-                                    // : 13.sp
-                                    ,
-                                    // color: Color(0xFFFD5722),
+                                    fontSize: titleFontSize,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
                               ),
-                              // SizedBox(
-                              //   width: MediaQuery.of(context).size.width * 0.60,
-                              // ),
-                              // TextButton(
-                              //   onPressed: () {
-                              //     showAlertDialog(context);
-                              //   },
-                              //   child: widget.appointmentData['data']
-                              //               ['statusText'] ==
-                              //           'Booked'
-                              //       ? Text(
-                              //           'CANCEL',
-                              //           style: TextStyle(
-                              //             fontSize: 12.sp,
-                              //             color: Color(0xFFFD5722),
-                              //           ),
-                              //         )
-                              //       : Container(),
-                              // ),
                             ],
                           ),
                         ],
@@ -416,8 +328,8 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                     height: 20,
                   ),
                   Container(
-                    height: 40,
-                    width: 170,
+                    height: 5.h,
+                    // width: 45.w,
                     child: ElevatedButton(
                       onPressed: () {
                         Navigator.pop(context);
@@ -427,6 +339,11 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                       ),
                       child: Text(
                         'RETURN TO HOME',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: subTitleFontSize,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   )

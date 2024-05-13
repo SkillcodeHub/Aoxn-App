@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:axonweb/Provider/backButton_provider.dart';
+import 'package:axonweb/Utils/utils.dart';
 import 'package:axonweb/View_Model/NewsDetails_View_model/newsdetails_view_model.dart';
 import 'package:axonweb/data/response/status.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import 'package:flutter_udid/flutter_udid.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+import 'package:upgrader/upgrader.dart';
 
 import '../../Res/colors.dart';
 import '../../Utils/routes/routes_name.dart';
@@ -149,7 +151,6 @@ class _NewsScreenState extends State<NewsScreen> {
     var outputFormat3 = DateFormat('hh:mm a');
     var outputFormat4 = DateFormat('d-MM-yyyy');
     var outputFormat5 = DateFormat('d-MMM-yyyy, hh:mm a');
-    // var outputFormat = DateFormat('MM/dd/yyyy hh:mm a');
     var outputDate = outputFormat.format(inputDate);
     var outputDate1 = outputFormat1.format(inputDate);
     var outputDate2 = outputFormat2.format(inputDate);
@@ -157,7 +158,6 @@ class _NewsScreenState extends State<NewsScreen> {
     var outputDate4 = outputFormat4.format(inputDate);
     var outputDate5 = outputFormat5.format(inputDate);
     newsdate = outputDate5;
-    // print(outputDate5);
 
     return Column(
       children: [
@@ -166,10 +166,6 @@ class _NewsScreenState extends State<NewsScreen> {
         ),
         InkWell(
           onTap: () {
-            // newsDetailsViewmodel.fetchNewsDetailsListApi(
-            //     context, token, newsId);
-            // print(token);
-            // print(newsId);
             if (int.parse(newsId) >= 0) {
               Map data = {'token': token.toString(), 'newsId': newsId};
               Navigator.pushNamed(context, RoutesName.newsdetails,
@@ -185,174 +181,212 @@ class _NewsScreenState extends State<NewsScreen> {
               children: [
                 Container(
                     height: 18.h,
-                    // width: MediaQuery.of(context).size.width * 0.15,
                     width: 15.w,
                     color: Color(0xFFFD5722),
                     child: Center(
-                      child: Image.asset(
-                        'images/Iicon.png',
-                        // width: 2,
-                        height: 3.h,
-                      ),
+                      child: newsViewmodel
+                                  .newsList.data!.data![index].description
+                                  .toString() !=
+                              ""
+                          ? Image.asset(
+                              'images/Iicon.png',
+                              // width: 2,
+                              height: 3.h,
+                            )
+                          : Icon(Icons.remove_circle,
+                              color: Colors.white, size: 3.7.h),
                     )),
-                Container(
-                  height: 18.h,
-                  // width: MediaQuery.of(context).size.width * 0.79,
-                  width:
-                      // SizerUtil.deviceType == DeviceType.mobile ?
-
-                      78.w,
-
-                  //  : 82.w,
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 5, 0, 8),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          padding: EdgeInsets.only(left: 5),
-                          width: 85.w,
-                          child: Text(
-                            newsViewmodel.newsList.data!.data![index].title
-                                .toString(),
-                            style: TextStyle(
-                                fontSize:
-                                    // SizerUtil.deviceType == DeviceType.mobile
-                                    //     ?
-
-                                    14.sp,
-                                // : 11.sp,
-                                fontWeight: FontWeight.w600),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 1.h,
-                        ),
-                        Container(
-                          height: 7.h,
-                          width: 85.w,
-                          child: Html(
-                            data: _getFirstTwoLines(newsViewmodel
-                                    .newsList.data!.data![index].description
-                                    .toString()
-                                // .substring(0, 71)
-
-                                ),
-                            style: {
-                              'h3': Style(
-                                fontWeight: FontWeight
-                                    .normal, // Remove bold style from h3 tag
-                                fontStyle: FontStyle
-                                    .normal, // Remove italic style from h3 tag
-                                textDecoration: TextDecoration
-                                    .none, // Remove underline style from h3 tag
-                              ),
-                              'b': Style(
-                                fontWeight: FontWeight
-                                    .normal, // Remove bold style from b tag
-                              ),
-                              'u': Style(
-                                textDecoration: TextDecoration
-                                    .none, // Remove underline style from u tag
-                              ),
-                              'p': Style(
-                                maxLines: 2,
-                                textOverflow: TextOverflow.ellipsis,
-                                margin:
-                                    EdgeInsets.zero, // Remove margin from p tag
-
-                                fontWeight: FontWeight
-                                    .normal, // Remove bold style from p tag
-                                fontStyle: FontStyle
-                                    .normal, // Remove italic style from p tag
-                                textDecoration: TextDecoration
-                                    .none, // Remove underline style from p tag
-                              ),
-                            },
-                            customRender: {
-                              'img': (RenderContext context, Widget child) {
-                                if (context.tree.element!.attributes
-                                    .containsKey('src')) {
-                                  // Remove the substring limitation to include the entire image tag
-                                  return Container(
-                                      margin: EdgeInsets.only(top: 10),
-                                      height: 15,
-                                      child: Image.asset('images/obj.png'));
-                                }
-                                return child;
-                              },
-                            },
-                            onLinkTap: (url, _, __, ___) {
-                              // Handle link tap here
-                            },
-                            onImageTap: (src, _, __, ___) {
-                              // Handle image tap here
-                            },
-                            onImageError: (exception, stackTrace) {
-                              // Handle image error here
-                            },
-                            // Add any additional properties or callbacks you require
-                          ),
-                        ),
-                        SizedBox(
-                            // height: 1.h,
-                            ),
-                        Container(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                newsViewmodel.newsList.data!.data![index].description
+                            .toString() !=
+                        ""
+                    ? Container(
+                        height: 18.h,
+                        width: 78.w,
+                        child: Padding(
+                          padding: EdgeInsets.fromLTRB(0, 5, 0, 8),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
                                 padding: EdgeInsets.only(left: 5),
-                                width: 65.w,
+                                width: 85.w,
                                 child: Text(
-                                  newsdate!,
+                                  newsViewmodel
+                                      .newsList.data!.data![index].title
+                                      .toString(),
                                   style: TextStyle(
-                                      fontSize:
-                                          //  SizerUtil.deviceType ==
-                                          //         DeviceType.mobile
-                                          //     ?
-
-                                          11.sp,
-                                      // : 9.sp,
-
+                                      fontSize: titleFontSize,
                                       fontWeight: FontWeight.w500),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ),
-                              InkWell(
-                                // onTap: () {
-                                //   Navigator.push(
-                                //       context,
-                                //       MaterialPageRoute(
-                                //           builder: (context) => NewsDetails(
-                                //               token,
-                                //               newsData[itemIndex]['newsId'])));
-                                // },
-                                child: Container(
-                                  width: 8.w,
-                                  child: Icon(
-                                    Icons.info_outline,
-                                    size:
-                                        //  SizerUtil.deviceType ==
-                                        //         DeviceType.mobile
-                                        //     ?
-                                        2.5.h
-                                    // : 3.h
-                                    ,
+                              SizedBox(
+                                height: 1.h,
+                              ),
+                              Container(
+                                height: 7.h,
+                                width: 85.w,
+                                child: Html(
+                                  data: _getFirstTwoLines(newsViewmodel.newsList
+                                          .data!.data![index].description
+                                          .toString()
+                                      // .substring(0, 71)
+
+                                      ),
+                                  style: {
+                                    'h3': Style(
+                                      fontWeight: FontWeight
+                                          .normal, // Remove bold style from h3 tag
+                                      fontStyle: FontStyle
+                                          .normal, // Remove italic style from h3 tag
+                                      textDecoration: TextDecoration
+                                          .none, // Remove underline style from h3 tag
+                                    ),
+                                    'b': Style(
+                                      fontWeight: FontWeight
+                                          .normal, // Remove bold style from b tag
+                                    ),
+                                    'u': Style(
+                                      textDecoration: TextDecoration
+                                          .none, // Remove underline style from u tag
+                                    ),
+                                    'p': Style(
+                                      maxLines: 2,
+                                      textOverflow: TextOverflow.ellipsis,
+                                      margin: EdgeInsets
+                                          .zero, // Remove margin from p tag
+
+                                      fontWeight: FontWeight
+                                          .normal, // Remove bold style from p tag
+                                      fontStyle: FontStyle
+                                          .normal, // Remove italic style from p tag
+                                      textDecoration: TextDecoration
+                                          .none, // Remove underline style from p tag
+                                    ),
+                                  },
+                                  customRender: {
+                                    'img':
+                                        (RenderContext context, Widget child) {
+                                      if (context.tree.element!.attributes
+                                          .containsKey('src')) {
+                                        // Remove the substring limitation to include the entire image tag
+                                        return Container(
+                                            margin: EdgeInsets.only(top: 10),
+                                            height: 15,
+                                            child:
+                                                Image.asset('images/obj.png'));
+                                      }
+                                      return child;
+                                    },
+                                  },
+                                  onLinkTap: (url, _, __, ___) {
+                                    // Handle link tap here
+                                  },
+                                  onImageTap: (src, _, __, ___) {
+                                    // Handle image tap here
+                                  },
+                                  onImageError: (exception, stackTrace) {
+                                    // Handle image error here
+                                  },
+                                  // Add any additional properties or callbacks you require
+                                ),
+                              ),
+                              SizedBox(
+                                  // height: 1.h,
                                   ),
+                              Container(
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.only(left: 5),
+                                      width: 65.w,
+                                      child: Text(
+                                        newsdate!,
+                                        style: TextStyle(
+                                            fontSize: descriptionFontSize,
+                                            fontWeight: FontWeight.w500),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                    InkWell(
+                                      child: Container(
+                                        width: 8.w,
+                                        child: Icon(
+                                          Icons.info_outline,
+                                          size: 2.5.h
+                                          // : 3.h
+                                          ,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                ),
+                      )
+                    : Container(
+                        height: 17.h,
+                        width: 78.w,
+                        child: Padding(
+                          padding: EdgeInsets.fromLTRB(0, 5, 0, 8),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                padding: EdgeInsets.only(left: 5),
+                                width: 85.w,
+                                child: Text(
+                                  newsViewmodel
+                                      .newsList.data!.data![index].title
+                                      .toString(),
+                                  style: TextStyle(
+                                      fontSize: titleFontSize,
+                                      fontWeight: FontWeight.w500),
+                                  maxLines: 4,
+                                  overflow: TextOverflow.visible,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 1.h,
+                              ),
+                              SizedBox(
+                                  // height: 1.h,
+                                  ),
+                              Container(
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.only(left: 5),
+                                      width: 65.w,
+                                      child: Text(
+                                        newsdate!,
+                                        style: TextStyle(
+                                            fontSize: descriptionFontSize,
+
+                                            // 11.sp,
+
+                                            fontWeight: FontWeight.w500),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
               ],
             ),
           ),
@@ -391,28 +425,142 @@ class _NewsScreenState extends State<NewsScreen> {
     final settingsViewModel =
         Provider.of<SettingsViewModel>(context, listen: false);
 
-    // Timer(Duration(microseconds: 20), () {
-    //   newsViewmodel.fetchNewsListApi(token);
-    //   settingsViewModel.fetchDoctorDetailsListApi(token);
-    // });
-    // newsViewmodel.fetchNewsListApi(token);
     Future refresh() async {
       newsViewmodel.fetchNewsListApi(token, letId.toString());
     }
 
     settingsViewModel.setLoading1(false);
-// print(object)
-    // final doctorNameProvider =
-    //     Provider.of<DoctorNameProvider>(context, listen: false);
+    return UpgradeAlert(
+      upgrader: Upgrader(
+        canDismissDialog: false,
+        showLater: false,
+        showIgnore: false,
+        showReleaseNotes: false,
+      ),
+      child: Scaffold(
+        backgroundColor: BackgroundColor,
+        appBar: PreferredSize(
+          preferredSize: SizerUtil.deviceType == DeviceType.mobile
+              ? Size.fromHeight(7.h)
+              : Size.fromHeight(5.h),
+          child: FutureBuilder<void>(
+            future: fetchDataFuture,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (snapshot.hasError) {
+                return Center(
+                  child: Text('Error occurred: ${snapshot.error}'),
+                );
+              } else {
+                // Render the UI with the fetched data
+                return ChangeNotifierProvider<SettingsViewModel>.value(
+                  value: settingsViewModel,
+                  child: Consumer<SettingsViewModel>(
+                    builder: (context, value, _) {
+                      switch (value.doctorDetailsList.status!) {
+                        case Status.LOADING:
+                          return AppBar(
+                            automaticallyImplyLeading: false,
+                            // centerTitle: false,
+                            backgroundColor: Color(0xffffffff),
+                            elevation: 0,
+                            title: Padding(
+                              padding: EdgeInsets.only(top: 2.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  AxonIconForAppBarrWidget(),
+                                  ScreenNameWidget(
+                                    title: '  Notice Board',
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.all(6),
+                                    height: 4.h,
+                                    width: 5.h,
+                                    // child: Image.asset('images/whatsapp.png'),
+                                  ),
+                                  SettingsWidget(),
+                                ],
+                              ),
+                            ),
+                          );
 
-    // doctorNameProvider.resetData();
-    return Scaffold(
-      backgroundColor: BackgroundColor,
-      appBar: PreferredSize(
-        preferredSize: SizerUtil.deviceType == DeviceType.mobile
-            ? Size.fromHeight(7.h)
-            : Size.fromHeight(5.h),
-        child: FutureBuilder<void>(
+                        case Status.ERROR:
+                          return AppBar(
+                            automaticallyImplyLeading: false,
+                            // centerTitle: false,
+                            backgroundColor: Color(0xffffffff),
+                            elevation: 0,
+                            title: Padding(
+                              padding: EdgeInsets.only(top: 2.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  AxonIconForAppBarrWidget(),
+                                  ScreenNameWidget(
+                                    title: '  Notice Board',
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.all(6),
+                                    height: 4.h,
+                                    width: 5.h,
+                                    // child: Image.asset('images/whatsapp.png'),
+                                  ),
+                                  SettingsWidget(),
+                                ],
+                              ),
+                            ),
+                          );
+
+                        case Status.COMPLETED:
+                          print(
+                              "++++++++++++++++++++++++++++++++++++++++++++++++++++");
+                          print(value
+                              .doctorDetailsList.data!.data![0].whatsapplink
+                              .toString());
+                          print(
+                              "++++++++++++++++++++++++++++++++++++++++++++++++++++");
+
+                          return AppBar(
+                            automaticallyImplyLeading: false,
+                            // centerTitle: false,
+                            backgroundColor: Color(0xffffffff),
+                            elevation: 0,
+                            title: Padding(
+                              padding: EdgeInsets.only(top: 2.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  AxonIconForAppBarrWidget(),
+                                  ScreenNameWidget(
+                                    title: '  Notice Board',
+                                  ),
+                                  value.doctorDetailsList.data!.data![0]
+                                              .whatsapplink
+                                              .toString() ==
+                                          "null"
+                                      ? Container()
+                                      : WhatsappWidget(),
+                                  SettingsWidget(),
+                                ],
+                              ),
+                            ),
+                          );
+                      }
+                    },
+                  ),
+                );
+              }
+            },
+          ),
+        ),
+        body: FutureBuilder<void>(
           future: fetchDataFuture,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -425,104 +573,173 @@ class _NewsScreenState extends State<NewsScreen> {
               );
             } else {
               // Render the UI with the fetched data
-              return ChangeNotifierProvider<SettingsViewModel>.value(
-                value: settingsViewModel,
-                child: Consumer<SettingsViewModel>(
+              return ChangeNotifierProvider<NewsViewmodel>.value(
+                value: newsViewmodel,
+                child: Consumer<NewsViewmodel>(
                   builder: (context, value, _) {
-                    switch (value.doctorDetailsList.status!) {
+                    switch (value.newsList.status!) {
                       case Status.LOADING:
-                        return AppBar(
-                          automaticallyImplyLeading: false,
-                          // centerTitle: false,
-                          backgroundColor: Color(0xffffffff),
-                          elevation: 0,
-                          title: Padding(
-                            padding: EdgeInsets.only(top: 2.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                AxonIconForAppBarrWidget(),
-                                ScreenNameWidget(
-                                  title: '  Notice Board',
-                                ),
-                                Container(
-                                  margin: EdgeInsets.all(6),
-                                  height: 4.h,
-                                  width: 5.h,
-                                  // child: Image.asset('images/whatsapp.png'),
-                                ),
-                                SettingsWidget(),
-                              ],
-                            ),
-                          ),
-                        );
+                        return Center(child: CircularProgressIndicator());
                       case Status.ERROR:
-                        return AppBar(
-                          automaticallyImplyLeading: false,
-                          // centerTitle: false,
-                          backgroundColor: Color(0xffffffff),
-                          elevation: 0,
-                          title: Padding(
-                            padding: EdgeInsets.only(top: 2.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                AxonIconForAppBarrWidget(),
-                                ScreenNameWidget(
-                                  title: '  Notice Board',
+                        return RefreshIndicator(
+                          onRefresh: refresh,
+                          child: Stack(
+                            children: [
+                              SingleChildScrollView(
+                                physics: AlwaysScrollableScrollPhysics(),
+                                child: Padding(
+                                  padding: EdgeInsets.all(15),
+                                  child: Container(
+                                    height: 74.h,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        SizedBox(
+                                          height: 2.h,
+                                        ),
+                                        SizedBox(
+                                          height: 20.h,
+                                        ),
+                                        Center(
+                                          child: Image.asset(
+                                            'images/loading.png',
+                                            height: 20.h,
+                                            // width: 90,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 4.h,
+                                        ),
+                                        Center(
+                                          child: Text(
+                                            value.newsList.message.toString(),
+                                            style: TextStyle(
+                                                fontSize:
+                                                    //  SizerUtil.deviceType ==
+                                                    //         DeviceType.mobile
+                                                    //     ?
+                                                    titleFontSize
+                                                // : 12.sp
+                                                ,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
-                                Container(
-                                  margin: EdgeInsets.all(6),
-                                  height: 4.h,
-                                  width: 5.h,
-                                  // child: Image.asset('images/whatsapp.png'),
-                                ),
-                                SettingsWidget(),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         );
 
-                      // Center(
-                      //     child: Column(
-                      //   children: [
-                      //     Text(value.doctorDetailsList.message.toString()),
-                      //   ],
-                      // ));
                       case Status.COMPLETED:
-                        print(
-                            "++++++++++++++++++++++++++++++++++++++++++++++++++++");
-                        print(value
-                            .doctorDetailsList.data!.data![0].whatsapplink
-                            .toString());
-                        print(
-                            "++++++++++++++++++++++++++++++++++++++++++++++++++++");
-
-                        return AppBar(
-                          automaticallyImplyLeading: false,
-                          // centerTitle: false,
-                          backgroundColor: Color(0xffffffff),
-                          elevation: 0,
-                          title: Padding(
-                            padding: EdgeInsets.only(top: 2.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                AxonIconForAppBarrWidget(),
-                                ScreenNameWidget(
-                                  title: '  Notice Board',
+                        return newsViewmodel.newsList.data!.data!.length != 0
+                            ? RefreshIndicator(
+                                onRefresh: refresh,
+                                child: Container(
+                                  height: 100.h,
+                                  child: SingleChildScrollView(
+                                    // Wrap with SingleChildScrollView
+                                    physics:
+                                        AlwaysScrollableScrollPhysics(), // Enable scrolling
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 6, left: 4, right: 6),
+                                      child: ListView.builder(
+                                        padding: EdgeInsets.only(bottom: 10),
+                                        physics:
+                                            NeverScrollableScrollPhysics(), // Disable scrolling
+                                        shrinkWrap: true,
+                                        itemCount:
+                                            value.newsList.data!.data!.length,
+                                        itemBuilder: (BuildContext context,
+                                            int itemIndex) {
+                                          return createNewsListContainer(
+                                              context, itemIndex);
+                                        },
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                                value.doctorDetailsList.data!.data![0]
-                                            .whatsapplink
-                                            .toString() ==
-                                        "null"
-                                    ? Container()
-                                    : WhatsappWidget(),
-                                SettingsWidget(),
-                              ],
-                            ),
-                          ),
-                        );
+                              )
+                            : RefreshIndicator(
+                                onRefresh: refresh,
+                                child: Stack(
+                                  children: [
+                                    SingleChildScrollView(
+                                      physics: AlwaysScrollableScrollPhysics(),
+                                      child: Padding(
+                                        padding: EdgeInsets.all(15),
+                                        child: Container(
+                                          height: 74.h,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              SizedBox(
+                                                height: 2.h,
+                                              ),
+                                              Text(
+                                                'Swipe down to refresh page',
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  fontSize:
+
+                                                      // SizerUtil.deviceType ==
+                                                      //         DeviceType.mobile
+                                                      //     ?
+                                                      titleFontSize,
+
+                                                  // : 12.sp,
+                                                  color: Color(0XFF545454),
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 20.h,
+                                              ),
+                                              Center(
+                                                child: Image.asset(
+                                                  'images/axon.png',
+                                                  height: 10.h,
+                                                  // width: 90,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 4.h,
+                                              ),
+                                              Center(
+                                                child: Text(
+                                                  'You don\'t have any news or upcoming events',
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      fontSize:
+                                                          // SizerUtil
+                                                          //             .deviceType ==
+                                                          //         DeviceType.mobile
+                                                          //     ?
+                                                          titleFontSize
+                                                      // : 12.sp
+                                                      ,
+                                                      color: Color(0XFF545454),
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
                     }
                   },
                 ),
@@ -530,192 +747,6 @@ class _NewsScreenState extends State<NewsScreen> {
             }
           },
         ),
-      ),
-      body: FutureBuilder<void>(
-        future: fetchDataFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (snapshot.hasError) {
-            return Center(
-              child: Text('Error occurred: ${snapshot.error}'),
-            );
-          } else {
-            // Render the UI with the fetched data
-            return ChangeNotifierProvider<NewsViewmodel>.value(
-              value: newsViewmodel,
-              child: Consumer<NewsViewmodel>(
-                builder: (context, value, _) {
-                  switch (value.newsList.status!) {
-                    case Status.LOADING:
-                      return Center(child: CircularProgressIndicator());
-                    case Status.ERROR:
-                      return RefreshIndicator(
-                        onRefresh: refresh,
-                        child: Stack(
-                          children: [
-                            SingleChildScrollView(
-                              physics: BouncingScrollPhysics(),
-                              child: Padding(
-                                padding: EdgeInsets.all(15),
-                                child: Container(
-                                  height: 74.h,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      SizedBox(
-                                        height: 2.h,
-                                      ),
-                                      SizedBox(
-                                        height: 20.h,
-                                      ),
-                                      Center(
-                                        child: Image.asset(
-                                          'images/loading.png',
-                                          height: 20.h,
-                                          // width: 90,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 4.h,
-                                      ),
-                                      Center(
-                                        child: Text(
-                                          value.newsList.message.toString(),
-                                          style: TextStyle(
-                                              fontSize:
-                                                  //  SizerUtil.deviceType ==
-                                                  //         DeviceType.mobile
-                                                  //     ?
-                                                  14.sp
-                                              // : 12.sp
-                                              ,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-
-                    case Status.COMPLETED:
-                      return newsViewmodel.newsList.data!.data!.length != 0
-                          ? RefreshIndicator(
-                              onRefresh: refresh,
-                              child: Container(
-                                height: 100.h,
-                                child: SingleChildScrollView(
-                                  // Wrap with SingleChildScrollView
-                                  physics:
-                                      AlwaysScrollableScrollPhysics(), // Enable scrolling
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 6, left: 4, right: 6),
-                                    child: ListView.builder(
-                                      padding: EdgeInsets.only(bottom: 10),
-                                      physics:
-                                          NeverScrollableScrollPhysics(), // Disable scrolling
-                                      shrinkWrap: true,
-                                      itemCount:
-                                          value.newsList.data!.data!.length,
-                                      itemBuilder: (BuildContext context,
-                                          int itemIndex) {
-                                        return createNewsListContainer(
-                                            context, itemIndex);
-                                      },
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            )
-                          : RefreshIndicator(
-                              onRefresh: refresh,
-                              child: Stack(
-                                children: [
-                                  SingleChildScrollView(
-                                    physics: BouncingScrollPhysics(),
-                                    child: Padding(
-                                      padding: EdgeInsets.all(15),
-                                      child: Container(
-                                        height: 74.h,
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            SizedBox(
-                                              height: 2.h,
-                                            ),
-                                            Text(
-                                              'Swipe down to refresh page',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                fontSize:
-
-                                                    // SizerUtil.deviceType ==
-                                                    //         DeviceType.mobile
-                                                    //     ?
-                                                    14.sp,
-
-                                                // : 12.sp,
-                                                color: Color(0XFF545454),
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: 20.h,
-                                            ),
-                                            Center(
-                                              child: Image.asset(
-                                                'images/axon.png',
-                                                height: 10.h,
-                                                // width: 90,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: 4.h,
-                                            ),
-                                            Center(
-                                              child: Text(
-                                                'You don\'t have any news or upcoming events',
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                    fontSize:
-                                                        // SizerUtil
-                                                        //             .deviceType ==
-                                                        //         DeviceType.mobile
-                                                        //     ?
-                                                        14.sp
-                                                    // : 12.sp
-                                                    ,
-                                                    color: Color(0XFF545454),
-                                                    fontWeight:
-                                                        FontWeight.w600),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                  }
-                },
-              ),
-            );
-          }
-        },
       ),
     );
   }

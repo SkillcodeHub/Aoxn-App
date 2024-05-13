@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:axonweb/Provider/backButton_provider.dart';
+import 'package:axonweb/Utils/utils.dart';
 import 'package:axonweb/View/NevigationBar/my_navigationbar.dart';
 import 'package:axonweb/View_Model/News_View_Model/notification_services.dart';
 import 'package:flutter/material.dart';
@@ -49,9 +50,7 @@ class _EventScreenState extends State<EventScreen> {
         deviceId = value!;
       });
     });
-    // super.initState();
     super.initState();
-    // notificationServices.requestNotificationPermission();
     notificationServices.forgroundMessage();
     notificationServices.firebaseInit(context);
     notificationServices.setupInteractMessage(context);
@@ -72,7 +71,6 @@ class _EventScreenState extends State<EventScreen> {
     var outputFormat1 = DateFormat('E, yyyy');
     var outputFormat2 = DateFormat('d MMM');
     var outputFormat3 = DateFormat('hh:mm a');
-    // var outputFormat = DateFormat('MM/dd/yyyy hh:mm a');
     var outputDate = outputFormat.format(inputDate);
     var outputDate1 = outputFormat1.format(inputDate);
     var outputDate2 = outputFormat2.format(inputDate);
@@ -132,66 +130,36 @@ class _EventScreenState extends State<EventScreen> {
                       child: Column(
                         children: [
                           Text(
-                            // historyData[itemIndex]['apptDate'],
                             outputDate1,
-                            style:
-                                // SizerUtil.deviceType == DeviceType.mobile
-                                //     ?
-                                TextStyle(
-                              fontSize: 12.sp,
+                            style: TextStyle(
+                              fontSize: subTitleFontSize,
                               color: Colors.white,
-                            )
-                            // : TextStyle(
-                            //     fontSize: 11.sp,
-                            //     color: Colors.white,
-                            //   )
-                            ,
+                            ),
                           ),
                           SizedBox(height: 1.h),
                           Text(
                             outputDate2,
-                            style:
-                                //  SizerUtil.deviceType == DeviceType.mobile
-                                //     ?
-                                TextStyle(
-                              fontSize: 12.sp,
+                            style: TextStyle(
+                              fontSize: subTitleFontSize,
                               color: Colors.white,
-                            )
-                            // : TextStyle(
-                            //     fontSize: 11.sp,
-                            //     color: Colors.white,
-                            //   )
-                            ,
+                            ),
                           ),
                           SizedBox(
                             height: 5.h,
                           ),
                           Text(
                             outputDate3,
-                            style:
-                                //  SizerUtil.deviceType == DeviceType.mobile
-                                // ?
-                                TextStyle(
-                              fontSize: 12.sp,
+                            style: TextStyle(
+                              fontSize: subTitleFontSize,
                               color: Colors.white,
-                            )
-                            // : TextStyle(
-                            //     fontSize: 11.sp,
-                            //     color: Colors.white,
-                            //   )
-                            ,
+                            ),
                           ),
                         ],
                       ),
                     )),
                 Container(
                   height: 18.h,
-                  width:
-                      // SizerUtil.deviceType == DeviceType.mobile ?
-                      63.w
-                  // :
-                  //  70.w
-                  ,
+                  width: 63.w,
                   child: Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Column(
@@ -199,23 +167,14 @@ class _EventScreenState extends State<EventScreen> {
                       children: [
                         Container(
                           child: Text(
-                            'Provider  ' +
+                            'Doctor  ' +
                                 eventListViewmodel
                                     .EventList.data!.data![itemIndex].doctorName
                                     .toString(),
-                            // 'Why 100% PCR Testing Required?',
-                            style:
-                                //  SizerUtil.deviceType == DeviceType.mobile
-                                //     ?
-                                TextStyle(
-                              fontSize: 11.sp,
+                            style: TextStyle(
+                              fontSize: subTitleFontSize,
                               fontWeight: FontWeight.w500,
-                            )
-                            // : TextStyle(
-                            //     fontSize: 10.sp,
-                            //     fontWeight: FontWeight.w500,
-                            //   )
-                            ,
+                            ),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -229,18 +188,10 @@ class _EventScreenState extends State<EventScreen> {
                                 eventListViewmodel
                                     .EventList.data!.data![itemIndex].name
                                     .toString(),
-                            style:
-                                //  SizerUtil.deviceType == DeviceType.mobile
-                                //     ?
-                                TextStyle(
-                              fontSize: 11.sp,
+                            style: TextStyle(
+                              fontSize: subTitleFontSize,
                               fontWeight: FontWeight.w500,
-                            )
-                            // : TextStyle(
-                            //     fontSize: 10.sp,
-                            //     fontWeight: FontWeight.w500,
-                            //   )
-                            ,
+                            ),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -254,18 +205,10 @@ class _EventScreenState extends State<EventScreen> {
                                 eventListViewmodel
                                     .EventList.data!.data![itemIndex].mobile
                                     .toString(),
-                            style:
-                                // SizerUtil.deviceType == DeviceType.mobile
-                                //     ?
-                                TextStyle(
-                              fontSize: 11.sp,
+                            style: TextStyle(
+                              fontSize: subTitleFontSize,
                               fontWeight: FontWeight.w500,
-                            )
-                            // : TextStyle(
-                            //     fontSize: 10.sp,
-                            //     fontWeight: FontWeight.w500,
-                            //   )
-                            ,
+                            ),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -279,18 +222,10 @@ class _EventScreenState extends State<EventScreen> {
                             children: [
                               Text(
                                 'Ref No  -',
-                                style:
-                                    // SizerUtil.deviceType == DeviceType.mobile
-                                    //     ?
-                                    TextStyle(
-                                  fontSize: 11.sp,
+                                style: TextStyle(
+                                  fontSize: subTitleFontSize,
                                   fontWeight: FontWeight.w500,
-                                )
-                                // : TextStyle(
-                                //     fontSize: 10.sp,
-                                //     fontWeight: FontWeight.w500,
-                                //   )
-                                ,
+                                ),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -326,9 +261,6 @@ class _EventScreenState extends State<EventScreen> {
             ),
           ),
         ),
-        // SizedBox(
-        //   height: 20,
-        // ),
       ],
     );
   }
@@ -349,10 +281,6 @@ class _EventScreenState extends State<EventScreen> {
   Widget build(BuildContext context) {
     final settingsViewModel =
         Provider.of<SettingsViewModel>(context, listen: false);
-    // Timer(Duration(microseconds: 20), () {
-    //   eventListViewmodel.fetchEventListApi(
-    //       deviceId.toString(), token.toString());
-    // });
     Future refresh() async {
       Timer(Duration(microseconds: 20), () {
         eventListViewmodel.fetchEventListApi(
@@ -387,7 +315,6 @@ class _EventScreenState extends State<EventScreen> {
                       case Status.LOADING:
                         return AppBar(
                           automaticallyImplyLeading: false,
-                          // centerTitle: false,
                           backgroundColor: Color(0xffffffff),
                           elevation: 0,
                           title: Padding(
@@ -435,12 +362,6 @@ class _EventScreenState extends State<EventScreen> {
                           ),
                         );
 
-                      // Center(
-                      //     child: Column(
-                      //   children: [
-                      //     Text(value.doctorDetailsList.message.toString()),
-                      //   ],
-                      // ));
                       case Status.COMPLETED:
                         return AppBar(
                           automaticallyImplyLeading: false,
@@ -505,9 +426,8 @@ class _EventScreenState extends State<EventScreen> {
                           final splitedText = value.EventList.message
                               .toString()
                               .split('Invalid request');
-                          messageCode = json
-                              .decode(splitedText[1])['displayMessage']
-                              .toString();
+                          messageCode =
+                              json.decode(splitedText[1])['displayMessage'];
                           print(json.decode(splitedText[1])['displayMessage']);
                           print(
                               'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
@@ -521,7 +441,7 @@ class _EventScreenState extends State<EventScreen> {
                                 child: Stack(
                                   children: [
                                     SingleChildScrollView(
-                                      physics: BouncingScrollPhysics(),
+                                      physics: AlwaysScrollableScrollPhysics(),
                                       child: Padding(
                                         padding: EdgeInsets.all(15),
                                         child: Container(
@@ -553,14 +473,7 @@ class _EventScreenState extends State<EventScreen> {
                                                   value.EventList.message
                                                       .toString(),
                                                   style: TextStyle(
-                                                      fontSize:
-                                                          // SizerUtil
-                                                          //             .deviceType ==
-                                                          //         DeviceType.mobile
-                                                          //     ?
-                                                          14.sp
-                                                      // : 12.sp
-                                                      ,
+                                                      fontSize: titleFontSize,
                                                       fontWeight:
                                                           FontWeight.w500),
                                                 ),
@@ -578,17 +491,13 @@ class _EventScreenState extends State<EventScreen> {
                                   child: Text(
                                     'Alert!',
                                     style: TextStyle(
-                                        fontSize: 15.sp,
+                                        fontSize: titleFontSize,
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ),
                                 content: Text(
                                   messageCode.toString(),
-                                  style: TextStyle(
-                                      // fontWeight:
-                                      //     FontWeight
-                                      //         .bold,
-                                      fontSize: 12.sp),
+                                  style: TextStyle(fontSize: subTitleFontSize),
                                   textAlign: TextAlign.center,
                                 ),
                                 actions: <Widget>[
@@ -606,7 +515,7 @@ class _EventScreenState extends State<EventScreen> {
                                           : Text(
                                               'OK',
                                               style: TextStyle(
-                                                  fontSize: 14.sp,
+                                                  fontSize: titleFontSize,
                                                   fontWeight: FontWeight.bold),
                                             ),
                                       onPressed: () {
@@ -618,46 +527,31 @@ class _EventScreenState extends State<EventScreen> {
                                                     MyNavigationBar(
                                                       indexNumber: 0,
                                                     )));
-                                        // Timer(Duration(seconds: 5),() =>  settingsViewModel.setLoading1(true)) ;
                                       },
                                     ),
                                   ),
                                 ],
                               );
 
-                      // Padding(
-                      //   padding: const EdgeInsets.all(8.0),
-                      //   child: Center(child: Text(messageCode.toString())),
-                      // );
-
-                      // Center(
-                      //     child:
-                      //         Html(data: value.EventList.message.toString()));
                       case Status.COMPLETED:
                         return eventListViewmodel
                                     .EventList.data!.data!.length !=
                                 0
                             ? RefreshIndicator(
                                 onRefresh: refresh,
-                                child: Stack(
-                                  children: [
-                                    Container(
-                                      height: 100.h,
-                                      child: SingleChildScrollView(
-                                        physics:
-                                            AlwaysScrollableScrollPhysics(),
-                                        child: ListView.builder(
-                                            padding:
-                                                EdgeInsets.only(bottom: 10),
-                                            physics: BouncingScrollPhysics(),
-                                            shrinkWrap: true,
-                                            itemCount: eventListViewmodel
-                                                .EventList.data!.data!.length,
-                                            itemBuilder: (BuildContext context,
-                                                int itemIndex) {
-                                              return createAppointmentListContainer(
-                                                  context, itemIndex);
-                                            }),
+                                child: CustomScrollView(
+                                  slivers: [
+                                    SliverPadding(
+                                      padding: EdgeInsets.only(bottom: 10),
+                                      sliver: SliverList(
+                                        delegate: SliverChildBuilderDelegate(
+                                          (context, index) {
+                                            return createAppointmentListContainer(
+                                                context, index);
+                                          },
+                                          childCount: eventListViewmodel
+                                              .EventList.data!.data!.length,
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -668,7 +562,7 @@ class _EventScreenState extends State<EventScreen> {
                                 child: Stack(
                                   children: [
                                     SingleChildScrollView(
-                                      physics: BouncingScrollPhysics(),
+                                      physics: AlwaysScrollableScrollPhysics(),
                                       child: Padding(
                                         padding: EdgeInsets.all(15),
                                         child: Container(
@@ -686,15 +580,9 @@ class _EventScreenState extends State<EventScreen> {
                                                 'Swipe down to refresh page',
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
-                                                  fontSize:
-
-                                                      // SizerUtil.deviceType ==
-                                                      //         DeviceType.mobile
-                                                      //     ?
-                                                      14.sp,
-                                                  // : 12.sp,
+                                                  fontSize: titleFontSize,
                                                   color: Color(0XFF545454),
-                                                  fontWeight: FontWeight.w600,
+                                                  fontWeight: FontWeight.w500,
                                                 ),
                                               ),
                                               SizedBox(
@@ -704,7 +592,6 @@ class _EventScreenState extends State<EventScreen> {
                                                 child: Image.asset(
                                                   'images/axon.png',
                                                   height: 10.h,
-                                                  // width: 90,
                                                 ),
                                               ),
                                               SizedBox(
@@ -715,17 +602,10 @@ class _EventScreenState extends State<EventScreen> {
                                                   'You don\'t have any bookings or upcoming events',
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
-                                                      fontSize:
-
-                                                          //  SizerUtil
-                                                          //             .deviceType ==
-                                                          //         DeviceType.mobile
-                                                          //     ?
-                                                          14.sp,
-                                                      // : 12.sp,
+                                                      fontSize: titleFontSize,
                                                       color: Color(0XFF545454),
                                                       fontWeight:
-                                                          FontWeight.w600),
+                                                          FontWeight.w500),
                                                 ),
                                               ),
                                             ],

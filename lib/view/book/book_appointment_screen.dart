@@ -179,6 +179,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                   margin: EdgeInsets.all(6),
                                   height: 4.h,
                                   width: 5.h,
+                                  // child: Image.asset('images/whatsapp.png'),
                                 ),
                                 SettingsWidget(),
                               ],
@@ -212,36 +213,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                           ),
                         );
                       case Status.COMPLETED:
-                        return
-
-                            // settingsViewModel.doctorDetailsList.data!
-                            //             .data![0].paymentGatewayEnabled
-                            //             .toString() ==
-                            //         'true'
-                            //     ? AppBar(
-                            //         automaticallyImplyLeading: false,
-                            //         centerTitle: false,
-                            //         backgroundColor: Color(0xffffffff),
-                            //         elevation: 0,
-                            //         title: Padding(
-                            //           padding: const EdgeInsets.only(top: 5.0),
-                            //           child: Row(
-                            //             mainAxisAlignment:
-                            //                 MainAxisAlignment.spaceBetween,
-                            //             children: [
-                            //               AxonIconForAppBarrWidget(),
-                            //               ScreenNameWidget(
-                            //                 title: '  Book Appointment',
-                            //               ),
-                            //               WhatsappWidget(),
-                            //               PaymentWidget(),
-                            //               SettingsWidget(),
-                            //             ],
-                            //           ),
-                            //         ),
-                            //       )
-                            //     :
-                            AppBar(
+                        return AppBar(
                           automaticallyImplyLeading: false,
                           centerTitle: false,
                           backgroundColor: Color(0xffffffff),
@@ -300,7 +272,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                           child: Stack(
                             children: [
                               SingleChildScrollView(
-                                physics: BouncingScrollPhysics(),
+                                physics: AlwaysScrollableScrollPhysics(),
                                 child: Padding(
                                   padding: EdgeInsets.all(15),
                                   child: Container(
@@ -336,7 +308,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                     // SizerUtil.deviceType ==
                                                     //         DeviceType.mobile
                                                     //     ?
-                                                    14.sp
+                                                    titleFontSize
                                                 // : 12.sp
                                                 ,
                                                 fontWeight: FontWeight.w500),
@@ -354,10 +326,76 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                       case Status.COMPLETED:
                         selectedDocotrId =
                             value.doctorList.data!.data![0].doctorId.toString();
+                        selectedDoctor = value
+                            .doctorList.data!.data![0].doctorName
+                            .toString();
+                        void _showDoctorSelectionAlertDialog(
+                            BuildContext context,
+                            DoctorNameProvider doctorNameProvider) {
+                          showDialog(
+                            barrierDismissible: false,
+                            context: context,
+                            builder: (BuildContext context) {
+                              DoctorListViewmodel value =
+                                  Provider.of<DoctorListViewmodel>(context);
+
+                              return AlertDialog(
+                                title: Text(
+                                  'Select a Doctor',
+                                  style: TextStyle(fontSize: titleFontSize),
+                                ),
+                                content: Container(
+                                  height: value.doctorList.data!.data!.length *
+                                      50.0, // Adjust the height based on item count
+                                  width: double.maxFinite,
+                                  child: ListView.builder(
+                                    itemCount:
+                                        value.doctorList.data!.data!.length,
+                                    itemBuilder: (context, index) {
+                                      var doctor =
+                                          value.doctorList.data!.data![index];
+                                      return ListTile(
+                                        title: Text(
+                                          doctor.doctorName.toString(),
+                                          style: TextStyle(
+                                              fontSize: subTitleFontSize),
+                                        ),
+                                        onTap: () {
+                                          selectedDocotrId =
+                                              doctor.doctorId.toString();
+                                          // get();
+                                          print(
+                                              'Selected Doctor: ${doctor.doctorName}');
+                                          print(
+                                              'Doctor ID: ${doctor.doctorId}');
+                                          print(
+                                              'CustomerDoctor ID: ${doctor.doctorId}');
+                                          print(
+                                              'cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc');
+
+                                          selectedDoctor =
+                                              doctor.doctorName.toString();
+                                          doctorNameProvider.updateTextValues(
+                                            '${doctor.doctorName}',
+                                            '${doctor.doctorId}',
+                                          );
+
+                                          // Close the dialog
+                                          Navigator.pop(context);
+                                        },
+                                      );
+                                    },
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        }
+
                         return Stack(
                           children: [
                             SingleChildScrollView(
-                              // physics: BouncingScrollPhysics(),
+                              // physics: AlwaysScrollableScrollPhysics(),
                               child: Padding(
                                 padding: EdgeInsets.all(0),
                                 child: isLoading
@@ -518,7 +556,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                           style:
                                                                               TextStyle(
                                                                             fontSize:
-                                                                                10.sp,
+                                                                                descriptionFontSize,
                                                                             color:
                                                                                 Colors.white,
                                                                             fontWeight:
@@ -539,7 +577,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                           style:
                                                                               TextStyle(
                                                                             fontSize:
-                                                                                10.sp,
+                                                                                descriptionFontSize,
                                                                             color:
                                                                                 Colors.white,
                                                                             fontStyle:
@@ -558,11 +596,15 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                       number == null ||
                                                                               number ==
                                                                                   ''
-                                                                          ? Utils.snackBar(
-                                                                              'MobileNo Not Available',
+                                                                          ?
+                                                                          //  Utils.snackBar(
+                                                                          //     'MobileNo Not Available',
+                                                                          //     context)
+                                                                          Utils.flushBarErrorMessage(
+                                                                              "MobileNo Not Available",
+                                                                              Duration(seconds: 2),
                                                                               context)
-                                                                          : launch(
-                                                                              'tel://$number');
+                                                                          : launch('tel://$number');
                                                                     },
                                                                     child:
                                                                         Container(
@@ -611,241 +653,240 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                             .start,
                                                     children: [
                                                       Text(
-                                                        '     Provider',
-                                                        style:
-                                                            //  SizerUtil
-                                                            //             .deviceType ==
-                                                            //         DeviceType
-                                                            //             .mobile
-                                                            //     ?
-                                                            TextStyle(
-                                                                fontSize: 12.sp,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
-                                                                color: Colors
-                                                                    .grey
-                                                                    .shade700)
-                                                        // : TextStyle(
-                                                        //     fontSize: 8.sp,
-                                                        //     fontWeight:
-                                                        //         FontWeight
-                                                        //             .w400,
-                                                        //     color: Colors
-                                                        //         .grey
-                                                        //         .shade700)
-                                                        ,
+                                                        '   Doctor',
+                                                        style: TextStyle(
+                                                            fontSize:
+                                                                subTitleFontSize,
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                            color: Colors
+                                                                .grey.shade700),
                                                       ),
-                                                      SizedBox(height: 2.h),
-                                                      // Consumer<
-                                                      //         DoctorNameProvider>(
-                                                      //     builder: (context,
-                                                      //         doctorNameProvider,
-                                                      //         _) {
-                                                      //   return Container(
-                                                      //     width: 70.w,
-                                                      //     color: Colors.amber,
-                                                      //     padding:
-                                                      //         EdgeInsets.all(0),
-                                                      //     alignment: Alignment
-                                                      //         .centerLeft,
-                                                      //     child:
-                                                      //         DropdownButtonHideUnderline(
-                                                      //       child: ButtonTheme(
-                                                      //         alignedDropdown:
-                                                      //             true,
-                                                      //         child:
-                                                      //             DropdownButton<
-                                                      //                 String>(
-                                                      //           isDense: true,
-                                                      //           value:
-                                                      //               selectedDocotrId,
-                                                      //           onChanged: (String?
-                                                      //               newValue) {
-                                                      //             selectedDocotrId =
-                                                      //                 newValue!;
-                                                      //             selectedDoctor = value
-                                                      //                 .doctorList
-                                                      //                 .data!
-                                                      //                 .data!
-                                                      //                 .firstWhere(
-                                                      //                   (doctor) =>
-                                                      //                       doctor.doctorId.toString() ==
-                                                      //                       newValue,
-                                                      //                 )
-                                                      //                 .doctorName
-                                                      //                 .toString();
-
-                                                      //             doctorNameProvider
-                                                      //                 .resetData();
-
-                                                      //             doctorNameProvider
-                                                      //                 .updateTextValues(
-                                                      //               '${selectedDoctor}',
-                                                      //               '${selectedDocotrId}',
-                                                      //             );
-                                                      //             if (kDebugMode) {
-                                                      //               print(
-                                                      //                   'updateTextValues');
-                                                      //               print(
-                                                      //                   'selectedDoctor ${selectedDoctor}');
-                                                      //               print(
-                                                      //                   'selectedDoctor ${selectedDocotrId}');
-                                                      //             }
-                                                      //           },
-                                                      //           items: value
-                                                      //               .doctorList
-                                                      //               .data!
-                                                      //               .data!
-                                                      //               .map((map) {
-                                                      //             return new DropdownMenuItem<
-                                                      //                 String>(
-                                                      //               value: map
-                                                      //                   .doctorId
-                                                      //                   .toString(),
-                                                      //               child: Row(
-                                                      //                 mainAxisAlignment:
-                                                      //                     MainAxisAlignment
-                                                      //                         .start,
-                                                      //                 children: <
-                                                      //                     Widget>[
-                                                      //                   // SizerUtil.deviceType ==
-                                                      //                   //         DeviceType.mobile
-                                                      //                   //     ?
-                                                      //                   Container(
-                                                      //                       child:
-                                                      //                           Text(
-                                                      //                     map.doctorName
-                                                      //                         .toString(),
-                                                      //                     overflow:
-                                                      //                         TextOverflow.visible,
-                                                      //                     maxLines:
-                                                      //                         1,
-                                                      //                     style: TextStyle(
-                                                      //                         fontSize: 14.sp,
-                                                      //                         fontWeight: FontWeight.w500),
-                                                      //                     textAlign:
-                                                      //                         TextAlign.start,
-                                                      //                   ))
-
-                                                      //                   // : Container(
-                                                      //                   //     child: Text(
-                                                      //                   //     map.doctorName.toString(),
-                                                      //                   //     style: TextStyle(fontSize: 10.sp, fontWeight: FontWeight.w500),
-                                                      //                   //     textAlign: TextAlign.start,
-                                                      //                   //   ))
-                                                      //                   ,
-                                                      //                 ],
-                                                      //               ),
-                                                      //             );
-                                                      //           }).toList(),
-                                                      //         ),
-                                                      //       ),
-                                                      //     ),
-                                                      //   );
-                                                      // })
-
+                                                      SizedBox(height: 1.h),
                                                       Consumer<
                                                           DoctorNameProvider>(
                                                         builder: (context,
                                                             doctorNameProvider,
                                                             _) {
-                                                          return Container(
-                                                            // width: 70.w,
-                                                            padding: EdgeInsets
-                                                                .symmetric(
-                                                                    horizontal:
-                                                                        8.0), // Adjust padding here
-                                                            alignment: Alignment
-                                                                .centerLeft,
-                                                            child:
-                                                                DropdownButtonHideUnderline(
-                                                              child:
-                                                                  ButtonTheme(
-                                                                alignedDropdown:
-                                                                    true,
-                                                                child:
-                                                                    DropdownButton<
-                                                                        String>(
-                                                                  isDense: true,
-                                                                  value:
-                                                                      selectedDocotrId,
-                                                                  onChanged:
-                                                                      (String?
-                                                                          newValue) {
-                                                                    selectedDocotrId =
-                                                                        newValue!;
-                                                                    selectedDoctor = value
-                                                                        .doctorList
-                                                                        .data!
-                                                                        .data!
-                                                                        .firstWhere(
-                                                                          (doctor) =>
-                                                                              doctor.doctorId.toString() ==
-                                                                              newValue,
-                                                                        )
-                                                                        .doctorName
-                                                                        .toString();
+                                                          if (value.doctorList
+                                                                      .data !=
+                                                                  null &&
+                                                              value
+                                                                  .doctorList
+                                                                  .data!
+                                                                  .data!
+                                                                  .isNotEmpty) {
+                                                            var firstDoctor =
+                                                                value
+                                                                    .doctorList
+                                                                    .data!
+                                                                    .data!
+                                                                    .first;
+                                                            if (doctorNameProvider
+                                                                .doctorName
+                                                                .isEmpty) {
+                                                              doctorNameProvider
+                                                                  .updateTextValues(
+                                                                '${firstDoctor.doctorName}',
+                                                                '${firstDoctor.doctorId}',
+                                                              );
+                                                              selectedDoctor =
+                                                                  firstDoctor
+                                                                      .doctorName
+                                                                      .toString();
+                                                            }
+                                                          }
 
-                                                                    doctorNameProvider
-                                                                        .resetData();
-
-                                                                    doctorNameProvider
-                                                                        .updateTextValues(
-                                                                      '${selectedDoctor}',
-                                                                      '${selectedDocotrId}',
-                                                                    );
-                                                                    if (kDebugMode) {
-                                                                      print(
-                                                                          'updateTextValues');
-                                                                      print(
-                                                                          'selectedDoctor ${selectedDoctor}');
-                                                                      print(
-                                                                          'selectedDoctor ${selectedDocotrId}');
-                                                                    }
-                                                                  },
-                                                                  items: value
-                                                                      .doctorList
-                                                                      .data!
-                                                                      .data!
-                                                                      .map(
-                                                                          (map) {
-                                                                    return DropdownMenuItem<
-                                                                        String>(
-                                                                      value: map
-                                                                          .doctorId
-                                                                          .toString(),
-                                                                      child:
-                                                                          Row(
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment.start,
-                                                                        children: <
-                                                                            Widget>[
-                                                                          Container(
-                                                                            width:
-                                                                                50.w,
-                                                                            child:
-                                                                                Text(
-                                                                              map.doctorName.toString(),
-                                                                              overflow: TextOverflow.ellipsis, // Handle overflow
-                                                                              maxLines: 1,
-                                                                              style: TextStyle(
-                                                                                fontSize: 14.sp,
-                                                                                fontWeight: FontWeight.w500,
-                                                                              ),
-                                                                              textAlign: TextAlign.start,
-                                                                            ),
+                                                          return InkWell(
+                                                            onTap: () {
+                                                              _showDoctorSelectionAlertDialog(
+                                                                  context,
+                                                                  doctorNameProvider);
+                                                            },
+                                                            child: SizerUtil
+                                                                        .deviceType ==
+                                                                    DeviceType
+                                                                        .mobile
+                                                                ? Container(
+                                                                    height: 5.h,
+                                                                    decoration: BoxDecoration(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(10)),
+                                                                    child: Row(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .start,
+                                                                      crossAxisAlignment:
+                                                                          CrossAxisAlignment
+                                                                              .center,
+                                                                      children: [
+                                                                        Container(
+                                                                          // color:
+                                                                          //     Colors.amber,
+                                                                          width:
+                                                                              60.w,
+                                                                          child:
+                                                                              Text(
+                                                                            "   ${selectedDoctor}",
+                                                                            style:
+                                                                                TextStyle(fontSize: subTitleFontSize, fontWeight: FontWeight.w500),
+                                                                            textAlign:
+                                                                                TextAlign.start,
+                                                                            overflow:
+                                                                                TextOverflow.ellipsis,
+                                                                            maxLines:
+                                                                                1,
                                                                           ),
-                                                                        ],
-                                                                      ),
-                                                                    );
-                                                                  }).toList(),
-                                                                ),
-                                                              ),
-                                                            ),
+                                                                        ),
+                                                                        Container(
+                                                                            child:
+                                                                                Icon(Icons.arrow_drop_down)),
+                                                                      ],
+                                                                    ),
+                                                                  )
+                                                                : Container(
+                                                                    height: 5.h,
+                                                                    decoration: BoxDecoration(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(10)),
+                                                                    child: Row(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .start,
+                                                                      crossAxisAlignment:
+                                                                          CrossAxisAlignment
+                                                                              .center,
+                                                                      children: [
+                                                                        Container(
+                                                                          width:
+                                                                              68.w,
+                                                                          child:
+                                                                              Text(
+                                                                            "   ${selectedDoctor}",
+                                                                            style:
+                                                                                TextStyle(fontSize: descriptionFontSize, fontWeight: FontWeight.w500),
+                                                                            textAlign:
+                                                                                TextAlign.start,
+                                                                            overflow:
+                                                                                TextOverflow.ellipsis,
+                                                                            maxLines:
+                                                                                1,
+                                                                          ),
+                                                                        ),
+                                                                        Container(
+                                                                            child:
+                                                                                Icon(Icons.arrow_drop_down)),
+                                                                      ],
+                                                                    ),
+                                                                  ),
                                                           );
                                                         },
                                                       )
+
+                                                      // Consumer<
+                                                      //     DoctorNameProvider>(
+                                                      //   builder: (context,
+                                                      //       doctorNameProvider,
+                                                      //       _) {
+                                                      //     return Container(
+                                                      //       padding: EdgeInsets
+                                                      //           .symmetric(
+                                                      //               horizontal:
+                                                      //                   8.0), // Adjust padding here
+                                                      //       alignment: Alignment
+                                                      //           .centerLeft,
+                                                      //       child:
+                                                      //           DropdownButtonHideUnderline(
+                                                      //         child:
+                                                      //             ButtonTheme(
+                                                      //           alignedDropdown:
+                                                      //               true,
+                                                      //           child:
+                                                      //               DropdownButton<
+                                                      //                   String>(
+                                                      //             isDense: true,
+                                                      //             value:
+                                                      //                 selectedDocotrId,
+                                                      //             onChanged:
+                                                      //                 (String?
+                                                      //                     newValue) {
+                                                      //               selectedDocotrId =
+                                                      //                   newValue!;
+                                                      //               selectedDoctor = value
+                                                      //                   .doctorList
+                                                      //                   .data!
+                                                      //                   .data!
+                                                      //                   .firstWhere(
+                                                      //                     (doctor) =>
+                                                      //                         doctor.doctorId.toString() ==
+                                                      //                         newValue,
+                                                      //                   )
+                                                      //                   .doctorName
+                                                      //                   .toString();
+
+                                                      //               doctorNameProvider
+                                                      //                   .resetData();
+
+                                                      //               doctorNameProvider
+                                                      //                   .updateTextValues(
+                                                      //                 '${selectedDoctor}',
+                                                      //                 '${selectedDocotrId}',
+                                                      //               );
+                                                      //               if (kDebugMode) {
+                                                      //                 print(
+                                                      //                     'updateTextValues');
+                                                      //                 print(
+                                                      //                     'selectedDoctor ${selectedDoctor}');
+                                                      //                 print(
+                                                      //                     'selectedDoctor ${selectedDocotrId}');
+                                                      //               }
+                                                      //             },
+                                                      //             items: value
+                                                      //                 .doctorList
+                                                      //                 .data!
+                                                      //                 .data!
+                                                      //                 .map(
+                                                      //                     (map) {
+                                                      //               return DropdownMenuItem<
+                                                      //                   String>(
+                                                      //                 value: map
+                                                      //                     .doctorId
+                                                      //                     .toString(),
+                                                      //                 child:
+                                                      //                     Row(
+                                                      //                   mainAxisAlignment:
+                                                      //                       MainAxisAlignment.start,
+                                                      //                   children: <
+                                                      //                       Widget>[
+                                                      //                     Container(
+                                                      //                       width:
+                                                      //                           50.w,
+                                                      //                       child:
+                                                      //                           Text(
+                                                      //                         map.doctorName.toString(),
+                                                      //                         overflow: TextOverflow.ellipsis, // Handle overflow
+                                                      //                         maxLines: 1,
+                                                      //                         style: TextStyle(
+                                                      //                           fontSize: titleFontSize,
+                                                      //                           fontWeight: FontWeight.w500,
+                                                      //                         ),
+                                                      //                         textAlign: TextAlign.start,
+                                                      //                       ),
+                                                      //                     ),
+                                                      //                   ],
+                                                      //                 ),
+                                                      //               );
+                                                      //             }).toList(),
+                                                      //           ),
+                                                      //         ),
+                                                      //       ),
+                                                      //     );
+                                                      //   },
+                                                      // )
                                                     ],
                                                   ),
                                                 ),
@@ -881,11 +922,10 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                               selectedDocotrId != "null"
                                                   ? _navigateDateAndTimeSelaction(
                                                       context)
-                                                  : Utils.snackBar(
-                                                      'Please Select a Doctor',
+                                                  : Utils.flushBarErrorMessage(
+                                                      "Please Select a Doctor",
+                                                      Duration(seconds: 2),
                                                       context);
-
-                                              ;
                                             },
                                             child: Card(
                                               shape: RoundedRectangleBorder(
@@ -926,29 +966,14 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                               10,
                                                                           top:
                                                                               10),
-                                                                  child:
-                                                                      // SizerUtil
-                                                                      //             .deviceType ==
-                                                                      //         DeviceType
-                                                                      //             .mobile
-                                                                      //     ?
-                                                                      Text(
+                                                                  child: Text(
                                                                     displaySelectAppointmentDate,
-                                                                    // displayDate,
                                                                     style: TextStyle(
-                                                                        fontSize: 14
-                                                                            .sp,
+                                                                        fontSize:
+                                                                            titleFontSize,
                                                                         fontWeight:
                                                                             FontWeight.w500),
-                                                                  )
-                                                                  // : Text(
-                                                                  //     displaySelectAppointmentDate,
-                                                                  //     // displayDate,
-                                                                  //     style: TextStyle(
-                                                                  //         fontSize: 10.sp,
-                                                                  //         fontWeight: FontWeight.w500),
-                                                                  //   )
-                                                                  ,
+                                                                  ),
                                                                 ),
                                                                 SizedBox(
                                                                     height:
@@ -960,16 +985,12 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                   CrossAxisAlignment
                                                                       .start,
                                                               children: [
-                                                                // SizerUtil.deviceType ==
-                                                                //         DeviceType
-                                                                //             .mobile
-                                                                //     ?
                                                                 Container(
                                                                   child: Text(
                                                                     '   Appointment',
                                                                     style: TextStyle(
-                                                                        fontSize: 12
-                                                                            .sp,
+                                                                        fontSize:
+                                                                            subTitleFontSize,
                                                                         fontWeight:
                                                                             FontWeight
                                                                                 .w400,
@@ -977,25 +998,10 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                             .grey
                                                                             .shade700),
                                                                   ),
-                                                                )
-                                                                // : Container(
-                                                                //     child:
-                                                                //         Text(
-                                                                //       '   Appointment',
-                                                                //       style: TextStyle(
-                                                                //           fontSize: 8.sp,
-                                                                //           fontWeight: FontWeight.w400,
-                                                                //           color: Colors.grey.shade700),
-                                                                //     )
-                                                                //     ,
-                                                                //   )
-                                                                ,
-                                                                // SizedBox(
-                                                                //     height: 1),
-                                                                // SizerUtil.deviceType ==
-                                                                //         DeviceType
-                                                                //             .mobile
-                                                                //     ?
+                                                                ),
+                                                                SizedBox(
+                                                                    height:
+                                                                        1.h),
                                                                 Container(
                                                                   padding: EdgeInsets
                                                                       .only(
@@ -1009,8 +1015,9 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                         'Date   ',
                                                                         style: TextStyle(
                                                                             fontSize:
-                                                                                12.sp,
-                                                                            fontWeight: FontWeight.w400,
+                                                                                subTitleFontSize,
+                                                                            fontWeight:
+                                                                                FontWeight.w400,
                                                                             color: Colors.grey.shade700),
                                                                       ),
                                                                       Text(
@@ -1018,37 +1025,16 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                         // displayDate,
                                                                         style: TextStyle(
                                                                             fontSize:
-                                                                                12.sp,
-                                                                            fontWeight: FontWeight.w500),
+                                                                                subTitleFontSize,
+                                                                            fontWeight:
+                                                                                FontWeight.w500),
                                                                       ),
                                                                     ],
                                                                   ),
-                                                                )
-                                                                // : Container(
-                                                                //     padding: EdgeInsets.only(
-                                                                //         left:
-                                                                //             10,
-                                                                //         top:
-                                                                //             5),
-                                                                //     child:
-                                                                //         Row(
-                                                                //       children: [
-                                                                //         Text(
-                                                                //           'Date   ',
-                                                                //           style: TextStyle(fontSize: 8.sp, fontWeight: FontWeight.w400, color: Colors.grey.shade700),
-                                                                //         ),
-                                                                //         Text(
-                                                                //           appointmentDate,
-                                                                //           // displayDate,
-                                                                //           style: TextStyle(fontSize: 8.sp, fontWeight: FontWeight.w500),
-                                                                //         ),
-                                                                //       ],
-                                                                //     ),
-                                                                //   )
-                                                                ,
+                                                                ),
                                                                 SizedBox(
                                                                     height:
-                                                                        0.3.h),
+                                                                        0.8.h),
                                                                 Container(
                                                                   padding: EdgeInsets
                                                                       .only(
@@ -1060,16 +1046,18 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                         'Time  ',
                                                                         style: TextStyle(
                                                                             fontSize:
-                                                                                8.sp,
-                                                                            fontWeight: FontWeight.w400,
+                                                                                subTitleFontSize,
+                                                                            fontWeight:
+                                                                                FontWeight.w400,
                                                                             color: Colors.grey.shade700),
                                                                       ),
                                                                       Text(
                                                                         displayTimeSlot,
                                                                         style: TextStyle(
                                                                             fontSize:
-                                                                                8.sp,
-                                                                            fontWeight: FontWeight.w500),
+                                                                                descriptionFontSize,
+                                                                            fontWeight:
+                                                                                FontWeight.w500),
                                                                       ),
                                                                     ],
                                                                   ),
@@ -1147,25 +1135,12 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                               overflow:
                                                                   TextOverflow
                                                                       .ellipsis,
-                                                              style:
-                                                                  // SizerUtil
-                                                                  //             .deviceType ==
-                                                                  //         DeviceType
-                                                                  //             .mobile
-                                                                  //     ?
-                                                                  TextStyle(
-                                                                      fontSize:
-                                                                          14.sp,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500)
-                                                              // : TextStyle(
-                                                              //     fontSize:
-                                                              //         10.sp,
-                                                              //     fontWeight:
-                                                              //         FontWeight
-                                                              //             .w500)
-                                                              ,
+                                                              style: TextStyle(
+                                                                  fontSize:
+                                                                      titleFontSize,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500),
                                                             ),
                                                           ),
                                                           //
@@ -1208,13 +1183,17 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                   child: ElevatedButton(
                                                     onPressed: () {
                                                       if (displayDate.isEmpty) {
-                                                        Utils.snackBar(
-                                                            'Please Select Appointment Date',
+                                                        Utils.flushBarErrorMessage(
+                                                            "Please Select Appointment Date",
+                                                            Duration(
+                                                                seconds: 2),
                                                             context);
                                                       } else if (displayPatientName ==
                                                           'Select Patient') {
-                                                        Utils.snackBar(
-                                                            'Please Select Patient',
+                                                        Utils.flushBarErrorMessage(
+                                                            "Please Select Patient",
+                                                            Duration(
+                                                                seconds: 2),
                                                             context);
                                                       } else if (isSubscriptionExpired ==
                                                           true) {
@@ -1226,8 +1205,8 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                   child: Text(
                                                                     'Alert!',
                                                                     style: TextStyle(
-                                                                        fontSize: 15
-                                                                            .sp,
+                                                                        fontSize:
+                                                                            titleFontSize,
                                                                         fontWeight:
                                                                             FontWeight.bold),
                                                                   ),
@@ -1238,7 +1217,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                       // fontWeight:
                                                                       //     FontWeight
                                                                       //         .bold,
-                                                                      fontSize: 12.sp),
+                                                                      fontSize: subTitleFontSize),
                                                                   textAlign:
                                                                       TextAlign
                                                                           .center,
@@ -1254,8 +1233,9 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                         'OK',
                                                                         style: TextStyle(
                                                                             fontSize:
-                                                                                14.sp,
-                                                                            fontWeight: FontWeight.bold),
+                                                                                titleFontSize,
+                                                                            fontWeight:
+                                                                                FontWeight.bold),
                                                                       ),
                                                                       onPressed:
                                                                           () {
@@ -1309,9 +1289,6 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                 .isAdvanceBookingRequired
                                                                 .toString() ==
                                                             'true') {
-                                                          // Utils.snackBar(
-                                                          //     'Appointment Book aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-                                                          //     context);
                                                           showModalBottomSheet<
                                                               void>(
                                                             isScrollControlled:
@@ -1352,25 +1329,12 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                           )))
                                                         : Text(
                                                             'BOOK APPOINTMENT',
-                                                            style:
-                                                                // SizerUtil
-                                                                //             .deviceType ==
-                                                                //         DeviceType
-                                                                //             .mobile
-                                                                //     ?
-                                                                TextStyle(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                    fontSize:
-                                                                        12.sp)
-                                                            // : TextStyle(
-                                                            //     fontWeight:
-                                                            //         FontWeight
-                                                            //             .w500,
-                                                            //     fontSize:
-                                                            //         8.sp)
-                                                            ,
+                                                            style: TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                                fontSize:
+                                                                    subTitleFontSize),
                                                           ),
                                                     style: ElevatedButton
                                                         .styleFrom(
@@ -1403,22 +1367,11 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                     },
                                                     child: Text(
                                                       'RESET',
-                                                      style:
-                                                          //  SizerUtil
-                                                          //             .deviceType ==
-                                                          //         DeviceType.mobile
-                                                          //     ?
-                                                          TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              fontSize: 12.sp)
-                                                      // : TextStyle(
-                                                      //     fontWeight:
-                                                      //         FontWeight
-                                                      //             .w500,
-                                                      //     fontSize: 8.sp)
-                                                      ,
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          fontSize:
+                                                              subTitleFontSize),
                                                     ),
                                                     style: ElevatedButton
                                                         .styleFrom(
@@ -1558,8 +1511,6 @@ class _PaymentSheetState extends State<PaymentSheet> {
   );
 
   UserPreferences userPreference = UserPreferences();
-  // String selectedPayHeadIndex =
-  //     'Consultation'; // Index of the selected payHead, initially set to -1
   String?
       selectedPayHeadIndex; // Index of the selected payHead, initially set to -1
 
@@ -1618,6 +1569,8 @@ class _PaymentSheetState extends State<PaymentSheet> {
   }
 
   void makePayment() async {
+    final advanceBookAppointmentViewModel =
+        Provider.of<AdvanceBookAppointmentViewModel>(context, listen: false);
     _nodeAmount.unfocus();
     _nodeEmail.unfocus();
     if (kDebugMode) {
@@ -1663,8 +1616,8 @@ class _PaymentSheetState extends State<PaymentSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final bookAppointmentViewModel =
-        Provider.of<BookAppointmentViewModel>(context);
+    final advanceBookAppointmentViewModel =
+        Provider.of<AdvanceBookAppointmentViewModel>(context);
     settingsViewModel.fetchDoctorDetailsListApi(token.toString());
 
     return Scaffold(
@@ -1703,13 +1656,7 @@ class _PaymentSheetState extends State<PaymentSheet> {
                                   Text(
                                     'Select Payment Reason',
                                     style: TextStyle(
-                                      fontSize:
-                                          //  SizerUtil.deviceType ==
-                                          //         DeviceType.mobile
-                                          //     ?
-                                          18.sp
-                                      // : 12.sp
-                                      ,
+                                      fontSize: 18.sp,
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
@@ -1781,14 +1728,7 @@ class _PaymentSheetState extends State<PaymentSheet> {
                                                                 .toString(),
                                                             style: TextStyle(
                                                               fontSize:
-                                                                  //  SizerUtil
-                                                                  //             .deviceType ==
-                                                                  //         DeviceType
-                                                                  //             .mobile
-                                                                  //     ?
-                                                                  13.sp
-                                                              // : 9.sp
-                                                              ,
+                                                                  titleFontSize,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w500,
@@ -1909,13 +1849,7 @@ class _PaymentSheetState extends State<PaymentSheet> {
                                     'I accept  ',
                                     style: TextStyle(
                                       color: Colors.black,
-                                      fontSize:
-                                          // SizerUtil.deviceType ==
-                                          //         DeviceType.mobile
-                                          //     ?
-                                          12.sp
-                                      // : 8.sp
-                                      ,
+                                      fontSize: subTitleFontSize,
                                     ),
                                   ),
                                   InkWell(
@@ -1936,13 +1870,7 @@ class _PaymentSheetState extends State<PaymentSheet> {
                                       'terms and conditions',
                                       style: TextStyle(
                                         color: Color(0xFFFD5722),
-                                        fontSize:
-                                            // SizerUtil.deviceType ==
-                                            //         DeviceType.mobile
-                                            //     ?
-                                            12.sp
-                                        // : 8.sp
-                                        ,
+                                        fontSize: subTitleFontSize,
                                       ),
                                     ),
                                   ),
@@ -1951,61 +1879,53 @@ class _PaymentSheetState extends State<PaymentSheet> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  // Spacer(),
                                   Container(
                                     height: 5.h,
-                                    width: 40.w,
                                     child: ElevatedButton(
                                       onPressed: () {
                                         print(selectedPayHeadIndex);
                                         if (selectedPayHeadIndex == null ||
                                             selectedPayHeadIndex == ' ') {
-                                          Utils.snackBar(
-                                              'Please select PayHead', context);
+                                          Utils.flushBarErrorMessage(
+                                              "Please select PayHead",
+                                              Duration(seconds: 2),
+                                              context);
                                         } else if (!emailRegex
                                             .hasMatch(strEmail.text)) {
-                                          Utils.snackBar(
-                                              'Please enter a valid Email address*',
+                                          Utils.flushBarErrorMessage(
+                                              "Please enter a valid Email address*",
+                                              Duration(seconds: 2),
                                               context);
                                         } else if (!agree) {
-                                          Utils.snackBar(
-                                              'Please select terms & conditions',
+                                          Utils.flushBarErrorMessage(
+                                              "Please select terms & conditions",
+                                              Duration(seconds: 2),
                                               context);
                                         } else if (!_enableBtn) {
-                                          // Utils.snackBar(
-                                          //     'Please select terms & conditions',
-                                          //     context);
                                         } else {
-                                          makePayment();
+                                          advanceBookAppointmentViewModel
+                                                  .Ploading
+                                              ? null
+                                              : makePayment();
                                         }
                                       },
-                                      child:
-
-                                          // advanceBookAppointmentViewModel
-                                          //         .Ploading
-                                          //     ? Container(
-                                          //         height: 2.h,
-                                          //         width: 2.h,
-                                          //         child: CircularProgressIndicator(
-                                          //           color: Colors.white,
-                                          //           strokeWidth: 2.0,
-                                          //         ))
-                                          //     :
-
-                                          Text(
-                                        'START PAYMENT',
-                                        style: TextStyle(
-                                          fontSize:
-                                              //  SizerUtil.deviceType ==
-                                              //         DeviceType.mobile
-                                              //     ?
-                                              12.sp
-                                          // : 8.sp
-                                          ,
-                                          fontWeight: FontWeight.w600,
-                                          color: Colors.white,
-                                        ),
-                                      ),
+                                      child: advanceBookAppointmentViewModel
+                                              .Ploading
+                                          ? Container(
+                                              height: 2.h,
+                                              width: 2.h,
+                                              child: CircularProgressIndicator(
+                                                color: Colors.white,
+                                                strokeWidth: 2.0,
+                                              ))
+                                          : Text(
+                                              'START PAYMENT',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: subTitleFontSize,
+                                                color: Colors.white,
+                                              ),
+                                            ),
                                       style: ElevatedButton.styleFrom(
                                         primary: _enableBtn
                                             ? Color(0xFFFD5722)

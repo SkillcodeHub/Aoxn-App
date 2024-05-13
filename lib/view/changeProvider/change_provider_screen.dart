@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:axonweb/Provider/backButton_provider.dart';
+import 'package:axonweb/Utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
@@ -37,7 +38,6 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
       CustomerTokenByQRViewmodel();
   SettingsViewModel settingsViewModel = SettingsViewModel();
 
-  // bool? backButton;
   String? token;
   String? deviceId;
   String? name;
@@ -48,7 +48,6 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
   String? customerName;
   String? appCode;
   String showAlertDialog = ' ';
-// late Map<String, dynamic> storedUserData;
   @override
   void initState() {
     userPreference.getToken().then((value) {
@@ -121,12 +120,6 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
   Future<void> checkPermission(
       Permission permission, BuildContext context) async {
     final status = await permission.request();
-    // if(status.isGranted){
-    //   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Permission is Granted")));
-    // }else{
-    //   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Permission is not Granted")));
-
-    // }
   }
 
   Future<List<String>> fetchData() async {
@@ -161,15 +154,7 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
 
     print(buttonProvider.backk);
     print('nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn');
-    // setState(() {
-    //   final settingsViewModel =
-    //       Provider.of<SettingsViewModel>(context, listen: false);
-    //   // settingsViewModel.setBackButton1(true);
-    //   print('yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy');
-    //   print(settingsViewModel.backButton1);
-    //   print('yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy');
-    //   print('ParthParthParth');
-    // });
+
     print('userData');
     print(userData);
     print('userData');
@@ -253,74 +238,67 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
           print(outputList);
 
           print('ParthParthParth');
-          // print('customerTkenViewmodel.backButton');
-          // print(settingsViewModel.backButton1);
-          // print('customerTkenViewmodel.backButton');
           return Scaffold(
               backgroundColor: BackgroundColor,
               appBar: PreferredSize(
                 preferredSize: SizerUtil.deviceType == DeviceType.mobile
                     ? Size.fromHeight(7.h)
                     : Size.fromHeight(5.h),
-                child:
-                    // getKeyForCallLetId == 'true'
-                    buttonProvider.backk == true
-                        ? AppBar(
-                            automaticallyImplyLeading: false,
-                            centerTitle: false,
-                            elevation: 0,
-                            backgroundColor: Color(0xffffffff),
-                            leading: Padding(
-                              padding: EdgeInsets.only(top: 2),
-                              child: IconButton(
-                                iconSize:
-                                    SizerUtil.deviceType == DeviceType.mobile
-                                        ? 2.5.h
-                                        : 3.h,
-                                color: Colors.black,
-                                onPressed: () {
-                                  settingsViewModel.setBackButton1(false);
+                child: buttonProvider.backk == true
+                    ? AppBar(
+                        automaticallyImplyLeading: false,
+                        centerTitle: false,
+                        elevation: 0,
+                        backgroundColor: Color(0xffffffff),
+                        leading: Padding(
+                          padding: EdgeInsets.only(top: 2),
+                          child: IconButton(
+                            iconSize: SizerUtil.deviceType == DeviceType.mobile
+                                ? 2.5.h
+                                : 3.h,
+                            color: Colors.black,
+                            onPressed: () {
+                              settingsViewModel.setBackButton1(false);
 
-                                  Navigator.pop(context);
-                                },
-                                icon: Icon(Icons.arrow_back_rounded),
-                              ),
-                            ),
-                            title: Padding(
-                              padding: EdgeInsets.only(
-                                top: 2.0,
-                              ),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  ScreenNameWidget(
-                                    title: '  Change Provider',
-                                  ),
-                                ],
-                              ),
-                            ),
-                          )
-                        : AppBar(
-                            automaticallyImplyLeading: false,
-                            centerTitle: false,
-                            elevation: 0,
-                            backgroundColor: Color(0xffffffff),
-                            title: Padding(
-                              padding: EdgeInsets.only(
-                                top: 2.0,
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  AxonIconForAppBarrWidget(),
-                                  ScreenNameWidget(
-                                    title: '  Change Provider',
-                                  ),
-                                ],
-                              ),
-                            ),
+                              Navigator.pop(context);
+                            },
+                            icon: Icon(Icons.arrow_back_rounded),
                           ),
+                        ),
+                        title: Padding(
+                          padding: EdgeInsets.only(
+                            top: 2.0,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              ScreenNameWidget(
+                                title: '  Change Doctor',
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                    : AppBar(
+                        automaticallyImplyLeading: false,
+                        centerTitle: false,
+                        elevation: 0,
+                        backgroundColor: Color(0xffffffff),
+                        title: Padding(
+                          padding: EdgeInsets.only(
+                            top: 2.0,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              AxonIconForAppBarrWidget(),
+                              ScreenNameWidget(
+                                title: '  Change Doctor',
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
               ),
               body: providerList.length != 0
                   ? Stack(
@@ -356,7 +334,7 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                             style: TextStyle(
                                               fontSize: SizerUtil.deviceType ==
                                                       DeviceType.mobile
-                                                  ? 15.sp
+                                                  ? titleFontSize
                                                   : 12.sp,
                                               fontWeight: FontWeight.w500,
                                             ),
@@ -365,8 +343,6 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                         SizedBox(height: 1.h),
                                         InkWell(
                                           onTap: () {
-                                            // _qrScanner();
-                                            // _qr();
                                             _navigateAppcodeAndHospitalName(
                                                 context);
                                           },
@@ -388,14 +364,13 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                                       fontSize: SizerUtil
                                                                   .deviceType ==
                                                               DeviceType.mobile
-                                                          ? 14.sp
+                                                          ? titleFontSize
                                                           : 12.sp),
                                                 ),
                                               ),
                                             ],
                                           ),
                                         ),
-                                        // SizedBox(height: 1.h),
                                         Row(
                                           children: [
                                             Container(
@@ -409,7 +384,8 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                             SizedBox(width: 2.w),
                                             Text(
                                               'or',
-                                              style: TextStyle(fontSize: 12.sp),
+                                              style: TextStyle(
+                                                  fontSize: subTitleFontSize),
                                             ),
                                             SizedBox(width: 2.w),
                                             Container(
@@ -420,13 +396,8 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                                   : 42.w,
                                               color: Colors.black,
                                             ),
-                                            // Divider(
-                                            //   thickness: 0.1.h,
-                                            //   color: Colors.black,
-                                            // ),
                                           ],
                                         ),
-                                        // SizedBox(height: 1.h),
                                         InkWell(
                                           onTap: () {
                                             strAppcode.clear();
@@ -452,7 +423,7 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                                                         .deviceType ==
                                                                     DeviceType
                                                                         .mobile
-                                                                ? 13.sp
+                                                                ? titleFontSize
                                                                 : 7.sp),
                                                       ),
                                                       actions: [
@@ -468,7 +439,7 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                                                               .deviceType ==
                                                                           DeviceType
                                                                               .mobile
-                                                                      ? 14.sp
+                                                                      ? titleFontSize
                                                                       : 8.sp,
                                                                   color: Color(
                                                                       0xFFFD5722)),
@@ -521,7 +492,7 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                                                               .deviceType ==
                                                                           DeviceType
                                                                               .mobile
-                                                                      ? 14.sp
+                                                                      ? titleFontSize
                                                                       : 8.sp,
                                                                   color: Color(
                                                                       0xFFFD5722)),
@@ -549,14 +520,13 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                                       fontSize: SizerUtil
                                                                   .deviceType ==
                                                               DeviceType.mobile
-                                                          ? 14.sp
+                                                          ? titleFontSize
                                                           : 12.sp),
                                                 ),
                                               ),
                                             ],
                                           ),
                                         ),
-                                        // SizedBox(height: 1.h),
                                       ],
                                     ),
                                   ),
@@ -568,7 +538,7 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                         style: TextStyle(
                                             fontSize: SizerUtil.deviceType ==
                                                     DeviceType.mobile
-                                                ? 12.sp
+                                                ? subTitleFontSize
                                                 : 8.sp),
                                       )
                                     : Container(),
@@ -583,7 +553,6 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                               int index) {
                                             return InkWell(
                                               onTap: () {
-                                                // showBackAlertDialog() {
                                                 showDialog(
                                                   context: context,
                                                   builder: (context) {
@@ -595,14 +564,14 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                                                         .deviceType ==
                                                                     DeviceType
                                                                         .mobile
-                                                                ? 15.sp
+                                                                ? titleFontSize
                                                                 : 10.sp,
                                                             fontWeight:
                                                                 FontWeight
                                                                     .bold),
                                                       ),
                                                       content: Text(
-                                                        'Are you sure want to change your current Provider?',
+                                                        'Are you sure want to change your current Doctor?',
                                                         style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.bold,
@@ -610,7 +579,7 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                                                         .deviceType ==
                                                                     DeviceType
                                                                         .mobile
-                                                                ? 14.sp
+                                                                ? subTitleFontSize
                                                                 : 10.sp),
                                                       ),
                                                       actions: <Widget>[
@@ -622,7 +591,7 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                                                             .deviceType ==
                                                                         DeviceType
                                                                             .mobile
-                                                                    ? 14.sp
+                                                                    ? titleFontSize
                                                                     : 8.sp,
                                                                 fontWeight:
                                                                     FontWeight
@@ -643,13 +612,15 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                                                             .deviceType ==
                                                                         DeviceType
                                                                             .mobile
-                                                                    ? 14.sp
+                                                                    ? titleFontSize
                                                                     : 8.sp,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .bold),
                                                           ),
                                                           onPressed: () {
+                                                            userPreference
+                                                                .removeUserDetails();
                                                             final token =
                                                                 outputList[index]
                                                                         [
@@ -726,28 +697,6 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                                     );
                                                   },
                                                 );
-                                                // }
-
-                                                // final token = outputList[index]
-                                                //         ['token']
-                                                //     .toString();
-
-                                                // print(outputList[index]['token']
-                                                //     .toString());
-                                                // userPreference.setToken(token);
-
-                                                // // customerTkenViewmodel
-                                                // //     .fetchCustomerTokenApi(
-                                                // //         context,
-                                                // //         providerList[index]['token']
-                                                // //             .toString());
-                                                // Timer(
-                                                //     Duration(seconds: 1),
-                                                //     () => Navigator.push(
-                                                //         context,
-                                                //         MaterialPageRoute(
-                                                //             builder: (context) =>
-                                                //                 MyNavigationBar())));
                                               },
                                               child: Card(
                                                 child: Padding(
@@ -798,11 +747,11 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                       : Container(),
                                 ),
                                 Text(
-                                  'Contact your provider for App Code',
+                                  'Contact your Doctor for App Code',
                                   style: TextStyle(
                                       fontSize: SizerUtil.deviceType ==
                                               DeviceType.mobile
-                                          ? 12.sp
+                                          ? subTitleFontSize
                                           : 9.sp),
                                 ),
                                 SizedBox(
@@ -850,7 +799,7 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                                 fontSize:
                                                     SizerUtil.deviceType ==
                                                             DeviceType.mobile
-                                                        ? 15.sp
+                                                        ? titleFontSize
                                                         : 12.sp,
                                                 fontWeight: FontWeight.w500,
                                               ),
@@ -859,8 +808,6 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                           SizedBox(height: 1.h),
                                           InkWell(
                                             onTap: () {
-                                              // _qrScanner();
-                                              // _qr();
                                               _navigateAppcodeAndHospitalName(
                                                   context);
                                             },
@@ -884,14 +831,13 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                                                     .deviceType ==
                                                                 DeviceType
                                                                     .mobile
-                                                            ? 14.sp
+                                                            ? titleFontSize
                                                             : 12.sp),
                                                   ),
                                                 ),
                                               ],
                                             ),
                                           ),
-                                          // SizedBox(height: 1.h),
                                           Row(
                                             children: [
                                               Container(
@@ -905,8 +851,8 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                               SizedBox(width: 2.w),
                                               Text(
                                                 'or',
-                                                style:
-                                                    TextStyle(fontSize: 12.sp),
+                                                style: TextStyle(
+                                                    fontSize: subTitleFontSize),
                                               ),
                                               SizedBox(width: 2.w),
                                               Container(
@@ -919,7 +865,6 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                               ),
                                             ],
                                           ),
-                                          // SizedBox(height: 1.h),
                                           InkWell(
                                             onTap: () {
                                               strAppcode.clear();
@@ -946,7 +891,7 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                                                           .deviceType ==
                                                                       DeviceType
                                                                           .mobile
-                                                                  ? 13.sp
+                                                                  ? titleFontSize
                                                                   : 7.sp),
                                                         ),
                                                         actions: [
@@ -961,7 +906,7 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                                                     fontSize: SizerUtil.deviceType ==
                                                                             DeviceType
                                                                                 .mobile
-                                                                        ? 14.sp
+                                                                        ? titleFontSize
                                                                         : 8.sp,
                                                                     color: Color(
                                                                         0xFFFD5722)),
@@ -1013,7 +958,7 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                                                     fontSize: SizerUtil.deviceType ==
                                                                             DeviceType
                                                                                 .mobile
-                                                                        ? 14.sp
+                                                                        ? titleFontSize
                                                                         : 8.sp,
                                                                     color: Color(
                                                                         0xFFFD5722)),
@@ -1043,24 +988,19 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
                                                                     .deviceType ==
                                                                 DeviceType
                                                                     .mobile
-                                                            ? 14.sp
+                                                            ? titleFontSize
                                                             : 12.sp),
                                                   ),
                                                 ),
                                               ],
                                             ),
                                           ),
-                                          // SizedBox(height: 1.h),
                                         ],
                                       ),
                                     ),
                                   ),
                                 ),
                                 SizedBox(height: 1.h),
-                                // Text(
-                                //   'Contact your provider for App Code',
-                                //   style: TextStyle(fontSize: 12.sp),
-                                // ),
                                 SizedBox(
                                   height: 1.h,
                                 )
@@ -1097,11 +1037,6 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
           _showBackAlertDialog();
         }
       });
-      // if (result[2] == true) {
-      //   setState(() {
-      //     showAlertDialog = true;
-      //   });
-      // }
     }
   }
 

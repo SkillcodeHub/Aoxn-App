@@ -4,12 +4,10 @@ import '../../data/network/BaseApiServices.dart';
 import '../../data/network/NetworkApiService.dart';
 
 class CustomerPayHeadRepository {
-  // CustomerTokenModel customerTokenViewmodel = CustomerTokenModel();
   BaseApiServices _apiServices = NetworkApiService();
 
   Future<CustomerPayHeadListModel> fetchCustomerPayHeadList(
       String token) async {
-        
     try {
       dynamic response = await _apiServices.getGetApiResponse(
           AppUrl.getcustomerpayhead + '?CustomerToken=' + token.toString());

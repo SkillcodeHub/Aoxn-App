@@ -19,7 +19,7 @@ class _ErrorScreenWidgetState extends State<ErrorScreenWidget> {
       child: Stack(
         children: [
           SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
+            physics: AlwaysScrollableScrollPhysics(),
             child: Padding(
               padding: EdgeInsets.all(15),
               child: Container(

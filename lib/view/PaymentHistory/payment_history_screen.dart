@@ -2,13 +2,14 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:axonweb/Res/Components/Appbar/screen_name_widget.dart';
+import 'package:axonweb/Utils/utils.dart';
 import 'package:axonweb/View/NevigationBar/my_navigationbar.dart';
 import 'package:axonweb/View_Model/Payment_View_Model/paymentHistory_view_model.dart';
 import 'package:axonweb/data/response/status.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+
 import '../../View_Model/Settings_View_Model/settings_view_model.dart';
 
 class PaymentHistory extends StatefulWidget {
@@ -93,7 +94,7 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                                 color: Colors.white,
                                 fontSize:
                                     SizerUtil.deviceType == DeviceType.mobile
-                                        ? 12.sp
+                                        ? subTitleFontSize
                                         : 9.sp,
                               ),
                             )
@@ -105,7 +106,7 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: SizerUtil.deviceType == DeviceType.mobile
-                              ? 13.sp
+                              ? titleFontSize
                               : 10.sp,
                           fontWeight: FontWeight.bold,
                         ),
@@ -127,7 +128,7 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                             .toString(),
                         style: TextStyle(
                           fontSize: SizerUtil.deviceType == DeviceType.mobile
-                              ? 12.sp
+                              ? subTitleFontSize
                               : 10.sp,
                           fontWeight: FontWeight.w500,
                         ),
@@ -138,7 +139,7 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                             .toString(),
                         style: TextStyle(
                           fontSize: SizerUtil.deviceType == DeviceType.mobile
-                              ? 12.sp
+                              ? subTitleFontSize
                               : 10.sp,
                           fontWeight: FontWeight.w500,
                         ),
@@ -149,7 +150,7 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                             .toString(),
                         style: TextStyle(
                           fontSize: SizerUtil.deviceType == DeviceType.mobile
-                              ? 12.sp
+                              ? subTitleFontSize
                               : 10.sp,
                           fontWeight: FontWeight.w500,
                         ),
@@ -158,7 +159,7 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                         '11-May-2023 12:33 PM',
                         style: TextStyle(
                           fontSize: SizerUtil.deviceType == DeviceType.mobile
-                              ? 12.sp
+                              ? subTitleFontSize
                               : 10.sp,
                           fontWeight: FontWeight.w500,
                         ),
@@ -258,7 +259,7 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                               style: TextStyle(
                                   fontSize:
                                       SizerUtil.deviceType == DeviceType.mobile
-                                          ? 15.sp
+                                          ? titleFontSize
                                           : 12.sp,
                                   fontWeight: FontWeight.bold),
                             ),
@@ -266,9 +267,6 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                           content: Text(
                             messageCode.toString(),
                             style: TextStyle(
-                                // fontWeight:
-                                //     FontWeight
-                                //         .bold,
                                 fontSize:
                                     SizerUtil.deviceType == DeviceType.mobile
                                         ? 12.sp
@@ -292,7 +290,7 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                                         style: TextStyle(
                                             fontSize: SizerUtil.deviceType ==
                                                     DeviceType.mobile
-                                                ? 14.sp
+                                                ? titleFontSize
                                                 : 10.sp,
                                             fontWeight: FontWeight.bold),
                                       ),
@@ -325,7 +323,8 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                                         child: ListView.builder(
                                             padding:
                                                 EdgeInsets.only(bottom: 10),
-                                            physics: BouncingScrollPhysics(),
+                                            physics:
+                                                AlwaysScrollableScrollPhysics(),
                                             shrinkWrap: true,
                                             itemCount: value.paymentHistoryList
                                                 .data!.data!.length,
@@ -344,7 +343,7 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                                 child: Stack(
                                   children: [
                                     SingleChildScrollView(
-                                      physics: BouncingScrollPhysics(),
+                                      physics: AlwaysScrollableScrollPhysics(),
                                       child: Padding(
                                         padding: EdgeInsets.all(15),
                                         child: Container(
@@ -365,10 +364,10 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                                                   fontSize:
                                                       SizerUtil.deviceType ==
                                                               DeviceType.mobile
-                                                          ? 14.sp
+                                                          ? titleFontSize
                                                           : 12.sp,
                                                   color: Color(0XFF545454),
-                                                  fontWeight: FontWeight.w600,
+                                                  fontWeight: FontWeight.w500,
                                                 ),
                                               ),
                                               SizedBox(
@@ -392,11 +391,11 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                                                       fontSize: SizerUtil
                                                                   .deviceType ==
                                                               DeviceType.mobile
-                                                          ? 14.sp
+                                                          ? titleFontSize
                                                           : 12.sp,
                                                       color: Color(0XFF545454),
                                                       fontWeight:
-                                                          FontWeight.w600),
+                                                          FontWeight.w500),
                                                 ),
                                               ),
                                             ],
@@ -413,437 +412,6 @@ class _PaymentHistoryState extends State<PaymentHistory> {
           }
         },
       ),
-
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     showModalBottomSheet<void>(
-      //       isScrollControlled: true,
-      //       backgroundColor: Colors.transparent,
-      //       context: context,
-      //       builder: (BuildContext context) {
-      //         return PaymentSheet();
-      //       },
-      //     );
-      //   },
-      //   backgroundColor: Colors.green,
-      //   child: Icon(Icons.add),
-      // ),
     );
   }
 }
-
-// class PaymentSheet extends StatefulWidget {
-//   const PaymentSheet({Key? key}) : super(key: key);
-
-//   @override
-//   State<PaymentSheet> createState() => _PaymentSheetState();
-// }
-
-// class _PaymentSheetState extends State<PaymentSheet> {
-//   String? genderValue;
-//   final formKey = GlobalKey<FormState>();
-//   bool _enableBtn = false;
-//   bool agree = false;
-//   final FocusNode _nodeAmount = FocusNode();
-//   final FocusNode _nodeEmail = FocusNode();
-//   TextEditingController strAmount = TextEditingController();
-//   TextEditingController strEmail = TextEditingController();
-//   late String token;
-//   late String mobile;
-//   late String name;
-//   late String letId;
-
-//   UserPreferences userPreference = UserPreferences();
-//   String selectedPayHeadIndex =
-//       'Consultation'; // Index of the selected payHead, initially set to -1
-
-//   CustomerPayHeadViewmodel customerPayHeadViewmodel =
-//       CustomerPayHeadViewmodel();
-
-//   InitiatePaymentViewModel initiatePaymentViewModel =
-//       InitiatePaymentViewModel();
-//   AdvanceBookAppointmentViewModel advanceBookAppointmentViewModel =
-//       AdvanceBookAppointmentViewModel();
-//   SettingsViewModel settingsViewModel = SettingsViewModel();
-
-//   @override
-//   void initState() {
-//     userPreference.getToken().then((value) {
-//       setState(() {
-//         token = value!;
-//         print(token);
-//       });
-//     });
-//     userPreference.getMobile().then((value) {
-//       setState(() {
-//         mobile = value!;
-//         print(token);
-//       });
-//     });
-//     userPreference.getName().then((value) {
-//       setState(() {
-//         name = value!;
-//         print(token);
-//       });
-//     });
-//     userPreference.getletId().then((value) {
-//       setState(() {
-//         letId = value!;
-//         print(token);
-//       });
-//     });
-
-//     super.initState();
-//     Timer(Duration(microseconds: 20), () {
-//       print(token);
-//       customerPayHeadViewmodel.fetchCustomerPayHeadListApi(token.toString());
-//     });
-//   }
-
-//   void makePayment() async {
-//     _nodeAmount.unfocus();
-//     _nodeEmail.unfocus();
-
-//     Map<String, dynamic> data = {
-//       "CaseNo": '20731',
-//       "Name": name,
-//       "Mobile": mobile.toString(),
-//       "Email": strEmail.text.toString(),
-//       "Gender": "Male",
-//       "PatType": "Old",
-//       "ApptDate": "2023-09-22",
-//       "CustomerToken": token.toString(),
-//       "DelayMinute":
-//           "30", //DelayMinutes from minuteInterval form slot timing selection
-//       "DeviceId": "App",
-//       "DoctorId": "1",
-//       "TimingId": '1', //TimingId from slot timing selection
-//       "AppointmentPaymentHead": selectedPayHeadIndex.toString(),
-//       "Amount": '200',
-
-//       // "customerId": settingsViewModel
-//       //     .doctorDetailsList.data!.data![0].customerId
-//       //     .toString(),
-
-//       // "mobile": mobile.toString(),
-//       // "patientId": '1647895',
-//       // "caseNo": '20731',
-//       // "name": name,
-//       // "email": strEmail.text.toString(),
-//       // "payHead": selectedPayHeadIndex.toString(),
-//       // "amount": '200',
-//       // "customerToken": token.toString(),
-//       // "lat": letId.toString(),
-//     };
-//     // initiatePaymentViewModel.initiatePaymentApi(data, context);
-//     advanceBookAppointmentViewModel.advancebookappointmentapi(data, context);
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     settingsViewModel.fetchDoctorDetailsListApi(token.toString());
-
-//     return Scaffold(
-//       // persistentFooterAlignment: AlignmentDirectional.centerEnd,
-//       backgroundColor: Colors.transparent,
-//       body: SizedBox(
-//         height: 100.h,
-//         // alignment: Alignment.bottomCenter,
-//         child: DraggableScrollableSheet(
-//           initialChildSize: 0.84,
-//           maxChildSize: 0.84,
-//           minChildSize: 0.84,
-//           builder: (BuildContext context, ScrollController scrollController) {
-//             return Container(
-//               margin: EdgeInsets.only(left: 4.sp, right: 4.sp, bottom: 4.sp),
-//               padding: EdgeInsets.all(8.sp),
-//               decoration: BoxDecoration(
-//                 borderRadius: BorderRadius.circular(10.sp),
-//                 color: Colors.white,
-//               ),
-//               child: ListView(
-//                 controller: scrollController,
-//                 children: [
-//                   Form(
-//                     key: formKey,
-//                     onChanged: () => setState(
-//                         () => _enableBtn = formKey.currentState!.validate()),
-//                     child: Column(
-//                       children: [
-//                         Container(
-//                           height: MediaQuery.of(context).size.height * 0.57,
-//                           child: Column(
-//                             children: [
-//                               Row(
-//                                 mainAxisAlignment:
-//                                     MainAxisAlignment.spaceBetween,
-//                                 children: [
-//                                   Text(
-//                                     'Select Payment Reason',
-//                                     style: TextStyle(
-//                                       fontSize: 18.sp,
-//                                       fontWeight: FontWeight.w600,
-//                                     ),
-//                                   ),
-//                                   TextButton(
-//                                     onPressed: () {
-//                                       Navigator.pop(context);
-//                                     },
-//                                     child: Icon(
-//                                       Icons.close,
-//                                       color: Colors.black,
-//                                     ),
-//                                   ),
-//                                 ],
-//                               ),
-//                               SizedBox(
-//                                 height:
-//                                     MediaQuery.of(context).size.height * 0.02,
-//                               ),
-//                               ChangeNotifierProvider<CustomerPayHeadViewmodel>(
-//                                 create: (BuildContext context) =>
-//                                     customerPayHeadViewmodel,
-//                                 child: Consumer<CustomerPayHeadViewmodel>(
-//                                   builder: (context, value, _) {
-//                                     switch (value.CustomerPayHeadList.status!) {
-//                                       case Status.LOADING:
-//                                         return Center(
-//                                           child: CircularProgressIndicator(),
-//                                         );
-//                                       case Status.ERROR:
-//                                         return Center(
-//                                           child: Text(value
-//                                               .CustomerPayHeadList.message
-//                                               .toString()),
-//                                         );
-//                                       case Status.COMPLETED:
-//                                         return Container(
-//                                           // height: 30.h,
-//                                           width: 90.w,
-//                                           child: SingleChildScrollView(
-//                                             physics:
-//                                                 AlwaysScrollableScrollPhysics(),
-//                                             child: Padding(
-//                                               padding:
-//                                                   const EdgeInsets.all(8.0),
-//                                               child: ListView.builder(
-//                                                 // physics:
-//                                                 //     NeverScrollableScrollPhysics(), // Disable scrolling
-//                                                 shrinkWrap: true,
-//                                                 itemCount:
-//                                                     customerPayHeadViewmodel
-//                                                         .CustomerPayHeadList
-//                                                         .data!
-//                                                         .data!
-//                                                         .length,
-//                                                 itemBuilder:
-//                                                     (BuildContext context,
-//                                                         index) {
-//                                                   return Column(
-//                                                     children: [
-//                                                       Row(
-//                                                         mainAxisAlignment:
-//                                                             MainAxisAlignment
-//                                                                 .spaceBetween,
-//                                                         children: [
-//                                                           Text(
-//                                                             customerPayHeadViewmodel
-//                                                                 .CustomerPayHeadList
-//                                                                 .data!
-//                                                                 .data![index]
-//                                                                 .payHead
-//                                                                 .toString(),
-//                                                             style: TextStyle(
-//                                                               fontSize: 13.sp,
-//                                                               fontWeight:
-//                                                                   FontWeight
-//                                                                       .w500,
-//                                                             ),
-//                                                           ),
-//                                                           Radio<String>(
-//                                                             value: customerPayHeadViewmodel
-//                                                                 .CustomerPayHeadList
-//                                                                 .data!
-//                                                                 .data![index]
-//                                                                 .payHead
-//                                                                 .toString(),
-//                                                             groupValue:
-//                                                                 selectedPayHeadIndex
-//                                                                     .toString(),
-//                                                             onChanged: (value) {
-//                                                               setState(() {
-//                                                                 selectedPayHeadIndex =
-//                                                                     value!;
-
-//                                                                 print(
-//                                                                     'selectedPayHeadIndex:');
-//                                                                 strAmount.text = customerPayHeadViewmodel
-//                                                                     .CustomerPayHeadList
-//                                                                     .data!
-//                                                                     .data![
-//                                                                         index]
-//                                                                     .defaultAmount
-//                                                                     .toString();
-//                                                                 print(
-//                                                                   customerPayHeadViewmodel
-//                                                                       .CustomerPayHeadList
-//                                                                       .data!
-//                                                                       .data![
-//                                                                           index]
-//                                                                       .defaultAmount
-//                                                                       .toString(),
-//                                                                 );
-//                                                                 print(
-//                                                                     selectedPayHeadIndex);
-//                                                               });
-//                                                             },
-//                                                           ),
-//                                                         ],
-//                                                       ),
-//                                                       Container(
-//                                                         color: Colors.black,
-//                                                         height: 1,
-//                                                       )
-//                                                     ],
-//                                                   );
-//                                                 },
-//                                               ),
-//                                             ),
-//                                           ),
-//                                         );
-//                                     }
-//                                   },
-//                                 ),
-//                               ),
-//                             ],
-//                           ),
-//                         ),
-//                         Container(
-//                           child: Column(
-//                             children: [
-//                               TextFormField(
-//                                 focusNode: _nodeAmount,
-//                                 controller: strAmount,
-//                                 keyboardType: TextInputType.number,
-//                                 validator: (value) => value!.isEmpty
-//                                     ? "Please enter Amount"
-//                                     : null,
-//                                 autovalidateMode:
-//                                     AutovalidateMode.onUserInteraction,
-//                                 textInputAction: TextInputAction.next,
-//                                 decoration: InputDecoration(
-//                                   hintText: 'Amount',
-//                                 ),
-//                               ),
-//                               TextFormField(
-//                                 focusNode: _nodeEmail,
-//                                 controller: strEmail,
-//                                 keyboardType: TextInputType.text,
-//                                 validator: (value) => value!.isEmpty
-//                                     ? "Please enter email"
-//                                     : null,
-//                                 autovalidateMode:
-//                                     AutovalidateMode.onUserInteraction,
-//                                 textInputAction: TextInputAction.next,
-//                                 decoration: InputDecoration(
-//                                   hintText: 'Email Id',
-//                                 ),
-//                               ),
-//                               Row(
-//                                 children: [
-//                                   Checkbox(
-//                                     value: agree,
-//                                     onChanged: (value) {
-//                                       setState(() {
-//                                         agree = value ?? false;
-//                                       });
-//                                     },
-//                                   ),
-//                                   Text(
-//                                     'I accept  ',
-//                                     style: TextStyle(
-//                                       color: Colors.black,
-//                                       fontSize: 12.sp,
-//                                     ),
-//                                   ),
-//                                   InkWell(
-//                                     onTap: () async {
-//                                       final url = settingsViewModel
-//                                           .doctorDetailsList
-//                                           .data!
-//                                           .data![0]
-//                                           .termsLink
-//                                           .toString();
-//                                       if (await canLaunch(url)) {
-//                                         await launch(url);
-//                                       } else {
-//                                         throw 'Could not launch $url';
-//                                       }
-//                                     },
-//                                     child: Text(
-//                                       'terms and conditions',
-//                                       style: TextStyle(
-//                                         color: Color(0xFFFD5722),
-//                                         fontSize: 12.sp,
-//                                       ),
-//                                     ),
-//                                   ),
-//                                 ],
-//                               ),
-//                               Row(
-//                                 children: [
-//                                   Spacer(),
-//                                   Container(
-//                                     height: 28.sp,
-//                                     width: 40.w,
-//                                     child: ElevatedButton(
-//                                       onPressed: () {
-//                                         if (!agree) {
-//                                           Utils.snackBar(
-//                                               'Please select terms & conditions',
-//                                               context);
-//                                         } else if (!_enableBtn) {
-//                                           Utils.snackBar(
-//                                               'Please select terms & conditions',
-//                                               context);
-//                                         } else {
-//                                           makePayment();
-//                                         }
-//                                       },
-
-//                                       // _enableBtn
-//                                       //     ? () => makePayment()
-//                                       //     : null,
-//                                       child: Text(
-//                                         'START PAYMENT',
-//                                         style: TextStyle(
-//                                           fontSize: 11.sp,
-//                                           fontWeight: FontWeight.w600,
-//                                           color: Colors.white,
-//                                         ),
-//                                       ),
-//                                       style: ElevatedButton.styleFrom(
-//                                         primary: _enableBtn
-//                                             ? Color(0xFFFD5722)
-//                                             : Colors.grey,
-//                                       ),
-//                                     ),
-//                                   ),
-//                                 ],
-//                               ),
-//                             ],
-//                           ),
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                   SizedBox(height: MediaQuery.of(context).viewInsets.bottom),
-//                 ],
-//               ),
-//             );
-//           },
-//         ),
-//       ),
-//     );
-//   }
-// }

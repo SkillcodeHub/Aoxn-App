@@ -302,26 +302,18 @@ class LoginScreenState extends State {
                                 decoration: InputDecoration(
                                   hintText: 'Mobile Number(10 digit)',
                                   labelText: 'Mobile',
-                                  // prefixIcon: Icon(Icons.alternate_email),
                                 ),
-
                                 onTap: () {
                                   if (Platform.isAndroid) {
                                     _showSimCardNumbersDialog();
                                   }
                                 },
-                                // onFieldSubmitted: (value) {
-                                //   Utils.fieldFocusChange(
-                                //       context, emailFocusNode, passwordFocusNode);
-                                // },
                               ),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  SizedBox(
-                                      //   width: 60.w,
-                                      ),
+                                  SizedBox(),
                                   TextButton(
                                     child: Text(
                                       'Request OTP',
@@ -333,21 +325,24 @@ class LoginScreenState extends State {
                                     onPressed: () {
                                       setState(() {
                                         if (_nameController.text.isEmpty) {
-                                          Utils.snackBar(
+                                          Utils.flushBarErrorMessage(
                                               'Please enter your name',
+                                              Duration(seconds: 2),
                                               context);
                                           viewVisible = false;
                                         } else if (_mobileController
                                             .text.isEmpty) {
-                                          Utils.snackBar(
+                                          Utils.flushBarErrorMessage(
                                               'Please enter MobileNo*',
+                                              Duration(seconds: 2),
                                               context);
                                           viewVisible = false;
                                         } else if (_mobileController
                                                 .text.length <
                                             10) {
-                                          Utils.snackBar(
+                                          Utils.flushBarErrorMessage(
                                               'Please enter 10 Digit MobileNo*',
+                                              Duration(seconds: 2),
                                               context);
                                           viewVisible = false;
                                         } else if (_mobileController.text
@@ -382,12 +377,6 @@ class LoginScreenState extends State {
                                                 data, context);
                                             viewVisible = true;
                                           }
-
-                                          // Timer(Duration(seconds: 5), () {
-                                          //   _mobileController.clear();
-                                          // });
-
-                                          // Close the keyboard
                                         }
                                       });
                                     },
@@ -447,9 +436,6 @@ class LoginScreenState extends State {
                                               _mobileController.text.toString()
                                         };
                                         authViewModel.loginApi(data, context);
-                                        // Timer(Duration(seconds: 5), () {
-                                        //   _mobileController.clear();
-                                        // });
                                         viewVisible = true;
                                       },
                                       child: const Text(
@@ -465,10 +451,11 @@ class LoginScreenState extends State {
                                           print("codeValue");
                                           print(codeValue);
                                           print("codeValue");
-                                          // _verifyOTP();
                                           if (codeValue.isEmpty) {
-                                            Utils.snackBar(
-                                                'Please enter OTP*', context);
+                                            Utils.flushBarErrorMessage(
+                                                'Please enter OTP*',
+                                                Duration(seconds: 2),
+                                                context);
                                           } else {
                                             mobileFocusNode.unfocus();
                                             otpFocusNode.unfocus();
@@ -476,32 +463,8 @@ class LoginScreenState extends State {
                                               "Mobile": _mobileController.text
                                                   .toString(),
                                               'OTP': codeValue.toString(),
-                                              // "platform": "Mobile",
-                                              // "deviceId": _udid.toString(),
-                                              // "fullName":
-                                              //     _nameController.text.toString(),
-                                              // "mobile":
-                                              //     _mobileController.text.toString(),
-                                              // "fcmToken": fcmToken,
-                                              // "gender": genderValue,
-                                              // "userType": 1,
-                                              // "birthDate":
-                                              //     _birthController.text.toString(),
                                             };
 
-                                            //                                   Map<String, dynamic> registerUserData = {
-                                            //                                     "platform": "Mobile",
-                                            //                                     "deviceId": _udid.toString(),
-                                            //                                     "fullName":
-                                            //                                         _nameController.text.toString(),
-                                            //                                     "mobile":
-                                            //                                         _mobileController.text.toString(),
-                                            //                                     "fcmToken": fcmToken.toString(),
-                                            //                                     "gender": genderValue.toString(),
-                                            //                                     "userType": 1,
-                                            //                                     "birthDate":
-                                            //                                         _birthController.text.toString(),
-                                            // };
                                             if (codeValue.toString() ==
                                                 '1234') {
                                               userPreference
@@ -519,8 +482,6 @@ class LoginScreenState extends State {
                                             } else {
                                               authViewModel.otpVerifyApi(
                                                   data, context);
-                                              // userPreference.saveUserData(registerUserData);
-                                              // authViewModel.otpVerifyApi(data, context);
                                             }
                                             ;
                                           }
@@ -541,20 +502,17 @@ class LoginScreenState extends State {
                       ),
                     ],
                   ),
-                  // SizedBox(
-                  //   height: 10.h,
-                  // ),
                   RichText(
                     textAlign: TextAlign.center,
                     text: TextSpan(
                       children: [
                         TextSpan(
                           text:
-                              'By Clicking On Request OTP, you agree to our Terms and\n',
+                              'By clicking on request OTP, you agree to our terms and\n',
                           style: TextStyle(color: Colors.black),
                         ),
                         TextSpan(
-                          text: ' Learn how we process your data in our ',
+                          text: ' learn how we process your data in our ',
                           style: TextStyle(color: Colors.black),
                         ),
                         TextSpan(

@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:io';
+
 import 'package:axonweb/View_Model/Settings_View_Model/settings_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
+
 import '../../../Utils/utils.dart';
 
 class WhatsappWidget extends StatefulWidget {
@@ -50,7 +52,8 @@ class _WhatsappWidgetState extends State<WhatsappWidget> {
         await launchUrl(Uri.parse(androidUrl));
       }
     } on Exception {
-      Utils.snackBar('WhatsApp is not installed.', context);
+      Utils.flushBarErrorMessage(
+          "WhatsApp is not installed.", Duration(seconds: 2), context);
     }
   }
 

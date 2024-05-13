@@ -29,11 +29,4 @@ class AuthRepository {
       throw e;
     }
   }
-
-  // ?CustomerToken=68cb311f-585a-4e86-8e89-06edf1814080
-
-  // ApiResponse<GetProviderTokenModel> data = ApiResponse.loading();
-  // setMoviesList(ApiResponse<GetProviderTokenModel> response) {
-  //   data = response;
-  // }
 }

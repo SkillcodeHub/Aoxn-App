@@ -1,6 +1,7 @@
 import 'package:axonweb/Provider/backButton_provider.dart';
 import 'package:axonweb/Utils/routes/routes_name.dart';
 import 'package:axonweb/View_Model/Book_View_Model/Book_view_Model.dart';
+import 'package:axonweb/View_Model/Book_View_Model/advanceBookAppointment_view_model.dart';
 import 'package:axonweb/View_Model/Payment_View_Model/paymentHistory_view_model.dart';
 import 'package:axonweb/res/colors.dart';
 import 'package:axonweb/utils/routes/routes.dart';
@@ -10,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+import 'package:upgrader/upgrader.dart';
 
 import 'Provider/current_time_provider.dart';
 import 'View_Model/App_User_View_Model/register_appuser_view_model.dart';
@@ -49,6 +51,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  await Upgrader.clearSavedSettings();
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
@@ -65,8 +68,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => DoctorNameProvider()),
         ChangeNotifierProvider(create: (_) => AuthViewModel()),
         ChangeNotifierProvider(create: (_) => TimeProvider()),
-        // ChangeNotifierProvider(create: (_) => GetProviderTokenViewModel()),
-        // ChangeNotifierProvider(create: (_) => NewsViewmodel()),
+        ChangeNotifierProvider(
+            create: (_) => AdvanceBookAppointmentViewModel()),
         ChangeNotifierProvider<NewsViewmodel>.value(value: NewsViewmodel()),
         ChangeNotifierProvider<DoctorListViewmodel>.value(
             value: DoctorListViewmodel()),
@@ -104,7 +107,6 @@ class MyApp extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          // color: Colors.grey.shade100,
           child: Center(
             child: Consumer<ContainerSizeNotifier>(
               builder: (context, containerSize, _) {
@@ -121,9 +123,6 @@ class MyApp extends StatelessWidget {
                             theme: ThemeData(
                               primarySwatch: AppPrimaryColor,
                             ),
-                            // home: SplashScreen(
-                            //   indexNumber: 0,
-                            // ),
                             initialRoute: RoutesName.splash,
                             onGenerateRoute: Routes.generateRoute,
                           );
@@ -137,7 +136,6 @@ class MyApp extends StatelessWidget {
           ),
         ),
         Positioned(
-          // top: 10,
           bottom: 16.0,
           right: 16.0,
           child: Container(
@@ -163,10 +161,6 @@ class MyApp extends StatelessWidget {
                   return Image.asset(containerSize.width == 500
                       ? 'images/full_screen.png'
                       : 'images/minimize_screen.png');
-
-                  //  Text(
-                  //   containerSize.width == 500 ? 'Zoom In' : 'Zoom Out',
-                  // );
                 },
               ),
             ),
@@ -187,9 +181,6 @@ class MyApp extends StatelessWidget {
               theme: ThemeData(
                 primarySwatch: AppPrimaryColor,
               ),
-              // home: SplashScreen(
-              //   indexNumber: 0,
-              // ),
               initialRoute: RoutesName.splash,
               onGenerateRoute: Routes.generateRoute,
             );
@@ -207,114 +198,4 @@ class MyApp extends StatelessWidget {
 
 
 
-
-// class MyApp extends StatelessWidget {
-//   int indexNumber = 0;
-//   // This widget is the root of your application.
-//   @override
-//   Widget build(BuildContext context) {
-//     return MultiProvider(
-//       providers: [
-//         ChangeNotifierProvider(create: (_) => ButtonProvider()),
-//         ChangeNotifierProvider(create: (_) => DoctorNameProvider()),
-
-//         ChangeNotifierProvider(create: (_) => AuthViewModel()),
-//         ChangeNotifierProvider(create: (_) => TimeProvider()),
-//         // ChangeNotifierProvider(create: (_) => GetProviderTokenViewModel()),
-//         // ChangeNotifierProvider(create: (_) => NewsViewmodel()),
-//         ChangeNotifierProvider<NewsViewmodel>.value(value: NewsViewmodel()),
-//         ChangeNotifierProvider<DoctorListViewmodel>.value(
-//             value: DoctorListViewmodel()),
-//         ChangeNotifierProvider<SettingsViewModel>.value(
-//             value: SettingsViewModel()),
-//         ChangeNotifierProvider<GetPatientByMobileListViewmodel>.value(
-//             value: GetPatientByMobileListViewmodel()),
-//         ChangeNotifierProvider<SelectPatientByIdViewmodel>.value(
-//             value: SelectPatientByIdViewmodel()),
-//         ChangeNotifierProvider<BookAppointmentViewModel>.value(
-//             value: BookAppointmentViewModel()),
-//         ChangeNotifierProvider<EventListViewmodel>.value(
-//             value: EventListViewmodel()),
-//         ChangeNotifierProvider<CancelAppointmentViewModel>.value(
-//             value: CancelAppointmentViewModel()),
-//         ChangeNotifierProvider<RegisterAppUserViewModel>.value(
-//             value: RegisterAppUserViewModel()),
-//         ChangeNotifierProvider<ValidateAppUserViewmodel>.value(
-//             value: ValidateAppUserViewmodel()),
-//         ChangeNotifierProvider<ReportViewmodel>.value(value: ReportViewmodel()),
-//         ChangeNotifierProvider<PaymentHistoryViewmodel>.value(
-//             value: PaymentHistoryViewmodel()),
-//       ],
-//       child: Sizer(builder: (context, orientation, DeviceType) {
-//         return MaterialApp(
-//           debugShowCheckedModeBanner: false,
-//           title: 'Flutter Demo',
-//           theme: ThemeData(
-//             primarySwatch: AppPrimaryColor,
-//           ),
-//           // home: SplashScreen(
-//           //   indexNumber: 0,
-//           // ),
-//           initialRoute: RoutesName.splash,
-//           onGenerateRoute: Routes.generateRoute,
-//         );
-//       }),
-//     );
-//   }
-// }
-
-// class MyApp extends StatelessWidget {
-//   int indexNumber = 0;
-//   // This widget is the root of your application.
-//   @override
-//   Widget build(BuildContext context) {
-//     return MultiProvider(
-//       providers: [
-//         ChangeNotifierProvider(create: (_) => ButtonProvider()),
-//         ChangeNotifierProvider(create: (_) => DoctorNameProvider()),
-
-//         ChangeNotifierProvider(create: (_) => AuthViewModel()),
-//         ChangeNotifierProvider(create: (_) => TimeProvider()),
-//         // ChangeNotifierProvider(create: (_) => GetProviderTokenViewModel()),
-//         // ChangeNotifierProvider(create: (_) => NewsViewmodel()),
-//         ChangeNotifierProvider<NewsViewmodel>.value(value: NewsViewmodel()),
-//         ChangeNotifierProvider<DoctorListViewmodel>.value(
-//             value: DoctorListViewmodel()),
-//         ChangeNotifierProvider<SettingsViewModel>.value(
-//             value: SettingsViewModel()),
-//         ChangeNotifierProvider<GetPatientByMobileListViewmodel>.value(
-//             value: GetPatientByMobileListViewmodel()),
-//         ChangeNotifierProvider<SelectPatientByIdViewmodel>.value(
-//             value: SelectPatientByIdViewmodel()),
-//         ChangeNotifierProvider<BookAppointmentViewModel>.value(
-//             value: BookAppointmentViewModel()),
-//         ChangeNotifierProvider<EventListViewmodel>.value(
-//             value: EventListViewmodel()),
-//         ChangeNotifierProvider<CancelAppointmentViewModel>.value(
-//             value: CancelAppointmentViewModel()),
-//         ChangeNotifierProvider<RegisterAppUserViewModel>.value(
-//             value: RegisterAppUserViewModel()),
-//         ChangeNotifierProvider<ValidateAppUserViewmodel>.value(
-//             value: ValidateAppUserViewmodel()),
-//         ChangeNotifierProvider<ReportViewmodel>.value(value: ReportViewmodel()),
-//         ChangeNotifierProvider<PaymentHistoryViewmodel>.value(
-//             value: PaymentHistoryViewmodel()),
-//       ],
-//       child: Sizer(builder: (context, orientation, DeviceType) {
-//         return MaterialApp(
-//           debugShowCheckedModeBanner: false,
-//           title: 'Flutter Demo',
-//           theme: ThemeData(
-//             primarySwatch: AppPrimaryColor,
-//           ),
-//           // home: SplashScreen(
-//           //   indexNumber: 0,
-//           // ),
-//           initialRoute: RoutesName.splash,
-//           onGenerateRoute: Routes.generateRoute,
-//         );
-//       }),
-//     );
-//   }
-// }
 

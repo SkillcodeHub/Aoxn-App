@@ -138,10 +138,6 @@ class _QRScannerWidgetState extends State<QRScannerWidget> {
 
         // Call your method or perform any necessary operations with the result
         Navigator.pop(context, [customerName, appCode, demo]);
-        // customerTokenByQRViewmodel.fetchCustomerTokenByQR(
-        //   context,
-        //   appCode.toString(),
-        // );
 
         isResultHandled = true;
         controller.stopCamera(); // Stop scanning after the first result

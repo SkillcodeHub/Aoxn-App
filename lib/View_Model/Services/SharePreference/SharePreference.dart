@@ -182,39 +182,10 @@ class UserPreferences {
     // prefs.remove("access_doctor");
   }
 
-// Future<void> saveUserDataToSharedPreferences(Map<String, dynamic> userData) async {
-//   SharedPreferences prefs = await SharedPreferences.getInstance();
-//   await prefs.setString('platform', userData['platform']);
-//   await prefs.setString('deviceId', userData['deviceId']);
-//   await prefs.setString('fullName', userData['fullName']);
-//   await prefs.setString('mobile', userData['mobile']);
-//   await prefs.setString('fcmToken', userData['fcmToken']);
-//   await prefs.setString('gender', userData['gender']);
-//   await prefs.setInt('userType', userData['userType']);
-//   await prefs.setString('birthDate', userData['birthDate']);
-// }
+  void removeUserDetails() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove("userDetails");
 
-// Retrieve data from shared preferences
-// Future<Map<String, dynamic>> getUserDataFromSharedPreferences() async {
-//   SharedPreferences prefs = await SharedPreferences.getInstance();
-//   String platform = prefs.getString('platform') ?? '';
-//   String deviceId = prefs.getString('deviceId') ?? '';
-//   String fullName = prefs.getString('fullName') ?? '';
-//   String mobile = prefs.getString('mobile') ?? '';
-//   String fcmToken = prefs.getString('fcmToken') ?? '';
-//   String gender = prefs.getString('gender') ?? '';
-//   int userType = prefs.getInt('userType') ?? 0;
-//   String birthDate = prefs.getString('birthDate') ?? '';
-
-//   return {
-//     "platform": platform,
-//     "deviceId": deviceId,
-//     "fullName": fullName,
-//     "mobile": mobile,
-//     "fcmToken": fcmToken,
-//     "gender": gender,
-//     "userType": userType,
-//     "birthDate": birthDate,
-//   };
-// }
+    // prefs.remove("access_doctor");
+  }
 }

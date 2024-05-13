@@ -36,7 +36,7 @@
     </queries>
 
    <application
-        android:label="axonweb"
+        android:label="AxonWeb"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

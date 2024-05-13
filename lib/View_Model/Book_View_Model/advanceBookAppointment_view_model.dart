@@ -33,6 +33,8 @@ class AdvanceBookAppointmentViewModel with ChangeNotifier {
     ConfirmPaidAppointmentViewModel confirmPaidAppointmentViewModel =
         ConfirmPaidAppointmentViewModel();
     userData = data;
+    AdvanceBookAppointmentViewModel advanceBookAppointmentViewModel =
+        AdvanceBookAppointmentViewModel();
 
     void _handlePaymentSuccess(PaymentSuccessResponse response) {
       print("++++++============");
@@ -148,7 +150,10 @@ class AdvanceBookAppointmentViewModel with ChangeNotifier {
       } else if (value['status'] == false) {
         setPLoading(false);
 
-        Utils.snackBar(value['displayMessage'], context);
+        // Utils.snackBar(value['displayMessage'], context);
+        Utils.flushBarErrorMessage(
+            value['displayMessage'].toString(), Duration(seconds: 5), context);
+
         print(
             'sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss');
         print(value['displayMessage']);
@@ -159,14 +164,15 @@ class AdvanceBookAppointmentViewModel with ChangeNotifier {
         }
       }
     }).onError((error, stackTrace) {
-      Utils.snackBar1(
-          "Cannot book appointment. Online slot is full! please contact provider directly to take appointment.",
+      advanceBookAppointmentViewModel.setPLoading(true);
+
+      setPLoading(false);
+      Utils.flushBarErrorMessage(
+          "Cannot book appointment. Online slot is full! please contact doctor directly to take appointment.",
           Duration(seconds: 5),
           context);
 
       if (kDebugMode) {
-        Utils.flushBarErrorMessage(
-            error.toString(), Duration(seconds: 7), context);
         print(error.toString());
       }
     });

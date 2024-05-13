@@ -27,12 +27,10 @@ class BookAppointmentViewModel with ChangeNotifier {
     print(data);
     print('datadatadatadatadatadatadatadatadatadatadatadata');
     _myRepo.bookappointmentapi(data).then((value) {
-      // Utils.flushBarErrorMessage(
-      //     'Otp is Valid'.toString(), Duration(seconds: 5), context);
-
       if (value['status'] == true) {
         setSignUpLoading(false);
-        Utils.snackBar('Appointment Book Successfully', context);
+        Utils.flushBarErrorMessage(
+            "Appointment Book Successfully", Duration(seconds: 2), context);
         print(value);
         Timer(
             Duration(seconds: 2),
@@ -51,38 +49,6 @@ class BookAppointmentViewModel with ChangeNotifier {
                 .doctorDetailsList.data!.data![0].isAdvanceBookingRequired
                 .toString() ==
             'true') {
-          //       Widget okButton = TextButton(
-          //   child: Text(
-          //     "OK",
-          //     style: TextStyle(
-          //       fontSize: 15,
-          //       color: Color(0xFFFD5722),
-          //     ),
-          //   ),
-          //   onPressed: () {
-          //     Navigator.of(context)
-          //       ..pop()
-          //       ..pop();
-
-          //   },
-          // );
-
-          // // set up the AlertDialog
-          // AlertDialog alert = AlertDialog(
-          //   title: Text("Alert"),
-          //   content: Text(value['displayMessage']),
-          //   actions: [
-          //     okButton,
-          //   ],
-          // );
-
-          // // show the dialog
-          // showDialog(
-          //   context: context,
-          //   builder: (BuildContext context) {
-          //     return alert;
-          //   },
-          // );
           Widget okButton = CupertinoDialogAction(
             child: Text(
               "OK",
@@ -115,7 +81,9 @@ class BookAppointmentViewModel with ChangeNotifier {
             },
           );
         } else {
-          Utils.snackBar(value['displayMessage'], context);
+          Utils.flushBarErrorMessage(
+              value['displayMessage'], Duration(seconds: 2), context);
+          // Utils.snackBar(value['displayMessage'], context);
         }
 
         if (kDebugMode) {

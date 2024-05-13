@@ -10,14 +10,6 @@ class Utils {
     FocusScope.of(context).requestFocus(nextFocus);
   }
 
-  // static toastMessage(String message) {
-  //   Fluttertoast.showToast(
-  //     msg: message,
-  //     backgroundColor: Colors.black,
-  //     textColor: Colors.white,
-  //   );
-  // }
-
   static void flushBarErrorMessage(
       String message, Duration duration, BuildContext context) {
     showFlushbar(
@@ -29,8 +21,8 @@ class Utils {
         message: message,
         duration: duration,
         borderRadius: BorderRadius.circular(8),
-        flushbarPosition: FlushbarPosition.TOP,
-        backgroundColor: Colors.red,
+        flushbarPosition: FlushbarPosition.BOTTOM,
+        backgroundColor: Colors.grey.shade800,
         reverseAnimationCurve: Curves.easeInOut,
         positionOffset: 20,
         icon: Icon(
@@ -42,61 +34,33 @@ class Utils {
     );
   }
 
-  static snackBar(String message, BuildContext context) {
-    return ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        backgroundColor: Colors.grey.shade800,
-        content: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Icon(
-              Icons.error_outline,
-              color: Colors.white,
-              size: 3.3.h,
-            ),
-            SizedBox(
-              width: 3.w,
-            ),
-            Expanded(
-              // Wrap the Text widget with Expanded
-              child: Text(
-                message,
-                overflow: TextOverflow.visible, // Set overflow to visible
-              ),
-            ),
-          ],
-        ),
-        duration: Duration(seconds: 1),
-      ),
-    );
-  }
-
-  static snackBar1(String message, Duration duration, BuildContext context) {
-    return ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        backgroundColor: Colors.grey.shade800,
-        content: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Icon(
-              Icons.error_outline,
-              color: Colors.white,
-              size: 3.3.h,
-            ),
-            SizedBox(
-              width: 3.w,
-            ),
-            Expanded(
-              // Wrap the Text widget with Expanded
-              child: Text(
-                message,
-                overflow: TextOverflow.visible, // Set overflow to visible
-              ),
-            ),
-          ],
-        ),
+  static void flushBarErrorMessagelogin(
+      String message, Duration duration, BuildContext context) {
+    showFlushbar(
+      context: context,
+      flushbar: Flushbar(
+        forwardAnimationCurve: Curves.decelerate,
+        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        padding: EdgeInsets.all(15),
+        message: message,
         duration: duration,
-      ),
+        borderRadius: BorderRadius.circular(8),
+        flushbarPosition: FlushbarPosition.BOTTOM,
+        backgroundColor: Colors.grey.shade800,
+        reverseAnimationCurve: Curves.easeInOut,
+        positionOffset: 20,
+        icon: Icon(
+          Icons.error,
+          size: 28,
+          color: Colors.white,
+        ),
+      )..show(context),
     );
   }
 }
+
+final headerFontSize = 15.sp;
+final titleFontSize = 13.sp;
+final subTitleFontSize = 12.sp;
+final descriptionFontSize = 10.sp;
+final subDescriptionFontSize = 8.sp;

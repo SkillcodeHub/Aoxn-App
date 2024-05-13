@@ -1,6 +1,10 @@
 import 'dart:async';
+
+import 'package:another_flushbar/flushbar.dart';
+import 'package:another_flushbar/flushbar_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
 import '../../Repository/Login_Repository/auth_repository.dart';
 import '../../utils/utils.dart';
 import '../../view/ChangeProvider/change_provider_screen.dart';
@@ -24,23 +28,40 @@ class AuthViewModel with ChangeNotifier {
     notifyListeners();
   }
 
+  static void flushBarErrorMessagelogin(
+      String message, Duration duration, BuildContext context) {
+    showFlushbar(
+      context: context,
+      flushbar: Flushbar(
+        forwardAnimationCurve: Curves.decelerate,
+        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        padding: EdgeInsets.all(15),
+        message: message,
+        duration: duration,
+        borderRadius: BorderRadius.circular(20),
+        flushbarPosition: FlushbarPosition.BOTTOM,
+        backgroundColor: Colors.grey.shade800,
+        reverseAnimationCurve: Curves.easeInOut,
+        positionOffset: 20,
+        icon: Icon(
+          Icons.error,
+          size: 28,
+          color: Colors.white,
+        ),
+      )..show(context),
+    );
+  }
+
   Future<void> loginApi(dynamic data, BuildContext context) async {
     setLoading(true);
     await _myRepo.loginapi(data).then((value) {
       setLoading(false);
-      // final userPreference =
-      //     Provider.of<GetProviderTokenViewModel>(context, listen: false);
-      // userPreference.saveProviderToken(GetProviderTokenModel(
-      //     displayMessage: value['displayMessage'].toString()));
 
       if (value['status'] == true) {
-        // Utils.snackBar('OTP Send Successfully', context);
-
-        // Timer(
-        //     Duration(seconds: 2),
-        //     () =>
-        //         Navigator.pushNamed(context, RoutesName.otp, arguments: data));
-
+        flushBarErrorMessagelogin(
+            'OTP is sent on given mobile, Valid for 30 minutes.'.toString(),
+            Duration(seconds: 5),
+            context);
         if (kDebugMode) {
           print(value.toString());
         }
@@ -56,46 +77,24 @@ class AuthViewModel with ChangeNotifier {
   }
 
   Future<void> otpVerifyApi(dynamic data, BuildContext context) async {
-    // final registerAppUserViewModel =
-    //     Provider.of<RegisterAppUserViewModel>(context, listen: false);
     UserPreferences userPreference = UserPreferences();
     dynamic otpVerifyData = {
       "Mobile": data['Mobile'].toString(),
       'OTP': data['OTP'].toString(),
     };
-    // dynamic registerUserData = {
-    //   "platform": data['platform'].toString(),
-    //   'deviceId': data['deviceId'].toString(),
-    //   'fullName': data['fullName'].toString(),
-    //   'mobile': data['mobile'].toString(),
-    //   'fcmToken': data['fcmToken'].toString(),
-    //   'gender': data['gender'].toString(),
-    //   'userType': data['userType'].toString(),
-    //   'birthDate': data['birthDate'].toString(),
-    // };
-    print('wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww');
-    print(data['platform']);
-    print(data['deviceId']);
-    print(data['fullName']);
-    print(data['mobile']);
-    print(data['fcmToken']);
-    print(data['gender']);
-    print(data['userType']);
-    print(data['birthDate']);
-    print('wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww');
+
     setSignUpLoading(true);
     _myRepo.otpverifyapi(otpVerifyData).then((value) {
       setSignUpLoading(false);
 
       if (value['status'] == true) {
-        Utils.snackBar('Otp is Valid', context);
+        // Utils.snackBar('Otp is Valid', context);
+        Utils.flushBarErrorMessage(
+            'Otp is Valid', Duration(seconds: 2), context);
+
         userPreference.setMobile(data['Mobile']);
-        // registerAppUserViewModel.registerAppUserApi(registerUserData, context);
-        //  userPreference.setMobile(data['Mobile']);
-        //  userPreference.saveUserData(registerUserData);
-        // await registerAppUserViewModel.registerAppUserApi(registerUserData, context);
         Timer(
-            Duration(seconds: 2),
+            Duration(seconds: 0),
             () => Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(builder: (context) => ChangeProviderScreen()),
@@ -104,7 +103,10 @@ class AuthViewModel with ChangeNotifier {
           print(value.toString());
         }
       } else {
-        Utils.snackBar('OTP is not valid*', context);
+        Utils.flushBarErrorMessage(
+            'OTP is not valid*', Duration(seconds: 2), context);
+
+        // Utils.snackBar('OTP is not valid*', context);
         if (kDebugMode) {
           print(value.toString());
         }

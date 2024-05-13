@@ -1,5 +1,6 @@
 import 'package:axonweb/Provider/backButton_provider.dart';
 import 'package:axonweb/Utils/routes/routes_name.dart';
+import 'package:axonweb/Utils/utils.dart';
 import 'package:axonweb/View/PaymentHistory/payment_history_screen.dart';
 import 'package:axonweb/View_Model/ChangeProvider_View_Model/provider_view_model.dart';
 import 'package:axonweb/View_Model/Settings_View_Model/settings_view_model.dart';
@@ -168,7 +169,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   child: Stack(
                     children: [
                       SingleChildScrollView(
-                        physics: BouncingScrollPhysics(),
+                        physics: AlwaysScrollableScrollPhysics(),
                         child: Padding(
                           padding: EdgeInsets.all(15),
                           child: Container(
@@ -199,7 +200,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     style: TextStyle(
                                         fontSize: SizerUtil.deviceType ==
                                                 DeviceType.mobile
-                                            ? 14.sp
+                                            ? titleFontSize
                                             : 12.sp,
                                         fontWeight: FontWeight.w500),
                                   ),
@@ -232,11 +233,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            'Provider',
+                                            'Doctor',
                                             style: TextStyle(
                                               fontSize: SizerUtil.deviceType ==
                                                       DeviceType.mobile
-                                                  ? 10.sp
+                                                  ? descriptionFontSize
                                                   : 8.sp,
                                               fontWeight: FontWeight.w500,
                                               color: Colors.grey.shade600,
@@ -276,7 +277,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                                       .deviceType ==
                                                                   DeviceType
                                                                       .mobile
-                                                              ? 12.sp
+                                                              ? subTitleFontSize
                                                               : 10.sp,
                                                           fontWeight:
                                                               FontWeight.w500,
@@ -308,7 +309,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w500,
-                                                              fontSize: 12.sp)
+                                                              fontSize:
+                                                                  subTitleFontSize)
                                                           : TextStyle(
                                                               fontWeight:
                                                                   FontWeight
@@ -337,7 +339,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                 fontSize:
                                                     SizerUtil.deviceType ==
                                                             DeviceType.mobile
-                                                        ? 12.sp
+                                                        ? subTitleFontSize
                                                         : 10.sp,
                                                 fontWeight: FontWeight.w500,
                                               ),
@@ -363,7 +365,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                             style: TextStyle(
                                               fontSize: SizerUtil.deviceType ==
                                                       DeviceType.mobile
-                                                  ? 10.sp
+                                                  ? descriptionFontSize
                                                   : 8.sp,
                                               fontWeight: FontWeight.w500,
                                               color: Colors.grey.shade600,
@@ -389,7 +391,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                       fontSize: SizerUtil
                                                                   .deviceType ==
                                                               DeviceType.mobile
-                                                          ? 13.sp
+                                                          ? subTitleFontSize
                                                           : 11.sp,
                                                       fontWeight:
                                                           FontWeight.w500),
@@ -424,7 +426,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w500,
-                                                              fontSize: 12.sp)
+                                                              fontSize:
+                                                                  subTitleFontSize)
                                                           : TextStyle(
                                                               fontWeight:
                                                                   FontWeight
@@ -444,50 +447,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       ),
                                     ),
                                   ),
-
-                                  // InkWell(
-                                  //   onTap: () {
-                                  //     Navigator.push(
-                                  //         context,
-                                  //         MaterialPageRoute(
-                                  //             builder: (context) =>
-                                  //                 PaymentHistory()));
-                                  //   },
-                                  //   child: Card(
-                                  //     color: Colors.white,
-                                  //     child: Padding(
-                                  //         padding: EdgeInsets.all(12.0),
-                                  //         child: Row(
-                                  //           mainAxisAlignment:
-                                  //               MainAxisAlignment.spaceBetween,
-                                  //           children: [
-                                  //             Container(
-                                  //               child: Row(
-                                  //                 children: [
-                                  //                   Icon(Icons.history),
-                                  //                   SizedBox(
-                                  //                     width: 3.w,
-                                  //                   ),
-                                  //                   Text(
-                                  //                     'Show Payment History',
-                                  //                     style: TextStyle(
-                                  //                       fontSize: 12.sp,
-                                  //                       fontWeight:
-                                  //                           FontWeight.w500,
-                                  //                     ),
-                                  //                   ),
-                                  //                 ],
-                                  //               ),
-                                  //             ),
-                                  //             Icon(
-                                  //               Icons.arrow_forward_ios,
-                                  //               size: 2.2.h,
-                                  //             ),
-                                  //           ],
-                                  //         )),
-                                  //   ),
-                                  // ),
-
                                   SizedBox(height: 1.h),
                                   Card(
                                     color: Colors.white,
@@ -502,7 +461,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                             style: TextStyle(
                                               fontSize: SizerUtil.deviceType ==
                                                       DeviceType.mobile
-                                                  ? 10.sp
+                                                  ? descriptionFontSize
                                                   : 8.sp,
                                               fontWeight: FontWeight.w500,
                                               color: Colors.grey.shade600,
@@ -526,12 +485,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.start,
                                                   children: [
-                                                    Text(name),
+                                                    Text(
+                                                      name,
+                                                      style: TextStyle(
+                                                        fontSize:
+                                                            subTitleFontSize,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
+                                                    ),
                                                     Text(
                                                       mobile.replaceRange(
                                                           0, 7, 'xxxxxxx'),
                                                       style: TextStyle(
-                                                        fontSize: 12.sp,
+                                                        fontSize:
+                                                            subTitleFontSize,
                                                         fontWeight:
                                                             FontWeight.w500,
                                                       ),
@@ -560,7 +528,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w500,
-                                                              fontSize: 12.sp)
+                                                              fontSize:
+                                                                  subTitleFontSize)
                                                           : TextStyle(
                                                               fontWeight:
                                                                   FontWeight
@@ -580,7 +549,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       ),
                                     ),
                                   ),
-
                                   SizedBox(height: 30.h),
                                   Center(
                                     child: RichText(

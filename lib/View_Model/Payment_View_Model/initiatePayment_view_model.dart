@@ -1,10 +1,11 @@
 import 'package:axonweb/View_Model/Payment_View_Model/validatePayment_view_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
+
 import '../../Repository/Payment_Repository/initiatePayment_repository.dart';
 import '../../Utils/utils.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class InitiatePaymentViewModel with ChangeNotifier {
   late Razorpay _razorpay;
@@ -64,12 +65,6 @@ class InitiatePaymentViewModel with ChangeNotifier {
           msg: "EXTERNAL_WALLET IS: ${response.walletName}",
           timeInSecForIosWeb: 4);
     }
-    // bool _loading = false;
-    // bool get loading => _loading;
-    // setLoading(bool value) {
-    //   _loading = value;
-    //   notifyListeners();
-    // }
 
     _razorpay = Razorpay();
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
@@ -81,16 +76,12 @@ class InitiatePaymentViewModel with ChangeNotifier {
     setisLoading(true);
     _myRepo.initiatePaymentApi(data).then((value) {
       setisLoading(false);
-      // Utils.flushBarErrorMessage(
-      //     'Otp is Valid'.toString(), Duration(seconds: 5), context);
 
       if (value['status'] == true) {
-        // Utils.snackBar('Appointment Book Successfully', context);
         print(value);
 
         var options = {
           'key': 'rzp_test_8aGQyjie2ef5rn',
-          // 'key': value['data']['razorpayKey'],
           'order_id': value['data']['razorpayOrderId'],
 
           'amount': (int.parse(data['amount']) * 100).toString(), // Rs 200
@@ -111,7 +102,10 @@ class InitiatePaymentViewModel with ChangeNotifier {
           print(value.toString());
         }
       } else {
-        Utils.snackBar(value['displayMessage'], context);
+        Utils.flushBarErrorMessage(
+            value['displayMessage'], Duration(seconds: 2), context);
+
+        // Utils.snackBar(value['displayMessage'], context);
         if (kDebugMode) {
           print(value.toString());
         }

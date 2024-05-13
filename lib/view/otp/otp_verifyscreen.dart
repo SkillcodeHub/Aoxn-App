@@ -36,7 +36,9 @@ class _OtpVerifyScreenState extends State<OtpVerifyScreen> {
                 'images/axon.png',
               ),
             ),
-            SizedBox(height: 3.h,),
+            SizedBox(
+              height: 3.h,
+            ),
             Card(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -83,7 +85,9 @@ class _OtpVerifyScreenState extends State<OtpVerifyScreen> {
                               print("codeValue");
                               // _verifyOTP();
                               if (codeValue.isEmpty) {
-                                Utils.snackBar('Please enter OTP*', context);
+                                // Utils.snackBar('Please enter OTP*', context);
+                                Utils.flushBarErrorMessage('Please enter OTP*',
+                                    Duration(seconds: 2), context);
                               } else {
                                 Map data = {
                                   "Mobile": widget.mobile['Mobile'].toString(),

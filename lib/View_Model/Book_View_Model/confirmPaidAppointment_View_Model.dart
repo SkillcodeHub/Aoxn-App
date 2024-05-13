@@ -26,9 +26,6 @@ class ConfirmPaidAppointmentViewModel with ChangeNotifier {
     print(data);
     print('datadatadatadatadatadatadatadatadatadatadatadata');
     _myRepo.confirmPaidAppointmentApi(data).then((value) {
-      // Utils.flushBarErrorMessage(
-      //     'Otp is Valid'.toString(), Duration(seconds: 5), context);
-
       if (value['status'] == true) {
         setLoading(false);
         showDialog(
@@ -41,16 +38,19 @@ class ConfirmPaidAppointmentViewModel with ChangeNotifier {
               ),
               title: Text(
                 'Congratulations!',
-                style: TextStyle(fontSize: SizerUtil.deviceType == DeviceType.mobile ?  15.sp : 12.sp, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    fontSize: SizerUtil.deviceType == DeviceType.mobile
+                        ? 15.sp
+                        : 12.sp,
+                    fontWeight: FontWeight.bold),
               ),
               content: Center(
                 child: Text(
                   'Appointment Booked Successfully.',
                   style: TextStyle(
-                      // fontWeight:
-                      //     FontWeight
-                      //         .bold,
-                      fontSize:SizerUtil.deviceType == DeviceType.mobile ?  12.sp : 8.sp),
+                      fontSize: SizerUtil.deviceType == DeviceType.mobile
+                          ? 12.sp
+                          : 8.sp),
                 ),
               ),
               actions: <Widget>[
@@ -60,7 +60,10 @@ class ConfirmPaidAppointmentViewModel with ChangeNotifier {
                     child: Text(
                       'CONTINUE',
                       style: TextStyle(
-                          fontSize: SizerUtil.deviceType == DeviceType.mobile ?  14.sp : 8.sp, fontWeight: FontWeight.bold),
+                          fontSize: SizerUtil.deviceType == DeviceType.mobile
+                              ? 14.sp
+                              : 8.sp,
+                          fontWeight: FontWeight.bold),
                     ),
                     onPressed: () {
                       Timer(
@@ -91,11 +94,7 @@ class ConfirmPaidAppointmentViewModel with ChangeNotifier {
             ),
             content: Text(
               'Appointment booking failed. Please try to contact in Clinic.',
-              style: TextStyle(
-                  // fontWeight:
-                  //     FontWeight
-                  //         .bold,
-                  fontSize: 12.sp),
+              style: TextStyle(fontSize: 12.sp),
             ),
             actions: <Widget>[
               SizedBox(

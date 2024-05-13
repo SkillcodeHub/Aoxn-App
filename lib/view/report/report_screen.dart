@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:axonweb/Utils/utils.dart';
 import 'package:axonweb/View_Model/News_View_Model/notification_services.dart';
 import 'package:axonweb/View_Model/Report_View_Model/report_view_model.dart';
 import 'package:axonweb/view/nevigationBar/my_navigationbar.dart';
@@ -29,7 +30,6 @@ class _ReportScreenState extends State<ReportScreen> {
   late String token;
   late String mobile;
   bool isLoading = false;
-  // ReportViewmodel reportViewmodel = ReportViewmodel();
   late Map<String, dynamic> data3;
   late String data1;
   late Future<void> fetchDataFuture;
@@ -61,16 +61,11 @@ class _ReportScreenState extends State<ReportScreen> {
       });
     });
 
-    // setState(() {});
-    // super.initState();
     super.initState();
     notificationServices.forgroundMessage();
     notificationServices.firebaseInit(context);
     notificationServices.setupInteractMessage(context);
     fetchDataFuture = fetchData(); // Call the API only once
-
-    // final bookAppointmentViewModel =
-    //     Provider.of<BookAppointmentViewModel>(context, listen: false);
   }
 
   createNewsListContainer(BuildContext context, int itemIndex) {
@@ -129,7 +124,7 @@ class _ReportScreenState extends State<ReportScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Provider: ' +
+                    'Doctor: ' +
                         reportViewmodel
                             .reportsList.data!.data![itemIndex].providerName
                             .toString(),
@@ -190,16 +185,6 @@ class _ReportScreenState extends State<ReportScreen> {
             ),
           ),
         ),
-        // SizedBox(
-        //   height: 20,
-        // ),
-        // ElevatedButton(
-        //   onPressed: () {
-        //     Navigator.push(context,
-        //         MaterialPageRoute(builder: (context) => SearchBarScreen()));
-        //   },
-        //   child: Text('aaaaa'),
-        // )
       ],
     );
   }
@@ -226,11 +211,6 @@ class _ReportScreenState extends State<ReportScreen> {
         Provider.of<ReportViewmodel>(context, listen: false);
     final settingsViewModel =
         Provider.of<SettingsViewModel>(context, listen: false);
-    // print(
-    //     'rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr');
-    // Timer(Duration(microseconds: 20), () {
-    //   reportViewmodel.fetchReportsListApi(token, mobile);
-    // });
     Future refresh() async {
       Timer(Duration(microseconds: 20), () {
         print(
@@ -320,35 +300,7 @@ class _ReportScreenState extends State<ReportScreen> {
                           ),
                         );
                       case Status.COMPLETED:
-                        return
-                            //  settingsViewModel.doctorDetailsList.data!
-                            //             .data![0].paymentGatewayEnabled
-                            //             .toString() ==
-                            //         'true'
-                            //     ? AppBar(
-                            //         automaticallyImplyLeading: false,
-                            //         centerTitle: false,
-                            //         backgroundColor: Color(0xffffffff),
-                            //         elevation: 0,
-                            //         title: Padding(
-                            //           padding: const EdgeInsets.only(top: 5.0),
-                            //           child: Row(
-                            //             mainAxisAlignment:
-                            //                 MainAxisAlignment.spaceBetween,
-                            //             children: [
-                            //               AxonIconForAppBarrWidget(),
-                            //               ScreenNameWidget(
-                            //                 title: '  Recent Precription',
-                            //               ),
-                            //               WhatsappWidget(),
-                            //               PaymentWidget(),
-                            //               SettingsWidget(),
-                            //             ],
-                            //           ),
-                            //         ),
-                            //       )
-                            //     :
-                            AppBar(
+                        return AppBar(
                           automaticallyImplyLeading: false,
                           centerTitle: false,
                           backgroundColor: Color(0xffffffff),
@@ -410,7 +362,7 @@ class _ReportScreenState extends State<ReportScreen> {
                         child: Stack(
                           children: [
                             SingleChildScrollView(
-                              physics: BouncingScrollPhysics(),
+                              physics: AlwaysScrollableScrollPhysics(),
                               child: Padding(
                                 padding: EdgeInsets.all(15),
                                 child: Container(
@@ -442,7 +394,7 @@ class _ReportScreenState extends State<ReportScreen> {
                                           style: TextStyle(
                                               fontSize: SizerUtil.deviceType ==
                                                       DeviceType.mobile
-                                                  ? 14.sp
+                                                  ? titleFontSize
                                                   : 12.sp,
                                               fontWeight: FontWeight.w500),
                                         ),
@@ -460,16 +412,13 @@ class _ReportScreenState extends State<ReportScreen> {
                           child: Text(
                             'Alert!',
                             style: TextStyle(
-                                fontSize: 15.sp, fontWeight: FontWeight.bold),
+                                fontSize: titleFontSize,
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
                         content: Text(
                           messageCode.toString(),
-                          style: TextStyle(
-                              // fontWeight:
-                              //     FontWeight
-                              //         .bold,
-                              fontSize: 12.sp),
+                          style: TextStyle(fontSize: subTitleFontSize),
                           textAlign: TextAlign.center,
                         ),
                         actions: <Widget>[
@@ -486,7 +435,7 @@ class _ReportScreenState extends State<ReportScreen> {
                                   : Text(
                                       'OK',
                                       style: TextStyle(
-                                          fontSize: 14.sp,
+                                          fontSize: titleFontSize,
                                           fontWeight: FontWeight.bold),
                                     ),
                               onPressed: () {
@@ -505,9 +454,6 @@ class _ReportScreenState extends State<ReportScreen> {
                       );
               case Status.COMPLETED:
                 print('providerNameproviderNameproviderNameproviderName');
-                // print(reportViewmodel.reportsList.data!.data![1].providerName
-                //     .toString());
-
                 print(
                     '--------------------------------------------------------------------------------------');
                 print(reportViewmodel.reportsList.data!.data!.length);
@@ -524,7 +470,7 @@ class _ReportScreenState extends State<ReportScreen> {
                                 physics: AlwaysScrollableScrollPhysics(),
                                 child: ListView.builder(
                                     padding: EdgeInsets.only(bottom: 0),
-                                    physics: BouncingScrollPhysics(),
+                                    physics: AlwaysScrollableScrollPhysics(),
                                     shrinkWrap: true,
                                     itemCount: reportViewmodel
                                         .reportsList.data!.data!.length,
@@ -543,7 +489,7 @@ class _ReportScreenState extends State<ReportScreen> {
                         child: Stack(
                           children: [
                             SingleChildScrollView(
-                              physics: BouncingScrollPhysics(),
+                              physics: AlwaysScrollableScrollPhysics(),
                               child: Padding(
                                 padding: EdgeInsets.all(15),
                                 child: Container(
@@ -560,15 +506,9 @@ class _ReportScreenState extends State<ReportScreen> {
                                         'Swipe down to refresh page',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
-                                          fontSize:
-                                              //  SizerUtil.deviceType ==
-                                              //         DeviceType.mobile
-                                              //     ?
-                                              14.sp
-                                          // : 12.sp
-                                          ,
+                                          fontSize: titleFontSize,
                                           color: Color(0XFF545454),
-                                          fontWeight: FontWeight.w600,
+                                          fontWeight: FontWeight.w500,
                                         ),
                                       ),
                                       SizedBox(
@@ -589,15 +529,9 @@ class _ReportScreenState extends State<ReportScreen> {
                                           'You don\'t have any recent prescriptions.',
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
-                                              fontSize:
-                                                  //  SizerUtil.deviceType ==
-                                                  //         DeviceType.mobile
-                                                  //     ?
-                                                  14.sp
-                                              // : 12.sp
-                                              ,
+                                              fontSize: titleFontSize,
                                               color: Color(0XFF545454),
-                                              fontWeight: FontWeight.w600),
+                                              fontWeight: FontWeight.w500),
                                         ),
                                       ),
                                     ],
