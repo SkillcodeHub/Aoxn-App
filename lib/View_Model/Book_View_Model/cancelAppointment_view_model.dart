@@ -25,9 +25,6 @@ class CancelAppointmentViewModel with ChangeNotifier {
   }
 
   Future<void> cancelApointmentApi(dynamic data, BuildContext context) async {
-    print('datadatadatadatadatadatadatadatadatadata');
-    print(data);
-    print('datadatadatadatadatadatadatadatadatadatadatadata');
     setSignUpLoading(true);
     _myRepo.cancelappointmentapi(data).then((value) {
       setSignUpLoading(false);
@@ -42,7 +39,6 @@ class CancelAppointmentViewModel with ChangeNotifier {
           ),
           onPressed: () {
             Navigator.of(context)
-              //   ..pop()
               ..pop()
               ..pop();
           },
@@ -64,7 +60,6 @@ class CancelAppointmentViewModel with ChangeNotifier {
             return alert;
           },
         );
-        // }
 
         print(value);
 
@@ -72,7 +67,6 @@ class CancelAppointmentViewModel with ChangeNotifier {
           print(value.toString());
         }
       } else {
-        // Utils.snackBar(value['displayMessage'], context);
         Widget okButton = TextButton(
           child: Text(
             "OK",
@@ -86,7 +80,6 @@ class CancelAppointmentViewModel with ChangeNotifier {
               ..pop()
               ..pop()
               ..pop();
-            // Navigator.push(context, MaterialPageRoute(builder: (context)=>MyNavigationBar()));
           },
         );
 

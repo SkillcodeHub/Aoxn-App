@@ -42,7 +42,6 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
       patientName = widget.appoitmentData['patientName'] as String?;
       status = widget.appoitmentData['status'] as String?;
     });
-    // super.initState();
     super.initState();
   }
 

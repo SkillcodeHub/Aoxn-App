@@ -179,7 +179,6 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                   margin: EdgeInsets.all(6),
                                   height: 4.h,
                                   width: 5.h,
-                                  // child: Image.asset('images/whatsapp.png'),
                                 ),
                                 SettingsWidget(),
                               ],
@@ -205,7 +204,6 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                   margin: EdgeInsets.all(6),
                                   height: 4.h,
                                   width: 5.h,
-                                  // child: Image.asset('images/whatsapp.png'),
                                 ),
                                 SettingsWidget(),
                               ],
@@ -225,7 +223,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                               children: [
                                 AxonIconForAppBarrWidget(),
                                 ScreenNameWidget(
-                                  title: '  Book Appointment',
+                                  title: ' Book Appointment',
                                 ),
                                 value.doctorDetailsList.data!.data![0]
                                             .whatsapplink
@@ -293,7 +291,6 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                           child: Image.asset(
                                             'images/loading.png',
                                             height: 20.h,
-                                            // width: 90,
                                           ),
                                         ),
                                         SizedBox(
@@ -303,14 +300,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                           child: Text(
                                             value.doctorList.message.toString(),
                                             style: TextStyle(
-                                                fontSize:
-
-                                                    // SizerUtil.deviceType ==
-                                                    //         DeviceType.mobile
-                                                    //     ?
-                                                    titleFontSize
-                                                // : 12.sp
-                                                ,
+                                                fontSize: titleFontSize,
                                                 fontWeight: FontWeight.w500),
                                           ),
                                         ),
@@ -363,16 +353,12 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                         onTap: () {
                                           selectedDocotrId =
                                               doctor.doctorId.toString();
-                                          // get();
-                                          print(
-                                              'Selected Doctor: ${doctor.doctorName}');
-                                          print(
-                                              'Doctor ID: ${doctor.doctorId}');
-                                          print(
-                                              'CustomerDoctor ID: ${doctor.doctorId}');
-                                          print(
-                                              'cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc');
-
+                                          if (kDebugMode) {
+                                            if (kDebugMode) {
+                                              print(
+                                                  'buttonProvider ${buttonProvider}');
+                                            }
+                                          }
                                           selectedDoctor =
                                               doctor.doctorName.toString();
                                           doctorNameProvider.updateTextValues(
@@ -395,7 +381,6 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                         return Stack(
                           children: [
                             SingleChildScrollView(
-                              // physics: AlwaysScrollableScrollPhysics(),
                               child: Padding(
                                 padding: EdgeInsets.all(0),
                                 child: isLoading
@@ -418,9 +403,6 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                     width: 100.w,
                                                   );
 
-                                                // Center(
-                                                //     child:
-                                                //         CircularProgressIndicator());
                                                 case Status.ERROR:
                                                   return Center(
                                                       child: Text(value
@@ -428,16 +410,6 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                           .message
                                                           .toString()));
                                                 case Status.COMPLETED:
-                                                  print(
-                                                      'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
-                                                  print(value
-                                                      .doctorDetailsList
-                                                      .data!
-                                                      .data![0]
-                                                      .logoImageURL
-                                                      .toString());
-                                                  print(
-                                                      'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
                                                   number = value
                                                       .doctorDetailsList
                                                       .data!
@@ -504,7 +476,6 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                             Transform.translate(
                                                           offset: Offset(0, 4),
                                                           child: Container(
-                                                            // height: 10.h,
                                                             decoration:
                                                                 BoxDecoration(
                                                               gradient: LinearGradient(
@@ -534,8 +505,6 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                         .spaceBetween,
                                                                 children: [
                                                                   Container(
-                                                                    // color: Colors
-                                                                    //     .amber,
                                                                     width: 70.w,
                                                                     child:
                                                                         Column(
@@ -562,8 +531,6 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                             fontWeight:
                                                                                 FontWeight.bold,
                                                                           ),
-                                                                          // maxLines:
-                                                                          //     1,
                                                                           overflow:
                                                                               TextOverflow.ellipsis,
                                                                         ),
@@ -583,10 +550,6 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                             fontStyle:
                                                                                 FontStyle.italic,
                                                                           ),
-                                                                          // maxLines:
-                                                                          //     1,
-                                                                          // overflow:
-                                                                          //     TextOverflow.ellipsis,
                                                                         ),
                                                                       ],
                                                                     ),
@@ -596,11 +559,7 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                       number == null ||
                                                                               number ==
                                                                                   ''
-                                                                          ?
-                                                                          //  Utils.snackBar(
-                                                                          //     'MobileNo Not Available',
-                                                                          //     context)
-                                                                          Utils.flushBarErrorMessage(
+                                                                          ? Utils.flushBarErrorMessage(
                                                                               "MobileNo Not Available",
                                                                               Duration(seconds: 2),
                                                                               context)
@@ -723,8 +682,6 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                               .center,
                                                                       children: [
                                                                         Container(
-                                                                          // color:
-                                                                          //     Colors.amber,
                                                                           width:
                                                                               60.w,
                                                                           child:
@@ -786,107 +743,6 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                           );
                                                         },
                                                       )
-
-                                                      // Consumer<
-                                                      //     DoctorNameProvider>(
-                                                      //   builder: (context,
-                                                      //       doctorNameProvider,
-                                                      //       _) {
-                                                      //     return Container(
-                                                      //       padding: EdgeInsets
-                                                      //           .symmetric(
-                                                      //               horizontal:
-                                                      //                   8.0), // Adjust padding here
-                                                      //       alignment: Alignment
-                                                      //           .centerLeft,
-                                                      //       child:
-                                                      //           DropdownButtonHideUnderline(
-                                                      //         child:
-                                                      //             ButtonTheme(
-                                                      //           alignedDropdown:
-                                                      //               true,
-                                                      //           child:
-                                                      //               DropdownButton<
-                                                      //                   String>(
-                                                      //             isDense: true,
-                                                      //             value:
-                                                      //                 selectedDocotrId,
-                                                      //             onChanged:
-                                                      //                 (String?
-                                                      //                     newValue) {
-                                                      //               selectedDocotrId =
-                                                      //                   newValue!;
-                                                      //               selectedDoctor = value
-                                                      //                   .doctorList
-                                                      //                   .data!
-                                                      //                   .data!
-                                                      //                   .firstWhere(
-                                                      //                     (doctor) =>
-                                                      //                         doctor.doctorId.toString() ==
-                                                      //                         newValue,
-                                                      //                   )
-                                                      //                   .doctorName
-                                                      //                   .toString();
-
-                                                      //               doctorNameProvider
-                                                      //                   .resetData();
-
-                                                      //               doctorNameProvider
-                                                      //                   .updateTextValues(
-                                                      //                 '${selectedDoctor}',
-                                                      //                 '${selectedDocotrId}',
-                                                      //               );
-                                                      //               if (kDebugMode) {
-                                                      //                 print(
-                                                      //                     'updateTextValues');
-                                                      //                 print(
-                                                      //                     'selectedDoctor ${selectedDoctor}');
-                                                      //                 print(
-                                                      //                     'selectedDoctor ${selectedDocotrId}');
-                                                      //               }
-                                                      //             },
-                                                      //             items: value
-                                                      //                 .doctorList
-                                                      //                 .data!
-                                                      //                 .data!
-                                                      //                 .map(
-                                                      //                     (map) {
-                                                      //               return DropdownMenuItem<
-                                                      //                   String>(
-                                                      //                 value: map
-                                                      //                     .doctorId
-                                                      //                     .toString(),
-                                                      //                 child:
-                                                      //                     Row(
-                                                      //                   mainAxisAlignment:
-                                                      //                       MainAxisAlignment.start,
-                                                      //                   children: <
-                                                      //                       Widget>[
-                                                      //                     Container(
-                                                      //                       width:
-                                                      //                           50.w,
-                                                      //                       child:
-                                                      //                           Text(
-                                                      //                         map.doctorName.toString(),
-                                                      //                         overflow: TextOverflow.ellipsis, // Handle overflow
-                                                      //                         maxLines: 1,
-                                                      //                         style: TextStyle(
-                                                      //                           fontSize: titleFontSize,
-                                                      //                           fontWeight: FontWeight.w500,
-                                                      //                         ),
-                                                      //                         textAlign: TextAlign.start,
-                                                      //                       ),
-                                                      //                     ),
-                                                      //                   ],
-                                                      //                 ),
-                                                      //               );
-                                                      //             }).toList(),
-                                                      //           ),
-                                                      //         ),
-                                                      //       ),
-                                                      //     );
-                                                      //   },
-                                                      // )
                                                     ],
                                                   ),
                                                 ),
@@ -1022,7 +878,6 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                       ),
                                                                       Text(
                                                                         appointmentDate,
-                                                                        // displayDate,
                                                                         style: TextStyle(
                                                                             fontSize:
                                                                                 subTitleFontSize,
@@ -1143,7 +998,6 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                           .w500),
                                                             ),
                                                           ),
-                                                          //
                                                         ],
                                                       ),
                                                     ),
@@ -1214,10 +1068,8 @@ class _BookApointmentScreenState extends State<BookApointmentScreen> {
                                                                 content: Text(
                                                                   " Oops Sorry! Operation cannot be performed at this moment. Please contact your doctor to use this feature!",
                                                                   style: TextStyle(
-                                                                      // fontWeight:
-                                                                      //     FontWeight
-                                                                      //         .bold,
-                                                                      fontSize: subTitleFontSize),
+                                                                      fontSize:
+                                                                          subTitleFontSize),
                                                                   textAlign:
                                                                       TextAlign
                                                                           .center,
@@ -1511,8 +1363,7 @@ class _PaymentSheetState extends State<PaymentSheet> {
   );
 
   UserPreferences userPreference = UserPreferences();
-  String?
-      selectedPayHeadIndex; // Index of the selected payHead, initially set to -1
+  String? selectedPayHeadIndex;
 
   CustomerPayHeadViewmodel customerPayHeadViewmodel =
       CustomerPayHeadViewmodel();
@@ -1528,42 +1379,26 @@ class _PaymentSheetState extends State<PaymentSheet> {
     userPreference.getToken().then((value) {
       setState(() {
         token = value!;
-        print(token);
-        if (kDebugMode) {
-          print(token);
-        }
       });
     });
     userPreference.getMobile().then((value) {
       setState(() {
         mobile = value!;
-        if (kDebugMode) {
-          print(mobile);
-        }
       });
     });
     userPreference.getName().then((value) {
       setState(() {
         name = value!;
-        if (kDebugMode) {
-          print(name);
-        }
       });
     });
     userPreference.getletId().then((value) {
       setState(() {
         letId = value!;
-        if (kDebugMode) {
-          print(letId);
-        }
       });
     });
 
     super.initState();
     Timer(Duration(microseconds: 20), () {
-      if (kDebugMode) {
-        print(token);
-      }
       customerPayHeadViewmodel.fetchCustomerPayHeadListApi(token.toString());
     });
   }
@@ -1600,12 +1435,10 @@ class _PaymentSheetState extends State<PaymentSheet> {
       "PatType": widget.arguments['PatType'],
       "ApptDate": widget.arguments['ApptDate'],
       "CustomerToken": token.toString(),
-      "DelayMinute": widget.arguments[
-          'DelayMinute'], //DelayMinutes from minuteInterval form slot timing selection
+      "DelayMinute": widget.arguments['DelayMinute'],
       "DeviceId": widget.arguments['DeviceId'],
       "DoctorId": widget.arguments['DoctorId'],
-      "TimingId":
-          widget.arguments['TimingId'], //TimingId from slot timing selection
+      "TimingId": widget.arguments['TimingId'],
       "AppointmentPaymentHead": selectedPayHeadIndex.toString(),
       "Amount": strAmount.text.toString(),
       "LAT": letId.toString(),
@@ -1693,7 +1526,6 @@ class _PaymentSheetState extends State<PaymentSheet> {
                                         );
                                       case Status.COMPLETED:
                                         return Container(
-                                          // height: 30.h,
                                           width: 90.w,
                                           child: SingleChildScrollView(
                                             physics:
@@ -1748,8 +1580,6 @@ class _PaymentSheetState extends State<PaymentSheet> {
                                                               setState(() {
                                                                 selectedPayHeadIndex =
                                                                     value!;
-                                                                print(
-                                                                    'selectedPayHeadIndex:');
 
                                                                 String rs = customerPayHeadViewmodel
                                                                     .CustomerPayHeadList
@@ -1768,18 +1598,6 @@ class _PaymentSheetState extends State<PaymentSheet> {
                                                                 strAmount.text =
                                                                     amount
                                                                         .toString();
-                                                                print(
-                                                                  customerPayHeadViewmodel
-                                                                      .CustomerPayHeadList
-                                                                      .data!
-                                                                      .data![
-                                                                          index]
-                                                                      .defaultAmount
-                                                                      .toString(),
-                                                                );
-
-                                                                print(
-                                                                    selectedPayHeadIndex);
                                                               });
                                                             },
                                                           ),
@@ -1883,7 +1701,6 @@ class _PaymentSheetState extends State<PaymentSheet> {
                                     height: 5.h,
                                     child: ElevatedButton(
                                       onPressed: () {
-                                        print(selectedPayHeadIndex);
                                         if (selectedPayHeadIndex == null ||
                                             selectedPayHeadIndex == ' ') {
                                           Utils.flushBarErrorMessage(

@@ -15,8 +15,6 @@ class MyNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(
-        '999999999999999999999999999999999999999999999999999999999999999999999');
     return ChangeNotifierProvider<ValueNotifier<int>>(
       create: (_) => ValueNotifier<int>(indexNumber),
       child: Consumer<ValueNotifier<int>>(
@@ -31,9 +29,6 @@ class MyNavigationBar extends StatelessWidget {
           ];
 
           void _onItemTapped(int index) {
-            print(
-                '999999999999999999999999999999999999999999999999999999999999999999999');
-
             selectedIndexProvider.value = index;
           }
 
@@ -109,8 +104,7 @@ class MyNavigationBar extends StatelessWidget {
                         label: 'Reports',
                       ),
                     ],
-                    selectedLabelStyle:
-                        TextStyle(fontSize: 20), // Adjust the font size
+                    selectedLabelStyle: TextStyle(fontSize: 20),
                     unselectedLabelStyle: TextStyle(fontSize: 20),
                     currentIndex: selectedIndex,
                     onTap: _onItemTapped,

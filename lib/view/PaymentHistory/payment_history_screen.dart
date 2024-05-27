@@ -37,9 +37,6 @@ class _PaymentHistoryState extends State<PaymentHistory> {
     userPreference.getletId().then((value) {
       setState(() {
         letId = value!;
-        print('letId');
-        print(letId);
-        print('letId');
       });
     });
     userPreference.getMobile().then((value1) {
@@ -156,7 +153,9 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                         ),
                       ),
                       Text(
-                        '11-May-2023 12:33 PM',
+                        paymentHistoryViewmodel.paymentHistoryList.data!
+                            .data![itemIndex].createdDate
+                            .toString(),
                         style: TextStyle(
                           fontSize: SizerUtil.deviceType == DeviceType.mobile
                               ? subTitleFontSize
@@ -313,26 +312,19 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                         return value.paymentHistoryList.data!.data!.length != 0
                             ? RefreshIndicator(
                                 onRefresh: refresh,
-                                child: Stack(
-                                  children: [
-                                    Container(
-                                      height: 100.h,
-                                      child: SingleChildScrollView(
-                                        physics:
-                                            AlwaysScrollableScrollPhysics(),
-                                        child: ListView.builder(
-                                            padding:
-                                                EdgeInsets.only(bottom: 10),
-                                            physics:
-                                                AlwaysScrollableScrollPhysics(),
-                                            shrinkWrap: true,
-                                            itemCount: value.paymentHistoryList
-                                                .data!.data!.length,
-                                            itemBuilder: (BuildContext context,
-                                                int itemIndex) {
-                                              return createAppointmentListContainer(
-                                                  context, itemIndex);
-                                            }),
+                                child: CustomScrollView(
+                                  slivers: [
+                                    SliverPadding(
+                                      padding: EdgeInsets.only(bottom: 10),
+                                      sliver: SliverList(
+                                        delegate: SliverChildBuilderDelegate(
+                                          (context, index) {
+                                            return createAppointmentListContainer(
+                                                context, index);
+                                          },
+                                          childCount: value.paymentHistoryList
+                                              .data!.data!.length,
+                                        ),
                                       ),
                                     ),
                                   ],

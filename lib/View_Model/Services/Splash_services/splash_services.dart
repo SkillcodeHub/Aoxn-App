@@ -14,12 +14,10 @@ class SplashServices {
   void checkAuthentication(BuildContext context) async {
     userPreference.getMobile().then((value) {
       mobile = value;
-      print('mobilemobilemobilemobilemobilemobile');
-      print(mobile);
+      print('mobile : ${mobile}');
     });
     getProviderData().then((value1) async {
       token = value1;
-      print('tokentokentokentokentokentokentoken');
       if (mobile == null && token == null) {
         Navigator.pushAndRemoveUntil(
             context,
@@ -46,5 +44,3 @@ class SplashServices {
     });
   }
 }
-
-// class SplashServices {}

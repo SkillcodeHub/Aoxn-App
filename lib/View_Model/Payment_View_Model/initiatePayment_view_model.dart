@@ -70,9 +70,6 @@ class InitiatePaymentViewModel with ChangeNotifier {
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
-    print('datadatadatadatadatadatadatadatadatadata');
-    print(data);
-    print('datadatadatadatadatadatadatadatadatadatadatadata');
     setisLoading(true);
     _myRepo.initiatePaymentApi(data).then((value) {
       setisLoading(false);

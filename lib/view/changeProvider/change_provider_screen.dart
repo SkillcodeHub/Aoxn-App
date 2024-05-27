@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:axonweb/Provider/backButton_provider.dart';
 import 'package:axonweb/Utils/utils.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
@@ -53,62 +54,49 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
     userPreference.getToken().then((value) {
       setState(() {
         token = value!;
-        print(token);
       });
     });
     userPreference.getDeviceId().then((value) {
       setState(() {
         deviceId = value!;
-        print(token);
       });
     });
     userPreference.getName().then((value) {
       setState(() {
         name = value!;
-        print(token);
       });
     });
     userPreference.getMobile().then((value) {
       setState(() {
         mobile = value!;
-        print(token);
       });
     });
     userPreference.getKeyForCallLetIdApi().then((value) {
       setState(() {
         getKeyForCallLetId = value!;
-        print(getKeyForCallLetId);
       });
     });
     userPreference.getFcmToken().then((value) {
       setState(() {
         fcmToken = value!;
-        print(fcmToken);
       });
     });
     userPreference.getBirth().then((value) {
       setState(() {
         birthDate = value!;
-        print(birthDate);
       });
     });
     userPreference.getBirth().then((value) {
       setState(() {
         gender = value!;
-        print(gender);
       });
     });
     super.initState();
-    print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
     final buttonProvider = Provider.of<ButtonProvider>(context, listen: false);
 
-    print(buttonProvider.backk);
-    print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
     checkPermission(Permission.notification, context);
 
-    // fetchData();
     setState(() {
-      print(showAlertDialog);
       if (showAlertDialog != ' ') {
         _showBackAlertDialog();
       } else {}
@@ -150,15 +138,6 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
   Widget build(BuildContext context) {
     final buttonProvider = Provider.of<ButtonProvider>(context, listen: false);
 
-    print('nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn');
-
-    print(buttonProvider.backk);
-    print('nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn');
-
-    print('userData');
-    print(userData);
-    print('userData');
-
     Map data1 = {
       "platform": 'Mobile',
       "deviceId": deviceId.toString(),
@@ -174,10 +153,6 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
         Provider.of<RegisterAppUserViewModel>(context, listen: false);
 
     Timer(Duration(microseconds: 20), () {
-      print('getKeyForCallLetId');
-      print(getKeyForCallLetId);
-      print('getKeyForCallLetId');
-
       if (data1 != {} && getKeyForCallLetId == 'false') {
         registerAppUserViewModel.registerAppUserApi(data1, context);
         userPreference.setKeyForCallLetIdApi('true');
@@ -185,7 +160,6 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
     });
 
     return FutureBuilder<List<Map<String, dynamic>>?>(
-      // future: fetchData(),
       future: fetchData1(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -235,9 +209,9 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
             outputList.add(output);
           }
 
+          print('outputList');
           print(outputList);
 
-          print('ParthParthParth');
           return Scaffold(
               backgroundColor: BackgroundColor,
               appBar: PreferredSize(
@@ -1020,9 +994,11 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
       context,
       MaterialPageRoute(builder: (context) => QRScannerWidget()),
     );
-    print(result[0]);
-    print(result[1]);
 
+    if (kDebugMode) {
+      print(result[0]);
+      print(result[1]);
+    }
     if (result != null) {
       setState(() {
         customerName = result[0];
@@ -1030,9 +1006,6 @@ class _ChangeProviderScreenState extends State<ChangeProviderScreen> {
         showAlertDialog = result[2];
       });
       setState(() {
-        print('showAlertDialogshowAlertDialogshowAlertDialogshowAlertDialog');
-        print(showAlertDialog);
-        print('showAlertDialogshowAlertDialogshowAlertDialogshowAlertDialog');
         if (showAlertDialog != ' ') {
           _showBackAlertDialog();
         }

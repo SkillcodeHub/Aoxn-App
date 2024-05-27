@@ -25,7 +25,6 @@ class SelectAppointmentDateScreen extends StatefulWidget {
 
 class _SelectAppointmentDateScreenState
     extends State<SelectAppointmentDateScreen> {
-  // DateTime selectedDate = DateTime.now(); // TO tracking date
   late DateTime selectedDate; // TO tracking date
   String? datetime1;
   bool isLoading = false;
@@ -55,7 +54,6 @@ class _SelectAppointmentDateScreenState
     userPreference.getToken().then((value) {
       setState(() {
         token = value!;
-        print(token);
       });
     });
     userPreference.getUserDetails().then((value) {
@@ -63,9 +61,6 @@ class _SelectAppointmentDateScreenState
         UserData = value!;
         advanceBookingFrom = UserData['data']['advanceBookingFrom'].toString();
         advanceBookingTo = UserData['data']['advanceBookingTo'].toString();
-        print('222222222222222222222222222222222222222222');
-        print(advanceBookingFrom);
-        print(advanceBookingTo);
         selectedDate =
             DateTime.now().add(Duration(days: int.parse(advanceBookingFrom)));
         currentDateSelectedIndex =
@@ -152,9 +147,6 @@ class _SelectAppointmentDateScreenState
                         .minuteInterval!
                         .toString();
 
-                    // print(minuteInterval1);
-
-                    // String a = '20.0';
                     var parts = minuteInterval1.split('.');
                     var prefix = parts[0].trim();
                     DelayMinute = prefix.toString();
@@ -204,7 +196,15 @@ class _SelectAppointmentDateScreenState
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  total.toString() + " - Available",
+                                  total / capacity > 0.7
+                                      ? total.toString() + " - Available"
+                                      : total / capacity > 0.4
+                                          ? total.toString() + " - Filling fast"
+                                          : total / capacity > 0.2
+                                              ? total.toString() +
+                                                  " - Filling fast"
+                                              : total.toString() +
+                                                  " - Filling fast",
                                   style:
                                       SizerUtil.deviceType == DeviceType.mobile
                                           ? TextStyle(
@@ -218,7 +218,26 @@ class _SelectAppointmentDateScreenState
                                 Container(
                                   height: 3,
                                   width: 80.w,
-                                  color: Colors.green,
+                                  child: LinearProgressIndicator(
+                                    value: total / capacity,
+                                    backgroundColor: total / capacity > 0.7
+                                        ? Colors.green.shade200
+                                        : total / capacity > 0.4
+                                            ? Colors.orange.shade200
+                                            : total / capacity > 0.2
+                                                ? Colors
+                                                    .deepOrangeAccent.shade100
+                                                : Colors.red.shade200,
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                      total / capacity > 0.7
+                                          ? Colors.green
+                                          : total / capacity > 0.4
+                                              ? Colors.orange
+                                              : total / capacity > 0.2
+                                                  ? Colors.deepOrangeAccent
+                                                  : Colors.red,
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),
@@ -234,7 +253,6 @@ class _SelectAppointmentDateScreenState
                           )
                         ],
                       ),
-                      // SizedBox(height: 5),
                     ],
                   ),
                 ),
@@ -249,8 +267,6 @@ class _SelectAppointmentDateScreenState
                   boxShadow: [
                     BoxShadow(
                       color: Colors.grey,
-                      // offset: Offset(3, 3),
-                      // blurRadius: 5,
                     )
                   ],
                   color: Colors.grey.shade300,
@@ -313,8 +329,6 @@ class _SelectAppointmentDateScreenState
 
   get() {
     datetime1 = DateFormat("yyyy-MM-dd").format(selectedDate);
-    // print(datetime1);
-    // print(widget.selectedDocotrId);
     Timer(Duration(microseconds: 20), () {
       appointmentSlotListViewmodel.fetchAppointmentSlotListApi(
           widget.selectedDocotrId.toString(),
@@ -427,10 +441,6 @@ class _SelectAppointmentDateScreenState
                           child: ListView.separated(
                             separatorBuilder:
                                 (BuildContext context, int index) {
-                              print(
-                                  'indexindexindexindexindexindexindexindexindexindexindexindexindexindexindexindex');
-                              print(currentDateSelectedIndex);
-                              print(advanceBookingFrom);
                               return SizedBox(width: 0);
                             },
                             itemCount:
@@ -439,11 +449,6 @@ class _SelectAppointmentDateScreenState
                             shrinkWrap: true,
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (BuildContext context, int index) {
-                              print(
-                                  'indexindexindexindexindexindexindexindexindexindexindexindexindexindexindexindex');
-                              print(currentDateSelectedIndex);
-                              print(advanceBookingFrom);
-
                               // Calculate the actual index considering the offset
                               int actualIndex = index + DateTime.now().day - 2;
 

@@ -36,7 +36,7 @@ class _ReportScreenState extends State<ReportScreen> {
   String? reportdate;
   String? messageCode;
   NotificationServices notificationServices = NotificationServices();
-
+  int isPublishedCounter = 0;
   @override
   void initState() {
     userPreference.getMobile().then((value1) {
@@ -53,11 +53,6 @@ class _ReportScreenState extends State<ReportScreen> {
     userPreference.getUserData().then((value) {
       setState(() {
         data3 = value!;
-        print(
-            'data3data3data3data3data3data3data3data3data3data3data3data3data3data3data3data3data3data3data3data3data3');
-        print(data3);
-        print(
-            'data3data3data3data3data3data3data3data3data3data3data3data3data3data3data3data3data3data3');
       });
     });
 
@@ -73,6 +68,11 @@ class _ReportScreenState extends State<ReportScreen> {
         Provider.of<ReportViewmodel>(context, listen: false);
     String date =
         reportViewmodel.reportsList.data!.data![itemIndex].visitDate.toString();
+    if (isPublishedCounter == 0) {
+      reportViewmodel.reportsList.data!.data![itemIndex].isPublished == true
+          ? isPublishedCounter = isPublishedCounter + 1
+          : null;
+    }
 
     DateTime parseDate = new DateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(date);
     var inputDate = DateTime.parse(parseDate.toString());
@@ -80,7 +80,7 @@ class _ReportScreenState extends State<ReportScreen> {
     var outputFormat1 = DateFormat('E,yyyy');
     var outputFormat2 = DateFormat('d MMM');
     var outputFormat3 = DateFormat('hh:mm a');
-    var outputFormat4 = DateFormat('d-MM-yyyy');
+    var outputFormat4 = DateFormat('d-MMM-yyyy');
     var outputFormat5 = DateFormat('d-MMM-yyyy, hh:mm a');
     // var outputFormat = DateFormat('MM/dd/yyyy hh:mm a');
     var outputDate = outputFormat.format(inputDate);
@@ -94,97 +94,161 @@ class _ReportScreenState extends State<ReportScreen> {
     String displayDate = reportdate.toString() +
         ', ' +
         reportViewmodel.reportsList.data!.data![itemIndex].visitTime.toString();
-    // print(outputDate5);
     return Column(
       children: [
         SizedBox(
           height: 2,
         ),
-        InkWell(
-          onTap: () {
-            Map reportDetails = {
-              'providerName': reportViewmodel
-                  .reportsList.data!.data![itemIndex].providerName
-                  .toString(),
-              'patientName': reportViewmodel
-                  .reportsList.data!.data![itemIndex].patientName
-                  .toString(),
-              'date': displayDate.toString(),
-              'treatment': reportViewmodel
-                  .reportsList.data!.data![itemIndex].treatment
-                  .toString(),
-            };
-            Navigator.pushNamed(context, RoutesName.reportDetails,
-                arguments: reportDetails);
-          },
-          child: Card(
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Doctor: ' +
-                        reportViewmodel
+        isPublishedCounter == 1
+            ? reportViewmodel.reportsList.data!.data![itemIndex].isPublished ==
+                    true
+                ? InkWell(
+                    onTap: () {
+                      Map reportDetails = {
+                        'providerName': reportViewmodel
                             .reportsList.data!.data![itemIndex].providerName
                             .toString(),
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Text(
-                    'Member: ' +
-                        reportViewmodel
+                        'patientName': reportViewmodel
                             .reportsList.data!.data![itemIndex].patientName
                             .toString(),
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w400,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Updated on: ' + displayDate,
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.w500),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Map reportDetails = {
-                            'providerName': reportViewmodel
-                                .reportsList.data!.data![itemIndex].providerName
-                                .toString(),
-                            'patientName': reportViewmodel
-                                .reportsList.data!.data![itemIndex].patientName
-                                .toString(),
-                            'date': displayDate.toString(),
-                            'treatment': reportViewmodel
-                                .reportsList.data!.data![itemIndex].treatment
-                                .toString(),
-                          };
-                          Navigator.pushNamed(context, RoutesName.reportDetails,
-                              arguments: reportDetails);
-                        },
-                        child: Container(
-                          child: Icon(Icons.info_outline),
+                        'date': displayDate.toString(),
+                        'treatment': reportViewmodel
+                            .reportsList.data!.data![itemIndex].treatment
+                            .toString(),
+                      };
+                      Navigator.pushNamed(context, RoutesName.reportDetails,
+                          arguments: reportDetails);
+                    },
+                    child: Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Doctor: ' +
+                                  reportViewmodel.reportsList.data!
+                                      .data![itemIndex].providerName
+                                      .toString(),
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            Text(
+                              'Member: ' +
+                                  reportViewmodel.reportsList.data!
+                                      .data![itemIndex].patientName
+                                      .toString(),
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Updated on: ' + displayDate,
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    Map reportDetails = {
+                                      'providerName': reportViewmodel
+                                          .reportsList
+                                          .data!
+                                          .data![itemIndex]
+                                          .providerName
+                                          .toString(),
+                                      'patientName': reportViewmodel.reportsList
+                                          .data!.data![itemIndex].patientName
+                                          .toString(),
+                                      'date': displayDate.toString(),
+                                      'treatment': reportViewmodel.reportsList
+                                          .data!.data![itemIndex].treatment
+                                          .toString(),
+                                    };
+                                    Navigator.pushNamed(
+                                        context, RoutesName.reportDetails,
+                                        arguments: reportDetails);
+                                  },
+                                  child: Container(
+                                    child: Icon(Icons.info_outline),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
+                    ),
+                  )
+                : Container()
+            : RefreshIndicator(
+                onRefresh: refresh,
+                child: Stack(
+                  children: [
+                    SingleChildScrollView(
+                      physics: AlwaysScrollableScrollPhysics(),
+                      child: Padding(
+                        padding: EdgeInsets.all(15),
+                        child: Container(
+                          height: 74.h,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                height: 2.h,
+                              ),
+                              Text(
+                                'Swipe down to refresh page',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: titleFontSize,
+                                  color: Color(0XFF545454),
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 20.h,
+                              ),
+                              Center(
+                                child: Image.asset(
+                                  'images/axon.png',
+                                  height: 10.h,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 4.h,
+                              ),
+                              Center(
+                                child: Text(
+                                  'You don\'t have any recent prescriptions.',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: titleFontSize,
+                                      color: Color(0XFF545454),
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
       ],
     );
   }
@@ -205,6 +269,14 @@ class _ReportScreenState extends State<ReportScreen> {
     });
   }
 
+  Future refresh() async {
+    Timer(Duration(microseconds: 20), () {
+      final reportViewmodel =
+          Provider.of<ReportViewmodel>(context, listen: false);
+      reportViewmodel.fetchReportsListApi(token, mobile);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final reportViewmodel =
@@ -213,12 +285,6 @@ class _ReportScreenState extends State<ReportScreen> {
         Provider.of<SettingsViewModel>(context, listen: false);
     Future refresh() async {
       Timer(Duration(microseconds: 20), () {
-        print(
-            'tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt');
-        print(token.toString());
-        print(mobile.toString());
-        print(
-            'tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt');
         reportViewmodel.fetchReportsListApi(token, mobile);
       });
     }
@@ -260,13 +326,12 @@ class _ReportScreenState extends State<ReportScreen> {
                               children: [
                                 AxonIconForAppBarrWidget(),
                                 ScreenNameWidget(
-                                  title: '  Recent Precription',
+                                  title: '  Recent Prescription',
                                 ),
                                 Container(
                                   margin: EdgeInsets.all(6),
                                   height: 4.h,
                                   width: 5.h,
-                                  // child: Image.asset('images/whatsapp.png'),
                                 ),
                                 SettingsWidget(),
                               ],
@@ -286,13 +351,12 @@ class _ReportScreenState extends State<ReportScreen> {
                               children: [
                                 AxonIconForAppBarrWidget(),
                                 ScreenNameWidget(
-                                  title: '  Recent Precription',
+                                  title: '  Recent Prescription',
                                 ),
                                 Container(
                                   margin: EdgeInsets.all(6),
                                   height: 4.h,
                                   width: 5.h,
-                                  // child: Image.asset('images/whatsapp.png'),
                                 ),
                                 SettingsWidget(),
                               ],
@@ -312,7 +376,7 @@ class _ReportScreenState extends State<ReportScreen> {
                               children: [
                                 AxonIconForAppBarrWidget(),
                                 ScreenNameWidget(
-                                  title: '  Recent Precription',
+                                  title: ' Recent Prescription',
                                 ),
                                 value.doctorDetailsList.data!.data![0]
                                             .whatsapplink
@@ -342,18 +406,11 @@ class _ReportScreenState extends State<ReportScreen> {
                 return Center(child: CircularProgressIndicator());
               case Status.ERROR:
                 if (value.reportsList.message != " No Internet Connection") {
-                  print(
-                      'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
-                  print(value.reportsList.message.runtimeType);
                   final splitedText = value.reportsList.message
                       .toString()
                       .split('Invalid request');
                   messageCode =
                       json.decode(splitedText[1])['displayMessage'].toString();
-                  print(json.decode(splitedText[1])['displayMessage']);
-                  print(
-                      'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
-                  print(value.reportsList.message.toString());
                 }
 
                 return value.reportsList.message == " No Internet Connection"
@@ -382,7 +439,6 @@ class _ReportScreenState extends State<ReportScreen> {
                                         child: Image.asset(
                                           'images/loading.png',
                                           height: 20.h,
-                                          // width: 90,
                                         ),
                                       ),
                                       SizedBox(
@@ -446,39 +502,28 @@ class _ReportScreenState extends State<ReportScreen> {
                                         builder: (context) => MyNavigationBar(
                                               indexNumber: 0,
                                             )));
-                                // Timer(Duration(seconds: 5),() =>  settingsViewModel.setLoading1(true)) ;
                               },
                             ),
                           ),
                         ],
                       );
               case Status.COMPLETED:
-                print('providerNameproviderNameproviderNameproviderName');
-                print(
-                    '--------------------------------------------------------------------------------------');
-                print(reportViewmodel.reportsList.data!.data!.length);
-                print(
-                    '---------------------------------------------------------------------------------------');
                 return reportViewmodel.reportsList.data!.data!.length != 0
                     ? RefreshIndicator(
                         onRefresh: refresh,
-                        child: Stack(
-                          children: [
-                            Container(
-                              height: 100.h,
-                              child: SingleChildScrollView(
-                                physics: AlwaysScrollableScrollPhysics(),
-                                child: ListView.builder(
-                                    padding: EdgeInsets.only(bottom: 0),
-                                    physics: AlwaysScrollableScrollPhysics(),
-                                    shrinkWrap: true,
-                                    itemCount: reportViewmodel
-                                        .reportsList.data!.data!.length,
-                                    itemBuilder:
-                                        (BuildContext context, int itemIndex) {
-                                      return createNewsListContainer(
-                                          context, itemIndex);
-                                    }),
+                        child: CustomScrollView(
+                          slivers: [
+                            SliverPadding(
+                              padding: EdgeInsets.only(bottom: 10),
+                              sliver: SliverList(
+                                delegate: SliverChildBuilderDelegate(
+                                  (context, index) {
+                                    return createNewsListContainer(
+                                        context, index);
+                                  },
+                                  childCount: reportViewmodel
+                                      .reportsList.data!.data!.length,
+                                ),
                               ),
                             ),
                           ],
@@ -518,7 +563,6 @@ class _ReportScreenState extends State<ReportScreen> {
                                         child: Image.asset(
                                           'images/axon.png',
                                           height: 10.h,
-                                          // width: 90,
                                         ),
                                       ),
                                       SizedBox(

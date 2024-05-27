@@ -11,6 +11,8 @@ import 'package:flutter_udid/flutter_udid.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+import 'package:timezone/data/latest.dart' as tzdata;
+import 'package:timezone/timezone.dart' as tz;
 import 'package:upgrader/upgrader.dart';
 
 import '../../Res/colors.dart';
@@ -40,9 +42,10 @@ class _NewsScreenState extends State<NewsScreen> {
   String deviceId = 'Unknown';
   late Future<void> fetchDataFuture;
   String _udid = 'Unknown';
+  late String timeZoneName;
+
   ButtonProvider buttonProvider = ButtonProvider();
   SettingsViewModel settingsViewModel = SettingsViewModel();
-  // NewsViewmodel newsViewmodel = NewsViewmodel();
   NewsDetailsViewmodel newsDetailsViewmodel = NewsDetailsViewmodel();
   NotificationServices notificationServices = NotificationServices();
   @override
@@ -50,23 +53,19 @@ class _NewsScreenState extends State<NewsScreen> {
     userPreference.getToken().then((value) {
       setState(() {
         token = value!;
-        print(token);
+        print('token : $token');
       });
     });
     userPreference.getletId().then((value) {
       setState(() {
         letId = value!;
-        print('letId');
-        print(letId);
-        print('letId');
+        print('letId : ${letId}');
       });
     });
     userPreference.getDeviceId().then((value) {
       setState(() {
         value!;
-        print('value');
-        print(value);
-        print('value');
+        print('value ${value}');
       });
     });
     setState(() {
@@ -74,11 +73,10 @@ class _NewsScreenState extends State<NewsScreen> {
     });
 
     super.initState();
-    print('qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq');
     print(buttonProvider.backk);
-    print('qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq');
 
     initPlatformState();
+    tzdata.initializeTimeZones();
 
     fetchDataFuture = fetchData(); // Call the API only once
     notificationServices.requestNotificationPermission();
@@ -87,8 +85,7 @@ class _NewsScreenState extends State<NewsScreen> {
     notificationServices.setupInteractMessage(context);
     notificationServices.isTokenRefresh();
     notificationServices.getDeviceToken().then((value) {
-      print('device token');
-      print(value);
+      print('device token${value}');
     });
   }
 
@@ -104,10 +101,7 @@ class _NewsScreenState extends State<NewsScreen> {
 
     setState(() {
       _udid = udid;
-      print('_udid_udid_udid_udid_udid_udid_udid_udid');
-      print(_udid);
-      print('_udid_udid_udid_udid_udid_udid_udid_udid');
-      // userPreference.setDeviceId(_udid.toString());
+      print('_udid_ : ${_udid}');
     });
   }
 
@@ -131,6 +125,215 @@ class _NewsScreenState extends State<NewsScreen> {
     }
   }
 
+  String mapTimeZone(String timeZoneName) {
+    switch (timeZoneName) {
+      case "International Date Line West":
+        return "Pacific/Midway";
+      case "Midway Island":
+        return "Pacific/Midway";
+      case "Samoa":
+        return "Pacific/Apia";
+      case "Dateline Standard Time":
+        return "Etc/GMT+12";
+      case "UTC-11":
+        return "Pacific/Midway";
+      case "Hawaiian Standard Time":
+        return "Pacific/Honolulu";
+      case "Alaskan Standard Time":
+        return "America/Anchorage";
+      case "Pacific Standard Time":
+        return "America/Los_Angeles";
+      case "Mountain Standard Time":
+        return "America/Denver";
+      case "Mountain Standard Time (Mexico)":
+        return "America/Chihuahua";
+      case "US Mountain Standard Time":
+        return "America/Phoenix";
+      case "Canada Central Standard Time":
+        return "America/Regina";
+      case "Central America Standard Time":
+        return "America/Guatemala";
+      case "Central Standard Time":
+        return "America/Chicago";
+      case "Eastern Standard Time":
+        return "America/New_York";
+      case "SA Pacific Standard Time":
+        return "America/Bogota";
+      case "US Eastern Standard Time":
+        return "America/Indianapolis";
+      case "Venezuela Standard Time":
+        return "America/Caracas";
+      case "Atlantic Standard Time":
+        return "America/Halifax";
+      case "Central Brazilian Standard Time":
+        return "America/Cuiaba";
+      case "Pacific SA Standard Time":
+        return "America/Santiago";
+      case "Paraguay Standard Time":
+        return "America/Asuncion";
+      case "SA Western Standard Time":
+        return "America/La_Paz";
+      case "Newfoundland Standard Time":
+        return "America/St_Johns";
+      case "Bahia Standard Time":
+        return "America/Bahia";
+      case "Argentina Standard Time":
+        return "America/Buenos_Aires";
+      case "E. South America Standard Time":
+        return "America/Sao_Paulo";
+      case "Greenland Standard Time":
+        return "America/Godthab";
+      case "Montevideo Standard Time":
+        return "America/Montevideo";
+      case "SA Eastern Standard Time":
+        return "America/Cayenne";
+      case "UTC-02":
+        return "America/Noronha";
+      case "Azores Standard Time":
+        return "Atlantic/Azores";
+      case "Cape Verde Standard Time":
+        return "Atlantic/Cape_Verde";
+      case "GMT Standard Time":
+        return "Europe/London";
+      case "Greenwich Standard Time":
+        return "Atlantic/Reykjavik";
+      case "Morocco Standard Time":
+        return "Africa/Casablanca";
+      case "UTC":
+        return "Etc/UTC";
+      case "Central Europe Standard Time":
+        return "Europe/Budapest";
+      case "Central European Standard Time":
+        return "Europe/Warsaw";
+      case "Namibia Standard Time":
+        return "Africa/Windhoek";
+      case "Romance Standard Time":
+        return "Europe/Paris";
+      case "W. Central Africa Standard Time":
+        return "Africa/Lagos";
+      case "W. Europe Standard Time":
+        return "Europe/Berlin";
+      case "Egypt Standard Time":
+        return "Africa/Cairo";
+      case "FLE Standard Time":
+        return "Europe/Kiev";
+      case "GTB Standard Time":
+        return "Europe/Bucharest";
+      case "Israel Standard Time":
+        return "Asia/Jerusalem";
+      case "Libya Standard Time":
+        return "Africa/Tripoli";
+      case "Middle East Standard Time":
+        return "Asia/Beirut";
+      case "South Africa Standard Time":
+        return "Africa/Johannesburg";
+      case "Syria Standard Time":
+        return "Asia/Damascus";
+      case "Turkey Standard Time":
+        return "Europe/Istanbul";
+      case "Arab Standard Time":
+        return "Asia/Riyadh";
+      case "Arabic Standard Time":
+        return "Asia/Baghdad";
+      case "Belarus Standard Time":
+        return "Europe/Minsk";
+      case "E. Africa Standard Time":
+        return "Africa/Nairobi";
+      case "Jordan Standard Time":
+        return "Asia/Amman";
+      case "Kaliningrad Standard Time":
+        return "Europe/Kaliningrad";
+      case "Iran Standard Time":
+        return "Asia/Tehran";
+      case "Arabian Standard Time":
+        return "Etc/GMT-4";
+      case "Azerbaijan Standard Time":
+        return "Asia/Baku";
+      case "Caucasus Standard Time":
+        return "Asia/Yerevan";
+      case "Georgian Standard Time":
+        return "Asia/Tbilisi";
+      case "Mauritius Standard Time":
+        return "Indian/Mauritius";
+      case "Russia Time Zone 3":
+        return "Europe/Samara";
+      case "Russian Standard Time":
+        return "Europe/Moscow";
+      case "Afghanistan Standard Time":
+        return "Asia/Kabul";
+      case "Pakistan Standard Time":
+        return "Asia/Karachi";
+      case "West Asia Standard Time":
+        return "Asia/Tashkent";
+      case "India Standard Time":
+        return "Asia/Kolkata";
+      case "Sri Lanka Standard Time":
+        return "Asia/Colombo";
+      case "Nepal Standard Time":
+        return "Asia/Kathmandu";
+      case "Bangladesh Standard Time":
+        return "Asia/Dhaka";
+      case "Central Asia Standard Time":
+        return "Asia/Almaty";
+      case "Ekaterinburg Standard Time":
+        return "Asia/Yekaterinburg";
+      case "Myanmar Standard Time":
+        return "Asia/Rangoon";
+      case "SE Asia Standard Time":
+        return "Asia/Bangkok";
+      case "N. Central Asia Standard Time":
+        return "Asia/Novosibirsk";
+      case "China Standard Time":
+        return "Asia/Shanghai";
+      case "North Asia Standard Time":
+        return "Asia/Krasnoyarsk";
+      case "Singapore Standard Time":
+        return "Asia/Singapore";
+      case "Taipei Standard Time":
+        return "Asia/Taipei";
+      case "Ulaanbaatar Standard Time":
+        return "Asia/Ulaanbaatar";
+      case "W. Australia Standard Time":
+        return "Australia/Perth";
+      case "Korea Standard Time":
+        return "Asia/Seoul";
+      case "North Asia East Standard Time":
+        return "Asia/Irkutsk";
+      case "Tokyo Standard Time":
+        return "Asia/Tokyo";
+      case "AUS Central Standard Time":
+        return "Australia/Darwin";
+      case "Cen. Australia Standard Time":
+        return "Australia/Adelaide";
+      case "AUS Eastern Standard Time":
+        return "Australia/Sydney";
+      case "E. Australia Standard Time":
+        return "Australia/Brisbane";
+      case "Tasmania Standard Time":
+        return "Australia/Hobart";
+      case "West Pacific Standard Time":
+        return "Pacific/Port_Moresby";
+      case "Yakutsk Standard Time":
+        return "Asia/Yakutsk";
+      case "Central Pacific Standard Time":
+        return "Pacific/Guadalcanal";
+      case "Vladivostok Standard Time":
+        return "Asia/Vladivostok";
+      case "Fiji Standard Time":
+        return "Pacific/Fiji";
+      case "Magadan Standard Time":
+        return "Asia/Magadan";
+      case "New Zealand Standard Time":
+        return "Pacific/Auckland";
+      case "Tonga Standard Time":
+        return "Pacific/Tongatapu";
+      case "Line Islands Standard Time":
+        return "Pacific/Kiritimati";
+      default:
+        return timeZoneName;
+    }
+  }
+
   createNewsListContainer(BuildContext context, int index) {
     final newsViewmodel = Provider.of<NewsViewmodel>(context, listen: false);
 
@@ -142,22 +345,25 @@ class _NewsScreenState extends State<NewsScreen> {
 
     String date =
         newsViewmodel.newsList.data!.data![index].displayDate.toString();
+    DateTime utcTime = DateTime.parse("${date}Z");
 
-    DateTime parseDate = new DateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(date);
-    var inputDate = DateTime.parse(parseDate.toString());
-    var outputFormat = DateFormat('E d-MMMM-yyyy');
-    var outputFormat1 = DateFormat('E,yyyy');
-    var outputFormat2 = DateFormat('d MMM');
-    var outputFormat3 = DateFormat('hh:mm a');
-    var outputFormat4 = DateFormat('d-MM-yyyy');
-    var outputFormat5 = DateFormat('d-MMM-yyyy, hh:mm a');
-    var outputDate = outputFormat.format(inputDate);
-    var outputDate1 = outputFormat1.format(inputDate);
-    var outputDate2 = outputFormat2.format(inputDate);
-    var outputDate3 = outputFormat3.format(inputDate);
-    var outputDate4 = outputFormat4.format(inputDate);
-    var outputDate5 = outputFormat5.format(inputDate);
-    newsdate = outputDate5;
+    // Manually map "India Standard Time" to "Asia/Kolkata"
+    String timeZoneIdentifier = mapTimeZone(timeZoneName);
+
+    // Load the local time zone
+    final location = tz.getLocation(timeZoneIdentifier);
+    if (location == null) {
+      throw ArgumentError(
+          'Location with the name "$timeZoneIdentifier" doesn\'t exist.');
+    }
+    // Convert UTC time to local time
+    tz.TZDateTime localTime = tz.TZDateTime.from(utcTime, location);
+
+    // Format the local time
+    String formattedLocalTime =
+        DateFormat('dd-MMM-yyyy, hh:mm a').format(localTime);
+
+    newsdate = formattedLocalTime;
 
     return Column(
       children: [
@@ -167,7 +373,11 @@ class _NewsScreenState extends State<NewsScreen> {
         InkWell(
           onTap: () {
             if (int.parse(newsId) >= 0) {
-              Map data = {'token': token.toString(), 'newsId': newsId};
+              Map data = {
+                'token': token.toString(),
+                'newsId': newsId,
+                'displayDate': formattedLocalTime
+              };
               Navigator.pushNamed(context, RoutesName.newsdetails,
                   arguments: data);
             }
@@ -391,9 +601,6 @@ class _NewsScreenState extends State<NewsScreen> {
             ),
           ),
         ),
-        // SizedBox(
-        //   height: 20,
-        // ),
       ],
     );
   }
@@ -518,17 +725,12 @@ class _NewsScreenState extends State<NewsScreen> {
                           );
 
                         case Status.COMPLETED:
-                          print(
-                              "++++++++++++++++++++++++++++++++++++++++++++++++++++");
-                          print(value
-                              .doctorDetailsList.data!.data![0].whatsapplink
-                              .toString());
-                          print(
-                              "++++++++++++++++++++++++++++++++++++++++++++++++++++");
+                          timeZoneName = settingsViewModel
+                              .doctorDetailsList.data!.data![0].timeZoneId
+                              .toString();
 
                           return AppBar(
                             automaticallyImplyLeading: false,
-                            // centerTitle: false,
                             backgroundColor: Color(0xffffffff),
                             elevation: 0,
                             title: Padding(
@@ -607,7 +809,6 @@ class _NewsScreenState extends State<NewsScreen> {
                                           child: Image.asset(
                                             'images/loading.png',
                                             height: 20.h,
-                                            // width: 90,
                                           ),
                                         ),
                                         SizedBox(
@@ -617,13 +818,7 @@ class _NewsScreenState extends State<NewsScreen> {
                                           child: Text(
                                             value.newsList.message.toString(),
                                             style: TextStyle(
-                                                fontSize:
-                                                    //  SizerUtil.deviceType ==
-                                                    //         DeviceType.mobile
-                                                    //     ?
-                                                    titleFontSize
-                                                // : 12.sp
-                                                ,
+                                                fontSize: titleFontSize,
                                                 fontWeight: FontWeight.w500),
                                           ),
                                         ),
@@ -637,109 +832,186 @@ class _NewsScreenState extends State<NewsScreen> {
                         );
 
                       case Status.COMPLETED:
-                        return newsViewmodel.newsList.data!.data!.length != 0
-                            ? RefreshIndicator(
-                                onRefresh: refresh,
-                                child: Container(
-                                  height: 100.h,
-                                  child: SingleChildScrollView(
-                                    // Wrap with SingleChildScrollView
-                                    physics:
-                                        AlwaysScrollableScrollPhysics(), // Enable scrolling
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 6, left: 4, right: 6),
-                                      child: ListView.builder(
-                                        padding: EdgeInsets.only(bottom: 10),
-                                        physics:
-                                            NeverScrollableScrollPhysics(), // Disable scrolling
-                                        shrinkWrap: true,
-                                        itemCount:
-                                            value.newsList.data!.data!.length,
-                                        itemBuilder: (BuildContext context,
-                                            int itemIndex) {
-                                          return createNewsListContainer(
-                                              context, itemIndex);
-                                        },
-                                      ),
+                        return ChangeNotifierProvider<SettingsViewModel>.value(
+                          value: settingsViewModel,
+                          child: Consumer<SettingsViewModel>(
+                            builder: (context, value, _) {
+                              switch (value.doctorDetailsList.status!) {
+                                case Status.LOADING:
+                                  return Center(
+                                      child: CircularProgressIndicator());
+                                case Status.ERROR:
+                                  return RefreshIndicator(
+                                    onRefresh: refresh,
+                                    child: Stack(
+                                      children: [
+                                        SingleChildScrollView(
+                                          physics:
+                                              AlwaysScrollableScrollPhysics(),
+                                          child: Padding(
+                                            padding: EdgeInsets.all(15),
+                                            child: Container(
+                                              height: 74.h,
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  SizedBox(
+                                                    height: 2.h,
+                                                  ),
+                                                  SizedBox(
+                                                    height: 20.h,
+                                                  ),
+                                                  Center(
+                                                    child: Image.asset(
+                                                      'images/loading.png',
+                                                      height: 20.h,
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 4.h,
+                                                  ),
+                                                  Center(
+                                                    child: Text(
+                                                      value.doctorDetailsList
+                                                          .message
+                                                          .toString(),
+                                                      style: TextStyle(
+                                                          fontSize:
+                                                              titleFontSize,
+                                                          fontWeight:
+                                                              FontWeight.w500),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ),
-                                ),
-                              )
-                            : RefreshIndicator(
-                                onRefresh: refresh,
-                                child: Stack(
-                                  children: [
-                                    SingleChildScrollView(
-                                      physics: AlwaysScrollableScrollPhysics(),
-                                      child: Padding(
-                                        padding: EdgeInsets.all(15),
-                                        child: Container(
-                                          height: 74.h,
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
+                                  );
+
+                                case Status.COMPLETED:
+                                  timeZoneName = settingsViewModel
+                                      .doctorDetailsList
+                                      .data!
+                                      .data![0]
+                                      .timeZoneId
+                                      .toString();
+
+                                  return newsViewmodel
+                                              .newsList.data!.data!.length !=
+                                          0
+                                      ? RefreshIndicator(
+                                          onRefresh: refresh,
+                                          child: Container(
+                                            height: 100.h,
+                                            child: SingleChildScrollView(
+                                              physics:
+                                                  AlwaysScrollableScrollPhysics(), // Enable scrolling
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 6, left: 4, right: 6),
+                                                child: ListView.builder(
+                                                  padding: EdgeInsets.only(
+                                                      bottom: 10),
+                                                  physics:
+                                                      NeverScrollableScrollPhysics(), // Disable scrolling
+                                                  shrinkWrap: true,
+                                                  itemCount: newsViewmodel
+                                                      .newsList
+                                                      .data!
+                                                      .data!
+                                                      .length,
+                                                  itemBuilder:
+                                                      (BuildContext context,
+                                                          int itemIndex) {
+                                                    return createNewsListContainer(
+                                                        context, itemIndex);
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      : RefreshIndicator(
+                                          onRefresh: refresh,
+                                          child: Stack(
                                             children: [
-                                              SizedBox(
-                                                height: 2.h,
-                                              ),
-                                              Text(
-                                                'Swipe down to refresh page',
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  fontSize:
-
-                                                      // SizerUtil.deviceType ==
-                                                      //         DeviceType.mobile
-                                                      //     ?
-                                                      titleFontSize,
-
-                                                  // : 12.sp,
-                                                  color: Color(0XFF545454),
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height: 20.h,
-                                              ),
-                                              Center(
-                                                child: Image.asset(
-                                                  'images/axon.png',
-                                                  height: 10.h,
-                                                  // width: 90,
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height: 4.h,
-                                              ),
-                                              Center(
-                                                child: Text(
-                                                  'You don\'t have any news or upcoming events',
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                      fontSize:
-                                                          // SizerUtil
-                                                          //             .deviceType ==
-                                                          //         DeviceType.mobile
-                                                          //     ?
-                                                          titleFontSize
-                                                      // : 12.sp
-                                                      ,
-                                                      color: Color(0XFF545454),
-                                                      fontWeight:
-                                                          FontWeight.w500),
+                                              SingleChildScrollView(
+                                                physics:
+                                                    AlwaysScrollableScrollPhysics(),
+                                                child: Padding(
+                                                  padding: EdgeInsets.all(15),
+                                                  child: Container(
+                                                    height: 74.h,
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        SizedBox(
+                                                          height: 2.h,
+                                                        ),
+                                                        Text(
+                                                          'Swipe down to refresh page',
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          style: TextStyle(
+                                                            fontSize:
+                                                                titleFontSize,
+                                                            color: Color(
+                                                                0XFF545454),
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          height: 20.h,
+                                                        ),
+                                                        Center(
+                                                          child: Image.asset(
+                                                            'images/axon.png',
+                                                            height: 10.h,
+                                                            // width: 90,
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          height: 4.h,
+                                                        ),
+                                                        Center(
+                                                          child: Text(
+                                                            'You don\'t have any news or upcoming events',
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            style: TextStyle(
+                                                                fontSize:
+                                                                    titleFontSize,
+                                                                color: Color(
+                                                                    0XFF545454),
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
                                                 ),
                                               ),
                                             ],
                                           ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              );
+                                        );
+                              }
+                            },
+                          ),
+                        );
                     }
                   },
                 ),

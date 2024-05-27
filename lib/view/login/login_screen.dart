@@ -56,11 +56,9 @@ class LoginScreenState extends State {
     initMobileNumberState();
     notificationServices.getDeviceToken().then((value) {
       fcmToken = value;
-      print('device token');
-      print(fcmToken);
+      print('fcm Token : ${fcmToken}');
       userPreference.setFcmToken(fcmToken.toString());
     });
-    // notificationServices.requestNotificationPermission();
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
@@ -97,9 +95,7 @@ class LoginScreenState extends State {
 
     setState(() {
       _udid = udid;
-      print('_udid_udid_udid_udid_udid_udid_udid_udid');
-      print(_udid);
-      print('_udid_udid_udid_udid_udid_udid_udid_udid');
+      print('_udid_ : ${_udid}');
       userPreference.setDeviceId(_udid.toString());
     });
   }
@@ -169,7 +165,7 @@ class LoginScreenState extends State {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(8.0),
             child: Container(
               height: 93.h,
               child: Column(
@@ -209,7 +205,6 @@ class LoginScreenState extends State {
                                 keyboardType: TextInputType.text,
                                 focusNode: nameFocusNode,
                                 decoration: InputDecoration(
-                                  // hintText: 'Mobile Number(10 digit)',
                                   labelText: 'Full Name',
                                 ),
                               ),
@@ -218,7 +213,6 @@ class LoginScreenState extends State {
                                 keyboardType: TextInputType.text,
                                 focusNode: birthFocusNode,
                                 decoration: InputDecoration(
-                                  // hintText: 'Mobile Number(10 digit)',
                                   labelText: 'Birthday(Optional)',
                                 ),
                               ),
@@ -281,9 +275,7 @@ class LoginScreenState extends State {
                                       ],
                                     ),
                                   ),
-                                  SizedBox(
-                                      //   width: 60.w,
-                                      ),
+                                  SizedBox(),
                                 ],
                               ),
                             ],
@@ -412,14 +404,11 @@ class LoginScreenState extends State {
                                     currentCode: codeValue,
                                     codeLength: 4,
                                     onCodeChanged: (code) {
-                                      print("onCodeChanged $code");
                                       setState(() {
                                         codeValue = code.toString();
                                       });
                                     },
-                                    onCodeSubmitted: (val) {
-                                      print("onCodeSubmitted $val");
-                                    },
+                                    onCodeSubmitted: (val) {},
                                   ),
                                 ),
                                 const SizedBox(
@@ -448,9 +437,6 @@ class LoginScreenState extends State {
                                     ),
                                     TextButton(
                                         onPressed: () async {
-                                          print("codeValue");
-                                          print(codeValue);
-                                          print("codeValue");
                                           if (codeValue.isEmpty) {
                                             Utils.flushBarErrorMessage(
                                                 'Please enter OTP*',

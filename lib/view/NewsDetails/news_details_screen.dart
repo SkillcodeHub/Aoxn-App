@@ -5,7 +5,6 @@ import 'package:axonweb/Utils/utils.dart';
 import 'package:axonweb/data/response/status.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -44,7 +43,6 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
       });
     }
 
-    // print(outputDate5);
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: SizerUtil.deviceType == DeviceType.mobile
@@ -92,15 +90,8 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
                   return Center(
                       child: Text(value.newsDetailsList.message.toString()));
                 case Status.COMPLETED:
-                  String date = newsDetailsViewmodel
-                      .newsDetailsList.data!.data!.displayDate
-                      .toString();
-                  DateTime parseDate =
-                      new DateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(date);
-                  var inputDate = DateTime.parse(parseDate.toString());
-                  var outputFormat5 = DateFormat('d-MMM-yyyy, hh:mm a');
-                  var outputDate5 = outputFormat5.format(inputDate);
-                  displayDate = outputDate5;
+                  displayDate = widget.data['displayDate'].toString();
+
                   return RefreshIndicator(
                     onRefresh: refresh,
                     child: Stack(
@@ -126,11 +117,8 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
                                             newsDetailsViewmodel.newsDetailsList
                                                 .data!.data!.title
                                                 .toString(),
-                                            // title,
                                             style: TextStyle(
-                                                fontSize: titleFontSize
-                                                // : 11.sp
-                                                ,
+                                                fontSize: titleFontSize,
                                                 fontWeight: FontWeight.w500),
                                           ),
                                         ),
@@ -144,9 +132,7 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
                                           child: Text(displayDate.toString(),
                                               style: TextStyle(
                                                   color: Colors.grey,
-                                                  fontSize:
-                                                      descriptionFontSize // : 8.sp
-                                                  ,
+                                                  fontSize: descriptionFontSize,
                                                   fontWeight: FontWeight.w500)),
                                         ),
                                         SizedBox(height: 20),

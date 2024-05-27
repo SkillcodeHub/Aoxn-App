@@ -54,11 +54,7 @@ class _EventScreenState extends State<EventScreen> {
     notificationServices.forgroundMessage();
     notificationServices.firebaseInit(context);
     notificationServices.setupInteractMessage(context);
-    print('ggggggggggggggggggggggggggggggggggggggggggggggg');
     final buttonProvider = Provider.of<ButtonProvider>(context, listen: false);
-
-    print(buttonProvider.backk);
-    print('ggggggggggggggggggggggggggggggggggggggggggggggggggggggg');
     fetchDataFuture = fetchData(); // Call the API only once
   }
 
@@ -75,9 +71,6 @@ class _EventScreenState extends State<EventScreen> {
     var outputDate1 = outputFormat1.format(inputDate);
     var outputDate2 = outputFormat2.format(inputDate);
     var outputDate3 = outputFormat3.format(inputDate);
-    print('|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
-    print(outputDate);
-    print('|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
     String doctorName = eventListViewmodel
         .EventList.data!.data![itemIndex].doctorName
         .toString();
@@ -93,14 +86,6 @@ class _EventScreenState extends State<EventScreen> {
       children: [
         InkWell(
           onTap: () {
-            print(outputDate);
-            print(doctorName);
-            print('outputDate3');
-            print(outputDate3);
-            print('outputDate3');
-            print(patientName);
-            print(status);
-            print(appointmentId);
             Map data = {
               'date': outputDate,
               'doctorName': doctorName,
@@ -339,7 +324,6 @@ class _EventScreenState extends State<EventScreen> {
                       case Status.ERROR:
                         return AppBar(
                           automaticallyImplyLeading: false,
-                          // centerTitle: false,
                           backgroundColor: Color(0xffffffff),
                           elevation: 0,
                           title: Padding(
@@ -365,7 +349,6 @@ class _EventScreenState extends State<EventScreen> {
                       case Status.COMPLETED:
                         return AppBar(
                           automaticallyImplyLeading: false,
-                          // centerTitle: false,
                           backgroundColor: Color(0xffffffff),
                           elevation: 0,
                           title: Padding(
@@ -420,18 +403,11 @@ class _EventScreenState extends State<EventScreen> {
                       case Status.ERROR:
                         if (value.EventList.message !=
                             " No Internet Connection") {
-                          print(
-                              'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
-                          print(value.EventList.message.runtimeType);
                           final splitedText = value.EventList.message
                               .toString()
                               .split('Invalid request');
                           messageCode =
                               json.decode(splitedText[1])['displayMessage'];
-                          print(json.decode(splitedText[1])['displayMessage']);
-                          print(
-                              'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
-                          print(value.EventList.message.toString());
                         }
 
                         return value.EventList.message ==
@@ -462,7 +438,6 @@ class _EventScreenState extends State<EventScreen> {
                                                 child: Image.asset(
                                                   'images/loading.png',
                                                   height: 20.h,
-                                                  // width: 90,
                                                 ),
                                               ),
                                               SizedBox(

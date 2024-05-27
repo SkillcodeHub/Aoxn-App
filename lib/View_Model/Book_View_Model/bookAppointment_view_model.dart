@@ -23,15 +23,11 @@ class BookAppointmentViewModel with ChangeNotifier {
 
   Future<void> bookApointmentApi(dynamic data, BuildContext context) async {
     setSignUpLoading(true);
-    print('datadatadatadatadatadatadatadatadatadata');
-    print(data);
-    print('datadatadatadatadatadatadatadatadatadatadatadata');
     _myRepo.bookappointmentapi(data).then((value) {
       if (value['status'] == true) {
         setSignUpLoading(false);
         Utils.flushBarErrorMessage(
             "Appointment Book Successfully", Duration(seconds: 2), context);
-        print(value);
         Timer(
             Duration(seconds: 2),
             () => Navigator.pushNamed(context, RoutesName.appointmentDetails,

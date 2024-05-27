@@ -9,7 +9,6 @@ import 'package:axonweb/view/Book/book_appointment_screen.dart';
 import 'package:axonweb/view/ChangeProvider/change_provider_screen.dart';
 import 'package:axonweb/view/Event/event_screen.dart';
 import 'package:axonweb/view/News/news_screen.dart';
-import 'package:axonweb/view/otp/otp_verifyscreen.dart';
 import 'package:axonweb/view/report/report_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -28,10 +27,6 @@ class Routes {
       case RoutesName.login:
         return MaterialPageRoute(
             builder: (BuildContext context) => LoginScreen());
-      case RoutesName.otp:
-        return MaterialPageRoute(
-            builder: (BuildContext context) =>
-                OtpVerifyScreen(mobile: settings.arguments as Map));
       case RoutesName.changeProvider:
         return MaterialPageRoute(
             builder: (BuildContext context) => ChangeProviderScreen());

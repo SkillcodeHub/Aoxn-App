@@ -88,7 +88,6 @@ class AuthViewModel with ChangeNotifier {
       setSignUpLoading(false);
 
       if (value['status'] == true) {
-        // Utils.snackBar('Otp is Valid', context);
         Utils.flushBarErrorMessage(
             'Otp is Valid', Duration(seconds: 2), context);
 
@@ -106,7 +105,6 @@ class AuthViewModel with ChangeNotifier {
         Utils.flushBarErrorMessage(
             'OTP is not valid*', Duration(seconds: 2), context);
 
-        // Utils.snackBar('OTP is not valid*', context);
         if (kDebugMode) {
           print(value.toString());
         }

@@ -21,7 +21,6 @@ class _ReportDetailsScreenState extends State<ReportDetailsScreen> {
   String? cfData;
 
   void downloadPdf() async {
-    // String cfData = "<html><body><h1>Sample HTML Content</h1></body></html>"; // Replace this with your actual HTML content
     String name = "RXreport"; // Replace this with the desired base file name
 
     // Append the file index to the name to make each file unique
@@ -39,7 +38,6 @@ class _ReportDetailsScreenState extends State<ReportDetailsScreen> {
       String timeFormatted = DateFormat('HH:mm:ss').format(now);
 
       var random = Random().nextInt(10000);
-      // String fileName = '$name-${fileIndex++}.pdf';
       String fileName = '$name-${timeFormatted}.pdf';
 
       var targetFileName = '$fileName-$currentTime-$random';
@@ -149,7 +147,6 @@ class _ReportDetailsScreenState extends State<ReportDetailsScreen> {
                   "Your Report Details",
                   style: TextStyle(
                     color: Colors.black,
-                    // fontWeight: FontWeight.bold,
                     fontSize: 22,
                   ),
                 ),

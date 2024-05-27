@@ -37,29 +37,30 @@ class AdvanceBookAppointmentViewModel with ChangeNotifier {
         AdvanceBookAppointmentViewModel();
 
     void _handlePaymentSuccess(PaymentSuccessResponse response) {
-      print("++++++============");
-      print("paymentId: ${response.paymentId}");
-      print("orderId: ${response.orderId}");
-      print("signature: ${response.signature}");
+      if (kDebugMode) {
+        print("++++++============");
+        print("paymentId: ${response.paymentId}");
+        print("orderId: ${response.orderId}");
+        print("signature: ${response.signature}");
+      }
 
       Map paymentData = {
-        //   'customerId': '99999999',
         'RazorpayOrderId': response.orderId.toString(),
         'RazorpayPaymentId': response.paymentId.toString(),
         'RazorpaySignature': response.signature.toString(),
         'CustomerToken': userData['CustomerToken'],
         'LAT': userData['LAT'],
       };
+      if (kDebugMode) {
+        print(response.orderId.toString());
+        print(
+          response.paymentId.toString(),
+        );
+        print(response.signature.toString());
+        print(userData['CustomerToken']);
+        print(userData['LAT']);
+      }
 
-      print(response.orderId.toString());
-      print(
-        response.paymentId.toString(),
-      );
-      print(response.signature.toString());
-      print(userData['CustomerToken']);
-      print(userData['LAT']);
-
-      // validatePaymentViewModel.validatePaymentApi(paymentData, context);
       confirmPaidAppointmentViewModel.confirmPaidAppointmentApi(
           paymentData, context);
       setPLoading(false);
@@ -86,10 +87,6 @@ class AdvanceBookAppointmentViewModel with ChangeNotifier {
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
     setLoading(true);
-    print('datadatadatadatadatadatadatadatadatadata');
-    print(data);
-
-    print('datadatadatadatadatadatadatadatadatadatadatadata');
     Map data1 = {
       "CaseNo": data['CaseNo'],
       "Name": data['Name'],
@@ -107,22 +104,27 @@ class AdvanceBookAppointmentViewModel with ChangeNotifier {
       "Amount": data['Amount'],
     };
     _myRepo.advancebookappointmentapi(data1).then((value) {
-      print('valuevaluevaluevaluevaluevaluevaluevalue');
-      print(value);
-      print(value['data']['razorPayOrder']['razorpayOrderId'].toString());
-      print(data['Name']);
-      print('valuevaluevaluevaluevaluevaluevaluevalue');
+      if (kDebugMode) {
+        print('valuevaluevaluevaluevaluevaluevaluevalue');
+        print(value);
+        print(value['data']['razorPayOrder']['razorpayOrderId'].toString());
+        print(data['Name']);
+        print('valuevaluevaluevaluevaluevaluevaluevalue');
+      }
+
       if (value['status'] == true) {
         setPLoading(false);
 
         setLoading(false);
-        print(value.toString());
-        print(
-            'keykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykey');
-        print(value['data']['razorPayOrder']['razorpayKey'].toString());
-        print(value['data']['razorPayOrder']['razorpayOrderId'].toString());
-        print(
-            'keykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykey');
+        if (kDebugMode) {
+          print(value.toString());
+          print(
+              'keykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykey');
+          print(value['data']['razorPayOrder']['razorpayKey'].toString());
+          print(value['data']['razorPayOrder']['razorpayOrderId'].toString());
+          print(
+              'keykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykey');
+        }
         var options = {
           // 'key': 'rzp_test_8aGQyjie2ef5rn',
           'key': value['data']['razorPayOrder']['razorpayKey'].toString(),
@@ -150,15 +152,10 @@ class AdvanceBookAppointmentViewModel with ChangeNotifier {
       } else if (value['status'] == false) {
         setPLoading(false);
 
-        // Utils.snackBar(value['displayMessage'], context);
         Utils.flushBarErrorMessage(
             value['displayMessage'].toString(), Duration(seconds: 5), context);
 
-        print(
-            'sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss');
         print(value['displayMessage']);
-        print(
-            'sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss');
         if (kDebugMode) {
           print(value.toString());
         }

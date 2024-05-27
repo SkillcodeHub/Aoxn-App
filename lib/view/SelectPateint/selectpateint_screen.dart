@@ -54,17 +54,14 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
     userPreference.getToken().then((value) {
       setState(() {
         token = value;
-        print(token);
       });
     });
     userPreference.getMobile().then((value1) {
       setState(() {
         mobile = value1;
-        print(token);
       });
     });
 
-    // _newsRepository.fetchCustomerToken();
     super.initState();
     fetchDataFuture = fetchData(); // Call the API only once
   }
@@ -76,10 +73,6 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
       Timer(
           Duration(microseconds: 20),
           () => [
-                print('token.toString()'),
-                print(token.toString()),
-                print(mobile.toString()),
-                print('mobile.toString()'),
                 getPatientByMobileListViewmodel.fetchGetPatientByMobileListApi(
                     token.toString(), mobile.toString()),
                 settingsViewModel.fetchDoctorDetailsListApi(token),
@@ -99,9 +92,6 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
 
     var outputDate5 = outputFormat5.format(inputDate);
     registeredpatientBirth = outputDate5;
-    print('|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
-    print(outputDate5);
-    print('|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
     return Column(
       children: [
         InkWell(
@@ -209,10 +199,6 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
   }
 
   _GetById() {
-    print(token);
-    print('strPatientId.text');
-    print(strPatientId.text != "");
-    print('strPatientId.text');
     strPatientId.text != ""
         ? [
             selectPatientByIdViewmodel.fetchSelectPatientByIdApi(
@@ -331,10 +317,6 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                                       .GetPatientByMobileList.message
                                       .toString()));
                             case Status.COMPLETED:
-                              print('aaaaaaaaaaaaaaaaaaaaaaaaaa');
-                              print(getPatientByMobileListViewmodel
-                                  .GetPatientByMobileList.data!.data!.length);
-                              print('aaaaaaaaaaaaaaaaaaaaaaaaaa');
                               return Container(
                                 child: Padding(
                                   padding: EdgeInsets.all(15.0),
@@ -474,7 +456,6 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                                                 child: Column(
                                                   children: [
                                                     TextFormField(
-                                                      // focusNode: _nodeName,
                                                       controller: strName,
                                                       keyboardType:
                                                           TextInputType.text,
@@ -648,22 +629,37 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                                       : Column(
                                           children: [
                                             SizedBox(
-                                              height: 30.h,
+                                              height: 15.h,
                                             ),
                                             Center(
-                                              child: Text(
-                                                'Plz Register Patient from Hospital!',
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  fontSize:
-                                                      SizerUtil.deviceType ==
-                                                              DeviceType.mobile
-                                                          ? titleFontSize
-                                                          : 13.sp,
-                                                  color: Color(0XFF545454),
-                                                  fontWeight: FontWeight.w500,
+                                              child: Column(children: [
+                                                Text(
+                                                  "To book an appointment, you need to be a registered patient.Please visit our hospital in person to complete your registration.Once you're registered,you'll be able to easily book appointments through the app.",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    fontSize: SizerUtil
+                                                                .deviceType ==
+                                                            DeviceType.mobile
+                                                        ? titleFontSize
+                                                        : 13.sp,
+                                                    color: Color(0XFF545454),
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
                                                 ),
-                                              ),
+                                                SizedBox(height: 5.h),
+                                                Text(
+                                                  'Thank you.',
+                                                  style: TextStyle(
+                                                    fontSize: SizerUtil
+                                                                .deviceType ==
+                                                            DeviceType.mobile
+                                                        ? titleFontSize
+                                                        : 13.sp,
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                )
+                                              ]),
                                             ),
                                           ],
                                         ),
@@ -684,15 +680,8 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                               TextFormField(
                                 onFieldSubmitted: (value) {
                                   setState(() {
-                                    print(token);
                                     strPatientId.text = value;
-                                    print('qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq');
-                                    print(value);
-                                    print(strPatientId.text);
-                                    print('qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq');
                                     _GetById();
-
-                                    print(patientById);
                                   });
                                 },
                                 scrollPadding: EdgeInsets.only(bottom: 60),
@@ -763,14 +752,6 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                                                         .data!
                                                         .data!
                                                         .toList();
-                                                print('data');
-                                                print(data1);
-
-                                                print('data');
-                                                print(data1);
-
-// convert date format
-                                                print(data1.length);
 
                                                 if (data1.length > 0) {
                                                   date =
@@ -790,17 +771,11 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
 
                                                   var outputFormat5 =
                                                       DateFormat('d-MMM-yyyy');
-                                                  // var outputFormat = DateFormat('MM/dd/yyyy hh:mm a');
 
                                                   var outputDate5 =
                                                       outputFormat5
                                                           .format(inputDate);
                                                   patientBirth = outputDate5;
-                                                  print(
-                                                      '|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
-                                                  print(outputDate5);
-                                                  print(
-                                                      '|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
                                                 } else {
                                                   date = '';
                                                 }
@@ -913,8 +888,8 @@ class _SelectPatientScreenState extends State<SelectPatientScreen> {
                                                                             .toString()
                                                                             .replaceRange(
                                                                                 0,
-                                                                                10,
-                                                                                'xxxxxxxxxx'),
+                                                                                7,
+                                                                                'xxxxxxx'),
                                                                         style:
                                                                             TextStyle(
                                                                           fontSize: SizerUtil.deviceType == DeviceType.mobile

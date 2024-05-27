@@ -37,7 +37,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   void initState() {
     super.initState();
-    // FirebaseCrashlytics.instance.crash();
 
     userPreference.getMobile().then((value1) {
       setState(() {
@@ -109,18 +108,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     final buttonProvider = Provider.of<ButtonProvider>(context, listen: false);
 
-    print('iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii');
-
-    print(buttonProvider.backk);
-    print('iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii');
     settingsViewModel.fetchDoctorDetailsListApi(token);
 
     Future refresh() async {
       settingsViewModel.fetchDoctorDetailsListApi(token);
     }
 
-    print(age);
-    print(name);
     return Scaffold(
       backgroundColor: BackgroundColor,
       appBar: PreferredSize(
@@ -188,7 +181,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   child: Image.asset(
                                     'images/loading.png',
                                     height: 20.h,
-                                    // width: 90,
                                   ),
                                 ),
                                 SizedBox(

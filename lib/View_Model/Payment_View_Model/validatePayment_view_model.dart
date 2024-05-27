@@ -22,14 +22,11 @@ class ValidatePaymentViewModel with ChangeNotifier {
   }
 
   Future<void> validatePaymentApi(dynamic data, BuildContext context) async {
-    print('qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq');
-    print(data);
     setLoading(true);
     await _myRepo.validatePaymentUserapi(data).then((value) {
       setLoading(false);
 
       if (value['status'] == true) {
-        // Utils.snackBar('', context);
         final settingsViewModel =
             Provider.of<SettingsViewModel>(context, listen: false);
         final bookAppointmentViewModel =
@@ -40,16 +37,9 @@ class ValidatePaymentViewModel with ChangeNotifier {
                 .toString() ==
             'true') {
           userPreference.getUserData().then((value) {
-            //  data1 = value!;
             data1 = value!;
-            print('data1');
-            print(data1);
-            print('data1');
           });
           Timer(Duration(microseconds: 20), () {
-            print('qqqq');
-            print(data1['CaseNo'].toString());
-            print('qqqqqqqq');
             bookAppointmentViewModel.bookApointmentApi(data1, context);
           });
         }

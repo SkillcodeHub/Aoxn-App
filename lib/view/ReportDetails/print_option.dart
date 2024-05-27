@@ -1,11 +1,11 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:axonweb/Utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html_to_pdf/flutter_html_to_pdf.dart';
 import 'package:path_provider/path_provider.dart';
 
-// convert(String cfData, String name) async {
 Future<void> generateAndSavePdf(
     String cfData, String name, BuildContext context) async {
   var targetPath = await _localPath;
@@ -19,14 +19,16 @@ Future<void> generateAndSavePdf(
   var targetFileName = '$name-$currentTime-$random';
 
   var generatedPdfFile = await FlutterHtmlToPdf.convertFromHtmlContent(
-      cfData, targetPath, targetFileName);
+    cfData,
+    targetPath,
+    targetFileName,
+  );
 
   if (generatedPdfFile == null) {
     print("Error: Failed to generate PDF file.");
     return;
   }
 
-  // Check if the target directory exists before writing the file
   final file = File(generatedPdfFile.path);
   if (!file.existsSync()) {
     print("Error: Target directory does not exist.");
@@ -35,14 +37,13 @@ Future<void> generateAndSavePdf(
 
   final bytes = await file.readAsBytes();
 
-  // Save the PDF file to disk
   final downloadDirectory = await _getDownloadDirectory();
   final pdfFile = File('${downloadDirectory!.path}/$name.pdf');
   await pdfFile.writeAsBytes(bytes);
 
-  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-    content: Text('PDF file downloaded'),
-  ));
+  final downloadDirectoryPath = downloadDirectory.path;
+  Utils.flushBarErrorMessage("PDF file downloaded to $downloadDirectoryPath",
+      Duration(seconds: 4), context);
 }
 
 Future<String?> get _localPath async {
